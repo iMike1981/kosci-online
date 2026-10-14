@@ -1,6 +1,6 @@
 <!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kości online / Dice online</title>
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <style>
 body{margin:0;font-family:system-ui,Segoe UI,Arial;color:#333;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23e3ebf5' stroke-width='3'%3E%3Crect x='10' y='10' width='40' height='40' rx='8' transform='rotate(12 30 30)'/%3E%3Crect x='70' y='70' width='36' height='36' rx='7' transform='rotate(-15 88 88)'/%3E%3C/g%3E%3Cg fill='%23e3ebf5'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='80' cy='80' r='3'/%3E%3Ccircle cx='96' cy='96' r='3'/%3E%3C/g%3E%3C/svg%3E")}
 .wrap{max-width:1100px;margin:auto;padding:12px}h1{color:#1f3864;margin:6px 0}
@@ -20,7 +20,7 @@ th.cur{background:#ffe699}.opt{cursor:pointer;color:#2f5597;font-weight:bold;bac
 .xbtn{font-size:12px;padding:1px 6px;margin-left:4px;background:#fff;color:#999;border-color:#ccc}
 @media(max-width:600px){.die{width:48px;height:48px;padding:4px}.die i{width:9px;height:9px}table{font-size:12px}td,th{padding:3px}}
 .lang{font-size:14px;padding:5px 9px}.lang.on{background:#2f5597;color:#fff}</style></head><body><div class="wrap">
-<h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
+<div id="net" class="small" style="text-align:right"></div><h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
 <div id="start" class="card">
  <p><span data-t="yourName"></span> <input id="name" maxlength="14"></p>
  <p><button id="create" data-t="create"></button></p>
@@ -108,13 +108,13 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 </script>
 <script>
 const $=id=>document.getElementById(id);const K=window.Kosci;
-const PRE='kosci-mk-';let peer,isHost=false,conns=[],hostConn=null,me='',lobby=[],G=null,lastDice='';
+let isHost=false,me='',lobby=[],G=null,lastDice='';
 
-const I18N={pl:{title:'Kości online',yourName:'Twoje imię:',create:'Stwórz pokój',orJoin:'lub dołącz kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).',newGame:'Nowa gra (ci sami gracze)',rules:'Zasady',
+const I18N={pl:{title:'Kości online',yourName:'Twoje imię:',create:'Stwórz pokój',orJoin:'lub dołącz kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).',newGame:'Nowa gra (ci sami gracze)',rules:'Zasady',reconnecting:'łączę ponownie…',searching:'Szukam pokoju…',noRoom:'Nie znaleziono pokoju {c}. Sprawdź kod (wielkość liter nie ma znaczenia).',enterCode:'Wpisz kod pokoju.',
  enterName:'Wpisz imię.',err:'Błąd: ',connecting:'Łączenie…',cantConnect:'Nie można połączyć ({e}). Sprawdź kod.',lost:'Połączenie z gospodarzem przerwane.',running:'Gra już trwa.',full:'Pokój pełny (8).',confirmNew:'Zacząć nową grę? Punkty zostaną wyczyszczone.',confirmX:'Skreślić tę kategorię (x = 0 pkt)?',
  roll:'Rzuć',extra:'Dodatkowy rzut',end:'🏆 Koniec gry! Wygrywa {n} ({p} pkt)',yourTurn:'Twoja tura, ',turn:'Tura: ',round:'runda',rollN:'Rzut {r}/3',extraLeft:'dodatkowe rzuty',cat:'Kategoria',school:'Szkoła',lower:'Figury',total:'RAZEM',dbl:' (1. rzut ×2)',
  rulesList:['6 kości, w turze do 3 rzutów; po rzucie można zatrzymać wybrane kości.','Wynik zapisany po PIERWSZYM rzucie liczy się podwójnie (oprócz Szansy).','Jedynki–Szóstki: punktem odniesienia są TRZY kości danej liczby = 0 pkt. Każda kość mniej to minus ta liczba, każda więcej to plus ta liczba. Np. dwie czwórki = −4, jedna trójka = −6, zero piątek = −15, cztery szóstki = +6, pięć dwójek = +4. Ujemne wyniki nigdy nie są podwajane (dodatnie w 1. rzucie – tak).','Szkoła = suma Jedynki–Szóstki; jeśli poniżej 0 → suma − 50 (np. −1 → −51).','Liczą się tylko kości tworzące układ: 1,2,3,3,4,4 jako Dwie pary = 14.','Strity: mały 1–5 = 15, duży 2–6 = 20, długi 1–6 = 21. Generał: 1 i 6 + trzy z 2–5 (brakuje jednej) = suma 5 kości.','Full = suma 5 kości, Kareta = suma 4 kości, Poker = suma + 50 (szóstki 80), Lord = poker × 2 (jedynki 110). Szansa = suma wszystkich.','Dodatkowe rzuty: każdy gracz ma na całą grę 3 dodatkowe (czwarte) rzuty.']},
-en:{title:'Dice online',yourName:'Your name:',create:'Create room',orJoin:'or join with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts).',newGame:'New game (same players)',rules:'Rules',
+en:{title:'Dice online',yourName:'Your name:',create:'Create room',orJoin:'or join with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts).',newGame:'New game (same players)',rules:'Rules',reconnecting:'reconnecting…',searching:'Looking for the room…',noRoom:'Room {c} not found. Check the code (case does not matter).',enterCode:'Enter the room code.',
  enterName:'Enter your name.',err:'Error: ',connecting:'Connecting…',cantConnect:'Cannot connect ({e}). Check the code.',lost:'Connection to the host was lost.',running:'The game has already started.',full:'Room is full (8).',confirmNew:'Start a new game? All scores will be cleared.',confirmX:'Cross out this category (x = 0 pts)?',
  roll:'Roll',extra:'Extra roll',end:'🏆 Game over! {n} wins ({p} pts)',yourTurn:'Your turn, ',turn:'Turn: ',round:'round',rollN:'Roll {r}/3',extraLeft:'extra rolls',cat:'Category',school:'Upper section',lower:'Lower section',total:'TOTAL',dbl:' (1st roll ×2)',
  rulesList:['6 dice, up to 3 rolls per turn; after a roll you can hold any dice.','A score written after the FIRST roll counts double (except Chance).','Ones–Sixes: the reference is THREE dice of that number = 0 pts. Each die fewer costs that number, each die more adds it. E.g. two fours = −4, one three = −6, no fives = −15, four sixes = +6, five twos = +4. Negative scores are never doubled (positive ones on the 1st roll are).','Upper section = sum of Ones–Sixes; if below 0 → sum − 50 (e.g. −1 → −51).','Only the dice forming the combination count: 1,2,3,3,4,4 as 2 Pairs = 14.','Straights: small 1–5 = 15, large 2–6 = 20, long 1–6 = 21. General: 1 and 6 + three of 2–5 (one missing) = sum of 5 dice.','Full House = sum of 5 dice, 4 of a kind = sum of 4 dice, Poker = sum + 50 (sixes 80), Lord = Poker × 2 (ones 110). Chance = sum of all dice.','Extra rolls: each player has 3 extra (4th) rolls for the whole game.']}};
@@ -124,36 +124,42 @@ function catName(k){return LANG==='en'?K.CAT_EN[k]:K.CATS.find(c=>c[0]===k)[1]}
 function applyLang(){document.documentElement.lang=LANG;document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));
  $('rules').innerHTML=I18N[LANG].rulesList.map(x=>'<li>'+x+'</li>').join('');document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));if(G)render()}
 document.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{LANG=b.dataset.l;localStorage.klang=LANG;applyLang()});
-const params=new URLSearchParams(location.search);if(params.get('pokoj'))$('code').value=params.get('pokoj');
+const params=new URLSearchParams(location.search);if(params.get('pokoj'))$('code').value=params.get('pokoj').toUpperCase();
 $('name').value=localStorage.kname||'';
-function nm(){const n=$('name').value.trim();if(!n){$('msg').textContent=t('enterName');return null}localStorage.kname=n;return n}
-function code(){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:5},()=>a[Math.floor(Math.random()*a.length)]).join('')}
-$('create').onclick=()=>{me=nm();if(!me)return;isHost=true;const c=code();peer=new Peer(PRE+c);
- peer.on('open',()=>{lobby=[me];showLobby(c)});peer.on('error',e=>$('msg').textContent=t('err')+e.type);
- peer.on('connection',cn=>{cn.on('data',d=>hostMsg(cn,d));cn.on('open',()=>conns.push(cn));cn.on('close',()=>{conns=conns.filter(x=>x!==cn)})});};
-$('join').onclick=()=>{me=nm();if(!me)return;const c=$('code').value.trim().toUpperCase();if(!c)return;peer=new Peer({debug:+(params.get('debug')||0)});
- $('msg').textContent=t('connecting');peer.on('error',e=>$('msg').textContent=t('cantConnect',{e:e.type}));
- peer.on('open',()=>{hostConn=peer.connect(PRE+c,{reliable:true});hostConn.on('open',()=>{hostConn.send({t:'join',name:me});showLobby(c)});
-  hostConn.on('data',d=>{if(d.t==='lobby'){lobby=d.players;renderLobby()}if(d.t==='state'){G=d.g;render()}if(d.t==='err')alert(t(d.k))});
-  hostConn.on('close',()=>alert(t('lost')))});};
-function showLobby(c){$('start').hidden=true;$('lobby').hidden=false;$('rc').textContent=c;
+const SERVERS=[['wss://public.cloud.shiftr.io:443',{username:'public',password:'public'}],['wss://broker.hivemq.com:8884/mqtt',{}],['wss://broker.emqx.io:8084/mqtt',{}]];
+let cli=null,srv=0,ROOM='',S=null,joined=false,joinTimer=null;
+function topic(){return 'kosci-mk-v2/'+ROOM+'/state'}
+function status(s){$('net').textContent=s}
+function connect(onUp){
+ const [u,o]=SERVERS[srv%SERVERS.length];status('⏳ '+t('connecting'));
+ cli=mqtt.connect(u,Object.assign({connectTimeout:7000,reconnectPeriod:2000,clientId:'k'+Math.random().toString(16).slice(2,10)},o));
+ let ok=false;const fail=setTimeout(()=>{if(!ok){cli.end(true);srv++;connect(onUp)}},9000);
+ cli.on('connect',()=>{ok=true;clearTimeout(fail);status('🟢 online');const f=onUp;onUp=null;cli.subscribe(topic(),{qos:1},()=>f&&f())});
+ cli.on('reconnect',()=>status('🟠 '+t('reconnecting')));cli.on('offline',()=>status('🔴 offline – '+t('reconnecting')));
+ cli.on('message',(tp,m)=>{let d;try{d=JSON.parse(m.toString())}catch(e){return}if(!d||(S&&d.v<S.v))return;S=d;onState()});}
+function publish(){S.v=(S.v||0)+1;S.ts=Date.now();cli.publish(topic(),JSON.stringify(S),{qos:1,retain:true});onState()}
+function enterRoom(c,create){ROOM=c.toUpperCase().replace(/[^A-Z0-9]/g,'');localStorage['kroom']=ROOM;history.replaceState(null,'','?pokoj='+ROOM);
+ connect(()=>{if(create){S={v:1,host:me,lobby:[me],G:null};publish()}else{$('msg').textContent=t('searching');
+   joinTimer=setTimeout(()=>{if(!S)$('msg').textContent=t('noRoom',{c:ROOM})},6000)}});}
+function onState(){clearTimeout(joinTimer);G=S.G;lobby=S.lobby;
+ const inGame=G&&G.players.some(p=>p.name===me);
+ if(!lobby.includes(me)&&!inGame){if(G){$('msg').textContent=t('running');return}if(lobby.length>=8){$('msg').textContent=t('full');return}
+   lobby.push(me);publish();return}
+ isHost=S.host===me;if(G)render();else showLobby(ROOM)}
+if(params.get('pokoj')&&localStorage.kname&&localStorage.kroom===params.get('pokoj').toUpperCase()){me=localStorage.kname;enterRoom(localStorage.kroom,false)}
+$('create').onclick=()=>{me=nm();if(!me)return;enterRoom(code(),true)};
+$('join').onclick=()=>{me=nm();if(!me)return;const c=$('code').value.trim();if(!c){$('msg').textContent=t('enterCode');return}enterRoom(c,false)};
+function showLobby(c){$('start').hidden=true;$('game').hidden=true;$('lobby').hidden=false;$('rc').textContent=c;
  $('link').value=location.origin+location.pathname+'?pokoj='+c;$('hostctl').hidden=!isHost;$('wait').hidden=isHost;renderLobby()}
 $('copy').onclick=()=>{$('link').select();navigator.clipboard&&navigator.clipboard.writeText($('link').value)};
 function renderLobby(){$('plist').textContent=lobby.join(', ')}
-function bcast(m){conns.forEach(c=>c.open&&c.send(m))}
-function hostMsg(cn,d){
- if(d.t==='join'){if(G){ // rejoin by name
-   if(G.players.some(p=>p.name===d.name)){cn.pname=d.name;cn.send({t:'state',g:G})}else cn.send({t:'err',k:'running'});return}
-  let n=d.name;while(lobby.includes(n))n+='*';if(lobby.length>=8){cn.send({t:'err',k:'full'});return}
-  cn.pname=n;lobby.push(n);bcast({t:'lobby',players:lobby});renderLobby();return}
- if(d.t==='act')act(cn.pname,d);}
-function act(who,d){if(!G)return;
- if(d.a==='new'){if(who!==me)return;G=K.newGame(G.players.map(p=>p.name));return sync()}
- if(G.players[G.cur].name!==who)return;
- if(d.a==='roll')K.roll(G,Math.random);if(d.a==='hold')K.toggleHold(G,d.i);if(d.a==='write')K.write(G,d.cat,d.cross);sync()}
-function sync(){bcast({t:'state',g:G});render()}
-function send(d){if(isHost)act(me,d);else hostConn.send(Object.assign({t:'act'},d))}
-$('go').onclick=()=>{if(lobby.length<1)return;G=K.newGame(lobby);sync()};
+function send(d){if(!S||!G)return;
+ if(d.a==='new'){if(S.host!==me)return;S.G=K.newGame(G.players.map(p=>p.name));return publish()}
+ if(G.players[G.cur].name!==me)return;
+ if(d.a==='roll')K.roll(G,Math.random);if(d.a==='hold')K.toggleHold(G,d.i);if(d.a==='write')K.write(G,d.cat,d.cross);S.G=G;publish()}
+$('go').onclick=()=>{if(!S||S.host!==me)return;S.G=K.newGame(S.lobby);publish()};
+function nm(){const n=$('name').value.trim();if(!n){$('msg').textContent=t('enterName');return null}localStorage.kname=n;return n}
+function code(){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:5},()=>a[Math.floor(Math.random()*a.length)]).join('')}
 $('newg').onclick=()=>{if(confirm(t('confirmNew')))send({a:'new'})};
 $('rollb').onclick=()=>send({a:'roll'});
 const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
