@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Creepster&family=Nosifer&family=Orbitron:wght@600&family=Fredoka:wght@500;700&display=swap" rel="stylesheet"><title>Kości online / Dice online</title>
 <script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <style>
@@ -52,7 +52,7 @@ th.cur{background:#ffe699}.opt{cursor:pointer;color:#2f5597;font-weight:bold;bac
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .rc{border:1px solid #d0dbe8;border-top:4px solid #2e9e4f;border-radius:10px;padding:8px 10px;background:#fff}.rct{font-weight:bold;color:#1f3864;font-size:17px}.rcn{color:#555;font-size:14px;margin-bottom:5px}.rcs{margin-top:5px;font-size:15px}
 
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:8px}#appth{font-size:14px;padding:4px 6px;border-radius:8px}
+.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px}.topbar label{white-space:nowrap;display:inline-flex;align-items:center;gap:3px}#upd{position:fixed;left:0;right:0;bottom:0;z-index:99;background:#ffd23f;color:#1a1200;text-align:center;padding:12px;font:bold 16px system-ui;cursor:pointer}#appth{font-size:14px;padding:4px 6px;border-radius:8px}
 #thcards{display:flex;gap:8px;overflow-x:auto;padding:6px 0 10px}.thc{flex:none;width:96px;border:2px solid #ccd;border-radius:10px;padding:5px;font-size:12px;text-align:center;cursor:pointer;background:#fff;color:#333}.thc.on{border-color:#2f5597;box-shadow:0 0 0 3px #2f559755}
 .thb{height:48px;border-radius:7px;margin-bottom:4px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 8px}.thb span{height:9px;border-radius:3px;display:block}.thb span+span{width:60%}
 .pv-classic .thb{background:#f6f9fd;border:1px solid #d0dbe8}.pv-classic span{background:#2f5597}.pv-classic span+span{background:#d0dbe8}
@@ -272,6 +272,11 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
+const APP_VERSION='202610150019';
+async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
+ if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
+  else if(!document.getElementById('upd')){const b=document.createElement('div');b.id='upd';b.textContent=LANG==='pl'?'🔄 Nowa wersja – dotknij, aby odświeżyć':'🔄 New version – tap to reload';b.onclick=()=>location.reload();document.body.appendChild(b)}}}catch(e){}}
+setTimeout(checkVersion,1500);setInterval(checkVersion,300000);
 let LANG=localStorage.klang||((navigator.language||'').toLowerCase().startsWith('pl')?'pl':'en');
 function t(k,v){let s=I18N[LANG][k];if(v)for(const x in v)s=s.replace('{'+x+'}',v[x]);return s}
 function catName(k){return LANG==='en'?K.CAT_EN[k]:K.CATS.find(c=>c[0]===k)[1]}
