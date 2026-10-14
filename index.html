@@ -1,5 +1,5 @@
 <!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kości online</title>
+<title>Kości online / Dice online</title>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <style>
 body{margin:0;font-family:system-ui,Segoe UI,Arial;color:#333;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23e3ebf5' stroke-width='3'%3E%3Crect x='10' y='10' width='40' height='40' rx='8' transform='rotate(12 30 30)'/%3E%3Crect x='70' y='70' width='36' height='36' rx='7' transform='rotate(-15 88 88)'/%3E%3C/g%3E%3Cg fill='%23e3ebf5'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='80' cy='80' r='3'/%3E%3Ccircle cx='96' cy='96' r='3'/%3E%3C/g%3E%3C/svg%3E")}
@@ -19,45 +19,37 @@ th.cur{background:#ffe699}.opt{cursor:pointer;color:#2f5597;font-weight:bold;bac
 .lead{background:#ffe699!important}.small{font-size:13px;color:#666}.big{font-size:22px;font-weight:bold;color:#1f3864}
 .xbtn{font-size:12px;padding:1px 6px;margin-left:4px;background:#fff;color:#999;border-color:#ccc}
 @media(max-width:600px){.die{width:48px;height:48px;padding:4px}.die i{width:9px;height:9px}table{font-size:12px}td,th{padding:3px}}
-</style></head><body><div class="wrap">
-<h1>🎲 Kości online</h1>
+.lang{font-size:14px;padding:5px 9px}.lang.on{background:#2f5597;color:#fff}</style></head><body><div class="wrap">
+<h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
 <div id="start" class="card">
- <p>Twoje imię: <input id="name" maxlength="14"></p>
- <p><button id="create">Stwórz pokój</button></p>
- <p>lub dołącz kodem: <input id="code" size="7" style="text-transform:uppercase"> <button class="alt" id="join">Dołącz</button></p>
+ <p><span data-t="yourName"></span> <input id="name" maxlength="14"></p>
+ <p><button id="create" data-t="create"></button></p>
+ <p><span data-t="orJoin"></span> <input id="code" size="7" style="text-transform:uppercase"> <button class="alt" id="join" data-t="join"></button></p>
  <p class="small" id="msg"></p>
 </div>
 <div id="lobby" class="card" hidden>
- <div class="big">Pokój: <span id="rc"></span></div>
- <p>Wyślij dzieciom link: <input id="link" readonly style="width:70%"> <button class="alt" id="copy">Kopiuj</button></p>
- <p>Gracze (2–8): <b id="plist"></b></p>
- <p id="hostctl"><button id="go">Start gry</button></p><p class="small" id="wait">Czekamy, aż gospodarz rozpocznie grę…</p>
+ <div class="big"><span data-t="room"></span> <span id="rc"></span></div>
+ <p><span data-t="sendLink"></span> <input id="link" readonly style="width:70%"> <button class="alt" id="copy" data-t="copy"></button></p>
+ <p><span data-t="players"></span> <b id="plist"></b></p>
+ <p id="hostctl"><button id="go" data-t="start"></button></p><p class="small" id="wait" data-t="wait"></p>
 </div>
 <div id="game" hidden>
  <div class="card"><div class="big" id="turn"></div>
   <div class="dice" id="dice"></div>
-  <div style="text-align:center"><button id="rollb">Rzuć</button> <span id="rinfo" class="small"></span></div>
-  <p class="small" style="text-align:center">Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).</p></div>
+  <div style="text-align:center"><button id="rollb"></button> <span id="rinfo" class="small"></span></div>
+  <p class="small" style="text-align:center" data-t="help"></p></div>
  <div class="card" style="overflow-x:auto"><table id="tab"></table></div>
  <div class="card small" id="log"></div>
- <p id="ng"><button class="alt" id="newg">Nowa gra (ci sami gracze)</button></p>
+ <p id="ng"><button class="alt" id="newg" data-t="newGame"></button></p>
 </div>
-<details class="card"><summary><b>Zasady</b></summary><ul>
-<li>6 kości, w turze do 3 rzutów; po rzucie można zatrzymać wybrane kości.</li>
-<li>Wynik zapisany po PIERWSZYM rzucie liczy się podwójnie (oprócz Szansy).</li>
-<li>Jedynki–Szóstki: wynik względem trzech kości: (liczba kości − 3) × oczka, np. cztery piątki = +5, jedna dwójka = −4.</li>
-<li>Szkoła = suma Jedynki–Szóstki; jeśli poniżej 0 → suma − 50 (np. −1 → −51).</li>
-<li>Liczą się tylko kości tworzące układ: 1,2,3,3,4,4 jako Dwie pary = 14.</li>
-<li>Strity: mały 1–5 = 15, duży 2–6 = 20, długi 1–6 = 21. Generał: 1 i 6 + trzy z 2–5 (brakuje jednej) = suma 5 kości.</li>
-<li>Full = suma 5 kości, Kareta = suma 4 kości, Poker = suma + 50 (szóstki 80), Lord = poker × 2 (jedynki 110). Szansa = suma wszystkich.</li>
-<li>Dodatkowe rzuty: każdy gracz ma na całą grę 3 dodatkowe (czwarte) rzuty.</li></ul></details>
+<details class="card"><summary><b data-t="rules"></b></summary><ul id="rules"></ul></details>
 </div>
 <script>(function(root){
 const CATS=[
  ['u1','Jedynki (1)'],['u2','Dwójki (2)'],['u3','Trójki (3)'],['u4','Czwórki (4)'],['u5','Piątki (5)'],['u6','Szóstki (6)'],
  ['para','Para'],['dpary','Dwie pary'],['tpary','Trzy pary'],['trojka','Trójka'],['dtrojki','Dwie trójki'],
  ['mstrit','Mały strit 1-5'],['dstrit','Duży strit 2-6'],['lstrit','Długi strit 1-6'],['general','Generał'],
- ['full','Full'],['kareta','Kareta'],['poker','Poker'],['lord','Lord'],['szansa','Szansa']];
+ ['full','Full'],['kareta','Kareta'],['poker','Poker (5 jednakowych)'],['lord','Lord (6 jednakowych)'],['szansa','Szansa']];
 const UPPER=CATS.slice(0,6).map(c=>c[0]);
 function counts(d){const c=[0,0,0,0,0,0,0];d.forEach(v=>c[v]++);return c;}
 // best (max) score for each category; null = not possible
@@ -104,30 +96,46 @@ function toggleHold(g,i){if(g.rolls>0)g.held[i]=!g.held[i];}
 function write(g,cat,cross){
  const p=g.players[g.cur];if(g.rolls===0||cat in p.sheet)return false;
  let v;if(cross)v='x';else{v=finalScore(cat,g.dice,g.rolls===1);if(v===null)return false;}
- p.sheet[cat]=v;g.log.unshift(p.name+': '+CATS.find(c=>c[0]===cat)[1]+' = '+v+(g.rolls===1&&!cross&&cat!=='szansa'?' (1. rzut ×2)':''));g.log=g.log.slice(0,8);
+ p.sheet[cat]=v;g.log.unshift({n:p.name,c:cat,v:v,d:g.rolls===1&&!cross&&cat!=='szansa'});g.log=g.log.slice(0,8);
  g.rolls=0;g.held=g.held.map(()=>false);g.cur=(g.cur+1)%g.players.length;
  if(g.cur===0)g.round++;
  if(g.players.every(q=>CATS.every(([k])=>k in q.sheet)))g.phase='end';
  return true;}
-const api={CATS,UPPER,scores,finalScore,totals,newGame,canRoll,roll,toggleHold,write,MAX_EXTRA};
+const CAT_EN={u1:'Ones (1)',u2:'Twos (2)',u3:'Threes (3)',u4:'Fours (4)',u5:'Fives (5)',u6:'Sixes (6)',para:'1 Pair',dpary:'2 Pairs',tpary:'3 Pairs',trojka:'3 of a kind',dtrojki:'2 x 3 of a kind',mstrit:'Small Straight 1-5',dstrit:'Large Straight 2-6',lstrit:'Long Straight 1-6',general:'General',full:'Full House',kareta:'4 of a kind',poker:'Poker (5 of a kind)',lord:'Lord (6 of a kind)',szansa:'Chance'};
+const api={CAT_EN,CATS,UPPER,scores,finalScore,totals,newGame,canRoll,roll,toggleHold,write,MAX_EXTRA};
 if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 })(this);
 </script>
 <script>
 const $=id=>document.getElementById(id);const K=window.Kosci;
 const PRE='kosci-mk-';let peer,isHost=false,conns=[],hostConn=null,me='',lobby=[],G=null,lastDice='';
+
+const I18N={pl:{title:'Kości online',yourName:'Twoje imię:',create:'Stwórz pokój',orJoin:'lub dołącz kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).',newGame:'Nowa gra (ci sami gracze)',rules:'Zasady',
+ enterName:'Wpisz imię.',err:'Błąd: ',connecting:'Łączenie…',cantConnect:'Nie można połączyć ({e}). Sprawdź kod.',lost:'Połączenie z gospodarzem przerwane.',running:'Gra już trwa.',full:'Pokój pełny (8).',confirmNew:'Zacząć nową grę? Punkty zostaną wyczyszczone.',confirmX:'Skreślić tę kategorię (x = 0 pkt)?',
+ roll:'Rzuć',extra:'Dodatkowy rzut',end:'🏆 Koniec gry! Wygrywa {n} ({p} pkt)',yourTurn:'Twoja tura, ',turn:'Tura: ',round:'runda',rollN:'Rzut {r}/3',extraLeft:'dodatkowe rzuty',cat:'Kategoria',school:'Szkoła',lower:'Figury',total:'RAZEM',dbl:' (1. rzut ×2)',
+ rulesList:['6 kości, w turze do 3 rzutów; po rzucie można zatrzymać wybrane kości.','Wynik zapisany po PIERWSZYM rzucie liczy się podwójnie (oprócz Szansy).','Jedynki–Szóstki: wynik względem trzech kości: (liczba kości − 3) × oczka, np. cztery piątki = +5, jedna dwójka = −4.','Szkoła = suma Jedynki–Szóstki; jeśli poniżej 0 → suma − 50 (np. −1 → −51).','Liczą się tylko kości tworzące układ: 1,2,3,3,4,4 jako Dwie pary = 14.','Strity: mały 1–5 = 15, duży 2–6 = 20, długi 1–6 = 21. Generał: 1 i 6 + trzy z 2–5 (brakuje jednej) = suma 5 kości.','Full = suma 5 kości, Kareta = suma 4 kości, Poker = suma + 50 (szóstki 80), Lord = poker × 2 (jedynki 110). Szansa = suma wszystkich.','Dodatkowe rzuty: każdy gracz ma na całą grę 3 dodatkowe (czwarte) rzuty.']},
+en:{title:'Dice online',yourName:'Your name:',create:'Create room',orJoin:'or join with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts).',newGame:'New game (same players)',rules:'Rules',
+ enterName:'Enter your name.',err:'Error: ',connecting:'Connecting…',cantConnect:'Cannot connect ({e}). Check the code.',lost:'Connection to the host was lost.',running:'The game has already started.',full:'Room is full (8).',confirmNew:'Start a new game? All scores will be cleared.',confirmX:'Cross out this category (x = 0 pts)?',
+ roll:'Roll',extra:'Extra roll',end:'🏆 Game over! {n} wins ({p} pts)',yourTurn:'Your turn, ',turn:'Turn: ',round:'round',rollN:'Roll {r}/3',extraLeft:'extra rolls',cat:'Category',school:'Upper section',lower:'Lower section',total:'TOTAL',dbl:' (1st roll ×2)',
+ rulesList:['6 dice, up to 3 rolls per turn; after a roll you can hold any dice.','A score written after the FIRST roll counts double (except Chance).','Ones–Sixes: scored against three dice: (number of dice − 3) × face, e.g. four fives = +5, one two = −4.','Upper section = sum of Ones–Sixes; if below 0 → sum − 50 (e.g. −1 → −51).','Only the dice forming the combination count: 1,2,3,3,4,4 as 2 Pairs = 14.','Straights: small 1–5 = 15, large 2–6 = 20, long 1–6 = 21. General: 1 and 6 + three of 2–5 (one missing) = sum of 5 dice.','Full House = sum of 5 dice, 4 of a kind = sum of 4 dice, Poker = sum + 50 (sixes 80), Lord = Poker × 2 (ones 110). Chance = sum of all dice.','Extra rolls: each player has 3 extra (4th) rolls for the whole game.']}};
+let LANG=localStorage.klang||((navigator.language||'').toLowerCase().startsWith('pl')?'pl':'en');
+function t(k,v){let s=I18N[LANG][k];if(v)for(const x in v)s=s.replace('{'+x+'}',v[x]);return s}
+function catName(k){return LANG==='en'?K.CAT_EN[k]:K.CATS.find(c=>c[0]===k)[1]}
+function applyLang(){document.documentElement.lang=LANG;document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));
+ $('rules').innerHTML=I18N[LANG].rulesList.map(x=>'<li>'+x+'</li>').join('');document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));if(G)render()}
+document.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{LANG=b.dataset.l;localStorage.klang=LANG;applyLang()});
 const params=new URLSearchParams(location.search);if(params.get('pokoj'))$('code').value=params.get('pokoj');
 $('name').value=localStorage.kname||'';
-function nm(){const n=$('name').value.trim();if(!n){$('msg').textContent='Wpisz imię.';return null}localStorage.kname=n;return n}
+function nm(){const n=$('name').value.trim();if(!n){$('msg').textContent=t('enterName');return null}localStorage.kname=n;return n}
 function code(){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:5},()=>a[Math.floor(Math.random()*a.length)]).join('')}
 $('create').onclick=()=>{me=nm();if(!me)return;isHost=true;const c=code();peer=new Peer(PRE+c);
- peer.on('open',()=>{lobby=[me];showLobby(c)});peer.on('error',e=>$('msg').textContent='Błąd: '+e.type);
+ peer.on('open',()=>{lobby=[me];showLobby(c)});peer.on('error',e=>$('msg').textContent=t('err')+e.type);
  peer.on('connection',cn=>{cn.on('data',d=>hostMsg(cn,d));cn.on('open',()=>conns.push(cn));cn.on('close',()=>{conns=conns.filter(x=>x!==cn)})});};
 $('join').onclick=()=>{me=nm();if(!me)return;const c=$('code').value.trim().toUpperCase();if(!c)return;peer=new Peer({debug:+(params.get('debug')||0)});
- $('msg').textContent='Łączenie…';peer.on('error',e=>$('msg').textContent='Nie można połączyć ('+e.type+'). Sprawdź kod.');
+ $('msg').textContent=t('connecting');peer.on('error',e=>$('msg').textContent=t('cantConnect',{e:e.type}));
  peer.on('open',()=>{hostConn=peer.connect(PRE+c,{reliable:true});hostConn.on('open',()=>{hostConn.send({t:'join',name:me});showLobby(c)});
-  hostConn.on('data',d=>{if(d.t==='lobby'){lobby=d.players;renderLobby()}if(d.t==='state'){G=d.g;render()}if(d.t==='err')alert(d.m)});
-  hostConn.on('close',()=>alert('Połączenie z gospodarzem przerwane.'))});};
+  hostConn.on('data',d=>{if(d.t==='lobby'){lobby=d.players;renderLobby()}if(d.t==='state'){G=d.g;render()}if(d.t==='err')alert(t(d.k))});
+  hostConn.on('close',()=>alert(t('lost')))});};
 function showLobby(c){$('start').hidden=true;$('lobby').hidden=false;$('rc').textContent=c;
  $('link').value=location.origin+location.pathname+'?pokoj='+c;$('hostctl').hidden=!isHost;$('wait').hidden=isHost;renderLobby()}
 $('copy').onclick=()=>{$('link').select();navigator.clipboard&&navigator.clipboard.writeText($('link').value)};
@@ -135,8 +143,8 @@ function renderLobby(){$('plist').textContent=lobby.join(', ')}
 function bcast(m){conns.forEach(c=>c.open&&c.send(m))}
 function hostMsg(cn,d){
  if(d.t==='join'){if(G){ // rejoin by name
-   if(G.players.some(p=>p.name===d.name)){cn.pname=d.name;cn.send({t:'state',g:G})}else cn.send({t:'err',m:'Gra już trwa.'});return}
-  let n=d.name;while(lobby.includes(n))n+='*';if(lobby.length>=8){cn.send({t:'err',m:'Pokój pełny (8).'});return}
+   if(G.players.some(p=>p.name===d.name)){cn.pname=d.name;cn.send({t:'state',g:G})}else cn.send({t:'err',k:'running'});return}
+  let n=d.name;while(lobby.includes(n))n+='*';if(lobby.length>=8){cn.send({t:'err',k:'full'});return}
   cn.pname=n;lobby.push(n);bcast({t:'lobby',players:lobby});renderLobby();return}
  if(d.t==='act')act(cn.pname,d);}
 function act(who,d){if(!G)return;
@@ -146,32 +154,33 @@ function act(who,d){if(!G)return;
 function sync(){bcast({t:'state',g:G});render()}
 function send(d){if(isHost)act(me,d);else hostConn.send(Object.assign({t:'act'},d))}
 $('go').onclick=()=>{if(lobby.length<1)return;G=K.newGame(lobby);sync()};
-$('newg').onclick=()=>{if(confirm('Zacząć nową grę? Punkty zostaną wyczyszczone.'))send({a:'new'})};
+$('newg').onclick=()=>{if(confirm(t('confirmNew')))send({a:'new'})};
 $('rollb').onclick=()=>send({a:'roll'});
 const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 function render(){$('lobby').hidden=true;$('start').hidden=true;$('game').hidden=false;$('ng').hidden=!isHost;
  const P=G.players[G.cur],my=P.name===me&&G.phase==='play';
  const key=G.dice.join()+G.rolls+G.cur,anim=key!==lastDice&&G.rolls>0;lastDice=key;
- if(G.phase==='end'){const w=G.players.map(p=>[p.name,K.totals(p.sheet).total]).sort((a,b)=>b[1]-a[1]);$('turn').textContent='🏆 Koniec gry! Wygrywa '+w[0][0]+' ('+w[0][1]+' pkt)'}
- else $('turn').textContent=(my?'Twoja tura, ':'Tura: ')+P.name+' • runda '+Math.min(G.round,20);
+ if(G.phase==='end'){const w=G.players.map(p=>[p.name,K.totals(p.sheet).total]).sort((a,b)=>b[1]-a[1]);$('turn').textContent=t('end',{n:w[0][0],p:w[0][1]})}
+ else $('turn').textContent=(my?t('yourTurn'):t('turn'))+P.name+' • '+t('round')+' '+Math.min(G.round,20);
  $('dice').innerHTML='';G.dice.forEach((v,i)=>{const d=document.createElement('div');d.className='die'+(G.held[i]?' held':'')+(anim&&!G.held[i]?' roll':'');
   for(let k=0;k<9;k++){const p=document.createElement('i');if(v&&PIPS[v].includes(k))p.className='on';d.appendChild(p)}
   d.onclick=()=>{if(my)send({a:'hold',i})};$('dice').appendChild(d)});
- const extra=G.rolls>=3;$('rollb').disabled=!(my&&K.canRoll(G));$('rollb').textContent=extra?'Dodatkowy rzut':'Rzuć';
- $('rinfo').textContent='Rzut '+G.rolls+'/3'+(G.rolls===1?' (×2!)':'')+' • dodatkowe rzuty: '+(K.MAX_EXTRA-P.extraUsed)+'/'+K.MAX_EXTRA;
+ const extra=G.rolls>=3;$('rollb').disabled=!(my&&K.canRoll(G));$('rollb').textContent=extra?t('extra'):t('roll');
+ $('rinfo').textContent=t('rollN',{r:G.rolls})+(G.rolls===1?' (×2!)':'')+' • '+t('extraLeft')+': '+(K.MAX_EXTRA-P.extraUsed)+'/'+K.MAX_EXTRA;
  const T=G.players.map(p=>K.totals(p.sheet)),best=Math.max(...T.map(t=>t.total));
- let h='<tr><th>Kategoria</th>'+G.players.map((p,i)=>'<th class="'+(i===G.cur&&G.phase==='play'?'cur':'')+'">'+esc(p.name)+'</th>').join('')+'</tr>';
- K.CATS.forEach(([k,l],ci)=>{h+='<tr class="'+(ci<6?'up':'lo')+'"><td>'+l+'</td>';G.players.forEach((p,i)=>{
+ let h='<tr><th>'+t('cat')+'</th>'+G.players.map((p,i)=>'<th class="'+(i===G.cur&&G.phase==='play'?'cur':'')+'">'+esc(p.name)+'</th>').join('')+'</tr>';
+ K.CATS.forEach(([k,l],ci)=>{h+='<tr class="'+(ci<6?'up':'lo')+'"><td>'+catName(k)+'</td>';G.players.forEach((p,i)=>{
    if(k in p.sheet){const v=p.sheet[k];h+='<td class="'+(v<0?'neg':'')+'">'+v+'</td>'}
    else if(my&&i===G.cur&&G.rolls>0){const v=K.finalScore(k,G.dice,G.rolls===1);
      h+='<td>'+(v!==null?'<span class="opt" data-c="'+k+'">'+v+'</span>':'')+'<button class="xbtn" data-x="'+k+'">✕</button></td>'}
    else h+='<td></td>'});h+='</tr>';
-  if(ci===5)h+='<tr class="tot"><td>Szkoła</td>'+T.map(t=>'<td class="'+(t.szkola<0?'neg':'')+'">'+t.szkola+'</td>').join('')+'</tr>'});
- h+='<tr class="tot"><td>Figury</td>'+T.map(t=>'<td>'+t.lower+'</td>').join('')+'</tr>';
- h+='<tr class="tot"><td>RAZEM</td>'+T.map(t=>'<td class="'+(t.total===best?'lead':'')+'" style="font-size:18px">'+t.total+'</td>').join('')+'</tr>';
+  if(ci===5)h+='<tr class="tot"><td>'+t('school')+'</td>'+T.map(t=>'<td class="'+(t.szkola<0?'neg':'')+'">'+t.szkola+'</td>').join('')+'</tr>'});
+ h+='<tr class="tot"><td>'+t('lower')+'</td>'+T.map(t=>'<td>'+t.lower+'</td>').join('')+'</tr>';
+ h+='<tr class="tot"><td>'+t('total')+'</td>'+T.map(t=>'<td class="'+(t.total===best?'lead':'')+'" style="font-size:18px">'+t.total+'</td>').join('')+'</tr>';
  $('tab').innerHTML=h;
  $('tab').querySelectorAll('[data-c]').forEach(e=>e.onclick=()=>send({a:'write',cat:e.dataset.c}));
- $('tab').querySelectorAll('[data-x]').forEach(e=>e.onclick=()=>{if(confirm('Skreślić tę kategorię (x = 0 pkt)?'))send({a:'write',cat:e.dataset.x,cross:true})});
- $('log').innerHTML=G.log.map(esc).join('<br>')}
+ $('tab').querySelectorAll('[data-x]').forEach(e=>e.onclick=()=>{if(confirm(t('confirmX')))send({a:'write',cat:e.dataset.x,cross:true})});
+ $('log').innerHTML=G.log.map(x=>typeof x==='string'?esc(x):esc(x.n+': '+catName(x.c)+' = '+x.v+(x.d?t('dbl'):''))).join('<br>')}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+applyLang();
 </script></body></html>
