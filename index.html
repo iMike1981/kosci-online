@@ -38,6 +38,19 @@ th.cur{background:#ffe699}.opt{cursor:pointer;color:#2f5597;font-weight:bold;bac
 .st-ghost{background:radial-gradient(circle,#ffffffee,#e6e9ffcc);border-color:#b8bff0;box-shadow:0 0 12px 3px #c9d0ff}
 .st-ghost i{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1C5.5 1 3 4.5 3 8.5V19l2.3-2 2.3 2L10 17l2.4 2 2.3-2 2.3 2V8.5C17 4.5 14.5 1 10 1z' fill='%233a3a6e'/%3E%3Ccircle cx='7.6' cy='8.5' r='1.7' fill='%23fff'/%3E%3Ccircle cx='12.4' cy='8.5' r='1.7' fill='%23fff'/%3E%3Cellipse cx='10' cy='12.6' rx='1.5' ry='2' fill='%23fff'/%3E%3C/svg%3E") center/contain no-repeat;transform:scale(1.45)}
 .die.mini i,.die.tiny i{box-shadow:none}
+#rov{position:fixed;inset:0;z-index:50;background:#f6f9fd;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.rhead{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;background:#1f3864;color:#fff;padding:10px 16px;font-size:20px;z-index:2}.rhead button{background:#fff;color:#1f3864;font-size:15px;padding:7px 12px}
+.rbody{max-width:760px;margin:auto;padding:12px 16px 40px;font-size:16px;line-height:1.55}
+.rbody nav{background:#fff;border:1px solid #d0dbe8;border-radius:12px;padding:10px 16px}.rbody nav ol{margin:6px 0;padding-left:22px}.rbody nav a{color:#2f5597;text-decoration:none}
+.rbody section{background:#fff;border:1px solid #d0dbe8;border-radius:12px;padding:4px 16px 12px;margin:14px 0;scroll-margin-top:60px}
+.rbody h2{font-size:19px;color:#1f3864;border-bottom:3px solid #dde7f5;padding-bottom:6px;display:flex;align-items:center;gap:10px}
+.rn{background:#2f5597;color:#fff;border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:none}
+.steps{padding-left:22px}.steps li{margin:6px 0}.note{background:#eef7ea;border-left:4px solid #2e9e4f;padding:8px 12px;border-radius:6px}
+.ex{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0;background:#f6f9fd;border-radius:8px;padding:6px 8px}
+.grid{display:grid;grid-template-columns:1fr;gap:4px}
+.rdice{display:inline-flex;gap:3px}.die.rd{width:26px;height:26px;padding:2px;border-width:1.5px;border-radius:5px;box-shadow:none;cursor:default}.die.rd i{width:5px;height:5px}.die.dim{opacity:.3}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.rc{border:1px solid #d0dbe8;border-top:4px solid #2e9e4f;border-radius:10px;padding:8px 10px;background:#fff}.rct{font-weight:bold;color:#1f3864;font-size:17px}.rcn{color:#555;font-size:14px;margin-bottom:5px}.rcs{margin-top:5px;font-size:15px}
 </style></head><body><div class="wrap">
 <div id="net" class="small" style="text-align:right"></div><h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
 <div id="start" class="card">
@@ -61,7 +74,7 @@ th.cur{background:#ffe699}.opt{cursor:pointer;color:#2f5597;font-weight:bold;bac
  <div class="card small" id="log"></div>
  <p id="ng"><button class="alt" id="newg" data-t="newGame"></button></p>
 </div>
-<details class="card"><summary><b data-t="rules"></b></summary><ul id="rules"></ul></details>
+<p style="text-align:center"><button id="rbtn" class="alt" style="font-size:19px">📖 <span data-t="rules"></span></button></p><div id="rov" hidden></div>
 </div>
 <script>(function(root){
 const CATS=[
@@ -141,7 +154,7 @@ let LANG=localStorage.klang||((navigator.language||'').toLowerCase().startsWith(
 function t(k,v){let s=I18N[LANG][k];if(v)for(const x in v)s=s.replace('{'+x+'}',v[x]);return s}
 function catName(k){return LANG==='en'?K.CAT_EN[k]:K.CATS.find(c=>c[0]===k)[1]}
 function applyLang(){if(typeof drawPickers==='function')drawPickers();document.documentElement.lang=LANG;document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));
- $('rules').innerHTML=I18N[LANG].rulesList.map(x=>'<li>'+x+'</li>').join('');document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));if(G)render()}
+ if(!$('rov').hidden)openRules();document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));if(G)render()}
 document.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{LANG=b.dataset.l;localStorage.klang=LANG;applyLang()});
 const params=new URLSearchParams(location.search);if(params.get('pokoj'))$('code').value=params.get('pokoj').toUpperCase();
 $('name').value=localStorage.kname||'';
@@ -171,6 +184,52 @@ function drawPickers(){document.querySelectorAll('.pick').forEach(p=>{const g=(l
  p.innerHTML=g('colours',Object.keys(COL).filter(k=>!THEMES.includes(k)))+g('themes',THEMES);
  p.querySelectorAll('.sw').forEach(e=>e.onclick=()=>{myCol=e.dataset.c;localStorage.kcol=myCol;drawPickers();if(S&&me){S.col=S.col||{};S.col[me]=myCol;publish()}})})}
 drawPickers();
+const RX=[['para',[5,5,1,2,3,6],[0,1]],['dpary',[1,2,3,3,4,4],[2,3,4,5]],['tpary',[2,2,4,4,6,6],[0,1,2,3,4,5]],['trojka',[5,5,5,1,2,3],[0,1,2]],['dtrojki',[2,2,2,6,6,6],[0,1,2,3,4,5]],
+['mstrit',[1,2,3,4,5,5],[0,1,2,3,4]],['dstrit',[2,3,4,5,6,6],[0,1,2,3,4]],['lstrit',[1,2,3,4,5,6],[0,1,2,3,4,5]],['general',[1,2,4,5,6,6],[0,1,2,3,4]],['full',[3,3,3,5,5,1],[0,1,2,3,4]],
+['kareta',[4,4,4,4,1,2],[0,1,2,3]],['poker',[6,6,6,6,6,2],[0,1,2,3,4]],['lord',[1,1,1,1,1,1],[0,1,2,3,4,5]],['szansa',[1,2,3,3,4,4],[0,1,2,3,4,5]]];
+const RT={pl:{close:'Zamknij',toc:'Spis treści',sec:['Cel gry','Przebieg tury','Podwójne punkty za pierwszy rzut','Szkoła (Jedynki–Szóstki)','Figury','Skreślanie','Koniec gry i wynik','Jak grać online'],
+goal:'Każdy gracz ma 20 pól do wypełnienia: 6 w Szkole i 14 Figur. Gracze wypełniają po jednym polu na turę, a po wypełnieniu wszystkich pól wygrywa osoba z najwyższym wynikiem RAZEM.',
+turn:['Kliknij <b>Rzuć</b>: rzucasz wszystkimi 6 kośćmi.','Kliknij kości, które chcesz <b>zatrzymać</b> (unoszą się i dostają obwódkę). Pozostałymi rzucasz ponownie.','Masz do <b>3 rzutów</b> w turze. Możesz zapisać wynik po każdym z nich.','Po 3. rzucie możesz użyć <b>rzutu dodatkowego</b>. Każdy gracz ma ich tylko <b>3 na całą grę</b>.','Kliknij podświetloną liczbę w tabeli, żeby zapisać wynik. Tura przechodzi na następnego gracza.'],
+dbl:'Jeśli zapiszesz wynik już po <b>pierwszym rzucie</b>, punkty liczą się <b>podwójnie</b> (gra pokazuje to jako „×2!”).',dblx:['<b>Szansa</b> nigdy nie jest podwajana.','<b>Ujemne</b> wyniki w Szkole nie są podwajane. Dodatnie są.'],dblex:'Przykład: Dwie pary 14 w 1. rzucie = <b>28</b>.',
+up:'Punktem odniesienia są <b>trzy kości</b> danej liczby. Trzy kości = 0 pkt. Każda kość mniej to <b>minus</b> ta liczba, każda kość więcej to <b>plus</b> ta liczba.',
+upex:[[[4,4,1,1,2,6],'Czwórki','−4'],[[3,1,1,2,2,6],'Trójki','−6'],[[1,2,3,4,6,6],'Piątki (brak)','−15'],[[6,6,6,6,1,2],'Szóstki','+6'],[[2,2,2,2,2,1],'Dwójki','+4'],[[5,5,5,1,2,3],'Piątki','0']],
+upsum:'<b>Szkoła</b> = suma pól Jedynki–Szóstki. Jeśli jest <b>poniżej zera</b>, odejmuje się karę 50: <b>−1 → −51</b>, −12 → −62. Jeśli 0 lub więcej, zostaje bez zmian.',
+low:'Liczą się <b>tylko kości tworzące układ</b> (pozostałe są wyszarzone). Gra sama podpowiada najlepszy możliwy wynik dla każdej figury.',lowNote:'Kareta może posłużyć też jako dwie pary, a sześć jednakowych jako dwie trójki.',
+need:{para:'2 jednakowe',dpary:'2 różne pary',tpary:'3 pary',trojka:'3 jednakowe',dtrojki:'2 trójki',mstrit:'1-2-3-4-5',dstrit:'2-3-4-5-6',lstrit:'1-2-3-4-5-6',general:'1 i 6 + trzy z 2–5 (brakuje dokładnie jednej)',full:'trójka + para',kareta:'4 jednakowe',poker:'5 jednakowych',lord:'6 jednakowych',szansa:'dowolne kości'},
+how:{para:'suma 2 kości',dpary:'suma 4 kości',tpary:'suma 6 kości',trojka:'suma 3 kości',dtrojki:'suma 6 kości',mstrit:'zawsze 15',dstrit:'zawsze 20',lstrit:'zawsze 21',general:'suma 5 kości',full:'suma 5 kości',kareta:'suma 4 kości',poker:'suma + 50 (jedynki 55 … szóstki 80)',lord:'poker × 2 (jedynki 110 … szóstki 160)',szansa:'suma wszystkich 6, nigdy ×2'},
+dblw:'w 1. rzucie',cross:'Jeśli nie pasuje ci żaden wynik (albo nie chcesz go użyć), kliknij <b>✕</b> przy wybranym polu. Pole dostaje „x” = 0 pkt i jest zamknięte do końca gry. W Szkole skreślenie (0) bywa lepsze niż duży minus.',
+end:['Gra kończy się, gdy wszyscy wypełnią wszystkie 20 pól.','<b>RAZEM = Szkoła + Figury</b>. Wygrywa najwyższy wynik; prowadzący gracz ma złote pole.'],
+online:['<b>Stwórz pokój</b>: dostaniesz 5-znakowy kod i link.','Wyślij link lub kod innym graczom. Wielkość liter w kodzie nie ma znaczenia.','Każdy wpisuje imię i klika <b>Dołącz</b> (2–8 graczy). Gospodarz klika <b>Start gry</b>.','Wszyscy widzą na żywo rzuty, zatrzymane kości i tabelę.','Każdy wybiera własne <b>kolory lub motywy</b> kości i język (PL/EN).','Po odświeżeniu strony wracasz do gry automatycznie, pod tym samym imieniem.']},
+en:{close:'Close',toc:'Contents',sec:['Goal','How a turn works','First-roll double','Upper section (Ones–Sixes)','Lower section','Crossing out','End of game and scoring','Playing online'],
+goal:'Each player has 20 boxes to fill: 6 in the upper section and 14 in the lower section. Players fill one box per turn; when all are filled, the highest TOTAL wins.',
+turn:['Tap <b>Roll</b>: you roll all 6 dice.','Tap the dice you want to <b>hold</b> (they lift up and get an outline). The rest are rolled again.','You have up to <b>3 rolls</b> per turn and can write a score after any of them.','After the 3rd roll you may use an <b>extra roll</b>. Each player has only <b>3 for the whole game</b>.','Tap a highlighted number in the table to write it. The turn passes to the next player.'],
+dbl:'If you write a score right after your <b>first roll</b>, it counts <b>double</b> (shown as “×2!”).',dblx:['<b>Chance</b> is never doubled.','<b>Negative</b> upper-section scores are never doubled. Positive ones are.'],dblex:'Example: 2 Pairs 14 on the 1st roll = <b>28</b>.',
+up:'The reference is <b>three dice</b> of a number. Three dice = 0 pts. Each die fewer is <b>minus</b> that number; each die more is <b>plus</b> that number.',
+upex:[[[4,4,1,1,2,6],'Fours','−4'],[[3,1,1,2,2,6],'Threes','−6'],[[1,2,3,4,6,6],'Fives (none)','−15'],[[6,6,6,6,1,2],'Sixes','+6'],[[2,2,2,2,2,1],'Twos','+4'],[[5,5,5,1,2,3],'Fives','0']],
+upsum:'<b>Upper section</b> = sum of Ones–Sixes. If it is <b>below zero</b>, a 50-point penalty is subtracted: <b>−1 → −51</b>, −12 → −62. If 0 or more, it stays as it is.',
+low:'<b>Only the dice that form the combination count</b> (others are greyed out). The game suggests the best possible score for each box.',lowNote:'Four of a kind can also count as two pairs, and six of a kind as two threes.',
+need:{para:'2 the same',dpary:'2 different pairs',tpary:'3 pairs',trojka:'3 the same',dtrojki:'2 threes',mstrit:'1-2-3-4-5',dstrit:'2-3-4-5-6',lstrit:'1-2-3-4-5-6',general:'1 and 6 + three of 2–5 (exactly one missing)',full:'three + pair',kareta:'4 the same',poker:'5 the same',lord:'6 the same',szansa:'any dice'},
+how:{para:'sum of 2 dice',dpary:'sum of 4 dice',tpary:'sum of 6 dice',trojka:'sum of 3 dice',dtrojki:'sum of 6 dice',mstrit:'always 15',dstrit:'always 20',lstrit:'always 21',general:'sum of 5 dice',full:'sum of 5 dice',kareta:'sum of 4 dice',poker:'sum + 50 (ones 55 … sixes 80)',lord:'Poker × 2 (ones 110 … sixes 160)',szansa:'sum of all 6, never ×2'},
+dblw:'on 1st roll',cross:'If no score fits (or you do not want to use it), tap <b>✕</b> next to a box. It gets “x” = 0 pts and is closed for the rest of the game. In the upper section a cross (0) can beat a big minus.',
+end:['The game ends when everyone has filled all 20 boxes.','<b>TOTAL = Upper section + Lower section</b>. Highest wins; the leader’s cell is gold.'],
+online:['<b>Create room</b>: you get a 5-letter code and a link.','Send the link or code to the other players. The code is not case-sensitive.','Everyone types a name and taps <b>Join</b> (2–8 players). The host taps <b>Start game</b>.','Everyone sees rolls, held dice and the table live.','Each player picks their own dice <b>colours or themes</b> and language (PL/EN).','If you reload the page, you rejoin automatically under the same name.']}};
+function miniDice(d,on){return '<span class="rdice">'+d.map((v,i)=>dieHTML('white',v,'rd'+(on&&!on.includes(i)?' dim':''))).join('')+'</span>'}
+function rulesHTML(){const r=RT[LANG],ic=['🎯','🎲','✖️2','🏫','🃏','✕','🏆','🌐'];
+ const sec=(i,body)=>'<section id="rs'+i+'"><h2><span class="rn">'+(i+1)+'</span>'+r.sec[i]+'</h2>'+body+'</section>';
+ let h='<div class="rhead"><b>📖 '+t('rules')+'</b><button id="rclose">'+r.close+' ✕</button></div><div class="rbody"><nav><b>'+r.toc+'</b><ol>'+r.sec.map((s,i)=>'<li><a href="#rs'+i+'">'+s+'</a></li>').join('')+'</ol></nav>';
+ h+=sec(0,'<p>'+r.goal+'</p>');
+ h+=sec(1,'<ol class="steps">'+r.turn.map(x=>'<li>'+x+'</li>').join('')+'</ol>');
+ h+=sec(2,'<p>'+r.dbl+'</p><ul>'+r.dblx.map(x=>'<li>'+x+'</li>').join('')+'</ul><div class="ex">'+miniDice([1,2,3,3,4,4],[2,3,4,5])+' '+r.dblex+'</div>');
+ h+=sec(3,'<p>'+r.up+'</p><div class="grid">'+r.upex.map(([d,n,v])=>'<div class="ex">'+miniDice(d,d.map((x,i)=>i).filter(i=>d[i]==({Czwórki:4,Fours:4,Trójki:3,Threes:3,Szóstki:6,Sixes:6,Dwójki:2,Twos:2}[n]||5)))+'<span>'+n+': <b class="'+(v[0]=='−'?'neg':'')+'">'+v+'</b></span></div>').join('')+'</div><p class="note">'+r.upsum+'</p>');
+ h+=sec(4,'<p>'+r.low+'</p><div class="cards">'+RX.map(([k,d,on])=>{const v=K.scores(d)[k];return '<div class="rc"><div class="rct">'+catName(k)+'</div><div class="rcn">'+r.need[k]+'</div>'+miniDice(d,on)+'<div class="rcs">'+r.how[k]+' → <b>'+v+'</b>'+(k!=='szansa'?' <span class="small">('+r.dblw+' '+v*2+')</span>':'')+'</div></div>'}).join('')+'</div><p class="note">'+r.lowNote+'</p>');
+ h+=sec(5,'<p>'+r.cross+'</p>');
+ h+=sec(6,'<ul>'+r.end.map(x=>'<li>'+x+'</li>').join('')+'</ul>');
+ h+=sec(7,'<ol class="steps">'+r.online.map(x=>'<li>'+x+'</li>').join('')+'</ol>');
+ return h+'</div>'}
+function openRules(){const o=$('rov');o.innerHTML=rulesHTML();o.hidden=false;document.body.style.overflow='hidden';$('rclose').onclick=closeRules;o.querySelectorAll('nav a').forEach(a=>a.onclick=e=>{e.preventDefault();o.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'})})}
+function closeRules(){$('rov').hidden=true;document.body.style.overflow=''}
+
+$('rbtn').onclick=openRules;
 function onState(){clearTimeout(joinTimer);G=S.G;lobby=S.lobby;
  const inGame=G&&G.players.some(p=>p.name===me);
  if(!lobby.includes(me)&&!inGame){if(G){$('msg').textContent=t('running');return}if(lobby.length>=8){$('msg').textContent=t('full');return}
