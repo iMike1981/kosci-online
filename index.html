@@ -1,0 +1,177 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kości online</title>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<style>
+body{margin:0;font-family:system-ui,Segoe UI,Arial;color:#333;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23e3ebf5' stroke-width='3'%3E%3Crect x='10' y='10' width='40' height='40' rx='8' transform='rotate(12 30 30)'/%3E%3Crect x='70' y='70' width='36' height='36' rx='7' transform='rotate(-15 88 88)'/%3E%3C/g%3E%3Cg fill='%23e3ebf5'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='80' cy='80' r='3'/%3E%3Ccircle cx='96' cy='96' r='3'/%3E%3C/g%3E%3C/svg%3E")}
+.wrap{max-width:1100px;margin:auto;padding:12px}h1{color:#1f3864;margin:6px 0}
+.card{background:#ffffffee;border:1px solid #d0dbe8;border-radius:12px;padding:14px;margin:10px 0}
+button{font-size:17px;padding:10px 16px;border-radius:10px;border:1px solid #2f5597;background:#2f5597;color:#fff;cursor:pointer;margin:3px}
+button.alt{background:#fff;color:#2f5597}button:disabled{opacity:.4;cursor:default}
+input{font-size:17px;padding:9px;border:1px solid #aab;border-radius:8px}
+.dice{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.die{width:64px;height:64px;border-radius:12px;background:#fff;border:2px solid #2f5597;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:6px;box-sizing:border-box;cursor:pointer;box-shadow:0 2px 5px #0002}
+.die.held{background:#fff2cc;border-color:#c90;transform:translateY(-6px)}
+.die i{width:12px;height:12px;border-radius:50%;background:#1f3864;margin:auto;visibility:hidden}.die i.on{visibility:visible}
+.roll{animation:sp .45s}@keyframes sp{0%{transform:rotate(0) scale(.7)}60%{transform:rotate(300deg) scale(1.1)}100%{transform:rotate(360deg)}}
+table{border-collapse:collapse;width:100%;font-size:15px}td,th{border:1px solid #d0dbe8;padding:5px 7px;text-align:center}
+td:first-child{text-align:left}.up td{background:#eaf1fb}.lo td{background:#eef7ea}th{background:#dde7f5;color:#1f3864}
+th.cur{background:#ffe699}.opt{cursor:pointer;color:#2f5597;font-weight:bold;background:#fff8e0!important}.neg{color:#c00}.tot td{font-weight:bold;background:#fff!important}
+.lead{background:#ffe699!important}.small{font-size:13px;color:#666}.big{font-size:22px;font-weight:bold;color:#1f3864}
+.xbtn{font-size:12px;padding:1px 6px;margin-left:4px;background:#fff;color:#999;border-color:#ccc}
+@media(max-width:600px){.die{width:48px;height:48px;padding:4px}.die i{width:9px;height:9px}table{font-size:12px}td,th{padding:3px}}
+</style></head><body><div class="wrap">
+<h1>🎲 Kości online</h1>
+<div id="start" class="card">
+ <p>Twoje imię: <input id="name" maxlength="14"></p>
+ <p><button id="create">Stwórz pokój</button></p>
+ <p>lub dołącz kodem: <input id="code" size="7" style="text-transform:uppercase"> <button class="alt" id="join">Dołącz</button></p>
+ <p class="small" id="msg"></p>
+</div>
+<div id="lobby" class="card" hidden>
+ <div class="big">Pokój: <span id="rc"></span></div>
+ <p>Wyślij dzieciom link: <input id="link" readonly style="width:70%"> <button class="alt" id="copy">Kopiuj</button></p>
+ <p>Gracze (2–8): <b id="plist"></b></p>
+ <p id="hostctl"><button id="go">Start gry</button></p><p class="small" id="wait">Czekamy, aż gospodarz rozpocznie grę…</p>
+</div>
+<div id="game" hidden>
+ <div class="card"><div class="big" id="turn"></div>
+  <div class="dice" id="dice"></div>
+  <div style="text-align:center"><button id="rollb">Rzuć</button> <span id="rinfo" class="small"></span></div>
+  <p class="small" style="text-align:center">Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).</p></div>
+ <div class="card" style="overflow-x:auto"><table id="tab"></table></div>
+ <div class="card small" id="log"></div>
+ <p id="ng"><button class="alt" id="newg">Nowa gra (ci sami gracze)</button></p>
+</div>
+<details class="card"><summary><b>Zasady</b></summary><ul>
+<li>6 kości, w turze do 3 rzutów; po rzucie można zatrzymać wybrane kości.</li>
+<li>Wynik zapisany po PIERWSZYM rzucie liczy się podwójnie (oprócz Szansy).</li>
+<li>Jedynki–Szóstki: wynik względem trzech kości: (liczba kości − 3) × oczka, np. cztery piątki = +5, jedna dwójka = −4.</li>
+<li>Szkoła = suma Jedynki–Szóstki; jeśli poniżej 0 → suma − 50 (np. −1 → −51).</li>
+<li>Liczą się tylko kości tworzące układ: 1,2,3,3,4,4 jako Dwie pary = 14.</li>
+<li>Strity: mały 1–5 = 15, duży 2–6 = 20, długi 1–6 = 21. Generał: 1 i 6 + trzy z 2–5 (brakuje jednej) = suma 5 kości.</li>
+<li>Full = suma 5 kości, Kareta = suma 4 kości, Poker = suma + 50 (szóstki 80), Lord = poker × 2 (jedynki 110). Szansa = suma wszystkich.</li>
+<li>Dodatkowe rzuty: każdy gracz ma na całą grę 3 dodatkowe (czwarte) rzuty.</li></ul></details>
+</div>
+<script>(function(root){
+const CATS=[
+ ['u1','Jedynki (1)'],['u2','Dwójki (2)'],['u3','Trójki (3)'],['u4','Czwórki (4)'],['u5','Piątki (5)'],['u6','Szóstki (6)'],
+ ['para','Para'],['dpary','Dwie pary'],['tpary','Trzy pary'],['trojka','Trójka'],['dtrojki','Dwie trójki'],
+ ['mstrit','Mały strit 1-5'],['dstrit','Duży strit 2-6'],['lstrit','Długi strit 1-6'],['general','Generał'],
+ ['full','Full'],['kareta','Kareta'],['poker','Poker'],['lord','Lord'],['szansa','Szansa']];
+const UPPER=CATS.slice(0,6).map(c=>c[0]);
+function counts(d){const c=[0,0,0,0,0,0,0];d.forEach(v=>c[v]++);return c;}
+// best (max) score for each category; null = not possible
+function scores(d){
+ const c=counts(d),s={},sum=d.reduce((a,b)=>a+b,0);
+ for(let n=1;n<=6;n++)s['u'+n]=(c[n]-3)*n;
+ const pairs=[],trips=[];
+ for(let n=6;n>=1;n--){if(c[n]>=2)pairs.push(n);if(c[n]>=3)trips.push(n);}
+ s.para=pairs.length?2*pairs[0]:null;
+ // pairs from distinct values; a value with 4+ can count as two pairs
+ const pv=[];for(let n=6;n>=1;n--){for(let k=0;k<Math.floor(c[n]/2);k++)pv.push(n);}
+ s.dpary=pv.length>=2?2*(pv[0]+pv[1]):null;
+ s.tpary=pv.length>=3?2*(pv[0]+pv[1]+pv[2]):null;
+ s.trojka=trips.length?3*trips[0]:null;
+ const tv=[];for(let n=6;n>=1;n--){for(let k=0;k<Math.floor(c[n]/3);k++)tv.push(n);}
+ s.dtrojki=tv.length>=2?3*(tv[0]+tv[1]):null;
+ const has=a=>a.every(n=>c[n]>=1);
+ s.mstrit=has([1,2,3,4,5])?15:null; s.dstrit=has([2,3,4,5,6])?20:null; s.lstrit=has([1,2,3,4,5,6])?21:null;
+ let g=null;for(const m of [2,3,4,5]){const need=[1,2,3,4,5,6].filter(x=>x!==m);if(has(need)){const v=21-m;if(g===null||v>g)g=v;}}
+ s.general=g;
+ let f=null;for(let a=1;a<=6;a++)for(let b=1;b<=6;b++)if(a!==b&&c[a]>=3&&c[b]>=2){const v=3*a+2*b;if(f===null||v>f)f=v;}
+ s.full=f;
+ let k=null,p=null,l=null;for(let n=1;n<=6;n++){if(c[n]>=4)k=4*n;if(c[n]>=5)p=5*n+50;if(c[n]>=6)l=2*(5*n+50);}
+ s.kareta=k;s.poker=p;s.lord=l;s.szansa=sum;
+ return s;
+}
+function finalScore(cat,d,firstRoll){const v=scores(d)[cat];if(v===null)return null;return firstRoll&&cat!=='szansa'?v*2:v;}
+function totals(sheet){
+ let up=0;UPPER.forEach(k=>{if(typeof sheet[k]==='number')up+=sheet[k];});
+ const szkola=up<0?up-50:up;let low=0;
+ CATS.slice(6).forEach(([k])=>{if(typeof sheet[k]==='number')low+=sheet[k];});
+ return {upper:up,szkola,lower:low,total:szkola+low};
+}
+// ---- game state machine (authoritative on host) ----
+const MAX_EXTRA=3;
+function newGame(names){return {phase:'play',players:names.map(n=>({name:n,sheet:{},extraUsed:0})),cur:0,dice:[0,0,0,0,0,0],held:[false,false,false,false,false,false],rolls:0,round:1,log:[]};}
+function canRoll(g){const p=g.players[g.cur];return g.phase==='play'&&(g.rolls<3||(g.rolls>=3&&p.extraUsed<MAX_EXTRA));}
+function roll(g,rnd){
+ if(!canRoll(g))return false;const p=g.players[g.cur];
+ if(g.rolls>=3)p.extraUsed++;
+ if(g.rolls===0)g.held=[false,false,false,false,false,false];
+ g.dice=g.dice.map((v,i)=>g.held[i]&&g.rolls>0?v:1+Math.floor(rnd()*6));g.rolls++;return true;}
+function toggleHold(g,i){if(g.rolls>0)g.held[i]=!g.held[i];}
+function write(g,cat,cross){
+ const p=g.players[g.cur];if(g.rolls===0||cat in p.sheet)return false;
+ let v;if(cross)v='x';else{v=finalScore(cat,g.dice,g.rolls===1);if(v===null)return false;}
+ p.sheet[cat]=v;g.log.unshift(p.name+': '+CATS.find(c=>c[0]===cat)[1]+' = '+v+(g.rolls===1&&!cross&&cat!=='szansa'?' (1. rzut ×2)':''));g.log=g.log.slice(0,8);
+ g.rolls=0;g.held=g.held.map(()=>false);g.cur=(g.cur+1)%g.players.length;
+ if(g.cur===0)g.round++;
+ if(g.players.every(q=>CATS.every(([k])=>k in q.sheet)))g.phase='end';
+ return true;}
+const api={CATS,UPPER,scores,finalScore,totals,newGame,canRoll,roll,toggleHold,write,MAX_EXTRA};
+if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
+})(this);
+</script>
+<script>
+const $=id=>document.getElementById(id);const K=window.Kosci;
+const PRE='kosci-mk-';let peer,isHost=false,conns=[],hostConn=null,me='',lobby=[],G=null,lastDice='';
+const params=new URLSearchParams(location.search);if(params.get('pokoj'))$('code').value=params.get('pokoj');
+$('name').value=localStorage.kname||'';
+function nm(){const n=$('name').value.trim();if(!n){$('msg').textContent='Wpisz imię.';return null}localStorage.kname=n;return n}
+function code(){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from({length:5},()=>a[Math.floor(Math.random()*a.length)]).join('')}
+$('create').onclick=()=>{me=nm();if(!me)return;isHost=true;const c=code();peer=new Peer(PRE+c);
+ peer.on('open',()=>{lobby=[me];showLobby(c)});peer.on('error',e=>$('msg').textContent='Błąd: '+e.type);
+ peer.on('connection',cn=>{cn.on('data',d=>hostMsg(cn,d));cn.on('open',()=>conns.push(cn));cn.on('close',()=>{conns=conns.filter(x=>x!==cn)})});};
+$('join').onclick=()=>{me=nm();if(!me)return;const c=$('code').value.trim().toUpperCase();if(!c)return;peer=new Peer({debug:+(params.get('debug')||0)});
+ $('msg').textContent='Łączenie…';peer.on('error',e=>$('msg').textContent='Nie można połączyć ('+e.type+'). Sprawdź kod.');
+ peer.on('open',()=>{hostConn=peer.connect(PRE+c,{reliable:true});hostConn.on('open',()=>{hostConn.send({t:'join',name:me});showLobby(c)});
+  hostConn.on('data',d=>{if(d.t==='lobby'){lobby=d.players;renderLobby()}if(d.t==='state'){G=d.g;render()}if(d.t==='err')alert(d.m)});
+  hostConn.on('close',()=>alert('Połączenie z gospodarzem przerwane.'))});};
+function showLobby(c){$('start').hidden=true;$('lobby').hidden=false;$('rc').textContent=c;
+ $('link').value=location.origin+location.pathname+'?pokoj='+c;$('hostctl').hidden=!isHost;$('wait').hidden=isHost;renderLobby()}
+$('copy').onclick=()=>{$('link').select();navigator.clipboard&&navigator.clipboard.writeText($('link').value)};
+function renderLobby(){$('plist').textContent=lobby.join(', ')}
+function bcast(m){conns.forEach(c=>c.open&&c.send(m))}
+function hostMsg(cn,d){
+ if(d.t==='join'){if(G){ // rejoin by name
+   if(G.players.some(p=>p.name===d.name)){cn.pname=d.name;cn.send({t:'state',g:G})}else cn.send({t:'err',m:'Gra już trwa.'});return}
+  let n=d.name;while(lobby.includes(n))n+='*';if(lobby.length>=8){cn.send({t:'err',m:'Pokój pełny (8).'});return}
+  cn.pname=n;lobby.push(n);bcast({t:'lobby',players:lobby});renderLobby();return}
+ if(d.t==='act')act(cn.pname,d);}
+function act(who,d){if(!G)return;
+ if(d.a==='new'){if(who!==me)return;G=K.newGame(G.players.map(p=>p.name));return sync()}
+ if(G.players[G.cur].name!==who)return;
+ if(d.a==='roll')K.roll(G,Math.random);if(d.a==='hold')K.toggleHold(G,d.i);if(d.a==='write')K.write(G,d.cat,d.cross);sync()}
+function sync(){bcast({t:'state',g:G});render()}
+function send(d){if(isHost)act(me,d);else hostConn.send(Object.assign({t:'act'},d))}
+$('go').onclick=()=>{if(lobby.length<1)return;G=K.newGame(lobby);sync()};
+$('newg').onclick=()=>{if(confirm('Zacząć nową grę? Punkty zostaną wyczyszczone.'))send({a:'new'})};
+$('rollb').onclick=()=>send({a:'roll'});
+const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+function render(){$('lobby').hidden=true;$('start').hidden=true;$('game').hidden=false;$('ng').hidden=!isHost;
+ const P=G.players[G.cur],my=P.name===me&&G.phase==='play';
+ const key=G.dice.join()+G.rolls+G.cur,anim=key!==lastDice&&G.rolls>0;lastDice=key;
+ if(G.phase==='end'){const w=G.players.map(p=>[p.name,K.totals(p.sheet).total]).sort((a,b)=>b[1]-a[1]);$('turn').textContent='🏆 Koniec gry! Wygrywa '+w[0][0]+' ('+w[0][1]+' pkt)'}
+ else $('turn').textContent=(my?'Twoja tura, ':'Tura: ')+P.name+' • runda '+Math.min(G.round,20);
+ $('dice').innerHTML='';G.dice.forEach((v,i)=>{const d=document.createElement('div');d.className='die'+(G.held[i]?' held':'')+(anim&&!G.held[i]?' roll':'');
+  for(let k=0;k<9;k++){const p=document.createElement('i');if(v&&PIPS[v].includes(k))p.className='on';d.appendChild(p)}
+  d.onclick=()=>{if(my)send({a:'hold',i})};$('dice').appendChild(d)});
+ const extra=G.rolls>=3;$('rollb').disabled=!(my&&K.canRoll(G));$('rollb').textContent=extra?'Dodatkowy rzut':'Rzuć';
+ $('rinfo').textContent='Rzut '+G.rolls+'/3'+(G.rolls===1?' (×2!)':'')+' • dodatkowe rzuty: '+(K.MAX_EXTRA-P.extraUsed)+'/'+K.MAX_EXTRA;
+ const T=G.players.map(p=>K.totals(p.sheet)),best=Math.max(...T.map(t=>t.total));
+ let h='<tr><th>Kategoria</th>'+G.players.map((p,i)=>'<th class="'+(i===G.cur&&G.phase==='play'?'cur':'')+'">'+esc(p.name)+'</th>').join('')+'</tr>';
+ K.CATS.forEach(([k,l],ci)=>{h+='<tr class="'+(ci<6?'up':'lo')+'"><td>'+l+'</td>';G.players.forEach((p,i)=>{
+   if(k in p.sheet){const v=p.sheet[k];h+='<td class="'+(v<0?'neg':'')+'">'+v+'</td>'}
+   else if(my&&i===G.cur&&G.rolls>0){const v=K.finalScore(k,G.dice,G.rolls===1);
+     h+='<td>'+(v!==null?'<span class="opt" data-c="'+k+'">'+v+'</span>':'')+'<button class="xbtn" data-x="'+k+'">✕</button></td>'}
+   else h+='<td></td>'});h+='</tr>';
+  if(ci===5)h+='<tr class="tot"><td>Szkoła</td>'+T.map(t=>'<td class="'+(t.szkola<0?'neg':'')+'">'+t.szkola+'</td>').join('')+'</tr>'});
+ h+='<tr class="tot"><td>Figury</td>'+T.map(t=>'<td>'+t.lower+'</td>').join('')+'</tr>';
+ h+='<tr class="tot"><td>RAZEM</td>'+T.map(t=>'<td class="'+(t.total===best?'lead':'')+'" style="font-size:18px">'+t.total+'</td>').join('')+'</tr>';
+ $('tab').innerHTML=h;
+ $('tab').querySelectorAll('[data-c]').forEach(e=>e.onclick=()=>send({a:'write',cat:e.dataset.c}));
+ $('tab').querySelectorAll('[data-x]').forEach(e=>e.onclick=()=>{if(confirm('Skreślić tę kategorię (x = 0 pkt)?'))send({a:'write',cat:e.dataset.x,cross:true})});
+ $('log').innerHTML=G.log.map(esc).join('<br>')}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+</script></body></html>
