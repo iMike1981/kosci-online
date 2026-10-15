@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2f5597"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Kości">
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:type" content="website"><meta property="og:url" content="https://imike1981.github.io/kosci-online/"><meta property="og:title" content="Kości Online 🎲"><meta property="og:description" content="Zagrajmy razem w kości online – za darmo, w przeglądarce, z rodziną i znajomymi. / Free online dice game for family and friends."><meta property="og:image" content="https://imike1981.github.io/kosci-online/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="description" content="Kości online – gra w kości z rodziną i znajomymi."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2f5597"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Kości">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Creepster&family=Nosifer&family=Fredoka:wght@500;700&family=Mochiy+Pop+One&display=swap" rel="stylesheet"><title>Kości online / Dice online</title>
 <script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <style>
@@ -38,7 +38,7 @@ th.cur{background:#ffe699}.opt{cursor:pointer;color:#2f5597;font-weight:bold;bac
 .st-ghost{background:radial-gradient(circle,#ffffffee,#e6e9ffcc);border-color:#b8bff0;box-shadow:0 0 12px 3px #c9d0ff}
 .st-ghost i{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1C5.5 1 3 4.5 3 8.5V19l2.3-2 2.3 2L10 17l2.4 2 2.3-2 2.3 2V8.5C17 4.5 14.5 1 10 1z' fill='%233a3a6e'/%3E%3Ccircle cx='7.6' cy='8.5' r='1.7' fill='%23fff'/%3E%3Ccircle cx='12.4' cy='8.5' r='1.7' fill='%23fff'/%3E%3Cellipse cx='10' cy='12.6' rx='1.5' ry='2' fill='%23fff'/%3E%3C/svg%3E") center/contain no-repeat;transform:scale(1.45)}
 .die.mini i,.die.tiny i{box-shadow:none}
-#rov{position:fixed;inset:0;z-index:50;background:#f6f9fd;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#rov{position:fixed;inset:0;z-index:70;background:#f6f9fd;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .rhead{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;background:#1f3864;color:#fff;padding:10px 16px;font-size:20px;z-index:2}.rhead button{background:#fff;color:#1f3864;font-size:15px;padding:7px 12px}
 .rbody{max-width:760px;margin:auto;padding:12px 16px 40px;font-size:16px;line-height:1.55}
 .rbody nav{background:#fff;border:1px solid #d0dbe8;border-radius:12px;padding:10px 16px}.rbody nav ol{margin:6px 0;padding-left:22px}.rbody nav a{color:#2f5597;text-decoration:none}
@@ -181,6 +181,18 @@ body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env
 .toggles{display:inline-flex;flex-wrap:nowrap;align-items:center;gap:12px;white-space:nowrap;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.85);color:#333;position:relative;z-index:61}
 .toggles label{color:#333!important;margin:0}
 @media(max-width:600px){.tbmain{width:100%}.tbmain select{width:100%;max-width:none}}
+.hsb{max-width:640px;margin:auto}.hst{width:100%;border-collapse:separate;border-spacing:0 6px;font-size:17px}
+.hst th{font-size:13px;opacity:.75;text-align:left;padding:0 8px}.hst td{background:rgba(255,255,255,.88);color:#222;padding:9px 8px}
+.hst td:first-child{border-radius:12px 0 0 12px;text-align:center;width:2.2em;font-weight:700}.hst td:last-child{border-radius:0 12px 12px 0;text-align:right;font-size:19px}
+.hst th:last-child{text-align:right}.hst td:nth-child(2){word-break:break-word;font-weight:600}.hst td:nth-child(3){white-space:nowrap;font-size:14px;opacity:.8}
+.hst tr.r1 td{background:#fff3c4}.hst tr.r1 td:last-child b{color:#b07800}.hsempty{text-align:center;padding:30px 10px;font-size:18px}.hsst{text-align:center;opacity:.7}
+@media(max-width:420px){.hst{font-size:15px}.hst td{padding:8px 5px}}
+.shb{max-width:560px;margin:auto;text-align:center}.shimg{width:100%;max-width:420px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.shmsg{font-size:17px;word-break:break-all}.shgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 24px}
+.shi{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 8px;border-radius:14px;border:0;font:700 16px system-ui,sans-serif;color:#fff!important;text-decoration:none;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.18);min-height:48px}
+.sh-native{grid-column:1/-1;background:#2f5597}.sh-whatsapp{background:#25d366}.sh-facebook{background:#1877f2}.sh-messenger{background:#a033ff}.sh-telegram{background:#229ed9}.sh-x{background:#111}.sh-sms{background:#5b6b7a}.sh-mail{background:#e0603a}
+#rov .shgrid .sh-ig{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af)!important}#rov .shgrid .sh-copy{background:#1f8a8a!important}#rov .shgrid .shi{border:0!important;font-family:system-ui,sans-serif!important;color:#fff!important}
+#toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(30px);background:#222;color:#fff;padding:12px 18px;border-radius:12px;z-index:120;opacity:0;transition:.25s;max-width:88vw;text-align:center;font:600 15px system-ui;pointer-events:none}#toast.show{opacity:1;transform:translateX(-50%)}
 </style></head><body><div class="wrap">
 <div class="topbar"><span class="tbmain"><select id="appth" aria-label="theme"></select><span class="toggles"><label class="small"><input type="checkbox" id="animt"> <span data-t="anims"></span></label><label class="small"><input type="checkbox" id="sndt"> <span data-t="sound"></span></label></span></span> <span id="net" class="small"></span></div><h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
 <div id="start" class="card">
@@ -204,7 +216,7 @@ body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env
  <div class="card small" id="log"></div>
  <p><button class="alt" id="menub" data-t="menu"></button> <span id="ng"><button class="alt" id="newg" data-t="newGame"></button></span></p>
 </div>
-<p style="text-align:center"><button id="rbtn" class="alt" style="font-size:19px">📖 <span data-t="rules"></span></button></p><div id="rov" hidden></div><div id="fx" hidden></div>
+<p style="text-align:center"><button id="rbtn" class="alt" style="font-size:19px">📖 <span data-t="rules"></span></button> <button id="hsbtn" class="alt" style="font-size:19px">🏆 <span data-t="hs"></span></button> <button id="shbtn" class="alt" style="font-size:19px">📣 <span data-t="share"></span></button></p><div id="rov" hidden></div><div id="fx" hidden></div>
 </div>
 <script>(function(root){
 const CATS=[
@@ -248,7 +260,7 @@ function totals(sheet){
 }
 // ---- game state machine (authoritative on host) ----
 const MAX_EXTRA=3;
-function newGame(names){return {phase:'play',players:names.map(n=>({name:n,sheet:{},extraUsed:0})),cur:0,dice:[0,0,0,0,0,0],held:[false,false,false,false,false,false],rolls:0,round:1,log:[]};}
+function newGame(names){return {gid:Date.now().toString(36)+Math.random().toString(36).slice(2,7),phase:'play',players:names.map(n=>({name:n,sheet:{},extraUsed:0})),cur:0,dice:[0,0,0,0,0,0],held:[false,false,false,false,false,false],rolls:0,round:1,log:[]};}
 function canRoll(g){const p=g.players[g.cur];return g.phase==='play'&&(g.rolls<3||(g.rolls>=3&&p.extraUsed<MAX_EXTRA));}
 function roll(g,rnd){
  if(!canRoll(g))return false;const p=g.players[g.cur];
@@ -274,11 +286,11 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 const $=id=>document.getElementById(id);const K=window.Kosci;
 let isHost=false,me='',lobby=[],G=null,lastDice='';
 
-const I18N={pl:{title:'Kości online',yourName:'Twoje imię:',create:'Stwórz pokój',orJoin:'lub dołącz kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).',newGame:'🔁 Nowa gra – ci sami gracze',rules:'Zasady',sound:'Dźwięk',menu:'🏠 Menu główne',confirmLeave:'Wyjść do menu? Gra trwa – pozostali gracze grają dalej bez ciebie.',left:'(wyszedł)',anims:'Animacje',appTheme:'Motyw aplikacji:',thNames:{classic:'Klasyczny',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (styl Minecraft)',slime:'Slime (styl Slime Rancher)',kitty:'Kotek (styl Hello Kitty)'},colours:'Kolory',themes:'Motywy',diceColour:'Kolor kości:',rolling:'🎲 Rzuca: {n}',reconnecting:'łączę ponownie…',searching:'Szukam pokoju…',noRoom:'Nie znaleziono pokoju {c}. Sprawdź kod (wielkość liter nie ma znaczenia).',enterCode:'Wpisz kod pokoju.',
+const I18N={pl:{title:'Kości online',yourName:'Twoje imię:',create:'Stwórz pokój',orJoin:'lub dołącz kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).',newGame:'🔁 Nowa gra – ci sami gracze',rules:'Zasady',share:'Poleć grę',shT:'📣 Poleć grę',shMsg:'Zagrajmy w Kości online! 🎲',shNative:'Udostępnij…',shCopy:'Kopiuj link',shCopied:'Skopiowano!',shIg:'Link skopiowany – wklej go w Instagramie (wiadomość lub opis/relacja).',hs:'Najlepsze wyniki',hsT:'🏆 Najlepsze wyniki',hsEmpty:'Brak wyników – dokończ grę, żeby trafić na listę!',hsName:'Gracz',hsDate:'Data',hsScore:'Wynik',hsNote:'Top 10 wszech czasów – tylko w pełni ukończone gry.',hsClose:'Zamknij',sound:'Dźwięk',menu:'🏠 Menu główne',confirmLeave:'Wyjść do menu? Gra trwa – pozostali gracze grają dalej bez ciebie.',left:'(wyszedł)',anims:'Animacje',appTheme:'Motyw aplikacji:',thNames:{classic:'Klasyczny',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (styl Minecraft)',slime:'Slime (styl Slime Rancher)',kitty:'Kotek (styl Hello Kitty)'},colours:'Kolory',themes:'Motywy',diceColour:'Kolor kości:',rolling:'🎲 Rzuca: {n}',reconnecting:'łączę ponownie…',searching:'Szukam pokoju…',noRoom:'Nie znaleziono pokoju {c}. Sprawdź kod (wielkość liter nie ma znaczenia).',enterCode:'Wpisz kod pokoju.',
  enterName:'Wpisz imię.',err:'Błąd: ',connecting:'Łączenie…',cantConnect:'Nie można połączyć ({e}). Sprawdź kod.',lost:'Połączenie z gospodarzem przerwane.',running:'Gra już trwa.',full:'Pokój pełny (8).',confirmNew:'Zacząć nową grę? Punkty zostaną wyczyszczone.',confirmX:'Skreślić tę kategorię (x = 0 pkt)?',
  roll:'Rzuć',extra:'Dodatkowy rzut',end:'🏆 Koniec gry! Wygrywa {n} ({p} pkt)',yourTurn:'Twoja tura, ',turn:'Tura: ',round:'runda',rollN:'Rzut {r}/3',extraLeft:'dodatkowe rzuty',cat:'Kategoria',school:'Szkoła',lower:'Figury',total:'RAZEM',dbl:' (1. rzut ×2)',
  rulesList:['6 kości, w turze do 3 rzutów; po rzucie można zatrzymać wybrane kości.','Wynik zapisany po PIERWSZYM rzucie liczy się podwójnie (oprócz Szansy).','Jedynki–Szóstki: punktem odniesienia są TRZY kości danej liczby = 0 pkt. Każda kość mniej to minus ta liczba, każda więcej to plus ta liczba. Np. dwie czwórki = −4, jedna trójka = −6, zero piątek = −15, cztery szóstki = +6, pięć dwójek = +4. Szkoła nigdy nie jest podwajana.','Szkoła = suma Jedynki–Szóstki; jeśli poniżej 0 → suma − 50 (np. −1 → −51).','Liczą się tylko kości tworzące układ: 1,2,3,3,4,4 jako Dwie pary = 14.','Strity: mały 1–5 = 15, duży 2–6 = 20, długi 1–6 = 21. Generał: 1 i 6 + trzy z 2–5 (brakuje jednej) = suma 5 kości.','Full = suma 5 kości, Kareta = suma 4 kości, Poker = suma + 50 (szóstki 80), Lord = poker × 2 (jedynki 110). Szansa = suma wszystkich.','Dodatkowe rzuty: każdy gracz ma na całą grę 3 dodatkowe (czwarte) rzuty.']},
-en:{title:'Dice online',yourName:'Your name:',create:'Create room',orJoin:'or join with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts).',newGame:'🔁 New game – same players',rules:'Rules',sound:'Sound',menu:'🏠 Main menu',confirmLeave:'Leave to the main menu? The game is in progress – the others will continue without you.',left:'(left)',anims:'Animations',appTheme:'App theme:',thNames:{classic:'Classic',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (Minecraft style)',slime:'Slime (Slime Rancher style)',kitty:'Kitty (Hello Kitty style)'},colours:'Colours',themes:'Themes',diceColour:'Dice colour:',rolling:'🎲 {n} is rolling',reconnecting:'reconnecting…',searching:'Looking for the room…',noRoom:'Room {c} not found. Check the code (case does not matter).',enterCode:'Enter the room code.',
+en:{title:'Dice online',yourName:'Your name:',create:'Create room',orJoin:'or join with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts).',newGame:'🔁 New game – same players',rules:'Rules',share:'Share the game',shT:'📣 Share the game',shMsg:'Let\'s play Dice online! 🎲',shNative:'Share…',shCopy:'Copy link',shCopied:'Copied!',shIg:'Link copied – paste it in Instagram (DM, caption or story).',hs:'High scores',hsT:'🏆 High scores',hsEmpty:'No scores yet – finish a game to get on the board!',hsName:'Player',hsDate:'Date',hsScore:'Score',hsNote:'All-time top 10 – fully completed games only.',hsClose:'Close',sound:'Sound',menu:'🏠 Main menu',confirmLeave:'Leave to the main menu? The game is in progress – the others will continue without you.',left:'(left)',anims:'Animations',appTheme:'App theme:',thNames:{classic:'Classic',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (Minecraft style)',slime:'Slime (Slime Rancher style)',kitty:'Kitty (Hello Kitty style)'},colours:'Colours',themes:'Themes',diceColour:'Dice colour:',rolling:'🎲 {n} is rolling',reconnecting:'reconnecting…',searching:'Looking for the room…',noRoom:'Room {c} not found. Check the code (case does not matter).',enterCode:'Enter the room code.',
  enterName:'Enter your name.',err:'Error: ',connecting:'Connecting…',cantConnect:'Cannot connect ({e}). Check the code.',lost:'Connection to the host was lost.',running:'The game has already started.',full:'Room is full (8).',confirmNew:'Start a new game? All scores will be cleared.',confirmX:'Cross out this category (x = 0 pts)?',
  roll:'Roll',extra:'Extra roll',end:'🏆 Game over! {n} wins ({p} pts)',yourTurn:'Your turn, ',turn:'Turn: ',round:'round',rollN:'Roll {r}/3',extraLeft:'extra rolls',cat:'Category',school:'School',lower:'Lower section',total:'TOTAL',dbl:' (1st roll ×2)',
  rulesList:['6 dice, up to 3 rolls per turn; after a roll you can hold any dice.','A score written after the FIRST roll counts double (except Chance).','Ones–Sixes: the reference is THREE dice of that number = 0 pts. Each die fewer costs that number, each die more adds it. E.g. two fours = −4, one three = −6, no fives = −15, four sixes = +6, five twos = +4. School is never doubled.','School = sum of Ones–Sixes; if below 0 → sum − 50 (e.g. −1 → −51).','Only the dice forming the combination count: 1,2,3,3,4,4 as 2 Pairs = 14.','Straights: small 1–5 = 15, large 2–6 = 20, long 1–6 = 21. General: 1 and 6 + three of 2–5 (one missing) = sum of 5 dice.','Full House = sum of 5 dice, 4 of a kind = sum of 4 dice, Poker = sum + 50 (sixes 80), Lord = Poker × 2 (ones 110). Chance = sum of all dice.','Extra rolls: each player has 3 extra (4th) rolls for the whole game.']}};
@@ -298,7 +310,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202610151520';
+const APP_VERSION='202610151600';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -392,8 +404,9 @@ function leaveToMenu(){if(G&&G.phase==='play'&&!confirm(t('confirmLeave')))retur
 let LANG=localStorage.klang||((navigator.language||'').toLowerCase().startsWith('pl')?'pl':'en');
 function t(k,v){let s=I18N[LANG][k];if(v)for(const x in v)s=s.replace('{'+x+'}',v[x]);return s}
 function catName(k){return LANG==='en'?K.CAT_EN[k]:K.CATS.find(c=>c[0]===k)[1]}
-function applyLang(){drawThemes();if(typeof drawPickers==='function')drawPickers();document.documentElement.lang=LANG;document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));
- if(!$('rov').hidden)openRules();document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));if(G)render()}
+function applyLang(){if(!$('rov').hidden&&$('rov').dataset.hs){openHS();return applyLang2()}return applyLang2()}
+function applyLang2(){drawThemes();if(typeof drawPickers==='function')drawPickers();document.documentElement.lang=LANG;document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));
+ if(!$('rov').hidden&&!$('rov').dataset.hs)openRules();else if(!$('rov').hidden)openHS();document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));if(G)render()}
 document.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{LANG=b.dataset.l;localStorage.klang=LANG;applyLang()});
 const params=new URLSearchParams(location.search);if(params.get('pokoj'))$('code').value=params.get('pokoj').toUpperCase();
 $('name').value=localStorage.kname||'';
@@ -469,7 +482,47 @@ function openRules(){const o=$('rov');o.innerHTML=rulesHTML();o.hidden=false;doc
 function closeRules(){$('rov').hidden=true;document.body.style.overflow=''}
 
 $('rbtn').onclick=openRules;
-function onState(){if(!ROOM)return;clearTimeout(joinTimer);G=S.G;lobby=S.lobby;
+// ---- high scores (global via retained MQTT + local fallback) ----
+const HS_TOPIC='kosci-online/highscores/v1';let HS=[],hsCli=null,hsGot=false,hsPending=[];
+function hsClean(n){return String(n||'').replace(/[<>&"'`\u0000-\u001f]/g,'').trim().slice(0,20)||'?'}
+function hsValid(e){return e&&typeof e.g==='string'&&e.g.length<40&&typeof e.s==='number'&&isFinite(e.s)&&Math.abs(e.s)<5000&&typeof e.d==='number'}
+function hsMerge(a,b){const m={};[...a,...b].filter(hsValid).forEach(e=>{e={g:e.g.slice(0,40),n:hsClean(e.n),s:Math.round(e.s),d:e.d};m[e.g+'|'+e.n]=e});return Object.values(m).sort((x,y)=>y.s-x.s||x.d-y.d).slice(0,10)}
+try{HS=hsMerge(JSON.parse(localStorage.khs||'[]'),[])}catch(e){HS=[]}
+function hsSave(){localStorage.khs=JSON.stringify(HS);if(!$('rov').hidden&&$('rov').dataset.hs)openHS()}
+function hsPublish(){if(hsCli&&hsCli.connected&&hsGot)hsCli.publish(HS_TOPIC,JSON.stringify(HS),{qos:1,retain:true})}
+function hsConnect(i){i=i||0;const [u,o]=SERVERS[i%SERVERS.length];let ok=false;
+ try{hsCli=mqtt.connect(u,Object.assign({connectTimeout:7000,reconnectPeriod:5000,clientId:'h'+Math.random().toString(16).slice(2,10)},o))}catch(e){return}
+ const fail=setTimeout(()=>{if(!ok){hsCli.end(true);if(i<SERVERS.length*2)hsConnect(i+1)}},9000);
+ hsCli.on('connect',()=>{ok=true;clearTimeout(fail);hsGot=false;hsCli.subscribe(HS_TOPIC,{qos:1},()=>{setTimeout(()=>{if(!hsGot){hsGot=true;hsSync()}},2500)})});
+ hsCli.on('message',(tp,m)=>{if(tp!==HS_TOPIC)return;let d=[];try{d=JSON.parse(m.toString())}catch(e){}const first=!hsGot;hsGot=true;const before=JSON.stringify(HS);
+  HS=hsMerge(Array.isArray(d)?d:[],HS.concat(hsPending.splice(0)));hsSave();if(JSON.stringify(HS)!==JSON.stringify(hsMerge(Array.isArray(d)?d:[],[])))hsPublish()});}
+function hsSync(){HS=hsMerge(HS,hsPending.splice(0));hsSave();hsPublish()}
+const hsDone={};
+function hsSubmit(g){if(!g||g.phase!=='end')return;if(!g.players.length||g.players.some(p=>p.left||!K.CATS.every(([k])=>k in p.sheet)))return;
+ const gid=g.gid||(ROOM+'-'+g.players.map(p=>p.name).join(','));if(hsDone[gid])return;hsDone[gid]=1;const d=Date.now();
+ const add=g.players.map(p=>({g:gid,n:hsClean(p.name),s:K.totals(p.sheet).total,d}));
+ if(hsGot){HS=hsMerge(HS,add);hsSave();hsPublish()}else{hsPending.push(...add);HS=hsMerge(HS,add);hsSave()}}
+function hsDate(ms){const x=new Date(ms);return String(x.getDate()).padStart(2,'0')+'.'+String(x.getMonth()+1).padStart(2,'0')+'.'+x.getFullYear()}
+function openHS(){const o=$('rov');o.dataset.hs=1;const md=['🥇','🥈','🥉'];
+ let h='<div class="rhead"><b>'+t('hsT')+'</b><button id="rclose">'+t('hsClose')+' ✕</button></div><div class="rbody hsb"><p class="note">'+t('hsNote')+'</p>';
+ if(!HS.length)h+='<p class="hsempty">'+t('hsEmpty')+'</p>';else h+='<table class="hst"><thead><tr><th>#</th><th>'+t('hsName')+'</th><th>'+t('hsDate')+'</th><th>'+t('hsScore')+'</th></tr></thead><tbody>'+HS.map((e,i)=>'<tr class="r'+(i+1)+'"><td>'+(md[i]||i+1)+'</td><td>'+e.n+'</td><td>'+hsDate(e.d)+'</td><td><b>'+e.s+'</b></td></tr>').join('')+'</tbody></table>';
+ o.innerHTML=h+'<p class="small hsst">'+(hsGot?'🟢 online':'🟠 offline – local')+'</p></div>';o.hidden=false;document.body.style.overflow='hidden';$('rclose').onclick=()=>{delete o.dataset.hs;closeRules()}}
+document.body.appendChild($("rov"));document.body.appendChild($("fx"));$('hsbtn').onclick=openHS;window.KHS={submit:g=>hsSubmit(g),list:()=>HS,online:()=>hsGot};
+const SH_URL='https://imike1981.github.io/kosci-online/';
+function toast(m){let e=$('toast');if(!e){e=document.createElement('div');e.id='toast';document.body.appendChild(e)}e.textContent=m;e.className='show';clearTimeout(e._t);e._t=setTimeout(()=>e.className='',2600)}
+function shCopy(after){const ok=()=>toast(after||t('shCopied'));if(navigator.clipboard&&isSecureContext)navigator.clipboard.writeText(SH_URL).then(ok,()=>{fb();ok()});else{fb();ok()}
+ function fb(){const x=document.createElement('textarea');x.value=SH_URL;document.body.appendChild(x);x.select();try{document.execCommand('copy')}catch(e){}x.remove()}}
+function shNative(){return navigator.share({title:'Kości Online',text:t('shMsg'),url:SH_URL}).catch(()=>{})}
+function openShare(){const o=$('rov');delete o.dataset.hs;const m=t('shMsg'),txt=encodeURIComponent(m+' '+SH_URL),u=encodeURIComponent(SH_URL),mob=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+ const L=[['whatsapp','🟢','WhatsApp','https://wa.me/?text='+txt],['facebook','📘','Facebook','https://www.facebook.com/sharer/sharer.php?u='+u],mob?['messenger','💬','Messenger','fb-messenger://share?link='+u]:null,['telegram','✈️','Telegram','https://t.me/share/url?url='+u+'&text='+encodeURIComponent(m)],['x','𝕏','X','https://twitter.com/intent/tweet?text='+txt],['sms','📱','SMS','sms:?&body='+txt],['mail','✉️','E-mail','mailto:?subject='+encodeURIComponent('Kości Online 🎲')+'&body='+txt]].filter(Boolean);
+ let h='<div class="rhead"><b>'+t('shT')+'</b><button id="rclose">'+t('hsClose')+' ✕</button></div><div class="rbody shb"><img class="shimg" src="og-image.png" alt=""><p class="shmsg">'+m+'<br><b>'+SH_URL+'</b></p><div class="shgrid">';
+ if(navigator.share)h+='<button class="shi sh-native" id="shnat">📤 '+t('shNative')+'</button>';
+ h+=L.map(([k,i,n,href])=>'<a class="shi sh-'+k+'" href="'+href+'" target="_blank" rel="noopener">'+i+' '+n+'</a>').join('');
+ h+='<button class="shi sh-ig" id="shig">📸 Instagram</button><button class="shi sh-copy" id="shcp">🔗 '+t('shCopy')+'</button></div></div>';
+ o.innerHTML=h;o.hidden=false;document.body.style.overflow='hidden';$('rclose').onclick=closeRules;
+ if($('shnat'))$('shnat').onclick=shNative;$('shcp').onclick=()=>shCopy();$('shig').onclick=()=>{if(navigator.share&&mob)shNative();else shCopy(t('shIg'))}}
+$('shbtn').onclick=openShare;hsConnect(0);
+function onState(){if(!ROOM)return;clearTimeout(joinTimer);G=S.G;lobby=S.lobby;try{if(G&&G.phase==='end')hsSubmit(G)}catch(e){}
  const inGame=G&&G.players.some(p=>p.name===me);
  if(!lobby.includes(me)&&!inGame){if(G){$('msg').textContent=t('running');return}if(lobby.length>=8){$('msg').textContent=t('full');return}
    lobby.push(me);S.col=S.col||{};S.col[me]=myCol;publish();return}
