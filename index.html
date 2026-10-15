@@ -177,8 +177,12 @@ body.th-kitty{font-family:'Mochiy Pop One',Fredoka,system-ui,sans-serif;color:#5
 body .xbtn{font:12px system-ui!important;padding:1px 6px!important;margin-left:4px;background:#fff!important;color:#777!important;border:1px solid #bbb!important;box-shadow:none!important;text-shadow:none!important;border-radius:6px!important}
 h1 .lang{vertical-align:middle}.th-halloween h1 span[style],.th-zombie h1 span[style],.th-pixel h1 span[style]{font-family:system-ui}
 body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(40px,env(safe-area-inset-bottom))}
+.topbar{position:relative;z-index:60}.tbmain{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.toggles{display:inline-flex;flex-wrap:nowrap;align-items:center;gap:12px;white-space:nowrap;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.85);color:#333;position:relative;z-index:61}
+.toggles label{color:#333!important;margin:0}
+@media(max-width:600px){.tbmain{width:100%}.tbmain select{width:100%;max-width:none}}
 </style></head><body><div class="wrap">
-<div class="topbar"><span><select id="appth" aria-label="theme"></select> <label class="small"><input type="checkbox" id="animt"> <span data-t="anims"></span></label> <label class="small"><input type="checkbox" id="sndt"> <span data-t="sound"></span></label></span> <span id="net" class="small"></span></div><h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
+<div class="topbar"><span class="tbmain"><select id="appth" aria-label="theme"></select><span class="toggles"><label class="small"><input type="checkbox" id="animt"> <span data-t="anims"></span></label><label class="small"><input type="checkbox" id="sndt"> <span data-t="sound"></span></label></span></span> <span id="net" class="small"></span></div><h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
 <div id="start" class="card">
  <div><b data-t="appTheme"></b><div id="thcards"></div></div><p><span data-t="yourName"></span> <input id="name" maxlength="14"></p>
  <p><span data-t="diceColour"></span> <span class="pick"></span></p><p><button id="create" data-t="create"></button></p>
@@ -294,7 +298,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202610151505';
+const APP_VERSION='202610151520';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
