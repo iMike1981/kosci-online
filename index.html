@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2f5597"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Kości">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Creepster&family=Nosifer&family=Fredoka:wght@500;700&family=Mochiy+Pop+One&display=swap" rel="stylesheet"><title>Kości online / Dice online</title>
 <script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <style>
@@ -177,6 +177,7 @@ body.th-kitty{font-family:'Mochiy Pop One',Fredoka,system-ui,sans-serif;color:#5
 .th-kitty #rov{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Ccircle cx='6' cy='6' r='3' fill='%23ffd0e0'/%3E%3Ccircle cx='19' cy='19' r='3' fill='%23ffd0e0'/%3E%3C/svg%3E"),#fff4f8}.th-kitty .rhead{background:#ff6f9f}.th-kitty .rbody section,.th-kitty .rbody nav{border-radius:22px;border:3px dashed #ffb6cf}.th-kitty .rbody h2{color:#e0457a;border-color:#ffd0e0}.th-kitty .rn{background:#e8384f}
 body .xbtn{font:12px system-ui!important;padding:1px 6px!important;margin-left:4px;background:#fff!important;color:#777!important;border:1px solid #bbb!important;box-shadow:none!important;text-shadow:none!important;border-radius:6px!important}
 h1 .lang{vertical-align:middle}.th-halloween h1 span[style],.th-zombie h1 span[style],.th-pixel h1 span[style]{font-family:system-ui}
+body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
 </style></head><body><div class="wrap">
 <div class="topbar"><span><select id="appth" aria-label="theme"></select> <label class="small"><input type="checkbox" id="animt"> <span data-t="anims"></span></label> <label class="small"><input type="checkbox" id="sndt"> <span data-t="sound"></span></label> <button class="alt sndtest" id="sndb" data-t="testSnd"></button> <span id="sndst" class="small"></span></span> <span id="net" class="small"></span></div><h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
 <div id="start" class="card">
@@ -294,7 +295,8 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202610151117';
+const APP_VERSION='202610151320';
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
   else if(!document.getElementById('upd')){const b=document.createElement('div');b.id='upd';b.textContent=LANG==='pl'?'🔄 Nowa wersja – dotknij, aby odświeżyć':'🔄 New version – tap to reload';b.onclick=()=>location.reload();document.body.appendChild(b)}}}catch(e){}}
