@@ -1,5 +1,5 @@
 <!doctype html><html lang="pl"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Creepster&family=Nosifer&family=Orbitron:wght@600&family=Fredoka:wght@500;700&display=swap" rel="stylesheet"><title>Kości online / Dice online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Creepster&family=Nosifer&family=Fredoka:wght@500;700&family=Mochiy+Pop+One&display=swap" rel="stylesheet"><title>Kości online / Dice online</title>
 <script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <style>
 body{margin:0;font-family:system-ui,Segoe UI,Arial;color:#333;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23e3ebf5' stroke-width='3'%3E%3Crect x='10' y='10' width='40' height='40' rx='8' transform='rotate(12 30 30)'/%3E%3Crect x='70' y='70' width='36' height='36' rx='7' transform='rotate(-15 88 88)'/%3E%3C/g%3E%3Cg fill='%23e3ebf5'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Ccircle cx='80' cy='80' r='3'/%3E%3Ccircle cx='96' cy='96' r='3'/%3E%3C/g%3E%3C/svg%3E")}
@@ -59,17 +59,16 @@ th.cur{background:#ffe699}.opt{cursor:pointer;color:#2f5597;font-weight:bold;bac
 .pv-halloween .thb{background:linear-gradient(160deg,#3a0d5c,#120018)}.pv-halloween span{background:#ff8c1a}.pv-halloween span+span{background:#7b3fbf}
 .pv-zombie .thb{background:#1c2a12}.pv-zombie span{background:#8fd14f}.pv-zombie span+span{background:#7a0d0d}
 .pv-pixel .thb{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Crect width='64' height='64' fill='%237a5230'/%3E%3Cg fill='%235e3d22'%3E%3Crect x='8' y='8' width='8' height='8'/%3E%3Crect x='40' y='16' width='8' height='8'/%3E%3Crect x='24' y='40' width='8' height='8'/%3E%3Crect x='48' y='48' width='8' height='8'/%3E%3C/g%3E%3Cg fill='%23946640'%3E%3Crect x='16' y='24' width='8' height='8'/%3E%3Crect x='0' y='48' width='8' height='8'/%3E%3Crect x='56' y='0' width='8' height='8'/%3E%3C/g%3E%3C/svg%3E");border-top:8px solid #5aa02c;border-radius:0}.pv-pixel span{background:#c6c6c6;border-radius:0}.pv-pixel span+span{background:#3c3c3c}
-.pv-space .thb{background:radial-gradient(circle at 70% 30%,#3b1d6e,#05061a)}.pv-space span{background:#4cc9f0}.pv-space span+span{background:#c77dff}
 /* ===== shared dark-theme rules ===== */
-body.th-halloween,body.th-zombie,body.th-space{color:#f1ecf7}
-.th-halloween .small,.th-zombie .small,.th-space .small{color:#d6cfe0}
-.th-halloween input,.th-zombie input,.th-space input,.th-halloween select,.th-zombie select,.th-space select{background:#fff;color:#222}
-.th-halloween table td,.th-zombie table td,.th-space table td{color:#f4f0fa}
-.th-halloween .neg,.th-zombie .neg,.th-space .neg{color:#ff7a7a!important}
-.th-halloween .lead,.th-zombie .lead,.th-space .lead,.th-pixel .lead{background:#ffd23f!important;color:#1a1200!important}
-.th-halloween .opt,.th-zombie .opt,.th-space .opt{background:#fff3c4!important;color:#1f3864}
-.th-halloween th.cur,.th-zombie th.cur,.th-space th.cur{background:#ffd23f;color:#1a1200}
-.th-halloween .thc,.th-zombie .thc,.th-space .thc{background:#ffffff14;color:#fff}
+body.th-halloween,body.th-zombie{color:#f1ecf7}
+.th-halloween .small,.th-zombie .small{color:#d6cfe0}
+.th-halloween input,.th-zombie input,.th-halloween select,.th-zombie select{background:#fff;color:#222}
+.th-halloween table td,.th-zombie table td{color:#f4f0fa}
+.th-halloween .neg,.th-zombie .neg{color:#ff7a7a!important}
+.th-halloween .lead,.th-zombie .lead,.th-pixel .lead{background:#ffd23f!important;color:#1a1200!important}
+.th-halloween .opt,.th-zombie .opt{background:#fff3c4!important;color:#1f3864}
+.th-halloween th.cur,.th-zombie th.cur{background:#ffd23f;color:#1a1200}
+.th-halloween .thc,.th-zombie .thc{background:#ffffff14;color:#fff}
 /* Halloween */
 body.th-halloween{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Ccircle cx='180' cy='40' r='22' fill='%23ffe9a8' opacity='.18'/%3E%3Cg fill='%23000' opacity='.35'%3E%3Cpath d='M30 60q8-10 16-2 3-5 6 0 8-8 16 2-8-3-11 3-5-3-6 2-2-5-6-1-5-5-15-2z'/%3E%3Cpath d='M120 150q6-8 12-1 2-4 4 0 6-6 12 1-6-2-8 2-3-2-4 1-2-3-4 0-4-4-12-1z'/%3E%3C/g%3E%3Cg fill='%23ff8c1a' opacity='.16'%3E%3Cellipse cx='60' cy='190' rx='16' ry='12'/%3E%3Crect x='57' y='174' width='5' height='7' fill='%234e7a1e'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(170deg,#2a0845 0%,#14001f 60%,#0a0010 100%) fixed}
 .th-halloween h1{color:#ff9a2e;font-family:Creepster,cursive;letter-spacing:2px;font-weight:normal;font-size:40px;text-shadow:0 0 12px #ff7a00aa}
@@ -93,26 +92,14 @@ body.th-pixel{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org
 .th-pixel table{font-family:VT323,monospace;font-size:20px}.th-pixel td,.th-pixel th{border:2px solid #555}.th-pixel th{background:#8b8b8b;color:#fff}.th-pixel .up td{background:#d8e8c8}.th-pixel .lo td{background:#e8dcc8}.th-pixel .tot td{background:#fff!important}
 .th-pixel .neg{color:#b00000;font-weight:bold}.th-pixel .big{font-family:'Press Start 2P',monospace;font-size:14px;color:#1b1b1b;line-height:1.6}.th-pixel .small{color:#333;font-size:17px}.th-pixel input,.th-pixel select{border-radius:0;border:3px solid #000;font-family:VT323,monospace;font-size:20px}
 .th-pixel .thc{border-radius:0}.th-pixel .rhead{background:#3c3c3c;font-family:'Press Start 2P',monospace;font-size:13px}.th-pixel #rov{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Crect width='64' height='64' fill='%237a5230'/%3E%3Cg fill='%235e3d22'%3E%3Crect x='8' y='8' width='8' height='8'/%3E%3Crect x='40' y='16' width='8' height='8'/%3E%3Crect x='24' y='40' width='8' height='8'/%3E%3Crect x='48' y='48' width='8' height='8'/%3E%3C/g%3E%3Cg fill='%23946640'%3E%3Crect x='16' y='24' width='8' height='8'/%3E%3Crect x='0' y='48' width='8' height='8'/%3E%3Crect x='56' y='0' width='8' height='8'/%3E%3C/g%3E%3C/svg%3E")}.th-pixel .rbody{font-size:20px}.th-pixel .rbody h2{font-family:'Press Start 2P',monospace;font-size:13px;line-height:1.6}
-/* Space */
-body.th-space{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='%23fff'%3E%3Ccircle cx='20' cy='30' r='1.2'/%3E%3Ccircle cx='150' cy='20' r='1'/%3E%3Ccircle cx='90' cy='80' r='1.5'/%3E%3Ccircle cx='180' cy='140' r='1'/%3E%3Ccircle cx='40' cy='170' r='1.3'/%3E%3Ccircle cx='120' cy='190' r='.8'/%3E%3C/g%3E%3Ccircle cx='160' cy='90' r='14' fill='%23c77dff' opacity='.25'/%3E%3Cellipse cx='160' cy='90' rx='24' ry='5' fill='none' stroke='%23c77dff' opacity='.35'/%3E%3C/svg%3E"),radial-gradient(ellipse at 70% 10%,#2b1660,#05061a 70%) fixed}
-.th-space h1{font-family:Orbitron,sans-serif;color:#7fe3ff;text-shadow:0 0 12px #4cc9f0aa}
-.th-space .card{background:#0d1030e6;border-color:#4cc9f055;box-shadow:0 0 20px #4cc9f022}
-.th-space button{background:linear-gradient(90deg,#4361ee,#7b2cbf);border-color:#4cc9f0;color:#fff}.th-space button.alt{background:transparent;color:#7fe3ff}.th-space .lang.on{background:#4361ee;color:#fff}
-.th-space td,.th-space th{border-color:#2a2f6a}.th-space th{background:#1b1f55;color:#9fe8ff}.th-space .up td{background:#11163f}.th-space .lo td{background:#170f3a}.th-space .tot td{background:#05061a!important}.th-space .big{color:#9fe8ff}
 /* rules overlay in dark themes */
-.th-halloween #rov{background:#14001f}.th-zombie #rov{background:#0e1608}.th-space #rov{background:#05061a}
+.th-halloween #rov{background:#14001f}.th-zombie #rov{background:#0e1608}
 .th-halloween .rbody section,.th-halloween .rbody nav,.th-halloween .rc{background:#1f0b33;border-color:#5a2d7a}.th-halloween .rhead{background:#4b1478}.th-halloween .rbody h2{color:#ffb35c;border-color:#5a2d7a}
 .th-zombie .rbody section,.th-zombie .rbody nav,.th-zombie .rc{background:#17230f;border-color:#3d5a22}.th-zombie .rhead{background:#2f4a1c}.th-zombie .rbody h2{color:#b5ec7a;border-color:#3d5a22}
-.th-space .rbody section,.th-space .rbody nav,.th-space .rc{background:#0d1030;border-color:#2a2f6a}.th-space .rhead{background:#1b1f55}.th-space .rbody h2{color:#9fe8ff;border-color:#2a2f6a}
-.th-halloween .rbody nav a,.th-zombie .rbody nav a,.th-space .rbody nav a{color:#ffd28f}.th-halloween .rct,.th-zombie .rct,.th-space .rct{color:#fff}.th-halloween .rcn,.th-zombie .rcn,.th-space .rcn{color:#cfc6dc}
-.th-halloween .note,.th-zombie .note,.th-space .note,.th-halloween .ex,.th-zombie .ex,.th-space .ex{background:#ffffff12;color:inherit}
+.th-halloween .rbody nav a,.th-zombie .rbody nav a{color:#ffd28f}.th-halloween .rct,.th-zombie .rct{color:#fff}.th-halloween .rcn,.th-zombie .rcn{color:#cfc6dc}
+.th-halloween .note,.th-zombie .note,.th-halloween .ex,.th-zombie .ex{background:#ffffff12;color:inherit}
 .th-pixel .note,.th-pixel .ex{background:#e0e0e0;border-radius:0}
 
-.credit{display:none;text-align:center;opacity:.8}.th-space .credit{display:block}
-body.th-space{background:linear-gradient(#05061a8c,#05061a73),url(space-800.webp) center/cover fixed #05061a}
-@media(min-width:900px){body.th-space{background:linear-gradient(#05061aaa,#05061a99),url(space-1600.webp) center/cover fixed #05061a}}
-.th-space .card{background:#0b0e2cd9;backdrop-filter:blur(3px)}
-.pv-space .thb{background:linear-gradient(#05061a88,#05061a88),url(space-800.webp) center/cover}
 .pv-slime .thb{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 300' preserveAspectRatio='none'%3E%3Cpath d='M0 120Q150 40 320 110T640 90T800 100V300H0z' fill='%239be37a'/%3E%3Cpath d='M0 190Q200 120 420 180T800 160V300H0z' fill='%236fcf5a'/%3E%3Cpath d='M0 250Q260 200 520 245T800 235V300H0z' fill='%234fb84a'/%3E%3C/svg%3E") bottom/100% 60% no-repeat,linear-gradient(#7fe0d8,#ffd1e8);border-radius:14px}.pv-slime span{background:#ff6fae;border-radius:9px}.pv-slime span+span{background:#fff}
 body.th-slime{font-family:Fredoka,'Baloo 2',system-ui,sans-serif;color:#3d2c4a;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='300'%3E%3Cg transform='translate(60 70)'%3E%3Cpath d='M-26 14.3C-26 -23.400000000000002 26 -23.400000000000002 26 14.3Q0 19.5 -26 14.3z' fill='%23ff9ccf'/%3E%3Cellipse cx='-9.1' cy='-9.1' rx='4.68' ry='2.6' fill='%23fff' opacity='.7'/%3E%3Ccircle cx='-7.8' cy='0' r='2.6' fill='%233a2a3a'/%3E%3Ccircle cx='7.8' cy='0' r='2.6' fill='%233a2a3a'/%3E%3Cpath d='M-5.2 5.2Q0 9.88 5.2 5.2' stroke='%233a2a3a' stroke-width='1.8200000000000003' fill='none' stroke-linecap='round'/%3E%3Cellipse cx='-14.3' cy='4.42' rx='2.6' ry='1.56' fill='%23ff7aa8' opacity='.6'/%3E%3Cellipse cx='14.3' cy='4.42' rx='2.6' ry='1.56' fill='%23ff7aa8' opacity='.6'/%3E%3C/g%3E%3Cg transform='translate(250 150)'%3E%3Cpath d='M-20 11.0C-20 -18.0 20 -18.0 20 11.0Q0 15.0 -20 11.0z' fill='%237fd4ff'/%3E%3Cellipse cx='-7.0' cy='-7.0' rx='3.5999999999999996' ry='2.0' fill='%23fff' opacity='.7'/%3E%3Ccircle cx='-6.0' cy='0' r='2.0' fill='%233a2a3a'/%3E%3Ccircle cx='6.0' cy='0' r='2.0' fill='%233a2a3a'/%3E%3Cpath d='M-4.0 4.0Q0 7.6 4.0 4.0' stroke='%233a2a3a' stroke-width='1.4000000000000001' fill='none' stroke-linecap='round'/%3E%3Cellipse cx='-11.0' cy='3.4000000000000004' rx='2.0' ry='1.2' fill='%23ff7aa8' opacity='.6'/%3E%3Cellipse cx='11.0' cy='3.4000000000000004' rx='2.0' ry='1.2' fill='%23ff7aa8' opacity='.6'/%3E%3C/g%3E%3Cg transform='translate(140 240)'%3E%3Cpath d='M-23 12.65C-23 -20.7 23 -20.7 23 12.65Q0 17.25 -23 12.65z' fill='%23ffe066'/%3E%3Cellipse cx='-8.049999999999999' cy='-8.049999999999999' rx='4.14' ry='2.3000000000000003' fill='%23fff' opacity='.7'/%3E%3Ccircle cx='-6.8999999999999995' cy='0' r='2.3000000000000003' fill='%233a2a3a'/%3E%3Ccircle cx='6.8999999999999995' cy='0' r='2.3000000000000003' fill='%233a2a3a'/%3E%3Cpath d='M-4.6000000000000005 4.6000000000000005Q0 8.74 4.6000000000000005 4.6000000000000005' stroke='%233a2a3a' stroke-width='1.61' fill='none' stroke-linecap='round'/%3E%3Cellipse cx='-12.65' cy='3.91' rx='2.3000000000000003' ry='1.38' fill='%23ff7aa8' opacity='.6'/%3E%3Cellipse cx='12.65' cy='3.91' rx='2.3000000000000003' ry='1.38' fill='%23ff7aa8' opacity='.6'/%3E%3C/g%3E%3C/svg%3E") 0 0/360px 300px,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 300' preserveAspectRatio='none'%3E%3Cpath d='M0 120Q150 40 320 110T640 90T800 100V300H0z' fill='%239be37a'/%3E%3Cpath d='M0 190Q200 120 420 180T800 160V300H0z' fill='%236fcf5a'/%3E%3Cpath d='M0 250Q260 200 520 245T800 235V300H0z' fill='%234fb84a'/%3E%3C/svg%3E") bottom/100% 38vh no-repeat fixed,linear-gradient(180deg,#6fd9d0 0%,#bdf0e8 45%,#ffd6ea 75%) fixed}
 .th-slime h1{font-weight:700;color:#ff4f9a;text-shadow:0 3px 0 #fff,0 5px 10px #ff4f9a55;font-size:34px}
@@ -176,6 +163,18 @@ body.shake .wrap{animation:shake .12s linear 10}@keyframes shake{0%,100%{transfo
 .fx-lord~.wrap #dice .die,.lordglow #dice .die{box-shadow:0 0 18px 6px #ffd23f}
 @media(max-width:600px){#fx .fxt{font-size:48px}.fx-lord .fxt{font-size:58px}}
 .sndtest{font-size:13px!important;padding:3px 8px!important}
+
+.pv-kitty .thb{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Ccircle cx='6' cy='6' r='3' fill='%23ffd0e0'/%3E%3Ccircle cx='19' cy='19' r='3' fill='%23ffd0e0'/%3E%3C/svg%3E"),#fff0f6;border:2px solid #ffb6cf}.pv-kitty span{background:#ff6f9f;border-radius:9px}.pv-kitty span+span{background:#e8384f}
+body.th-kitty{font-family:'Mochiy Pop One',Fredoka,system-ui,sans-serif;color:#5a3a4a;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg transform='translate(60 60) scale(0.9)'%3E%3Cellipse cx='0' cy='0' rx='26' ry='20' fill='%23fff' stroke='%235a4a52' stroke-width='2.2'/%3E%3Cpath d='M-22 -10 L-20 -30 L-6 -18 M22 -10 L20 -30 L6 -18' fill='%23fff' stroke='%235a4a52' stroke-width='2.2' stroke-linejoin='round'/%3E%3Cellipse cx='-9' cy='2' rx='2.3' ry='3.2' fill='%235a4a52'/%3E%3Cellipse cx='9' cy='2' rx='2.3' ry='3.2' fill='%235a4a52'/%3E%3Cellipse cx='0' cy='7' rx='2.6' ry='1.8' fill='%23ffcf3a'/%3E%3Cpath d='M-28 2h-10M-28 7l-9 3M28 2h10M28 7l9 3' stroke='%235a4a52' stroke-width='1.8' stroke-linecap='round'/%3E%3Cg transform='translate(14 -20) rotate(20)'%3E%3Cpath d='M0 0L-11 -7V7z M0 0L11 -7V7z' fill='%23e8384f'/%3E%3Ccircle r='3.5' fill='%23e8384f'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(195 190) scale(0.7)'%3E%3Cellipse cx='0' cy='0' rx='26' ry='20' fill='%23fff' stroke='%235a4a52' stroke-width='2.2'/%3E%3Cpath d='M-22 -10 L-20 -30 L-6 -18 M22 -10 L20 -30 L6 -18' fill='%23fff' stroke='%235a4a52' stroke-width='2.2' stroke-linejoin='round'/%3E%3Cellipse cx='-9' cy='2' rx='2.3' ry='3.2' fill='%235a4a52'/%3E%3Cellipse cx='9' cy='2' rx='2.3' ry='3.2' fill='%235a4a52'/%3E%3Cellipse cx='0' cy='7' rx='2.6' ry='1.8' fill='%23ffcf3a'/%3E%3Cpath d='M-28 2h-10M-28 7l-9 3M28 2h10M28 7l9 3' stroke='%235a4a52' stroke-width='1.8' stroke-linecap='round'/%3E%3Cg transform='translate(14 -20) rotate(20)'%3E%3Cpath d='M0 0L-11 -7V7z M0 0L11 -7V7z' fill='%23e8384f'/%3E%3Ccircle r='3.5' fill='%23e8384f'/%3E%3C/g%3E%3C/g%3E%3Cpath transform='translate(190 40)' d='M0 4C-6-4-14 2-7 9L0 15L7 9C14 2 6-4 0 4z' fill='%23ff8fb3'/%3E%3Cpath transform='translate(50 200)' d='M0 4C-6-4-14 2-7 9L0 15L7 9C14 2 6-4 0 4z' fill='%23ff8fb3'/%3E%3Cpath transform='translate(130 120)' d='M0-8L2.4-2.5 8-2 3.7 1.8 5 8 0 4.6-5 8-3.7 1.8-8-2-2.4-2.5z' fill='%23ffd35c'/%3E%3Cpath transform='translate(235 110)' d='M0-8L2.4-2.5 8-2 3.7 1.8 5 8 0 4.6-5 8-3.7 1.8-8-2-2.4-2.5z' fill='%23ffd35c'/%3E%3Cpath transform='translate(20 130)' d='M0-8L2.4-2.5 8-2 3.7 1.8 5 8 0 4.6-5 8-3.7 1.8-8-2-2.4-2.5z' fill='%23ffd35c'/%3E%3C/svg%3E") 0 0/260px 260px,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Ccircle cx='6' cy='6' r='3' fill='%23ffd0e0'/%3E%3Ccircle cx='19' cy='19' r='3' fill='%23ffd0e0'/%3E%3C/svg%3E"),#fff4f8}
+.th-kitty h1{color:#ff4f8b;text-shadow:0 3px 0 #fff,0 4px 8px #ff4f8b44;font-weight:normal}.th-kitty h1::after{content:'🎀';font-size:26px}
+.th-kitty .card{background:#ffffffee;border:3px dashed #ffb6cf;border-radius:24px;box-shadow:0 6px 0 #ffd0e0}
+.th-kitty button{font-family:inherit;font-weight:normal;border-radius:999px;background:linear-gradient(180deg,#ffa3c4,#ff6f9f);border:none;color:#fff;box-shadow:inset 0 -4px 0 #e0457a,0 3px 8px #ff6f9f55}
+.th-kitty button.alt{background:#fff;color:#e0457a;box-shadow:inset 0 0 0 2px #ffb6cf}.th-kitty .lang.on{background:#e8384f;color:#fff}
+.th-kitty table{border-collapse:separate;border-spacing:0;border-radius:14px;overflow:hidden;font-family:Fredoka,system-ui}.th-kitty td,.th-kitty th{border:1px solid #ffd0e0}
+.th-kitty th{background:#ff8fb3;color:#fff}.th-kitty .up td{background:#fff0f6}.th-kitty .lo td{background:#fffaf0}.th-kitty .tot td{background:#fff!important}
+.th-kitty th.cur{background:#e8384f;color:#fff}.th-kitty .neg{color:#c8003c}.th-kitty .lead{background:#ffd35c!important;color:#3d2c00}.th-kitty .big{color:#e0457a}.th-kitty .small{color:#7a5a6a}
+.th-kitty input,.th-kitty select{border-radius:999px;border:2px solid #ffb6cf;font-family:Fredoka,system-ui}.th-kitty .thc{border-radius:16px}
+.th-kitty #rov{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Ccircle cx='6' cy='6' r='3' fill='%23ffd0e0'/%3E%3Ccircle cx='19' cy='19' r='3' fill='%23ffd0e0'/%3E%3C/svg%3E"),#fff4f8}.th-kitty .rhead{background:#ff6f9f}.th-kitty .rbody section,.th-kitty .rbody nav{border-radius:22px;border:3px dashed #ffb6cf}.th-kitty .rbody h2{color:#e0457a;border-color:#ffd0e0}.th-kitty .rn{background:#e8384f}
 body .xbtn{font:12px system-ui!important;padding:1px 6px!important;margin-left:4px;background:#fff!important;color:#777!important;border:1px solid #bbb!important;box-shadow:none!important;text-shadow:none!important;border-radius:6px!important}
 h1 .lang{vertical-align:middle}.th-halloween h1 span[style],.th-zombie h1 span[style],.th-pixel h1 span[style]{font-family:system-ui}
 </style></head><body><div class="wrap">
@@ -201,7 +200,7 @@ h1 .lang{vertical-align:middle}.th-halloween h1 span[style],.th-zombie h1 span[s
  <div class="card small" id="log"></div>
  <p><button class="alt" id="menub" data-t="menu"></button> <span id="ng"><button class="alt" id="newg" data-t="newGame"></button></span></p>
 </div>
-<p style="text-align:center"><button id="rbtn" class="alt" style="font-size:19px">📖 <span data-t="rules"></span></button></p><div id="rov" hidden></div><div id="fx" hidden></div><p class="credit small">🌌 Image: NASA, ESA, M. Livio &amp; Hubble 20th Anniversary Team (STScI) – Carina Nebula</p>
+<p style="text-align:center"><button id="rbtn" class="alt" style="font-size:19px">📖 <span data-t="rules"></span></button></p><div id="rov" hidden></div><div id="fx" hidden></div>
 </div>
 <script>(function(root){
 const CATS=[
@@ -271,17 +270,17 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 const $=id=>document.getElementById(id);const K=window.Kosci;
 let isHost=false,me='',lobby=[],G=null,lastDice='';
 
-const I18N={pl:{title:'Kości online',yourName:'Twoje imię:',create:'Stwórz pokój',orJoin:'lub dołącz kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).',newGame:'🔁 Nowa gra – ci sami gracze',rules:'Zasady',testSnd:'🔊 Test dźwięku',sound:'Dźwięk',menu:'🏠 Menu główne',confirmLeave:'Wyjść do menu? Gra trwa – pozostali gracze grają dalej bez ciebie.',left:'(wyszedł)',anims:'Animacje',appTheme:'Motyw aplikacji:',thNames:{classic:'Klasyczny',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (styl Minecraft)',space:'Kosmos',slime:'Slime (styl Slime Rancher)'},colours:'Kolory',themes:'Motywy',diceColour:'Kolor kości:',rolling:'🎲 Rzuca: {n}',reconnecting:'łączę ponownie…',searching:'Szukam pokoju…',noRoom:'Nie znaleziono pokoju {c}. Sprawdź kod (wielkość liter nie ma znaczenia).',enterCode:'Wpisz kod pokoju.',
+const I18N={pl:{title:'Kości online',yourName:'Twoje imię:',create:'Stwórz pokój',orJoin:'lub dołącz kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).',newGame:'🔁 Nowa gra – ci sami gracze',rules:'Zasady',testSnd:'🔊 Test dźwięku',sound:'Dźwięk',menu:'🏠 Menu główne',confirmLeave:'Wyjść do menu? Gra trwa – pozostali gracze grają dalej bez ciebie.',left:'(wyszedł)',anims:'Animacje',appTheme:'Motyw aplikacji:',thNames:{classic:'Klasyczny',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (styl Minecraft)',slime:'Slime (styl Slime Rancher)',kitty:'Kotek (styl Hello Kitty)'},colours:'Kolory',themes:'Motywy',diceColour:'Kolor kości:',rolling:'🎲 Rzuca: {n}',reconnecting:'łączę ponownie…',searching:'Szukam pokoju…',noRoom:'Nie znaleziono pokoju {c}. Sprawdź kod (wielkość liter nie ma znaczenia).',enterCode:'Wpisz kod pokoju.',
  enterName:'Wpisz imię.',err:'Błąd: ',connecting:'Łączenie…',cantConnect:'Nie można połączyć ({e}). Sprawdź kod.',lost:'Połączenie z gospodarzem przerwane.',running:'Gra już trwa.',full:'Pokój pełny (8).',confirmNew:'Zacząć nową grę? Punkty zostaną wyczyszczone.',confirmX:'Skreślić tę kategorię (x = 0 pkt)?',
  roll:'Rzuć',extra:'Dodatkowy rzut',end:'🏆 Koniec gry! Wygrywa {n} ({p} pkt)',yourTurn:'Twoja tura, ',turn:'Tura: ',round:'runda',rollN:'Rzut {r}/3',extraLeft:'dodatkowe rzuty',cat:'Kategoria',school:'Szkoła',lower:'Figury',total:'RAZEM',dbl:' (1. rzut ×2)',
  rulesList:['6 kości, w turze do 3 rzutów; po rzucie można zatrzymać wybrane kości.','Wynik zapisany po PIERWSZYM rzucie liczy się podwójnie (oprócz Szansy).','Jedynki–Szóstki: punktem odniesienia są TRZY kości danej liczby = 0 pkt. Każda kość mniej to minus ta liczba, każda więcej to plus ta liczba. Np. dwie czwórki = −4, jedna trójka = −6, zero piątek = −15, cztery szóstki = +6, pięć dwójek = +4. Szkoła nigdy nie jest podwajana.','Szkoła = suma Jedynki–Szóstki; jeśli poniżej 0 → suma − 50 (np. −1 → −51).','Liczą się tylko kości tworzące układ: 1,2,3,3,4,4 jako Dwie pary = 14.','Strity: mały 1–5 = 15, duży 2–6 = 20, długi 1–6 = 21. Generał: 1 i 6 + trzy z 2–5 (brakuje jednej) = suma 5 kości.','Full = suma 5 kości, Kareta = suma 4 kości, Poker = suma + 50 (szóstki 80), Lord = poker × 2 (jedynki 110). Szansa = suma wszystkich.','Dodatkowe rzuty: każdy gracz ma na całą grę 3 dodatkowe (czwarte) rzuty.']},
-en:{title:'Dice online',yourName:'Your name:',create:'Create room',orJoin:'or join with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts).',newGame:'🔁 New game – same players',rules:'Rules',testSnd:'🔊 Test sound',sound:'Sound',menu:'🏠 Main menu',confirmLeave:'Leave to the main menu? The game is in progress – the others will continue without you.',left:'(left)',anims:'Animations',appTheme:'App theme:',thNames:{classic:'Classic',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (Minecraft style)',space:'Space',slime:'Slime (Slime Rancher style)'},colours:'Colours',themes:'Themes',diceColour:'Dice colour:',rolling:'🎲 {n} is rolling',reconnecting:'reconnecting…',searching:'Looking for the room…',noRoom:'Room {c} not found. Check the code (case does not matter).',enterCode:'Enter the room code.',
+en:{title:'Dice online',yourName:'Your name:',create:'Create room',orJoin:'or join with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts).',newGame:'🔁 New game – same players',rules:'Rules',testSnd:'🔊 Test sound',sound:'Sound',menu:'🏠 Main menu',confirmLeave:'Leave to the main menu? The game is in progress – the others will continue without you.',left:'(left)',anims:'Animations',appTheme:'App theme:',thNames:{classic:'Classic',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (Minecraft style)',slime:'Slime (Slime Rancher style)',kitty:'Kitty (Hello Kitty style)'},colours:'Colours',themes:'Themes',diceColour:'Dice colour:',rolling:'🎲 {n} is rolling',reconnecting:'reconnecting…',searching:'Looking for the room…',noRoom:'Room {c} not found. Check the code (case does not matter).',enterCode:'Enter the room code.',
  enterName:'Enter your name.',err:'Error: ',connecting:'Connecting…',cantConnect:'Cannot connect ({e}). Check the code.',lost:'Connection to the host was lost.',running:'The game has already started.',full:'Room is full (8).',confirmNew:'Start a new game? All scores will be cleared.',confirmX:'Cross out this category (x = 0 pts)?',
  roll:'Roll',extra:'Extra roll',end:'🏆 Game over! {n} wins ({p} pts)',yourTurn:'Your turn, ',turn:'Turn: ',round:'round',rollN:'Roll {r}/3',extraLeft:'extra rolls',cat:'Category',school:'School',lower:'Lower section',total:'TOTAL',dbl:' (1st roll ×2)',
  rulesList:['6 dice, up to 3 rolls per turn; after a roll you can hold any dice.','A score written after the FIRST roll counts double (except Chance).','Ones–Sixes: the reference is THREE dice of that number = 0 pts. Each die fewer costs that number, each die more adds it. E.g. two fours = −4, one three = −6, no fives = −15, four sixes = +6, five twos = +4. School is never doubled.','School = sum of Ones–Sixes; if below 0 → sum − 50 (e.g. −1 → −51).','Only the dice forming the combination count: 1,2,3,3,4,4 as 2 Pairs = 14.','Straights: small 1–5 = 15, large 2–6 = 20, long 1–6 = 21. General: 1 and 6 + three of 2–5 (one missing) = sum of 5 dice.','Full House = sum of 5 dice, 4 of a kind = sum of 4 dice, Poker = sum + 50 (sixes 80), Lord = Poker × 2 (ones 110). Chance = sum of all dice.','Extra rolls: each player has 3 extra (4th) rolls for the whole game.']}};
 
-const APPTH=['classic','halloween','zombie','pixel','space','slime'];let appTh=APPTH.includes(localStorage.kapp)?localStorage.kapp:'classic';
-function setTheme(k){appTh=k;localStorage.kapp=k;document.body.className=document.body.className.replace(/\bth-\w+/g,'').trim()+' th-'+k;drawThemes()}
+const APPTH=['classic','halloween','zombie','pixel','slime','kitty'];let appTh=APPTH.includes(localStorage.kapp)?localStorage.kapp:'classic';
+function setTheme(k){appTh=k;if(typeof renderAll==='function'&&sndOn)setTimeout(renderAll,50);localStorage.kapp=k;document.body.className=document.body.className.replace(/\bth-\w+/g,'').trim()+' th-'+k;drawThemes()}
 function drawThemes(){const N=I18N[LANG].thNames;$('appth').innerHTML=APPTH.map(k=>'<option value="'+k+'"'+(k===appTh?' selected':'')+'>🎨 '+N[k]+'</option>').join('');
  $('thcards').innerHTML=APPTH.map(k=>'<div class="thc pv-'+k+(k===appTh?' on':'')+'" data-k="'+k+'"><div class="thb"><span></span><span></span></div>'+N[k]+'</div>').join('');
  $('thcards').querySelectorAll('.thc').forEach(e=>e.onclick=()=>setTheme(e.dataset.k))}
@@ -295,14 +294,14 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202610151101';
+const APP_VERSION='202610151117';
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
   else if(!document.getElementById('upd')){const b=document.createElement('div');b.id='upd';b.textContent=LANG==='pl'?'🔄 Nowa wersja – dotknij, aby odświeżyć':'🔄 New version – tap to reload';b.onclick=()=>location.reload();document.body.appendChild(b)}}}catch(e){}}
 setTimeout(checkVersion,1500);setInterval(checkVersion,300000);
 
 /* ===== sound: synthesized offline -> WAV -> <audio> (media volume), Web Audio fallback ===== */
-let sndOn=localStorage.ksnd!=='0',AC=null,A=null,D=null,unlocked=false;const WAV={},DUR={roll:.6,land:.3,click:.12,write:.45,combo:.7,sad:2.4,poker:1.4,lord:4.6,chime:1.1};
+let sndOn=localStorage.ksnd!=='0',AC=null,A=null,D=null,unlocked=false;const WAV={},DUR={roll:.6,land:.3,click:.15,write:.8,combo:.8,sad:2.4,poker:1.6,lord:4.6,chime:1.2};function sset(){return SETS[appTh]?appTh:'classic'}
 function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();const c=AC.createDynamicsCompressor();c.threshold.value=-14;c.ratio.value=4;AC._m=AC.createGain();AC._m.gain.value=1;AC._m.connect(c).connect(AC.destination)}catch(e){}}
  if(AC&&AC.state!=='running')AC.resume().catch(()=>{});return AC}
 function unlock(){if(!sndOn)return;const a=ac();if(a&&!unlocked){try{const b=a.createBuffer(1,1,22050),src=a.createBufferSource();src.buffer=b;src.connect(a.destination);src.start(0)}catch(e){}
@@ -310,36 +309,64 @@ function unlock(){if(!sndOn)return;const a=ac();if(a&&!unlocked){try{const b=a.c
 ['pointerdown','touchend','click','keydown'].forEach(ev=>addEventListener(ev,unlock,{passive:true,capture:true}));
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&AC&&AC.state!=='running')AC.resume().catch(()=>{})});
 function setSnd(v){sndOn=v;localStorage.ksnd=v?'1':'0';$('sndt').checked=v;showSnd()}
-function showSnd(){const e=$('sndst');if(e)e.textContent=(AC?AC.state:'–')+' / wav '+Object.keys(WAV).length}
+function showSnd(){const e=$('sndst');if(e)e.textContent=(AC?AC.state:'–')+' / '+sset()+' '+Object.keys(WAV).filter(k=>k.startsWith(sset()+':')).length+'/9'}
 function tone(f,t0,d,type,vol,f2){const a=A,o=a.createOscillator(),g=a.createGain(),T=a.currentTime+t0;o.type=type||'sine';o.frequency.setValueAtTime(f,T);if(f2)o.frequency.exponentialRampToValueAtTime(f2,T+d);
  g.gain.setValueAtTime(0.0001,T);g.gain.exponentialRampToValueAtTime(vol||.4,T+.01);g.gain.exponentialRampToValueAtTime(0.0001,T+d);o.connect(g).connect(D);o.start(T);o.stop(T+d+.05);return o}
 function noise(t0,d,vol,fq){const a=A,b=a.createBuffer(1,Math.ceil(a.sampleRate*d),a.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=(Math.random()*2-1)*Math.pow(1-i/x.length,2);
  const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=fq||2500;f.Q.value=.9;g.gain.value=vol||.8;s.connect(f).connect(g).connect(D);s.start(a.currentTime+t0)}
-const SFX={
- roll(){for(let i=0;i<11;i++){noise(i*.048+Math.random()*.02,.06,1.4,1200+Math.random()*2400);tone(500+Math.random()*700,i*.048,.04,'triangle',.25)}},
- land(){tone(420,0,.14,'triangle',.7,180);noise(0,.08,1.2,1000)},
- click(){tone(1400,0,.06,'square',.25);tone(700,0,.05,'triangle',.3)},
- write(){tone(880,0,.2,'triangle',.55);tone(1320,.08,.3,'triangle',.45)},
- combo(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.08,.3,'triangle',.5))},
- chime(){[784,1047,1319,1568].forEach((f,i)=>tone(f,i*.12,.6,'triangle',.55))},
- sad(){[392,370,349,294].forEach((f,i)=>{const o=tone(f,i*.34,i==3?1.1:.32,'sawtooth',.32);if(i==3){const l=A.createOscillator(),lg=A.createGain();l.frequency.value=6;lg.gain.value=10;l.connect(lg).connect(o.frequency);l.start(A.currentTime+1);l.stop(A.currentTime+2.3)}})},
- poker(){[523,659,784,1047,784,1047,1319].forEach((f,i)=>tone(f,i*.11,i==6?.8:.18,'square',.3));[0,.1,.2].forEach(t0=>noise(.8+t0,.15,1,4000))},
- lord(){const a=A,out=a.createGain(),T=a.currentTime;out.gain.setValueAtTime(0.0001,T);out.gain.exponentialRampToValueAtTime(.9,T+.8);out.gain.setValueAtTime(.9,T+2.8);out.gain.exponentialRampToValueAtTime(0.0001,T+4.4);
-  const f1=a.createBiquadFilter();f1.type='bandpass';f1.frequency.value=800;f1.Q.value=1.5;const f2=a.createBiquadFilter();f2.type='bandpass';f2.frequency.value=1150;f2.Q.value=2.5;
-  f1.connect(out);f2.connect(out);out.connect(D);
-  [261.6,329.6,392,523.3,659.3,784].forEach(f=>[-7,0,7].forEach(dt=>{const o=a.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=dt+Math.random()*4;const l=a.createOscillator(),lg=a.createGain();l.frequency.value=5+Math.random();lg.gain.value=5;l.connect(lg).connect(o.detune);o.connect(f1);o.connect(f2);o.start(T);l.start(T);o.stop(T+4.5);l.stop(T+4.5)}));
-  [1568,2093,2637].forEach((f,i)=>tone(f,.6+i*.35,1.4,'sine',.18))}};
+function hit(t0,fq,vol){noise(t0,.016+Math.random()*.01,(vol||1.6),fq,1.6);tone(fq*.42,t0,.025,'triangle',(vol||1)*.22)}
+function diceRoll(base,n){let t=0,g=.03;for(let i=0;i<(n||9);i++){hit(t,base*(.75+Math.random()*.6),1.8-i*.1);if(Math.random()<.4)hit(t+.008,base*1.3,.8);t+=g*(.6+Math.random()*.8);g*=1.17}
+ hit(t+.03,base*1.1,.6);hit(t+.07,base*1.2,.35);return t}
+function shaper(amt){const ws=A.createWaveShaper(),c=new Float32Array(1024);for(let i=0;i<1024;i++){const x=i/512-1;c[i]=Math.tanh(x*amt)}ws.curve=c;ws.connect(D);return ws}
+function choir(base,vol){const a=A,out=a.createGain(),T=a.currentTime;out.gain.setValueAtTime(0.0001,T);out.gain.exponentialRampToValueAtTime(vol||.9,T+.8);out.gain.setValueAtTime(vol||.9,T+2.8);out.gain.exponentialRampToValueAtTime(0.0001,T+4.4);
+ const f1=a.createBiquadFilter();f1.type='bandpass';f1.frequency.value=800;f1.Q.value=1.5;const f2=a.createBiquadFilter();f2.type='bandpass';f2.frequency.value=1150;f2.Q.value=2.5;f1.connect(out);f2.connect(out);out.connect(D);
+ [1,1.26,1.5,2,2.52,3].forEach(m=>[-7,0,7].forEach(dt=>{const o=a.createOscillator();o.type='sawtooth';o.frequency.value=base*m;o.detune.value=dt+Math.random()*4;const l=a.createOscillator(),lg=a.createGain();l.frequency.value=5+Math.random();lg.gain.value=5;l.connect(lg).connect(o.detune);o.connect(f1);o.connect(f2);o.start(T);l.start(T);o.stop(T+4.5);l.stop(T+4.5)}))}
+function bell(f,t0,d,vol){[1,2.76,5.4,8.9].forEach((m,i)=>tone(f*m,t0,d/(1+i*.6),'sine',(vol||.5)/(1+i)))}
+function sweep(f1,f2,t0,d,type,vol){return tone(f1,t0,d,type||'sine',vol||.5,f2)}
+function vib(o,rate,depth,t0,d){const l=A.createOscillator(),g=A.createGain();l.frequency.value=rate;g.gain.value=depth;l.connect(g).connect(o.frequency);l.start(A.currentTime+(t0||0));l.stop(A.currentTime+(t0||0)+(d||2))}
+function sadTrombone(type,vol){[392,370,349,294].forEach((f,i)=>{const o=tone(f,i*.34,i==3?1.1:.32,type||'sawtooth',vol||.32);if(i==3)vib(o,6,10,1,1.3)})}
+const SETS={
+ classic:{roll(){diceRoll(3200,9)},land(){hit(0,2800,2);tone(900,0,.05,'triangle',.4)},click(){tone(1200,0,.035,'triangle',.5);hit(0,3500,.6)},
+  write(){tone(880,0,.25,'sine',.5);tone(1320,.08,.35,'sine',.4)},combo(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.08,.3,'triangle',.5))},chime(){[784,1047,1319,1568].forEach((f,i)=>tone(f,i*.12,.6,'triangle',.55))},
+  sad(){sadTrombone()},poker(){[523,659,784,1047,784,1047,1319].forEach((f,i)=>tone(f,i*.11,i==6?.8:.18,'triangle',.45));[0,.1,.2].forEach(t0=>noise(.8+t0,.15,1,4000))},
+  lord(){choir(261.6);[1568,2093,2637].forEach((f,i)=>tone(f,.6+i*.35,1.4,'sine',.18))}},
+ halloween:{roll(){diceRoll(2600,9)},land(){hit(0,2200,2);tone(520,0,.08,'triangle',.4,380)},click(){sweep(700,1100,0,.09,'sawtooth',.18)},
+  write(){[220,261.6,329.6].forEach(f=>{const o=tone(f*2,0,.7,'square',.12);vib(o,5,4,0,.7)})},combo(){[440,523,622,740].forEach((f,i)=>tone(f,i*.1,.35,'square',.15))},chime(){bell(392,0,1,.6)},
+  sad(){const o=sweep(520,330,0,1.4,'sine',.6);vib(o,4.5,18,0,1.4);const o2=sweep(780,500,0,1.4,'sine',.15);vib(o2,4.5,25,0,1.4)},
+  poker(){const o=sweep(500,1400,0,.6,'sine',.6);vib(o,7,40,0,.6);const o2=sweep(1400,600,.6,.7,'sine',.6);vib(o2,9,60,.6,.7);[0,.12,.24,.36].forEach(t=>sweep(1100,800,.1+t,.1,'square',.12))},
+  lord(){bell(196,0,3.8,.8);bell(392,.9,3,.4);choir(220,.7)}},
+ zombie:{roll(){diceRoll(1600,8);[0,.12,.25].forEach(t=>sweep(220,700,t,.09,'sine',.45))},land(){sweep(500,200,0,.12,'triangle',.6);noise(0,.08,1.2,700,1)},click(){sweep(300,800,0,.07,'sine',.5)},
+  write(){[0,.09,.2].forEach(t=>sweep(250,650,t,.08,'sine',.5))},combo(){[392,466,523,622].forEach((f,i)=>tone(f,i*.09,.3,'sawtooth',.25))},chime(){[523,622,784].forEach((f,i)=>tone(f,i*.12,.5,'triangle',.5))},
+  sad(){const o=sweep(260,170,0,1.6,'sawtooth',.5);vib(o,3,8,0,1.6);noise(0,1.4,.6,700,2)},
+  poker(){const ws=shaper(6);[523,659,784,1047,784,1047,1319].forEach((f,i)=>{const o=A.createOscillator(),g=A.createGain(),T=A.currentTime+i*.11,d=i==6?.8:.18;o.type='sawtooth';o.frequency.value=f;g.gain.setValueAtTime(.25,T);g.gain.exponentialRampToValueAtTime(.001,T+d);o.connect(g).connect(ws);o.start(T);o.stop(T+d+.05)})},
+  lord(){choir(233,.8);bell(311,.5,3,.4)}},
+ pixel:{roll(){for(let i=0,t=0;i<8;i++,t+=.045+i*.006)tone(600+Math.random()*900,t,.035,'square',.28)},land(){tone(220,0,.04,'square',.35);tone(440,.04,.05,'square',.3)},click(){tone(1000,0,.04,'square',.25)},
+  write(){tone(988,0,.08,'square',.3);tone(1319,.08,.3,'square',.3)},combo(){[523,659,784,1047,1319].forEach((f,i)=>tone(f,i*.06,.08,'square',.28))},chime(){[659,784,988,1319].forEach((f,i)=>tone(f,i*.09,.12,'square',.3))},
+  sad(){[494,440,392,330,262].forEach((f,i)=>tone(f,i*.2,.18,'square',.28))},
+  poker(){const m=[523,523,523,659,784,0,659,784,1047];m.forEach((f,i)=>f&&tone(f,i*.11,.1,'square',.3));[0,.11,.22].forEach(t=>tone(262,t,.08,'triangle',.4))},
+  lord(){for(let i=0;i<24;i++)tone([523,659,784,1047][i%4]*(1+Math.floor(i/8)),i*.06,.08,'square',.2);choir(261.6,.6)}},
+ slime:{roll(){for(let i=0,t=0;i<7;i++,t+=.05+i*.012)sweep(300+Math.random()*200,900+Math.random()*400,t,.06,'sine',.55);diceRoll(2600,4)},land(){const o=sweep(300,700,0,.25,'sine',.6);vib(o,18,60,0,.25)},
+  click(){sweep(400,1300,0,.05,'sine',.6)},write(){[1047,1319].forEach((f,i)=>{tone(f,i*.09,.25,'sine',.5);tone(f*4,i*.09,.06,'sine',.12)})},
+  combo(){[784,988,1175,1568].forEach((f,i)=>{tone(f,i*.07,.22,'sine',.5);tone(f*4,i*.07,.05,'sine',.1)})},chime(){[1047,1319,1568,2093].forEach((f,i)=>tone(f,i*.1,.3,'sine',.5))},
+  sad(){const o=sweep(700,180,0,1,'sine',.6);vib(o,10,30,0,1)},
+  poker(){[523,659,784,1047,1319,1568,2093,1568,2093].forEach((f,i)=>{tone(f,i*.08,.2,'sine',.5);tone(f*4,i*.08,.04,'sine',.1)});[0,.2,.4].forEach(t=>sweep(300,900,.8+t,.12,'sine',.4))},
+  lord(){choir(293.7,.75);[2093,2637,3136].forEach((f,i)=>tone(f,.5+i*.3,1,'sine',.18))}},
+ kitty:{roll(){diceRoll(4200,8);[0,.15,.3].forEach(t=>tone(2637+Math.random()*800,t,.15,'sine',.12))},land(){hit(0,3800,1.4);bell(1568,.02,.5,.3)},click(){sweep(600,1500,0,.07,'sine',.6)},
+  write(){[2093,2637].forEach((f,i)=>bell(f/2,i*.12,.8,.45))},combo(){[1047,1319,1568,2093].forEach((f,i)=>bell(f/2,i*.09,.6,.35))},chime(){[1047,1319,1568,2093].forEach((f,i)=>bell(f/2,i*.12,.9,.45))},
+  sad(){[1568,1397,1319,1047].forEach((f,i)=>bell(f/2,i*.3,.7,.35))},
+  poker(){for(let i=0;i<16;i++)tone([523,659,784,988][i%4]*(1+Math.floor(i/4)/2),i*.05,.6,'triangle',.25);[0,.3,.6].forEach(t=>bell(1568,.9+t,.5,.25))},
+  lord(){choir(349,.7);for(let i=0;i<10;i++)bell([1047,1319,1568,2093][i%4],.4+i*.3,1,.25)}}};
 function wavURL(buf){const x=buf.getChannelData(0),n=x.length,ab=new ArrayBuffer(44+n*2),v=new DataView(ab),w=(o,s)=>{for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i))};let pk=0;for(let i=0;i<n;i++)pk=Math.max(pk,Math.abs(x[i]));const k=pk>0?0.95/pk:1;
  w(0,'RIFF');v.setUint32(4,36+n*2,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,buf.sampleRate,true);v.setUint32(28,buf.sampleRate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*2,true);
  for(let i=0;i<n;i++)v.setInt16(44+i*2,Math.max(-1,Math.min(1,x[i]*k))*32767,true);return URL.createObjectURL(new Blob([ab],{type:'audio/wav'}))}
 function silentWav(){if(!silentWav.u){const o={sampleRate:8000,getChannelData:()=>new Float32Array(800)};silentWav.u=wavURL(o)}return silentWav.u}
-async function renderOne(n){const OAC=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!OAC)return;const sr=32000,o=new OAC(1,Math.ceil(sr*DUR[n]),sr);const c=o.createDynamicsCompressor();c.threshold.value=-12;c.ratio.value=4;c.connect(o.destination);
- A=o;D=c;SFX[n]();const buf=await o.startRendering();WAV[n]=wavURL(buf)}
-let rendering=null;function renderAll(){if(!rendering)rendering=(async()=>{for(const n of Object.keys(DUR)){try{await renderOne(n)}catch(e){console.warn('render',n,e)}}showSnd()})();return rendering}
+async function renderOne(th,n){const OAC=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!OAC)return;const sr=32000,o=new OAC(1,Math.ceil(sr*DUR[n]),sr);const c=o.createDynamicsCompressor();c.threshold.value=-12;c.ratio.value=4;c.connect(o.destination);
+ A=o;D=c;SETS[th][n]();const buf=await o.startRendering();WAV[th+':'+n]=wavURL(buf)}
+const RENDER={};function renderAll(){const th=sset();if(!RENDER[th])RENDER[th]=(async()=>{for(const n of ['roll','land','click','write','chime','combo','sad','poker','lord']){try{await renderOne(th,n)}catch(e){console.warn('render',n,e)}}showSnd()})();return RENDER[th]}
 const POOL={};
-function play(n){if(!sndOn)return;if(WAV[n]){const p=(POOL[n]=POOL[n]||[]);let au=p.find(a=>a.paused||a.ended);if(!au){au=new Audio(WAV[n]);au.preload='auto';p.push(au)}au.currentTime=0;au.volume=1;au.play().then(showSnd).catch(()=>liveplay(n));return}
- liveplay(n);if(!rendering)renderAll()}
-function liveplay(n){const a=ac();if(!a)return;const go=()=>{A=a;D=a._m;try{SFX[n]()}catch(e){console.warn('sfx',n,e)}showSnd()};if(a.state==='running')go();else a.resume().then(go).catch(()=>{})}
+function play(n){if(!sndOn)return;const key=sset()+':'+n;if(WAV[key]){const p=(POOL[key]=POOL[key]||[]);let au=p.find(a=>a.paused||a.ended);if(!au){au=new Audio(WAV[key]);au.preload='auto';p.push(au)}au.currentTime=0;au.volume=1;au.play().then(showSnd).catch(()=>liveplay(n));return}
+ liveplay(n);renderAll()}
+function liveplay(n){const a=ac();if(!a)return;const go=()=>{A=a;D=a._m;try{SETS[sset()][n]()}catch(e){console.warn('sfx',n,e)}showSnd()};if(a.state==='running')go();else a.resume().then(go).catch(()=>{})}
 /* ===== big effects ===== */
 function fx(kind){const o=$('fx');clearTimeout(o._t);o.className='fx-'+kind+(animOn?' anim':'');
  if(kind==='poker'){let h='<div class="fxt">POKER!</div>';for(let i=0;i<70;i++){const c=['#ff4f9a','#ffd23f','#4cc9f0','#2e9e4f','#ff8c1a','#fff'][i%6];h+='<i style="--x:'+(Math.random()*200-100).toFixed(0)+'vw;--y:'+(-Math.random()*70-20).toFixed(0)+'vh;--r:'+(Math.random()*720).toFixed(0)+'deg;--d:'+(Math.random()*.3).toFixed(2)+'s;background:'+c+'"></i>'}o.innerHTML=h;play('poker')}
@@ -432,7 +459,7 @@ function rulesHTML(){const r=RT[LANG],ic=['🎯','🎲','✖️2','🏫','🃏',
  h+=sec(5,'<p>'+r.cross+'</p>');
  h+=sec(6,'<ul>'+r.end.map(x=>'<li>'+x+'</li>').join('')+'</ul>');
  h+=sec(7,'<ol class="steps">'+r.online.map(x=>'<li>'+x+'</li>').join('')+'</ol>');
- return h+'<p class="small" style="text-align:center">Kosmos/Space background image: NASA, ESA &amp; Hubble (public domain)</p></div>'}
+ return h+'</div>'}
 function openRules(){const o=$('rov');o.innerHTML=rulesHTML();o.hidden=false;document.body.style.overflow='hidden';$('rclose').onclick=closeRules;o.querySelectorAll('nav a').forEach(a=>a.onclick=e=>{e.preventDefault();o.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'})})}
 function closeRules(){$('rov').hidden=true;document.body.style.overflow=''}
 
