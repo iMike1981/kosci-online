@@ -175,10 +175,11 @@ td.gold-cell{background:linear-gradient(135deg,#fff3b0,#ffd23f,#ffe98a)!importan
 body.shake .wrap{animation:shake .12s linear 10}@keyframes shake{0%,100%{transform:translate(0,0)}25%{transform:translate(-6px,3px)}50%{transform:translate(5px,-4px)}75%{transform:translate(-3px,-2px)}}
 .fx-lord~.wrap #dice .die,.lordglow #dice .die{box-shadow:0 0 18px 6px #ffd23f}
 @media(max-width:600px){#fx .fxt{font-size:48px}.fx-lord .fxt{font-size:58px}}
+.sndtest{font-size:13px!important;padding:3px 8px!important}
 body .xbtn{font:12px system-ui!important;padding:1px 6px!important;margin-left:4px;background:#fff!important;color:#777!important;border:1px solid #bbb!important;box-shadow:none!important;text-shadow:none!important;border-radius:6px!important}
 h1 .lang{vertical-align:middle}.th-halloween h1 span[style],.th-zombie h1 span[style],.th-pixel h1 span[style]{font-family:system-ui}
 </style></head><body><div class="wrap">
-<div class="topbar"><span><select id="appth" aria-label="theme"></select> <label class="small"><input type="checkbox" id="animt"> <span data-t="anims"></span></label> <label class="small"><input type="checkbox" id="sndt"> <span data-t="sound"></span></label></span> <span id="net" class="small"></span></div><h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
+<div class="topbar"><span><select id="appth" aria-label="theme"></select> <label class="small"><input type="checkbox" id="animt"> <span data-t="anims"></span></label> <label class="small"><input type="checkbox" id="sndt"> <span data-t="sound"></span></label> <button class="alt sndtest" id="sndb" data-t="testSnd"></button> <span id="sndst" class="small"></span></span> <span id="net" class="small"></span></div><h1>🎲 <span data-t="title"></span> <span style="float:right"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></h1>
 <div id="start" class="card">
  <div><b data-t="appTheme"></b><div id="thcards"></div></div><p><span data-t="yourName"></span> <input id="name" maxlength="14"></p>
  <p><span data-t="diceColour"></span> <span class="pick"></span></p><p><button id="create" data-t="create"></button></p>
@@ -270,11 +271,11 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 const $=id=>document.getElementById(id);const K=window.Kosci;
 let isHost=false,me='',lobby=[],G=null,lastDice='';
 
-const I18N={pl:{title:'Kości online',yourName:'Twoje imię:',create:'Stwórz pokój',orJoin:'lub dołącz kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).',newGame:'🔁 Nowa gra – ci sami gracze',rules:'Zasady',sound:'Dźwięk',menu:'🏠 Menu główne',confirmLeave:'Wyjść do menu? Gra trwa – pozostali gracze grają dalej bez ciebie.',left:'(wyszedł)',anims:'Animacje',appTheme:'Motyw aplikacji:',thNames:{classic:'Klasyczny',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (styl Minecraft)',space:'Kosmos',slime:'Slime (styl Slime Rancher)'},colours:'Kolory',themes:'Motywy',diceColour:'Kolor kości:',rolling:'🎲 Rzuca: {n}',reconnecting:'łączę ponownie…',searching:'Szukam pokoju…',noRoom:'Nie znaleziono pokoju {c}. Sprawdź kod (wielkość liter nie ma znaczenia).',enterCode:'Wpisz kod pokoju.',
+const I18N={pl:{title:'Kości online',yourName:'Twoje imię:',create:'Stwórz pokój',orJoin:'lub dołącz kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt).',newGame:'🔁 Nowa gra – ci sami gracze',rules:'Zasady',testSnd:'🔊 Test dźwięku',sound:'Dźwięk',menu:'🏠 Menu główne',confirmLeave:'Wyjść do menu? Gra trwa – pozostali gracze grają dalej bez ciebie.',left:'(wyszedł)',anims:'Animacje',appTheme:'Motyw aplikacji:',thNames:{classic:'Klasyczny',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (styl Minecraft)',space:'Kosmos',slime:'Slime (styl Slime Rancher)'},colours:'Kolory',themes:'Motywy',diceColour:'Kolor kości:',rolling:'🎲 Rzuca: {n}',reconnecting:'łączę ponownie…',searching:'Szukam pokoju…',noRoom:'Nie znaleziono pokoju {c}. Sprawdź kod (wielkość liter nie ma znaczenia).',enterCode:'Wpisz kod pokoju.',
  enterName:'Wpisz imię.',err:'Błąd: ',connecting:'Łączenie…',cantConnect:'Nie można połączyć ({e}). Sprawdź kod.',lost:'Połączenie z gospodarzem przerwane.',running:'Gra już trwa.',full:'Pokój pełny (8).',confirmNew:'Zacząć nową grę? Punkty zostaną wyczyszczone.',confirmX:'Skreślić tę kategorię (x = 0 pkt)?',
  roll:'Rzuć',extra:'Dodatkowy rzut',end:'🏆 Koniec gry! Wygrywa {n} ({p} pkt)',yourTurn:'Twoja tura, ',turn:'Tura: ',round:'runda',rollN:'Rzut {r}/3',extraLeft:'dodatkowe rzuty',cat:'Kategoria',school:'Szkoła',lower:'Figury',total:'RAZEM',dbl:' (1. rzut ×2)',
  rulesList:['6 kości, w turze do 3 rzutów; po rzucie można zatrzymać wybrane kości.','Wynik zapisany po PIERWSZYM rzucie liczy się podwójnie (oprócz Szansy).','Jedynki–Szóstki: punktem odniesienia są TRZY kości danej liczby = 0 pkt. Każda kość mniej to minus ta liczba, każda więcej to plus ta liczba. Np. dwie czwórki = −4, jedna trójka = −6, zero piątek = −15, cztery szóstki = +6, pięć dwójek = +4. Szkoła nigdy nie jest podwajana.','Szkoła = suma Jedynki–Szóstki; jeśli poniżej 0 → suma − 50 (np. −1 → −51).','Liczą się tylko kości tworzące układ: 1,2,3,3,4,4 jako Dwie pary = 14.','Strity: mały 1–5 = 15, duży 2–6 = 20, długi 1–6 = 21. Generał: 1 i 6 + trzy z 2–5 (brakuje jednej) = suma 5 kości.','Full = suma 5 kości, Kareta = suma 4 kości, Poker = suma + 50 (szóstki 80), Lord = poker × 2 (jedynki 110). Szansa = suma wszystkich.','Dodatkowe rzuty: każdy gracz ma na całą grę 3 dodatkowe (czwarte) rzuty.']},
-en:{title:'Dice online',yourName:'Your name:',create:'Create room',orJoin:'or join with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts).',newGame:'🔁 New game – same players',rules:'Rules',sound:'Sound',menu:'🏠 Main menu',confirmLeave:'Leave to the main menu? The game is in progress – the others will continue without you.',left:'(left)',anims:'Animations',appTheme:'App theme:',thNames:{classic:'Classic',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (Minecraft style)',space:'Space',slime:'Slime (Slime Rancher style)'},colours:'Colours',themes:'Themes',diceColour:'Dice colour:',rolling:'🎲 {n} is rolling',reconnecting:'reconnecting…',searching:'Looking for the room…',noRoom:'Room {c} not found. Check the code (case does not matter).',enterCode:'Enter the room code.',
+en:{title:'Dice online',yourName:'Your name:',create:'Create room',orJoin:'or join with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts).',newGame:'🔁 New game – same players',rules:'Rules',testSnd:'🔊 Test sound',sound:'Sound',menu:'🏠 Main menu',confirmLeave:'Leave to the main menu? The game is in progress – the others will continue without you.',left:'(left)',anims:'Animations',appTheme:'App theme:',thNames:{classic:'Classic',halloween:'Halloween',zombie:'Zombie',pixel:'Pixel (Minecraft style)',space:'Space',slime:'Slime (Slime Rancher style)'},colours:'Colours',themes:'Themes',diceColour:'Dice colour:',rolling:'🎲 {n} is rolling',reconnecting:'reconnecting…',searching:'Looking for the room…',noRoom:'Room {c} not found. Check the code (case does not matter).',enterCode:'Enter the room code.',
  enterName:'Enter your name.',err:'Error: ',connecting:'Connecting…',cantConnect:'Cannot connect ({e}). Check the code.',lost:'Connection to the host was lost.',running:'The game has already started.',full:'Room is full (8).',confirmNew:'Start a new game? All scores will be cleared.',confirmX:'Cross out this category (x = 0 pts)?',
  roll:'Roll',extra:'Extra roll',end:'🏆 Game over! {n} wins ({p} pts)',yourTurn:'Your turn, ',turn:'Turn: ',round:'round',rollN:'Roll {r}/3',extraLeft:'extra rolls',cat:'Category',school:'School',lower:'Lower section',total:'TOTAL',dbl:' (1st roll ×2)',
  rulesList:['6 dice, up to 3 rolls per turn; after a roll you can hold any dice.','A score written after the FIRST roll counts double (except Chance).','Ones–Sixes: the reference is THREE dice of that number = 0 pts. Each die fewer costs that number, each die more adds it. E.g. two fours = −4, one three = −6, no fives = −15, four sixes = +6, five twos = +4. School is never doubled.','School = sum of Ones–Sixes; if below 0 → sum − 50 (e.g. −1 → −51).','Only the dice forming the combination count: 1,2,3,3,4,4 as 2 Pairs = 14.','Straights: small 1–5 = 15, large 2–6 = 20, long 1–6 = 21. General: 1 and 6 + three of 2–5 (one missing) = sum of 5 dice.','Full House = sum of 5 dice, 4 of a kind = sum of 4 dice, Poker = sum + 50 (sixes 80), Lord = Poker × 2 (ones 110). Chance = sum of all dice.','Extra rolls: each player has 3 extra (4th) rolls for the whole game.']}};
@@ -294,35 +295,51 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202610151048';
+const APP_VERSION='202610151101';
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
   else if(!document.getElementById('upd')){const b=document.createElement('div');b.id='upd';b.textContent=LANG==='pl'?'🔄 Nowa wersja – dotknij, aby odświeżyć':'🔄 New version – tap to reload';b.onclick=()=>location.reload();document.body.appendChild(b)}}}catch(e){}}
 setTimeout(checkVersion,1500);setInterval(checkVersion,300000);
 
-/* ===== sound (Web Audio) ===== */
-let sndOn=localStorage.ksnd!=='0',AC=null;
-function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC}
-addEventListener('pointerdown',()=>{if(sndOn)ac()},{once:false,passive:true});
-function setSnd(v){sndOn=v;localStorage.ksnd=v?'1':'0';$('sndt').checked=v;if(v)ac()}
-function tone(f,t0,d,type,vol,f2){const a=AC,o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,a.currentTime+t0);if(f2)o.frequency.exponentialRampToValueAtTime(f2,a.currentTime+t0+d);
- g.gain.setValueAtTime(0.0001,a.currentTime+t0);g.gain.exponentialRampToValueAtTime(vol||.2,a.currentTime+t0+.01);g.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+t0+d);o.connect(g).connect(a.destination);o.start(a.currentTime+t0);o.stop(a.currentTime+t0+d+.05);return o}
-function noise(t0,d,vol,fq){const a=AC,b=a.createBuffer(1,a.sampleRate*d,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=(Math.random()*2-1)*Math.pow(1-i/x.length,3);
- const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=fq||2500;f.Q.value=1.2;g.gain.value=vol||.4;s.connect(f).connect(g).connect(a.destination);s.start(a.currentTime+t0)}
+/* ===== sound: synthesized offline -> WAV -> <audio> (media volume), Web Audio fallback ===== */
+let sndOn=localStorage.ksnd!=='0',AC=null,A=null,D=null,unlocked=false;const WAV={},DUR={roll:.6,land:.3,click:.12,write:.45,combo:.7,sad:2.4,poker:1.4,lord:4.6,chime:1.1};
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();const c=AC.createDynamicsCompressor();c.threshold.value=-14;c.ratio.value=4;AC._m=AC.createGain();AC._m.gain.value=1;AC._m.connect(c).connect(AC.destination)}catch(e){}}
+ if(AC&&AC.state!=='running')AC.resume().catch(()=>{});return AC}
+function unlock(){if(!sndOn)return;const a=ac();if(a&&!unlocked){try{const b=a.createBuffer(1,1,22050),src=a.createBufferSource();src.buffer=b;src.connect(a.destination);src.start(0)}catch(e){}
+  const au=new Audio(silentWav());au.volume=0;au.play().catch(()=>{});unlocked=true;renderAll()}showSnd()}
+['pointerdown','touchend','click','keydown'].forEach(ev=>addEventListener(ev,unlock,{passive:true,capture:true}));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&AC&&AC.state!=='running')AC.resume().catch(()=>{})});
+function setSnd(v){sndOn=v;localStorage.ksnd=v?'1':'0';$('sndt').checked=v;showSnd()}
+function showSnd(){const e=$('sndst');if(e)e.textContent=(AC?AC.state:'–')+' / wav '+Object.keys(WAV).length}
+function tone(f,t0,d,type,vol,f2){const a=A,o=a.createOscillator(),g=a.createGain(),T=a.currentTime+t0;o.type=type||'sine';o.frequency.setValueAtTime(f,T);if(f2)o.frequency.exponentialRampToValueAtTime(f2,T+d);
+ g.gain.setValueAtTime(0.0001,T);g.gain.exponentialRampToValueAtTime(vol||.4,T+.01);g.gain.exponentialRampToValueAtTime(0.0001,T+d);o.connect(g).connect(D);o.start(T);o.stop(T+d+.05);return o}
+function noise(t0,d,vol,fq){const a=A,b=a.createBuffer(1,Math.ceil(a.sampleRate*d),a.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=(Math.random()*2-1)*Math.pow(1-i/x.length,2);
+ const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=fq||2500;f.Q.value=.9;g.gain.value=vol||.8;s.connect(f).connect(g).connect(D);s.start(a.currentTime+t0)}
 const SFX={
- roll(){for(let i=0;i<9;i++)noise(i*.045+Math.random()*.02,.05,.35,1800+Math.random()*2500)},
- land(){tone(140,0,.12,'sine',.35,60);noise(0,.06,.3,900)},
- click(){tone(900,0,.05,'square',.06)},
- write(){tone(880,0,.15,'triangle',.18);tone(1320,.07,.2,'triangle',.14)},
- combo(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.07,.25,'triangle',.16))},
- sad(){[392,370,349,294].forEach((f,i)=>{const o=tone(f,i*.32,i==3?.9:.3,'sawtooth',.09);if(i==3){const l=AC.createOscillator(),lg=AC.createGain();l.frequency.value=6;lg.gain.value=8;l.connect(lg).connect(o.frequency);l.start();l.stop(AC.currentTime+2.2)}})},
- poker(){[523,659,784,1047,784,1047,1319].forEach((f,i)=>tone(f,i*.11,i==6?.8:.18,'square',.1));[0,.1,.2].forEach(t0=>noise(.8+t0,.15,.25,4000))},
- lord(){const a=AC,out=a.createGain();out.gain.setValueAtTime(0.0001,a.currentTime);out.gain.exponentialRampToValueAtTime(.22,a.currentTime+.8);out.gain.setValueAtTime(.22,a.currentTime+2.6);out.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+4.2);
-  const f1=a.createBiquadFilter();f1.type='bandpass';f1.frequency.value=800;f1.Q.value=2;const f2=a.createBiquadFilter();f2.type='bandpass';f2.frequency.value=1150;f2.Q.value=3;const m=a.createGain();m.gain.value=.6;
-  f1.connect(out);f2.connect(m).connect(out);out.connect(a.destination);
-  [261.6,329.6,392,523.3,659.3,784].forEach(f=>[-6,0,6].forEach(dt=>{const o=a.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=dt+Math.random()*4;const l=a.createOscillator(),lg=a.createGain();l.frequency.value=5+Math.random();lg.gain.value=4;l.connect(lg).connect(o.detune);o.connect(f1);o.connect(f2);o.start();l.start();o.stop(a.currentTime+4.3);l.stop(a.currentTime+4.3)}));
-  [1568,2093,2637].forEach((f,i)=>tone(f,.6+i*.35,1.4,'sine',.05))}};
-function play(n){if(!sndOn)return;const a=ac();if(!a)return;try{SFX[n]()}catch(e){}}
+ roll(){for(let i=0;i<11;i++){noise(i*.048+Math.random()*.02,.06,1.4,1200+Math.random()*2400);tone(500+Math.random()*700,i*.048,.04,'triangle',.25)}},
+ land(){tone(420,0,.14,'triangle',.7,180);noise(0,.08,1.2,1000)},
+ click(){tone(1400,0,.06,'square',.25);tone(700,0,.05,'triangle',.3)},
+ write(){tone(880,0,.2,'triangle',.55);tone(1320,.08,.3,'triangle',.45)},
+ combo(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.08,.3,'triangle',.5))},
+ chime(){[784,1047,1319,1568].forEach((f,i)=>tone(f,i*.12,.6,'triangle',.55))},
+ sad(){[392,370,349,294].forEach((f,i)=>{const o=tone(f,i*.34,i==3?1.1:.32,'sawtooth',.32);if(i==3){const l=A.createOscillator(),lg=A.createGain();l.frequency.value=6;lg.gain.value=10;l.connect(lg).connect(o.frequency);l.start(A.currentTime+1);l.stop(A.currentTime+2.3)}})},
+ poker(){[523,659,784,1047,784,1047,1319].forEach((f,i)=>tone(f,i*.11,i==6?.8:.18,'square',.3));[0,.1,.2].forEach(t0=>noise(.8+t0,.15,1,4000))},
+ lord(){const a=A,out=a.createGain(),T=a.currentTime;out.gain.setValueAtTime(0.0001,T);out.gain.exponentialRampToValueAtTime(.9,T+.8);out.gain.setValueAtTime(.9,T+2.8);out.gain.exponentialRampToValueAtTime(0.0001,T+4.4);
+  const f1=a.createBiquadFilter();f1.type='bandpass';f1.frequency.value=800;f1.Q.value=1.5;const f2=a.createBiquadFilter();f2.type='bandpass';f2.frequency.value=1150;f2.Q.value=2.5;
+  f1.connect(out);f2.connect(out);out.connect(D);
+  [261.6,329.6,392,523.3,659.3,784].forEach(f=>[-7,0,7].forEach(dt=>{const o=a.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=dt+Math.random()*4;const l=a.createOscillator(),lg=a.createGain();l.frequency.value=5+Math.random();lg.gain.value=5;l.connect(lg).connect(o.detune);o.connect(f1);o.connect(f2);o.start(T);l.start(T);o.stop(T+4.5);l.stop(T+4.5)}));
+  [1568,2093,2637].forEach((f,i)=>tone(f,.6+i*.35,1.4,'sine',.18))}};
+function wavURL(buf){const x=buf.getChannelData(0),n=x.length,ab=new ArrayBuffer(44+n*2),v=new DataView(ab),w=(o,s)=>{for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i))};let pk=0;for(let i=0;i<n;i++)pk=Math.max(pk,Math.abs(x[i]));const k=pk>0?0.95/pk:1;
+ w(0,'RIFF');v.setUint32(4,36+n*2,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,buf.sampleRate,true);v.setUint32(28,buf.sampleRate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*2,true);
+ for(let i=0;i<n;i++)v.setInt16(44+i*2,Math.max(-1,Math.min(1,x[i]*k))*32767,true);return URL.createObjectURL(new Blob([ab],{type:'audio/wav'}))}
+function silentWav(){if(!silentWav.u){const o={sampleRate:8000,getChannelData:()=>new Float32Array(800)};silentWav.u=wavURL(o)}return silentWav.u}
+async function renderOne(n){const OAC=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!OAC)return;const sr=32000,o=new OAC(1,Math.ceil(sr*DUR[n]),sr);const c=o.createDynamicsCompressor();c.threshold.value=-12;c.ratio.value=4;c.connect(o.destination);
+ A=o;D=c;SFX[n]();const buf=await o.startRendering();WAV[n]=wavURL(buf)}
+let rendering=null;function renderAll(){if(!rendering)rendering=(async()=>{for(const n of Object.keys(DUR)){try{await renderOne(n)}catch(e){console.warn('render',n,e)}}showSnd()})();return rendering}
+const POOL={};
+function play(n){if(!sndOn)return;if(WAV[n]){const p=(POOL[n]=POOL[n]||[]);let au=p.find(a=>a.paused||a.ended);if(!au){au=new Audio(WAV[n]);au.preload='auto';p.push(au)}au.currentTime=0;au.volume=1;au.play().then(showSnd).catch(()=>liveplay(n));return}
+ liveplay(n);if(!rendering)renderAll()}
+function liveplay(n){const a=ac();if(!a)return;const go=()=>{A=a;D=a._m;try{SFX[n]()}catch(e){console.warn('sfx',n,e)}showSnd()};if(a.state==='running')go();else a.resume().then(go).catch(()=>{})}
 /* ===== big effects ===== */
 function fx(kind){const o=$('fx');clearTimeout(o._t);o.className='fx-'+kind+(animOn?' anim':'');
  if(kind==='poker'){let h='<div class="fxt">POKER!</div>';for(let i=0;i<70;i++){const c=['#ff4f9a','#ffd23f','#4cc9f0','#2e9e4f','#ff8c1a','#fff'][i%6];h+='<i style="--x:'+(Math.random()*200-100).toFixed(0)+'vw;--y:'+(-Math.random()*70-20).toFixed(0)+'vh;--r:'+(Math.random()*720).toFixed(0)+'deg;--d:'+(Math.random()*.3).toFixed(2)+'s;background:'+c+'"></i>'}o.innerHTML=h;play('poker')}
@@ -469,5 +486,5 @@ function render(){$('lobby').hidden=true;$('start').hidden=true;$('game').hidden
  $('tab').querySelectorAll('[data-x]').forEach(e=>e.onclick=()=>{if(confirm(t('confirmX')))send({a:'write',cat:e.dataset.x,cross:true})});
  $('log').innerHTML=G.log.map(x=>typeof x==='string'?esc(x):esc(x.n+': '+catName(x.c)+' = '+x.v+(x.d?t('dbl'):''))).join('<br>')}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-setTheme(appTh);$('animt').onchange=e=>setAnim(e.target.checked);setAnim(animOn);$('sndt').onchange=e=>setSnd(e.target.checked);setSnd(sndOn);applyLang();
+setTheme(appTh);$('animt').onchange=e=>setAnim(e.target.checked);setAnim(animOn);$('sndt').onchange=e=>{setSnd(e.target.checked);if(e.target.checked){unlock();play('chime')}};$('sndb').onclick=()=>{if(!sndOn)setSnd(true);unlock();renderAll().then(()=>play('chime'))};renderAll();setSnd(sndOn);applyLang();
 </script></body></html>
