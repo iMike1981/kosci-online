@@ -626,7 +626,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202610191435';
+const APP_VERSION='202610191510';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -1055,11 +1055,11 @@ function countDice(cat,d){const c=[0,0,0,0,0,0,0];d.forEach(v=>c[v]++);const u=n
  else if(cat==='mstrit')add([1,2,3,4,5],'dance');else if(cat==='dstrit')add([2,3,4,5,6],'dance');else if(cat==='lstrit')add([1,2,3,4,5,6],'dance');
  else if(cat==='general'){let m=0,bv=-1;for(const x of [2,3,4,5]){const need=[1,2,3,4,5,6].filter(y=>y!==x);if(need.every(y=>c[y]>=1)&&21-x>bv){bv=21-x;m=x}}if(m)add([1,2,3,4,5,6].filter(y=>y!==m),'spark')}
  else if(cat==='szansa')add(d.slice(),'spark');
- else if(cat==='poker'||cat==='lord'){let k=0;for(let n=1;n<=6;n++)if(c[n]>=(cat==='lord'?6:5))k=n;if(k)add(rep(k,cat==='lord'?6:5),'big')}
+ else if(cat==='poker'||cat==='lord'){let k=0;for(let n=1;n<=6;n++)if(c[n]>=(cat==='lord'?6:5))k=n;if(k)add(rep(k,cat==='lord'?6:5),'dance')}
  return G2}
 let scKey='',SCA=null;
 function scoreAnim(G){const L0=G.log[0],key=(G.mv?G.mv.length:0)+'|'+(L0&&typeof L0==='object'?L0.n+'|'+L0.c+'|'+L0.v:'');
- if(scKey&&key!==scKey&&G.rolls===0&&L0&&typeof L0==='object'&&L0.v!=='x'&&animOn){const gr=countDice(L0.c,G.dice).filter(x=>x.a!=='big');if(gr.length)SCA={t0:Date.now(),gr,dk:G.dice.join()}}
+ if(scKey&&key!==scKey&&G.rolls===0&&L0&&typeof L0==='object'&&L0.v!=='x'&&animOn){const gr=countDice(L0.c,G.dice);if(gr.length)SCA={t0:Date.now(),gr,dk:G.dice.join()}}
  scKey=key;if(!SCA)return;const el=(Date.now()-SCA.t0)/1000;if(el>1.6||G.rolls>0||SCA.dk!==G.dice.join()||!animOn){SCA=null;return}
  const ds=$('dice').querySelectorAll('.die');SCA.gr.forEach(g=>g.i.forEach(i=>{const d=ds[i];if(!d)return;d.classList.add('sc','sc-'+g.a);d.style.setProperty('--sd',(g.g*.16-el).toFixed(2)+'s');if(g.a==='spark'&&!d.querySelector('.spk'))d.insertAdjacentHTML('beforeend','<b class="spk">✨</b>')}))}
 function previewDice(cat,on){const ds=$('dice').querySelectorAll('.die');ds.forEach(d=>d.classList.remove('cnt'));if(!on||!G||G.rolls===0)return;countDice(cat,G.dice).forEach(g=>g.i.forEach(i=>ds[i]&&ds[i].classList.add('cnt')))}
@@ -1068,7 +1068,7 @@ function render(){$('lobby').hidden=true;$('start').hidden=true;$('game').hidden
  const key=G.dice.join()+G.rolls+G.cur,first=lastDice==='',anim=key!==lastDice&&G.rolls>0;lastDice=key;
  if(G.phase==='end'){const w=G.players.map(p=>[p.name,K.totals(p.sheet,K.ndOf(G)).total]).sort((a,b)=>b[1]-a[1]);$('turn').textContent=t('end',{n:w[0][0],p:w[0][1]})}
  else $('turn').textContent=(my?t('yourTurn')+P.name:t('rolling',{n:P.name}))+' • '+t('round')+' '+Math.min(G.round,K.catsFor(K.ndOf(G)).length)+' • '+K.ndOf(G)+'🎲';
- const sc=G.rolls>0?K.scores(G.dice):{},excAll=G.rolls>0&&(sc.lord!==null||sc.poker!==null||sc.lstrit!==null),excSet=new Set(excAll?G.dice.map((_,i)=>i):G.rolls>0&&sc.dstrit!==null?dPick(G.dice,[2,3,4,5,6]):G.rolls>0&&sc.mstrit!==null?dPick(G.dice,[1,2,3,4,5]):[]);const L0=G.log[0],sad=G.rolls===0&&L0&&typeof L0==='object'&&(L0.v==='x'||L0.v<0);
+ const sc=G.rolls>0?K.scores(G.dice):{},excAll=G.rolls>0&&(sc.lord!==null||sc.lstrit!==null),excSet=new Set(excAll?G.dice.map((_,i)=>i):G.rolls>0&&sc.poker!=null?countDice('poker',G.dice)[0].i:G.rolls>0&&sc.dstrit!==null?dPick(G.dice,[2,3,4,5,6]):G.rolls>0&&sc.mstrit!==null?dPick(G.dice,[1,2,3,4,5]):[]);const L0=G.log[0],sad=G.rolls===0&&L0&&typeof L0==='object'&&(L0.v==='x'||L0.v<0);
  $('dice').innerHTML=G.dice.map((v,i)=>dieHTML(colOf(P.name),v,'alive'+(G.held[i]?' held':'')+(anim&&!G.held[i]?' roll':'')+(excSet.has(i)?' excited':'')+(sad?' sad':''),i)).join('');applyLook();sounds(G,anim&&!first,sc);
  $('dice').querySelectorAll('.die').forEach((d,i)=>d.onclick=()=>{if(my)send({a:'hold',i})});scoreAnim(G);
  const extra=G.rolls>=3;$('rollb').disabled=!(my&&K.canRoll(G));$('rollb').textContent=extra?t('extra'):t('roll');
