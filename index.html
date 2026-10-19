@@ -626,7 +626,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202610191430';
+const APP_VERSION='202610191435';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -925,7 +925,7 @@ function gdHTML(x,e){const nd=x.k,cats=K.catsFor(nd),T=x.p.map(q=>K.totals(q.s,n
  return h}
 window.__gd={fetch:gsFetch,open:openGD,all:gsLoadAll};
 // ---- feedback (FormSubmit AJAX) ----
-const FB_URL='https://formsubmit.co/ajax/42073dda03e9611f6814cc6acede0c29',FB_MAIL=['janowicz.michal','gmail.com'].join('@'),FB_Q='kosci-online/feedback/v1/';let fbOpenT=0;
+const FB_URL='https://formsubmit.co/ajax/42073dda03e9611f6814cc6acede0c29',FB_MAIL=['janowicz.michal','gmail.com'].join('@');let fbOpenT=0;
 function fbLeft(){return Math.ceil((30000-(Date.now()-(+localStorage.kfbT||0)))/1000)}
 function openFB(){const o=$('gdv');o.className='gt-'+sset();const ty=[['idea','fbIdea'],['bug','fbBug'],['comment','fbCom']];
  o.innerHTML='<div class="gdcard fbcard" role="dialog" aria-modal="true"><div class="gdhead"><b>'+t('fbT')+'</b><button id="gdx" aria-label="close">✕</button></div><form class="gdbody fbform" id="fbf" novalidate><p class="fbintro">'+t('fbIntro')+'</p>'+
@@ -945,7 +945,7 @@ async function fbPost(body){const c=new AbortController(),tm=setTimeout(()=>c.ab
   if(r.ok&&String(j.success)==='true')return {ok:1};return {ok:0,act:/activat/i.test(j.message||''),why:(j.message||('HTTP '+r.status)).slice(0,160)}}
  catch(e){return {ok:0,why:e&&e.name==='AbortError'?'timeout':'network/blocked ('+(e&&e.message||e)+')'}}finally{clearTimeout(tm)}}
 function fbQueue(body){try{const q=JSON.parse(localStorage.kfbq||'[]').slice(-4);q.push({b:body,t:Date.now()});localStorage.kfbq=JSON.stringify(q)}catch(e){}
- try{if(hsCli&&hsCli.connected){const pub={n:body.name,ty:body.type,m:body.message,v:body.app_version,l:body.language,t:Date.now()};hsCli.publish(FB_Q+Date.now().toString(36)+Math.random().toString(36).slice(2,6),JSON.stringify(pub),{qos:1,retain:true})}}catch(e){}}
+}
 async function fbRetry(){let q=[];try{q=JSON.parse(localStorage.kfbq||'[]')}catch(e){}if(!q.length||fbLeft()>0)return;const keep=[];
  for(const it of q){if(Date.now()-it.t>7*864e5)continue;const r=await fbPost(it.b);if(!r.ok)keep.push(it)}localStorage.kfbq=JSON.stringify(keep);if(q.length&&!keep.length)console.log('feedback: queued messages delivered')}
 function fbMailto(body){return 'mailto:'+FB_MAIL+'?subject='+encodeURIComponent(body._subject)+'&body='+encodeURIComponent(body.message+'\n\n— '+body.name+(body.email?' <'+body.email+'>':'')+'\n'+body.type+' · v'+body.app_version+' · '+body.language+' · '+body.theme)}
