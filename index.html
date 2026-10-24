@@ -769,9 +769,63 @@ h1 .ttx{letter-spacing:.5px;paint-order:stroke fill}
 #stats2{margin:12px 0 0}
 .th-zombie h1{font-size:25px}.th-zombie h1 .ttx{letter-spacing:0}.th-pixel .langs .lang{font-size:10px;padding:6px 6px}.th-pixel h1{font-size:19px}@media(max-width:400px){.th-pixel .toggles label.small,.th-pixel .toggles .small{font-size:13px}.th-pixel .langs .lang{font-size:9px;padding:6px 5px}}.th-pixel .stats{gap:2px 8px}
 .th-pixel .stats .vcount{font-size:15px}
+
+/* ===== stats footer v3: very bottom of every screen ===== */
+#stats2{position:relative;z-index:30;display:flex;flex-wrap:wrap;justify-content:center;gap:2px 16px;width:fit-content;max-width:calc(100% - 8px);margin:18px auto 0;padding:8px 16px;border-radius:14px;background:rgba(255,255,255,.88);color:#1f2a44;box-shadow:0 2px 8px #0002;text-align:center}
+#stats2{margin-bottom:calc(14px + env(safe-area-inset-bottom))}
+#stats2 .vcount{font:600 14.5px/1.35 system-ui,-apple-system,sans-serif;opacity:1;color:inherit;text-shadow:none;margin:1px 0;white-space:nowrap;background:none;padding:0;width:auto}
+#stats2 .vcount b{font-weight:800}
+.th-halloween #stats2,.th-zombie #stats2,.th-gothic #stats2,.th-ocean #stats2,.th-forest #stats2{background:rgba(8,8,14,.78);color:#f4efe2;box-shadow:0 2px 10px #0008}
+.th-ocean #stats2{background:rgba(2,36,60,.8);color:#e4f8ff}.th-forest #stats2{background:rgba(6,24,14,.8);color:#eaf6dc}
+.th-winter #stats2{background:rgba(255,255,255,.92);color:#16486f}.th-beach #stats2{background:rgba(255,255,255,.9);color:#6b3a12}.th-soccer #stats2{background:rgba(255,255,255,.92);color:#1b5e20}
+.th-pixel #stats2{border-radius:0;background:#c6c6c6;color:#1b1b1b;box-shadow:inset -3px -3px 0 #555,inset 3px 3px 0 #fff,0 0 0 3px #000}.th-pixel #stats2 .vcount{font-size:16px}@media(max-width:400px){.th-pixel #stats2 .vcount{font-size:13px}}
+body{padding-bottom:max(24px,env(safe-area-inset-bottom))}
+
+/* ===== hero banner / logo lockup ===== */
+.hd{--bn:linear-gradient(135deg,#dfe9fb,#c6d6f2);--dt:#fff;--dm:#e3e8f2;--dd:#a8b4cc;--dp:#2f5597;--t1:#2f5597;--t2:#1f3864;--ts:#fff;--tg:#2f559744;--tc:#33415c;--bd:#a9bbe0;--mot:'🎲';
+ position:relative;overflow:hidden;isolation:isolate;margin:6px 0 10px;padding:12px 12px 10px;border-radius:18px;background:var(--bn);background-size:cover;border:2px solid var(--bd);box-shadow:0 4px 14px #0003,inset 0 0 28px #0002;min-height:96px;display:flex;flex-direction:column;justify-content:center}
+.hd::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 12% 30%,#fff5 0 14px,transparent 15px),radial-gradient(circle at 88% 72%,#fff4 0 22px,transparent 23px),radial-gradient(circle at 70% 18%,#fff4 0 9px,transparent 10px),radial-gradient(circle at 30% 84%,#fff3 0 12px,transparent 13px),radial-gradient(120% 90% at 50% 120%,#0000 40%,var(--vg,#0005) 100%)}
+.hd>*{position:relative;z-index:1}
+.hd .fd{position:absolute;z-index:0;width:46px;height:48px;filter:drop-shadow(0 6px 5px #0006);pointer-events:none;animation:fdf 5s ease-in-out infinite}
+.hd .fd1{left:-8px;bottom:-10px;transform:rotate(-18deg);width:52px;height:54px}
+.hd .fd2{right:10px;top:-14px;transform:rotate(22deg);width:40px;height:42px;animation-delay:-2.2s;opacity:.95}
+@keyframes fdf{0%,100%{translate:0 0}50%{translate:0 -4px}}
+.noanim .hd .fd,.noanim .hd .mot{animation:none}
+@media (prefers-reduced-motion:reduce){.hd .fd{animation:none}}
+.hd .mot{position:absolute;right:12px;bottom:6px;z-index:0;font-style:normal;font-size:26px;line-height:1;filter:drop-shadow(0 2px 2px #0005);opacity:.95}
+.hd .mot::before{content:var(--mot)}
+.hd h1{margin:0!important;gap:6px 8px!important;flex-wrap:nowrap!important;background:none!important;border:0!important;padding:0!important;box-shadow:none!important;text-shadow:none!important;line-height:1.05;align-items:center}
+.hd h1::after{display:none!important}
+.hd h1 .dmk{width:42px;height:44px;flex:0 0 auto;filter:drop-shadow(0 4px 3px #0006);transform:rotate(-8deg)}
+.hd h1 .ttx{background:linear-gradient(180deg,var(--t1) 25%,var(--t2) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;text-shadow:none!important;filter:drop-shadow(0 2px 0 var(--ts)) drop-shadow(0 0 9px var(--tg));padding:2px 1px;letter-spacing:.4px}
+.hd .tagrow{color:var(--tc)!important;text-shadow:0 1px 2px color-mix(in srgb,var(--ts) 70%,transparent)!important;background:none!important;padding:0!important;margin:5px auto 0!important;width:auto!important;position:relative;font-size:13px}
+.hd .tagl{font-weight:700;letter-spacing:.6px;text-transform:none}
+.th-pixel .hd{background:var(--bn);background-size:32px 16px;border:4px solid #000;border-radius:0;box-shadow:inset 0 0 0 3px #0003;image-rendering:pixelated}
+.th-pixel .hd h1 .ttx{background:none;-webkit-text-fill-color:#fff;color:#fff;filter:none;text-shadow:3px 3px 0 #3a2a10!important}
+.th-pixel .hd::before{display:none}.th-pixel .hd .tagrow{font-family:'Press Start 2P',monospace;font-size:9px;text-shadow:2px 2px 0 #3a2a10!important}
+.th-pixel .hd .fd{filter:drop-shadow(3px 3px 0 #0006)}
+.th-zombie .hd h1 .ttx{filter:drop-shadow(0 3px 0 #3a0000) drop-shadow(0 0 9px var(--tg))}
+@media(max-width:400px){.hd h1 .dmk{width:36px;height:38px}.hd{padding:10px 8px 8px}}
+.th-classic .hd{--bn:radial-gradient(120% 150% at 50% 25%,#2f9a5e 0%,#17683f 55%,#0b3d24 100%);--dt:#fffefa;--dm:#e8e4d6;--dd:#b4ae9a;--dp:#b3202a;--t1:#ffffff;--t2:#ffe9a8;--ts:#0a3a22;--tg:#ffe08a88;--tc:#e6f6d4;--bd:#0b3d24;--mot:'♠️'}
+.th-halloween .hd{--bn:radial-gradient(110% 150% at 50% 20%,#5a1c86 0%,#2a0d44 55%,#0d0418 100%);--dt:#ffc266;--dm:#ff8c1a;--dd:#b04a00;--dp:#2a0a00;--t1:#ffc15c;--t2:#ff7a00;--ts:#2a0800;--tg:#ff7a00aa;--tc:#ffd9a8;--bd:#7a3a00;--mot:'🎃'}
+.th-zombie .hd{--bn:radial-gradient(110% 150% at 50% 20%,#35581f 0%,#182c0d 60%,#0a1405 100%);--dt:#e6f7b8;--dm:#a6d65e;--dd:#4f7a24;--dp:#16260a;--t1:#c9ff7a;--t2:#7bc23a;--ts:#2a0000;--tg:#8aff3a66;--tc:#cfe8a8;--bd:#4a7a20;--mot:'🧟'}
+.th-pixel .hd{--bn:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='16' shape-rendering='crispEdges'%3E%3Crect width='32' height='16' fill='%235aa02c'/%3E%3Crect y='12' width='8' height='4' fill='%237a5230'/%3E%3Crect x='16' y='10' width='8' height='6' fill='%237a5230'/%3E%3Crect x='8' y='0' width='8' height='4' fill='%2378c040'/%3E%3C/svg%3E");--dt:#ffffff;--dm:#d2d2d2;--dd:#8a8a8a;--dp:#222;--t1:#ffffff;--t2:#ffffff;--ts:#3a2a10;--tg:transparent;--tc:#ffffff;--bd:#000;--mot:'⛏️'}
+.th-slime .hd{--bn:radial-gradient(90% 120% at 20% 20%,#ffe3f2 0%,transparent 60%),linear-gradient(135deg,#ffc6e4 0%,#b9ecff 100%);--dt:#ffe0ef;--dm:#ff86bd;--dd:#d93f86;--dp:#ffffff;--t1:#ff5fa6;--t2:#ff2f86;--ts:#ffffff;--tg:#ff4f9a66;--tc:#7a2a58;--bd:#ff9ccc;--mot:'🫧'}
+.th-nature .hd{--bn:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(214,242,176,.7) 100%);--dt:#e3fbbd;--dm:#8fd24c;--dd:#4b8a22;--dp:#ffffff;--t1:#4a9a24;--t2:#2c6e12;--ts:#ffffff;--tg:#7ad03a55;--tc:#2f5330;--bd:#a8d68a;--mot:'🌿'}
+.th-gothic .hd{--bn:radial-gradient(110% 150% at 50% 10%,#3a0f2c 0%,#170714 60%,#07030a 100%);--dt:#7a5a8c;--dm:#3d2650;--dd:#1a0e26;--dp:#ece6f2;--t1:#f3eef8;--t2:#b9a8c8;--ts:#000;--tg:#c01a5acc;--tc:#cfc4d8;--bd:#6a2a58;--mot:'🕯️'}
+.th-ocean .hd{--bn:radial-gradient(110% 150% at 50% 0%,#12789e 0%,#073e66 55%,#021f38 100%);--dt:#d4fcff;--dm:#4fe2ea;--dd:#0f7f9a;--dp:#04364a;--t1:#e6fdff;--t2:#79e6f0;--ts:#02304f;--tg:#3fe0e8aa;--tc:#d8f4ff;--bd:#2bc4d6;--mot:'🐬'}
+.th-beach .hd{--bn:radial-gradient(70% 90% at 85% 10%,#fff3b0 0%,transparent 60%),linear-gradient(180deg,#ffe6b5 0%,#ffbf86 100%);--dt:#ffffff;--dm:#ffe2c0;--dd:#e8a96a;--dp:#e8601c;--t1:#f06a22;--t2:#d4480f;--ts:#ffffff;--tg:#ffd23f88;--tc:#7a3d10;--bd:#ffb36b;--mot:'🏖️'}
+.th-soccer .hd{--bn:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 28px,transparent 28px 56px),radial-gradient(120% 150% at 50% 20%,#34a645 0%,#1d7a2e 60%,#14571f 100%);--dt:#ffffff;--dm:#e8e8e8;--dd:#a8a8a8;--dp:#111;--t1:#ffffff;--t2:#fff7c0;--ts:#14571f;--tg:#0006;--tc:#ffffff;--bd:#fff;--mot:'⚽'}
+.th-forest .hd{--bn:radial-gradient(110% 150% at 50% 10%,#2a5a3a 0%,#0f2a1a 60%,#06140c 100%);--dt:#f0dfa6;--dm:#c4953f;--dd:#6e4c1a;--dp:#1a1200;--t1:#f6edc6;--t2:#d6c07a;--ts:#06140c;--tg:#c8e67a77;--tc:#dcefc8;--bd:#6fa04a;--mot:'🍄'}
+.th-winter .hd{--bn:linear-gradient(180deg,rgba(255,255,255,.75) 0%,rgba(168,216,245,.85) 100%);--dt:#ffffff;--dm:#d2efff;--dd:#7fbfe6;--dp:#1d5f95;--t1:#2a76b4;--t2:#164e80;--ts:#ffffff;--tg:#9fe6ffaa;--tc:#1d4a70;--bd:#8cc8ec;--mot:'❄️'}
+.th-slime .hd,.th-nature .hd,.th-winter .hd,.th-beach .hd{--vg:#0000}.th-slime .hd{--bn:radial-gradient(90% 120% at 20% 20%,#fff0f8 0%,transparent 60%),linear-gradient(135deg,#ffd0e8 0%,#c4f0ff 100%)}
+.th-nature .hd{--bn:linear-gradient(180deg,rgba(236,250,255,.82) 0%,rgba(205,238,160,.86) 100%)}.th-winter .hd{--bn:linear-gradient(180deg,rgba(255,255,255,.88) 0%,rgba(178,222,248,.92) 100%)}
+.th-zombie h1{font-size:21px}.th-pixel .hd .fd1{width:38px;height:40px;left:-6px;bottom:-12px}.th-pixel .hd .tagrow{margin-left:auto;margin-right:auto}
+body:has(#game:not([hidden])) .hd{min-height:0;padding:6px 10px;margin:4px 0 6px}body:has(#game:not([hidden])) .hd .tagrow .tagl,body:has(#game:not([hidden])) .hd .fd1,body:has(#game:not([hidden])) .hd .mot{display:none}body:has(#game:not([hidden])) .hd h1 .dmk{width:28px;height:30px}body:has(#game:not([hidden])) .hd .tagrow{margin-top:2px!important}body:has(#game:not([hidden])) .hd h1{font-size:22px!important}
 </style></head><body><div id="instban" hidden><span class="ibi">📲</span><span class="ibt" data-t="iBan"></span><button id="instbango" data-t="iBtnS"></button><button id="instbanx" class="ibx" aria-label="close">✕</button></div><div class="wrap">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="dmk" viewBox="0 0 64 66"><g stroke-linejoin="round" stroke-width="3" stroke="var(--dd)"><polygon points="6,18 32,32 32,62 6,48" fill="var(--dm)"/><polygon points="58,18 32,32 32,62 58,48" fill="var(--dd)"/><polygon points="32,4 58,18 32,32 6,18" fill="var(--dt)"/></g><polygon points="32,6 53,17.5 32,24 11,17.5" fill="#fff" opacity=".28"/><polygon points="8,20 30,32 30,38 8,26" fill="#fff" opacity=".14"/><g fill="var(--dp)"><g transform="matrix(26 -14 26 14 6 18)"><circle cx=".25" cy=".25" r=".1"/><circle cx=".75" cy=".25" r=".1"/><circle cx=".5" cy=".5" r=".1"/><circle cx=".25" cy=".75" r=".1"/><circle cx=".75" cy=".75" r=".1"/></g><g transform="matrix(26 14 0 30 6 18)"><circle cx=".28" cy=".25" r=".1"/><circle cx=".5" cy=".5" r=".1"/><circle cx=".72" cy=".75" r=".1"/></g><g transform="matrix(26 -14 0 30 32 32)" opacity=".9"><circle cx=".28" cy=".28" r=".1"/><circle cx=".72" cy=".28" r=".1"/><circle cx=".28" cy=".72" r=".1"/><circle cx=".72" cy=".72" r=".1"/></g></g></symbol></defs></svg>
 <div class="topbar"><span class="tbmain"><select id="appth" aria-label="theme"></select><span class="tbrow"><span class="toggles"><label class="small"><input type="checkbox" id="animt"> <span data-t="anims"></span></label><label class="small"><input type="checkbox" id="sndt"> <span data-t="sound"></span></label></span><span class="langs"><button class="alt lang" data-l="pl">🇵🇱 PL</button><button class="alt lang" data-l="en">🇬🇧 EN</button></span></span></span></div>
-<header class="hd"><h1><span class="ld">🎲</span><span class="ttx" data-t="title"></span></h1><div class="tagrow"><span id="net" class="small"></span><span class="tagl" data-t="tagline"></span></div><div id="stats" class="stats"></div></header>
+<header class="hd"><svg class="fd fd1" aria-hidden="true"><use href="#dmk"/></svg><svg class="fd fd2" aria-hidden="true"><use href="#dmk"/></svg><i class="mot" aria-hidden="true"></i><h1><svg class="dmk" aria-hidden="true"><use href="#dmk"/></svg><span class="ttx" data-t="title"></span></h1><div class="tagrow"><span id="net" class="small"></span><span class="tagl" data-t="tagline"></span></div></header>
 <div id="start" class="card">
  <div><b data-t="appTheme"></b><div id="thcards"></div></div><p><span data-t="yourName"></span> <input id="name" maxlength="14"></p>
  <p><span data-t="diceColour"></span> <span class="pick"></span></p><p><button id="create" data-t="create"></button></p>
@@ -793,7 +847,7 @@ h1 .ttx{letter-spacing:.5px;paint-order:stroke fill}
  <div class="card" style="overflow-x:auto"><table id="tab"></table></div>
  <div class="card small" id="log"></div>
 </div>
-<div class="actbar card" id="actbar"><div id="instw" hidden><button id="instbtn" class="abtn aprim"><span class="ai">📲</span><span data-t="iBtn"></span></button></div><div id="ng" hidden><button id="newg" class="abtn aprim"><span class="ai">🔁</span><span data-t="aNew"></span></button></div><div class="agrid"><button class="alt abtn" id="menub" hidden><span class="ai">🏠</span><span data-t="aMenu"></span></button><button id="rbtn" class="alt abtn"><span class="ai">📖</span><span data-t="rules"></span></button><button id="hsbtn" class="alt abtn"><span class="ai">🏆</span><span data-t="aHs"></span></button><button id="shbtn" class="alt abtn"><span class="ai">📣</span><span data-t="aShare"></span></button></div><div class="asub"><button id="fbbtn" class="fbpill" type="button"><span data-t="fbBtn"></span></button><a id="coffee" class="coffee" href="https://revolut.me/solariis" target="_blank" rel="noopener noreferrer"><span data-t="coffee"></span></a></div></div><div id="stats2" class="stats" hidden></div><div id="rov" hidden></div><div id="fx" hidden></div><div id="win" hidden></div><div id="ish" hidden></div><div id="gdv" hidden></div><div id="deco" aria-hidden="true"></div>
+<div class="actbar card" id="actbar"><div id="instw" hidden><button id="instbtn" class="abtn aprim"><span class="ai">📲</span><span data-t="iBtn"></span></button></div><div id="ng" hidden><button id="newg" class="abtn aprim"><span class="ai">🔁</span><span data-t="aNew"></span></button></div><div class="agrid"><button class="alt abtn" id="menub" hidden><span class="ai">🏠</span><span data-t="aMenu"></span></button><button id="rbtn" class="alt abtn"><span class="ai">📖</span><span data-t="rules"></span></button><button id="hsbtn" class="alt abtn"><span class="ai">🏆</span><span data-t="aHs"></span></button><button id="shbtn" class="alt abtn"><span class="ai">📣</span><span data-t="aShare"></span></button></div><div class="asub"><button id="fbbtn" class="fbpill" type="button"><span data-t="fbBtn"></span></button><a id="coffee" class="coffee" href="https://revolut.me/solariis" target="_blank" rel="noopener noreferrer"><span data-t="coffee"></span></a></div></div><footer id="stats2" class="stats"></footer><div id="rov" hidden></div><div id="fx" hidden></div><div id="win" hidden></div><div id="ish" hidden></div><div id="gdv" hidden></div><div id="deco" aria-hidden="true"></div>
 </div>
 <script>(function(root){
 const CATS=[
@@ -908,7 +962,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202610241600';
+const APP_VERSION='202610241650';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -919,7 +973,7 @@ setTimeout(checkVersion,1500);setInterval(checkVersion,300000);
 const ST=(()=>{let o={};try{o=JSON.parse(localStorage.kstats||'{}')||{}}catch(e){}return{v:o.v??null,u:o.u??null,g:o.g??null}})();
 function stFmt(n){return typeof n==='number'?String(Math.max(0,Math.floor(n))).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0'):'—'}
 function statsDraw(){const h='<p class="vcount">👀 '+t('vVisits')+': <b>'+stFmt(ST.v)+'</b><span class="vsep">•</span>'+t('vPlayers')+': <b>'+stFmt(ST.u)+'</b></p><p class="vcount">🎲 '+t('gGames')+': <b>'+stFmt(ST.g)+'</b></p>';
- ['stats','stats2'].forEach(i=>{const e=$(i);if(e&&e.dataset.h!==h){e.dataset.h=h;e.innerHTML=h}})}
+ ['stats2'].forEach(i=>{const e=$(i);if(e&&e.dataset.h!==h){e.dataset.h=h;e.innerHTML=h}})}
 function stSet(k,v){if(typeof v!=='number')return;ST[k]=v;try{localStorage.kstats=JSON.stringify(ST)}catch(e){}statsDraw()}
 (function(){const NS='https://abacus.jasoncameron.dev/',K2='kosci-online-imike1981/',q=new URLSearchParams(location.search),rv=q.get('r');
  const auto=!!(rv&&sessionStorage['kreload_'+rv]),_s=auto&&history.replaceState&&(q.delete('r'),history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')+location.hash)),skip=q.has('test')||localStorage.knocount==='1'||navigator.webdriver===true;
@@ -928,7 +982,7 @@ function stSet(k,v){if(typeof v!=='number')return;ST[k]=v;try{localStorage.kstat
  // visits and visitors are independent: one failing does not hide the other (cached value stays)
  call(skip||auto?'get':'hit','visits').then(v=>{window.__vc.v=v;stSet('v',v)}).catch(()=>{window.__vc.errV=1});
  call(newV?'hit':'get','visitors').then(u=>{if(newV)localStorage.kvis='1';window.__vc.u=u;stSet('u',u)}).catch(()=>{window.__vc.errU=1})})();
-function vcSync(){const g=!$('game').hidden;const a=$('stats'),b=$('stats2');if(a)a.hidden=g;if(b)b.hidden=!g;statsDraw()}
+function vcSync(){statsDraw()}
 // ---- games-played counter (same abacus service/namespace, key 'games-played') ----
 // Read on load; +1 when a game is finished, by the HOST client only, once per gameId (guarded in localStorage).
 (function(){const NS='https://abacus.jasoncameron.dev/',K2='kosci-online-imike1981/',KEY='games-played',q=new URLSearchParams(location.search);
