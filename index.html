@@ -968,7 +968,7 @@ body .die.pm.alive.roll{animation:pm3d2 .82s cubic-bezier(.22,.9,.3,1) both!impo
 .pick .sw.on .die.pm,.pick .sw:hover .die.pm{animation:pmturn 3.2s cubic-bezier(.45,0,.55,1) infinite;will-change:transform}
 /* held dice: strong ring + lift + lock badge, readable on every colour/theme */
 #dice .die.held{outline:none!important;translate:0 -12px;box-shadow:0 0 0 3px #fff,0 0 0 6px #ff2d55,0 0 14px 6px #ff2d5599,0 12px 14px #0006!important;transition:translate .18s cubic-bezier(.3,1.4,.5,1)}
-#dice .die .hbadge{position:absolute!important;top:-13px;right:-13px;width:24px;height:24px;border-radius:50%;background:#ff2d55;border:2px solid #fff;box-shadow:0 2px 5px #0008;font:13px/20px system-ui,sans-serif;text-align:center;z-index:9;pointer-events:none;display:block!important;animation:none!important;transform:none!important}
+#dice .die .hbadge{position:absolute!important;top:-13px;right:-13px;width:24px;height:24px;border-radius:50%;background:#ff2d55;border:2px solid #fff;box-shadow:0 2px 5px #0008;font:13px/20px system-ui,sans-serif;text-align:center;z-index:9;pointer-events:none;display:none!important;animation:none!important;transform:none!important}
 /* primary start buttons */
 #start #create,#start #join{font:800 20px system-ui,sans-serif!important;min-height:54px;padding:12px 26px!important;border-radius:14px!important;letter-spacing:.3px;text-shadow:none!important;opacity:1!important}
 #start #create{display:block;width:100%;max-width:360px;margin:10px auto!important;background:linear-gradient(180deg,#2ecc71,#1e9e55)!important;border:2px solid #fff!important;color:#fff!important;box-shadow:0 0 0 3px #1e9e55,0 6px 16px #0006!important}
@@ -1145,7 +1145,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611071700';
+const APP_VERSION='202611072115';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
