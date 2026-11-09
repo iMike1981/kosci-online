@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:type" content="website"><meta property="og:url" content="https://imike1981.github.io/kosci-online/"><meta property="og:title" content="Kości Online 🎲"><meta property="og:description" content="Zagrajmy razem w kości online – za darmo, w przeglądarce, z rodziną i znajomymi. / Free online dice game for family and friends."><meta property="og:image" content="https://imike1981.github.io/kosci-online/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="description" content="Kości online – gra w kości z rodziną i znajomymi."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2f5597"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Kości">
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:type" content="website"><meta property="og:url" content="https://imike1981.github.io/kosci-online/"><meta property="og:title" content="Kości Online 🎲"><meta property="og:description" content="Zagrajmy razem w kości online – za darmo, w przeglądarce, z rodziną i znajomymi. / Free online dice game for family and friends."><meta property="og:image" content="https://imike1981.github.io/kosci-online/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="description" content="Kości online – gra w kości z rodziną i znajomymi."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2f5597"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2"><link rel="apple-touch-icon" href="apple-touch-icon.png?v=2"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Kości">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Fredoka:wght@500;700&family=Mochiy+Pop+One&family=Cinzel:wght@600;800&family=UnifrakturCook:wght@700&family=EB+Garamond:wght@500;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet"><title>Kości online / Dice online</title>
 <script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <style>
@@ -1109,6 +1109,265 @@ body.th-sapphire::before,body.th-sapphire::after{content:none!important}
   .dc-sapphire .sh{display:none}
 }
 
+/* ===== premium polish for remaining themes (do not regress sapphire) ===== */
+body.th-nature::before,body.th-nature::after,body.th-gothic::before,body.th-gothic::after{content:none!important;display:none!important}
+
+.th-classic button,.th-zombie button,.th-slime button,.th-nature button,.th-gothic button,.th-ocean button,.th-beach button,.th-winter button{transition:filter .18s,transform .12s,box-shadow .18s,background .18s}
+.th-classic button:hover,.th-zombie button:hover,.th-slime button:hover,.th-nature button:hover,.th-gothic button:hover,.th-ocean button:hover,.th-beach button:hover,.th-winter button:hover{filter:brightness(1.06)}
+.th-classic button:active,.th-zombie button:active,.th-slime button:active,.th-nature button:active,.th-gothic button:active,.th-ocean button:active,.th-beach button:active,.th-winter button:active{transform:translateY(1px);filter:brightness(.95)}
+
+/* --- Classic: casino felt, light sweep, drifting suits --- */
+html:has(body.th-classic){background:#0c3a24}
+body.th-classic{color:#1d2b45;background-color:#0c3a24;background-image:radial-gradient(120% 80% at 50% -8%,#1a6a42 0%,#0c3a2400 55%),repeating-radial-gradient(circle at 20% 30%,#ffffff06 0 1px,#0000 2px 80px),linear-gradient(180deg,#145c38 0%,#0c3a24 40%,#082818 100%);background-attachment:fixed}
+.th-classic .hd{--bn:radial-gradient(120% 150% at 50% 20%,#2c9a5c 0%,#165a38 58%,#0a301c 100%);--bd:#0a301c;box-shadow:0 8px 24px #0005,inset 0 1px 0 #ffffff33;border:1px solid #1a6a4288}
+.th-classic .hd::before{background:radial-gradient(80% 70% at 50% 0%,#ffffff18,transparent 60%),linear-gradient(#0000 55%,#04180c44 100%)}
+.th-classic .card{background:rgba(247,250,247,.92);border:1px solid rgba(255,255,255,.7);border-radius:16px;box-shadow:0 8px 24px #04180c44,inset 0 1px 0 #fff}
+.th-classic button{background:linear-gradient(180deg,#4a74c4 0%,#2f5597 52%,#1f3d72 100%);border:none;color:#fff;font-weight:800;border-radius:12px;box-shadow:inset 0 1px 0 #ffffff66,inset 0 -3px 0 #16305c,0 0 14px #2f559744,0 4px 12px #0004}
+.th-classic button.alt{background:rgba(255,255,255,.72);color:#1f3864;border:1.5px solid #2f559799;box-shadow:inset 0 1px 0 #fff}
+.th-classic .lang.on{background:linear-gradient(180deg,#4a74c4,#2f5597);color:#fff;border-color:transparent}
+.th-classic th{background:#1f3864;color:#fff}.th-classic .up td{background:#eef3fb}.th-classic .lo td{background:#f3f8ef}.th-classic .tot td{background:#fff!important}
+.th-classic td,.th-classic th{border-color:#c5d2e4}
+.th-classic .toggles{background:rgba(255,255,255,.72);border:1px solid #ffffff88}
+.th-classic .tagrow{color:#e6f6d8;text-shadow:0 1px 2px #04180c}
+.th-classic .vcount{color:#e6f6d8}
+.th-classic #stats2{background:rgba(247,250,247,.9);color:#1d2b45;box-shadow:0 2px 10px #04180c44,inset 0 1px 0 #fff}
+.th-classic #rov{background:linear-gradient(#e8f0e8,#f6f9fd)}
+.th-classic #tab{--acc:#2f5597}
+
+/* --- Zombie: toxic fog + glowing spores --- */
+html:has(body.th-zombie){background:#0a1208}
+body.th-zombie{font-family:system-ui,'Segoe UI',sans-serif;color:#e6f3d4;background-color:#0a1208;background-image:radial-gradient(90% 60% at 50% -10%,#2a4a1488 0%,#0a120800 55%),linear-gradient(180deg,#15240e 0%,#0a1208 45%,#070a05 100%);background-attachment:fixed}
+.th-zombie h1{color:#c8ee86;font-family:'Baloo 2',Fredoka,system-ui;font-weight:800;font-size:32px;text-shadow:0 2px 0 #0a1208,0 0 16px #8fd14f66}
+.th-zombie h1 span[style]{font-family:system-ui}
+.th-zombie .hd{box-shadow:0 8px 24px #0008,inset 0 1px 0 #8fd14f33;border:1px solid #6aa83466}
+.th-zombie .hd::before{background:radial-gradient(70% 60% at 20% 80%,#7bd23a22,transparent 55%),linear-gradient(#0000 60%,#0008 100%)}
+.th-zombie .card{background:rgba(16,28,12,.88);border:1px solid #8fd14f55;border-radius:16px;box-shadow:0 8px 28px #0008,inset 0 1px 0 #c8f08f22;padding-top:14px}
+.th-zombie button{background:linear-gradient(180deg,#b6ec6a 0%,#6aa834 52%,#3d6a18 100%);border:none;color:#102008;font-weight:800;border-radius:12px;box-shadow:inset 0 1px 0 #f2ffc888,inset 0 -3px 0 #2a4a10,0 0 14px #8fd14f44,0 4px 12px #0006}
+.th-zombie button.alt{background:rgba(18,32,12,.55);color:#d4f5a8;border:1.5px solid #8fd14f88;box-shadow:inset 0 1px 0 #ffffff18}
+.th-zombie .lang.on{background:linear-gradient(180deg,#b6ec6a,#6aa834);color:#102008;border-color:transparent}
+.th-zombie td,.th-zombie th{border-color:#3d5a22}.th-zombie th{background:#243616;color:#e4f5c4;font-family:inherit}
+.th-zombie .up td{background:#162410}.th-zombie .lo td{background:#121c0c}.th-zombie .tot td{background:#0a1208!important}
+.th-zombie table td{color:#eaf7d8}.th-zombie .small{color:#c3d8a8}.th-zombie .big{color:#c8ee86}.th-zombie .neg{color:#ff8f8f!important}
+.th-zombie .toggles{background:rgba(16,28,12,.62);color:#e6f3d4;border:1px solid #8fd14f44}
+.th-zombie .toggles label{color:#e6f3d4!important}
+.th-zombie .thc{background:#ffffff12;color:#fff;border-radius:12px}
+.th-zombie #rov{background:linear-gradient(#15240e,#0a1208)}
+.th-zombie .rbody section,.th-zombie .rbody nav,.th-zombie .rc{background:#162410;border-color:#3d5a22}
+.th-zombie .rhead{background:#243616}.th-zombie .rbody h2{color:#c8ee86;border-color:#3d5a22}
+.th-zombie .rn{background:#8fd14f;color:#102008}
+.th-zombie .rbody nav a{color:#d4f5a8}.th-zombie .rct{color:#fff}.th-zombie .rcn{color:#c3d8a8}
+.th-zombie .note,.th-zombie .ex{background:#ffffff12;color:inherit}
+.th-zombie #rov .hstab.on{background:#8fd14f!important;color:#102008!important}
+.th-zombie #tab{--fillbg:rgba(255,255,255,.07);--openbg:rgba(255,255,255,.025);--dot:rgba(255,255,255,.32);--pos:#86e39a;--negc:#ff8f8f;--zero:#a9b6a0;--acc:#8fd14f}
+.th-zombie .vcount,.th-zombie .tagrow{color:#d8f0b8;text-shadow:0 1px 2px #0009}
+.th-zombie #stats2{background:rgba(10,18,8,.82);color:#e6f3d4;box-shadow:0 2px 10px #0008,inset 0 0 0 1px #8fd14f33}
+.wt-zombie .wcard{background:linear-gradient(#1a2c12,#0e180a);color:#e6f3d4;border:2px solid #8fd14f;border-radius:16px;font-family:system-ui,sans-serif}
+.wt-zombie .wtitle{color:#c8ee86;font-family:'Baloo 2',Fredoka,system-ui;font-size:36px;text-shadow:0 0 12px #8fd14f66}
+.wt-zombie .wtab td{background:#1a2a12;color:#eaf7d8!important}.wt-zombie .wtab tr.wtop td{background:#c8f08f;color:#132000!important}
+.wt-zombie .wpts{color:#c3d8a8}.wt-zombie .wx{background:#ffffff22;color:#fff}
+#dlg.gt-zombie,#gdv.gt-zombie{--c:#121c0c;--f:#e6f3d4;--ln:#3d5a22;--hb:#6aa834;--hf:#102008;--sb:#1a2a12;--w:rgba(200,240,143,.18);--hs:#8fd14f}
+
+/* --- Slime: translucent bubbles, soft glass --- */
+html:has(body.th-slime){background:#b8ebe4}
+body.th-slime{font-family:Fredoka,'Baloo 2',system-ui,sans-serif;color:#3a2a48;background-color:#b8ebe4;background-image:radial-gradient(80% 50% at 80% 0%,#ffd6ea88,#0000 60%),linear-gradient(180deg,#8fe0d8 0%,#d4f4ef 42%,#ffe4f0 100%);background-attachment:fixed}
+.th-slime h1{color:#d6338a;text-shadow:0 2px 0 #fff,0 0 12px #ff5fa855;font-size:34px}
+.th-slime .hd{box-shadow:0 8px 24px #ff5fa833,inset 0 1px 0 #fff;border:1px solid #ff9ccc88}
+.th-slime .hd::before{background:radial-gradient(60% 50% at 15% 20%,#ffffff88,transparent 55%)}
+.th-slime .card{background:rgba(255,255,255,.82);border:1px solid rgba(255,179,214,.7);border-radius:22px;box-shadow:0 8px 24px #6fd9d033,inset 0 1px 0 #fff}
+.th-slime button{font-family:inherit;font-weight:700;border-radius:999px;background:linear-gradient(180deg,#ff9ad0 0%,#ff5fa8 52%,#e04890 100%);border:none;color:#fff;box-shadow:inset 0 1px 0 #ffffff88,inset 0 -3px 0 #c73a7a,0 0 14px #ff5fa844,0 4px 12px #ff5fa833;padding:11px 20px}
+.th-slime button.alt{background:rgba(255,255,255,.7);color:#16465c;box-shadow:inset 0 0 0 1.5px #6fd0f5,inset 0 1px 0 #fff}
+.th-slime .lang.on{background:linear-gradient(180deg,#ffe680,#ffcf3a);color:#5a3d00}
+.th-slime td,.th-slime th{border:1px solid #f0d4e4}.th-slime th{background:#ff5fa8;color:#fff}
+.th-slime .up td{background:#e8f8f6}.th-slime .lo td{background:#fff6ec}.th-slime .tot td{background:#fff!important}
+.th-slime .toggles{background:rgba(255,255,255,.7);border:1px solid #ffb3d666}
+.th-slime input,.th-slime select{border-radius:999px;border:1.5px solid #ffb3d6;background:#fff;color:#3a2a48}
+.th-slime #rov{background:linear-gradient(#d4f4ef,#ffe4f0)}
+.th-slime .rhead{background:#ff5fa8}.th-slime .rbody section,.th-slime .rbody nav{border-radius:18px;border:1.5px solid #ffb3d6}
+.th-slime #stats2{background:rgba(255,255,255,.88);color:#3a2a48}
+.wt-slime .wcard{background:rgba(255,255,255,.92);border:1.5px solid #ffb3d6;border-radius:22px}
+
+/* --- Nature: sun rays, drifting leaves, pollen --- */
+html:has(body.th-nature){background:#d7ecb8}
+body.th-nature{font-family:system-ui,'Segoe UI',sans-serif;color:#2a3a1c;background-color:#eaf4d8;background-image:linear-gradient(180deg,#c5e6f8 0%,#e3f2c8 48%,#d5e8b0 100%);background-attachment:fixed}
+.th-nature h1{font-family:'Baloo 2',Fredoka,system-ui;font-weight:800;color:#3a7a1c;text-shadow:0 2px 0 #fff,0 0 10px #7ad03a33}
+.th-nature .hd{box-shadow:0 8px 24px #3d7a1e22,inset 0 1px 0 #fff;border:1px solid #a8d68a}
+.th-nature .hd::before{background:radial-gradient(70% 50% at 80% 0%,#fff8 0%,transparent 55%)}
+.th-nature .card{background:rgba(255,253,246,.86);border:1px solid rgba(255,255,255,.75);border-radius:16px;box-shadow:0 8px 22px #3d7a1e1f,inset 0 1px 0 #fff}
+.th-nature button{font-family:'Baloo 2',system-ui;font-weight:700;border-radius:12px;background:linear-gradient(180deg,#8ed15a 0%,#4f9a2a 52%,#3a7a18 100%);border:none;color:#fff;box-shadow:inset 0 1px 0 #ffffff77,inset 0 -3px 0 #2f6214,0 0 12px #4f9a2a33,0 4px 10px #3d7a1e33}
+.th-nature button.alt{background:rgba(255,250,240,.75);color:#5a3a1c;box-shadow:inset 0 0 0 1.5px #c9a679,inset 0 1px 0 #fff}
+.th-nature .lang.on{background:#6b4423;color:#fff}
+.th-nature td,.th-nature th{border-color:#d2e4bc}.th-nature th{background:#5a6f2e;color:#fff8e8}
+.th-nature .up td{background:#f1f8e6}.th-nature .lo td{background:#fbf8ef}.th-nature .tot td{background:#fff!important}
+.th-nature .toggles{background:rgba(255,255,255,.7);border:1px solid #cfe6b888}
+.th-nature input,.th-nature select{border-radius:12px;border:1.5px solid #b9dc9a;background:#fff;color:#2a3a1c}
+.th-nature #rov{background:linear-gradient(#e6f4ff,#f1f8e6)}
+.th-nature .rhead{background:#4f9a2a}.th-nature .rbody h2{color:#3a7a1c;border-color:#d2e4bc}
+.th-nature #stats2{background:rgba(255,253,246,.9);color:#2a3a1c}
+.th-nature .tagrow,.th-nature .vcount{color:#2f5330;text-shadow:0 1px 0 #fff9}
+.th-nature #tab{--acc:#4f9a2a}
+.wt-nature .wcard{background:rgba(255,253,246,.94);border:1.5px solid #9ccf7a;border-radius:16px}
+
+/* --- Gothic: candle glow, embers, mist --- */
+html:has(body.th-gothic){background:#0c0910}
+body.th-gothic{font-family:'EB Garamond',Georgia,serif;font-size:18px;color:#ece6f0;background-color:#0c0910;background-image:radial-gradient(80% 50% at 50% -8%,#3a183088 0%,#0c091000 50%),linear-gradient(180deg,#1a101c 0%,#0c0910 55%,#07050a 100%);background-attachment:fixed}
+.th-gothic h1{font-family:'UnifrakturCook',Cinzel,serif;font-weight:700;color:#f0eaf4;letter-spacing:1px;font-size:42px;text-shadow:0 0 14px #9a1a4a88,0 2px 0 #000}
+.th-gothic .hd{box-shadow:0 8px 28px #000a,inset 0 1px 0 #c0a0c822;border:1px solid #6a2a5866}
+.th-gothic .hd::before{background:radial-gradient(50% 40% at 12% 88%,#ffcf5a22,transparent 60%),linear-gradient(#0000 55%,#0009 100%)}
+.th-gothic .card{background:rgba(18,12,24,.88);border:1px solid #6a4a7a66;border-radius:10px;box-shadow:0 8px 28px #000a,inset 0 1px 0 #e8d0e818}
+.th-gothic button{font-family:Cinzel,serif;font-weight:800;letter-spacing:.4px;border-radius:8px;background:linear-gradient(180deg,#a01a42 0%,#6a102c 55%,#3e0a1a 100%);border:1px solid #c8b8d044;color:#f6eef4;box-shadow:inset 0 1px 0 #ffd0e033,inset 0 -3px 0 #2a0810,0 0 14px #7a0f2e55,0 4px 12px #0008}
+.th-gothic button.alt{background:rgba(28,20,36,.6);color:#d8d0e0;border:1.5px solid #8a7a9a99;box-shadow:inset 0 1px 0 #ffffff14}
+.th-gothic .lang.on{background:#c0c0c8;color:#16101e;border-color:transparent}
+.th-gothic .toggles{background:rgba(18,12,24,.62);color:#ece6f0;border:1px solid #6a4a7a55}
+.th-gothic .toggles label{color:#ece6f0!important}
+.th-gothic #stats2{background:rgba(18,12,24,.84);color:#f0eaf4;box-shadow:0 2px 10px #0008,inset 0 0 0 1px #6a4a7a44}
+.th-gothic .tagrow,.th-gothic .vcount{color:#e8e2d0;text-shadow:0 1px 2px #000b}
+.wt-gothic .wcard{background:rgba(18,12,24,.94);border-radius:12px}
+
+/* --- Ocean: caustics + rising bubbles --- */
+html:has(body.th-ocean){background:#021b33}
+body.th-ocean{font-family:system-ui,'Segoe UI',sans-serif;color:#e6f7ff;background-color:#042a4a;background-image:radial-gradient(100% 70% at 50% -10%,#12789e88 0%,#021b3300 55%),linear-gradient(180deg,#0a5a86 0%,#043456 48%,#021b33 100%);background-attachment:fixed}
+.th-ocean h1{color:#d8fbff;text-shadow:0 2px 0 #02304f,0 0 16px #3fe0e866;font-family:'Baloo 2',Fredoka,system-ui;font-weight:800}
+.th-ocean .hd{box-shadow:0 8px 28px #0008,inset 0 1px 0 #9ff3ff33;border:1px solid #2bc4d666}
+.th-ocean .hd::before{background:radial-gradient(60% 50% at 80% 10%,#3fe0e828,transparent 55%),linear-gradient(#0000 60%,#021b3355 100%)}
+.th-ocean .card{background:rgba(5,36,68,.86);border:1px solid #2bc4d666;border-radius:16px;box-shadow:0 8px 28px #0008,inset 0 1px 0 #9ff3ff28}
+.th-ocean button{background:linear-gradient(180deg,#7aeff4 0%,#1aa8c8 52%,#0d7a96 100%);border:none;color:#02283a;font-weight:800;border-radius:12px;box-shadow:inset 0 1px 0 #ffffff99,inset 0 -3px 0 #0b6a82,0 0 14px #3fe0e844,0 4px 12px #0006}
+.th-ocean button.alt{background:rgba(8,48,80,.55);color:#d6f4ff;border:1.5px solid #2bc4d6aa;box-shadow:inset 0 1px 0 #ffffff22}
+.th-ocean .lang.on{background:#3fe0e8;color:#02283a;border-color:transparent}
+.th-ocean .toggles{background:rgba(5,36,68,.6);color:#e6f7ff;border:1px solid #2bc4d644}
+.th-ocean .toggles label{color:#e6f7ff!important}
+.th-ocean #stats2{background:rgba(2,36,60,.82);color:#e4f8ff;box-shadow:0 2px 10px #0008,inset 0 0 0 1px #2bc4d644}
+.dc-ocean .dol{display:none}
+.dc-ocean .fish{opacity:.45}
+.wt-ocean .wcard{background:linear-gradient(#063a63,#042a4a);border-radius:16px}
+
+/* --- Beach: sun shimmer, slow waves, soft clouds --- */
+html:has(body.th-beach){background:#9fdcff}
+body.th-beach{font-family:system-ui,'Segoe UI',sans-serif;color:#4a2c12;background-color:#ffe7b3;background-image:linear-gradient(180deg,#7ec8f0 0%,#c8eaff 28%,#ffe9c0 68%,#f3d49a 100%);background-attachment:fixed}
+.th-beach h1{color:#d1561a;text-shadow:0 2px 0 #fff,0 0 12px #ffd23f55;font-family:'Baloo 2',Fredoka,system-ui;font-weight:800}
+.th-beach .hd{box-shadow:0 8px 24px #b2541a22,inset 0 1px 0 #fff;border:1px solid #ffc46b}
+.th-beach .hd::before{background:radial-gradient(50% 50% at 88% 8%,#fff8d0cc,transparent 55%)}
+.th-beach .card{background:rgba(255,250,240,.86);border:1px solid rgba(255,196,107,.7);border-radius:16px;box-shadow:0 8px 22px #b2541a22,inset 0 1px 0 #fff}
+.th-beach button{background:linear-gradient(180deg,#ffb15c 0%,#f07a35 52%,#d1561a 100%);border:none;color:#fff;font-weight:800;border-radius:12px;text-shadow:none;box-shadow:inset 0 1px 0 #ffffff77,inset 0 -3px 0 #b2541a,0 0 12px #f07a3533,0 4px 10px #b2541a33}
+.th-beach button.alt{background:rgba(255,255,255,.75);color:#b2541a;box-shadow:inset 0 0 0 1.5px #ffb36b,inset 0 1px 0 #fff;text-shadow:none}
+.th-beach .lang.on{background:#2ec4d6;color:#fff}
+.th-beach .toggles{background:rgba(255,255,255,.72);border:1px solid #ffd99a88}
+.th-beach #stats2{background:rgba(255,250,240,.9);color:#6b3a12}
+.th-beach .tagrow,.th-beach .vcount{color:#6b3a12}
+.dc-beach .ball{display:none}
+.dc-beach .gull{opacity:.55}
+.dc-beach .rays{animation-duration:80s;opacity:.55}
+.dc-beach .sea{animation-duration:14s}
+.dc-beach .cloud{animation-duration:90s}.dc-beach .cl2{animation-duration:120s}
+.wt-beach .wcard{background:rgba(255,250,240,.94);border:1.5px solid #ffb347;border-radius:16px}
+
+/* --- Winter: snowfall with depth --- */
+html:has(body.th-winter){background:#cfe7f8}
+body.th-winter{font-family:system-ui,'Segoe UI',sans-serif;color:#17324d;background-color:#e6f3fc;background-image:linear-gradient(180deg,#9ecbeb 0%,#d7ebf8 40%,#f4f9ff 75%,#ffffff 100%);background-attachment:fixed}
+.th-winter h1{font-family:'Baloo 2',Fredoka,system-ui;font-weight:800;color:#1d5f95;text-shadow:0 2px 0 #fff,0 0 14px #9fe6ff88}
+.th-winter .hd{box-shadow:0 8px 24px #1d5f9522,inset 0 1px 0 #fff;border:1px solid #8cc8ec}
+.th-winter .hd::before{background:radial-gradient(60% 50% at 50% 0%,#ffffffaa,transparent 60%)}
+.th-winter .card{background:rgba(248,252,255,.86);border:1px solid rgba(185,222,244,.8);border-radius:16px;box-shadow:0 8px 22px #1d5f9520,inset 0 1px 0 #fff;background-image:none}
+.th-winter button{background:linear-gradient(180deg,#7ec8f4 0%,#2f7fc4 52%,#1d5f95 100%);border:none;color:#fff;font-weight:800;border-radius:12px;text-shadow:none;box-shadow:inset 0 1px 0 #ffffff88,inset 0 -3px 0 #1a5680,0 0 12px #5fb6ec44,0 4px 10px #1d5f9533}
+.th-winter button.alt{background:rgba(255,255,255,.75);color:#1d5f95;box-shadow:inset 0 0 0 1.5px #8cc8ec,inset 0 1px 0 #fff;text-shadow:none}
+.th-winter .lang.on{background:#1d5f95;color:#fff}
+.th-winter .toggles{background:rgba(255,255,255,.72);border:1px solid #b9def488}
+.th-winter #stats2{background:rgba(255,255,255,.9);color:#16486f}
+.wt-winter .wcard{background:rgba(248,252,255,.94);border:1.5px solid #8cc8ec;border-radius:16px}
+
+@supports ((-webkit-backdrop-filter:blur(14px)) or (backdrop-filter:blur(14px))){
+  .th-classic .card,.th-slime .card,.th-nature .card,.th-beach .card,.th-winter .card,
+  .th-classic .toggles,.th-slime .toggles,.th-nature .toggles,.th-beach .toggles,.th-winter .toggles,
+  .th-classic #stats2,.th-slime #stats2,.th-nature #stats2,.th-beach #stats2,.th-winter #stats2
+  {-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+  .th-classic .card{background:rgba(247,250,247,.78)}
+  .th-slime .card{background:rgba(255,255,255,.7)}
+  .th-nature .card{background:rgba(255,253,246,.74)}
+  .th-beach .card{background:rgba(255,250,240,.74)}
+  .th-winter .card{background:rgba(248,252,255,.74)}
+  .th-zombie .card,.th-gothic .card,.th-ocean .card,
+  .th-zombie .toggles,.th-gothic .toggles,.th-ocean .toggles,
+  .th-zombie #stats2,.th-gothic #stats2,.th-ocean #stats2
+  {-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+  .th-zombie .card{background:rgba(16,28,12,.72)}
+  .th-gothic .card{background:rgba(18,12,24,.72)}
+  .th-ocean .card{background:rgba(5,36,68,.7)}
+}
+
+/* deco animations — opacity/transform only */
+.dc-classic .felt{inset:0;background:radial-gradient(120% 80% at 50% 0%,#1d7a4a33,transparent 60%);opacity:.7}
+.dc-classic .sweep{inset:-20%;background:linear-gradient(105deg,#0000 36%,#ffffff14 48%,#0000 60%);background-size:200% 100%;animation:cfsweep 16s ease-in-out infinite;opacity:.55;will-change:transform,opacity}
+@keyframes cfsweep{0%,100%{transform:translate3d(-8%,0,0);opacity:.25}50%{transform:translate3d(8%,0,0);opacity:.6}}
+.dc-classic .su{width:var(--s,24px);height:var(--s,24px);opacity:.12;background-repeat:no-repeat;background-position:center;background-size:contain;animation:cfsuit var(--t,24s) linear infinite;animation-delay:var(--d,0s);will-change:transform,opacity;filter:drop-shadow(0 0 2px #fff6)}
+.dc-classic .su.sp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23fff' d='M20 4C12 14 6 18 6 24c0 5 4 8 9 8 2 0 4-1 5-2v6h-5v2h12v-2h-5v-6c1 1 3 2 5 2 5 0 9-3 9-8 0-6-6-10-14-20z'/%3E%3C/svg%3E")}
+.dc-classic .su.ht{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23ffd0d0' d='M20 36C8 26 4 20 4 14 4 8 9 4 14 4c3 0 5 1 6 4 1-3 3-4 6-4 5 0 10 4 10 10 0 6-4 12-16 22z'/%3E%3C/svg%3E")}
+.dc-classic .su.dm{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23ffe0e0' d='M20 2 L36 20 L20 38 L4 20Z'/%3E%3C/svg%3E")}
+.dc-classic .su.cl{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23fff' d='M20 6a8 8 0 0 1 7.5 10.6A8 8 0 1 1 22 28v4h6v2H12v-2h6v-4a8 8 0 1 1-5.5-11.4A8 8 0 0 1 20 6z'/%3E%3C/svg%3E")}
+@keyframes cfsuit{0%{transform:translate3d(0,0,0) rotate(var(--r,0deg));opacity:0}12%{opacity:.14}88%{opacity:.12}100%{transform:translate3d(8vw,-18vh,0) rotate(calc(var(--r,0deg) + 18deg));opacity:0}}
+
+.dc-zombie .fog{left:-15%;right:-15%;height:46%;border-radius:50%;filter:blur(28px);opacity:.35;will-change:transform,opacity}
+.dc-zombie .f1{bottom:-8%;background:radial-gradient(ellipse at 50% 50%,#7bd23a66,#1a3a0800 70%);animation:zfog 22s ease-in-out infinite}
+.dc-zombie .f2{top:8%;height:38%;background:radial-gradient(ellipse at 40% 50%,#4a7a2066,#0000 70%);animation:zfog 28s ease-in-out infinite reverse;animation-delay:-8s;opacity:.28}
+.dc-zombie .f3{top:40%;height:42%;background:radial-gradient(ellipse at 70% 50%,#c8f08f33,#0000 70%);animation:zfog 26s ease-in-out infinite 4s;opacity:.22}
+@keyframes zfog{0%,100%{transform:translate3d(-6%,0,0);opacity:.22}50%{transform:translate3d(7%,-3%,0);opacity:.4}}
+.dc-zombie .zp{width:var(--s,4px);height:var(--s,4px);border-radius:50%;background:#b6ec6a;box-shadow:0 0 8px 2px #8fd14f99;opacity:.55;animation:zpart var(--t,12s) ease-in-out infinite;animation-delay:var(--d,0s);will-change:transform,opacity}
+@keyframes zpart{0%,100%{transform:translate3d(0,0,0);opacity:.15}50%{transform:translate3d(18px,-28px,0);opacity:.7}}
+
+.dc-slime .sb{bottom:-40px;width:var(--s,24px);height:var(--s,24px);border-radius:50%;border:1.5px solid #ffffffaa;background:radial-gradient(circle at 32% 30%,#ffffffcc,#ffb3d644 55%,#6fd9d022 100%);opacity:.55;animation:slbub var(--t,18s) linear infinite;animation-delay:var(--d,0s);will-change:transform,opacity}
+@keyframes slbub{0%{transform:translate3d(0,0,0) scale(.7);opacity:0}10%{opacity:.55}70%{opacity:.4}100%{transform:translate3d(16px,-115vh,0) scale(1.05);opacity:0}}
+
+.dc-gothic .mist{left:-20%;right:-20%;height:50%;filter:blur(32px);border-radius:50%;will-change:transform,opacity}
+.dc-gothic .m1{bottom:-12%;background:radial-gradient(ellipse,#5a2a4a66,#0000 70%);animation:gmist 24s ease-in-out infinite;opacity:.4}
+.dc-gothic .m2{top:10%;height:36%;background:radial-gradient(ellipse,#2a183866,#0000 70%);animation:gmist 30s ease-in-out infinite reverse;opacity:.28}
+@keyframes gmist{0%,100%{transform:translate3d(-5%,0,0);opacity:.22}50%{transform:translate3d(6%,2%,0);opacity:.4}}
+.dc-gothic .cgl{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,#ffcf5a55 0%,#ff8c1a22 38%,#0000 70%);filter:blur(8px);animation:gcand 2.8s ease-in-out infinite;will-change:opacity,transform;pointer-events:none}
+.dc-gothic .cg1{left:-30px;bottom:-20px}.dc-gothic .cg2{right:-20px;bottom:8%;width:140px;height:140px;animation-delay:-1.2s}
+@keyframes gcand{0%,100%{opacity:.45;transform:scale(1)}40%{opacity:.8;transform:scale(1.06)}62%{opacity:.35;transform:scale(.96)}}
+.dc-gothic .em{bottom:-8px;width:var(--s,3px);height:var(--s,3px);border-radius:50%;background:#ffcf5a;box-shadow:0 0 6px 1px #ff8c1aaa;animation:gemb var(--t,14s) linear infinite;animation-delay:var(--d,0s);will-change:transform,opacity}
+@keyframes gemb{0%{transform:translate3d(0,0,0);opacity:0}12%{opacity:.8}100%{transform:translate3d(12px,-90vh,0);opacity:0}}
+
+.dc-nature .nray{inset:0;background:linear-gradient(118deg,#fff0 0 38%,#fff6d033 46%,#fff0 54%,#fff8d022 62%,#fff0 70%);animation:nray 14s ease-in-out infinite;opacity:.55;will-change:opacity,transform}
+@keyframes nray{0%,100%{opacity:.25;transform:translate3d(0,0,0)}50%{opacity:.6;transform:translate3d(2%,1%,0)}}
+.dc-nature .lv{top:-24px;width:var(--s,16px);height:var(--s,16px);background-repeat:no-repeat;background-position:center;background-size:contain;animation:nleaf var(--t,20s) linear infinite;animation-delay:var(--d,0s);will-change:transform,opacity;opacity:.7}
+.dc-nature .lv.l0{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 20C8 4 24 2 28 12C20 12 14 18 16 30C10 26 4 26 4 20Z' fill='%235aa832'/%3E%3Cpath d='M16 30C16 18 22 12 28 12' stroke='%233d7a1e' stroke-width='1.2' fill='none'/%3E%3C/svg%3E")}
+.dc-nature .lv.l1{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 20C8 4 24 2 28 12C20 12 14 18 16 30C10 26 4 26 4 20Z' fill='%237cc24a'/%3E%3Cpath d='M16 30C16 18 22 12 28 12' stroke='%233d7a1e' stroke-width='1.2' fill='none'/%3E%3C/svg%3E")}
+.dc-nature .lv.l2{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 20C8 4 24 2 28 12C20 12 14 18 16 30C10 26 4 26 4 20Z' fill='%23c4a832'/%3E%3Cpath d='M16 30C16 18 22 12 28 12' stroke='%237a5a18' stroke-width='1.2' fill='none'/%3E%3C/svg%3E")}
+@keyframes nleaf{0%{transform:translate3d(0,0,0) rotate(0deg);opacity:0}10%{opacity:.75}100%{transform:translate3d(18vw,112vh,0) rotate(280deg);opacity:.35}}
+.dc-nature .pl{top:-16px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle,#ffe9a8,#ffd23f88 60%,#0000);opacity:.6;animation:npol var(--t,18s) linear infinite;animation-delay:var(--d,0s);will-change:transform,opacity}
+@keyframes npol{0%{transform:translate3d(0,0,0);opacity:0}12%{opacity:.7}100%{transform:translate3d(-20px,110vh,0);opacity:0}}
+.dc-nature .fl{opacity:.7}
+
+.dc-ocean .cau{inset:0;background:radial-gradient(ellipse 40% 18% at 20% 30%,#9ff3ff33,#0000 60%),radial-gradient(ellipse 50% 22% at 70% 55%,#3fe0e828,#0000 60%),radial-gradient(ellipse 30% 14% at 40% 75%,#ffffff22,#0000 55%);animation:ocau 10s ease-in-out infinite;opacity:.55;will-change:opacity,transform}
+@keyframes ocau{0%,100%{opacity:.28;transform:translate3d(0,0,0) scale(1)}50%{opacity:.55;transform:translate3d(2%,1%,0) scale(1.04)}}
+
+.dc-beach .shim{inset:0;background:radial-gradient(circle at 88% 10%,#fff8d0aa 0 8%,#ffd23f22 18%,#0000 42%);animation:bshim 8s ease-in-out infinite;opacity:.7;will-change:opacity}
+@keyframes bshim{0%,100%{opacity:.4}50%{opacity:.8}}
+
+.dc-winter .sf.far{opacity:.4}.dc-winter .sf.mid{opacity:.7}.dc-winter .sf.near{opacity:.95;filter:drop-shadow(0 0 2px #fff)}
+
+.noanim .dc-classic .sweep,.noanim .dc-classic .su,
+.noanim .dc-zombie .fog,.noanim .dc-zombie .zp,
+.noanim .dc-slime .sb,
+.noanim .dc-gothic .mist,.noanim .dc-gothic .cgl,.noanim .dc-gothic .em,
+.noanim .dc-nature .nray,.noanim .dc-nature .lv,.noanim .dc-nature .pl,
+.noanim .dc-ocean .cau,
+.noanim .dc-beach .shim{animation:none!important}
+.noanim .dc-classic .su,.noanim .dc-zombie .zp,.noanim .dc-slime .sb,.noanim .dc-gothic .em,.noanim .dc-nature .lv,.noanim .dc-nature .pl{opacity:.35;transform:none}
+.noanim .dc-gothic .cgl{opacity:.6}
+.noanim .dc-classic .sweep,.noanim .dc-ocean .cau,.noanim .dc-beach .shim,.noanim .dc-nature .nray,.noanim .dc-zombie .fog{opacity:.4;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .dc-classic .sweep,.dc-classic .su,
+  .dc-zombie .fog,.dc-zombie .zp,
+  .dc-slime .sb,
+  .dc-gothic .mist,.dc-gothic .cgl,.dc-gothic .em,
+  .dc-nature .nray,.dc-nature .lv,.dc-nature .pl,
+  .dc-ocean .cau,
+  .dc-beach .shim,.dc-beach .rays,.dc-beach .sea,.dc-beach .cloud,
+  .dc-winter .sf,.dc-winter .aur,.dc-winter .ishine,.dc-winter .peng,.dc-winter .spk,.dc-winter .drip
+  {animation:none!important}
+  .dc-classic .su,.dc-zombie .zp,.dc-slime .sb,.dc-gothic .em,.dc-nature .lv,.dc-nature .pl,.dc-winter .sf{opacity:.35;transform:none}
+}
+
+
 </style></head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -1255,17 +1514,31 @@ let appTh=APPTH.includes(localStorage.kapp)?localStorage.kapp:'sapphire';
 const THCOL={classic:'#2f5597',sapphire:'#0a2358',zombie:'#1a2e0e',slime:'#ff5fa8',nature:'#4a9a24',gothic:'#2a1838',ocean:'#075482',beach:'#e8601c',winter:'#2a76b4'};
 function setTheme(k){appTh=k;try{achTheme(k)}catch(e){}try{drawDeco(k)}catch(e){}if(typeof renderAll==='function'&&sndOn)setTimeout(renderAll,50);localStorage.kapp=k;document.body.className=document.body.className.replace(/\bth-\w+/g,'').trim()+' th-'+k;const tm=document.querySelector('meta[name="theme-color"]');if(tm)tm.content=THCOL[k]||THCOL.classic;drawThemes()}
 function drawDeco(k){const d=$('deco');if(!d)return;if(d.dataset.k===k)return;d.dataset.k=k;d.className='dc-'+k;
- if(k==='ocean'){let b='';for(let i=0;i<12;i++)b+='<i class="bub" style="left:'+(4+i*8+Math.random()*4).toFixed(1)+'%;--s:'+(6+Math.random()*12).toFixed(0)+'px;--t:'+(7+Math.random()*7).toFixed(1)+'s;--d:-'+(Math.random()*12).toFixed(1)+'s;--y:'+(10+Math.random()*70).toFixed(0)+'vh"></i>';
-  d.innerHTML='<i class="weed wd1"></i><i class="weed wd2"></i><i class="weed wd3"></i>'+b+'<i class="fish f1"></i><i class="fish f2"></i><i class="fish f3"></i><i class="dol"></i><i class="dol d2"></i><i class="wv wv1"></i><i class="wv wv2"></i><i class="wv wv3"></i><i class="shell"></i><i class="star"></i>'}
- else if(k==='beach')d.innerHTML='<i class="rays"></i><i class="sun"></i><i class="cloud"></i><i class="cloud cl2"></i><i class="gull"></i><i class="gull g2"></i><i class="sea"></i><i class="sand"></i><i class="palm"></i><i class="umb"></i><i class="lounger"></i><i class="ball"></i><i class="star"></i><i class="shell"></i>';
+ if(k==='classic'){const su=['sp','ht','dm','cl'];let s='';
+  for(let i=0;i<10;i++)s+='<i class="su '+su[i%4]+'" style="left:'+(4+Math.random()*92).toFixed(1)+'%;top:'+(6+Math.random()*80).toFixed(1)+'%;--s:'+(18+Math.random()*22).toFixed(0)+'px;--t:'+(18+Math.random()*16).toFixed(1)+'s;--d:-'+(Math.random()*20).toFixed(1)+'s;--r:'+(Math.random()*40-20).toFixed(0)+'deg"></i>';
+  d.innerHTML='<i class="felt"></i><i class="sweep"></i>'+s}
+ else if(k==='zombie'){let p='';
+  for(let i=0;i<14;i++)p+='<i class="zp" style="left:'+(3+Math.random()*94).toFixed(1)+'%;top:'+(8+Math.random()*84).toFixed(1)+'%;--s:'+(3+Math.random()*6).toFixed(1)+'px;--t:'+(8+Math.random()*10).toFixed(1)+'s;--d:-'+(Math.random()*12).toFixed(1)+'s"></i>';
+  d.innerHTML='<i class="fog f1"></i><i class="fog f2"></i><i class="fog f3"></i>'+p}
+ else if(k==='slime'){let b='';
+  for(let i=0;i<12;i++)b+='<i class="sb" style="left:'+(3+Math.random()*94).toFixed(1)+'%;--s:'+(14+Math.random()*36).toFixed(0)+'px;--t:'+(14+Math.random()*12).toFixed(1)+'s;--d:-'+(Math.random()*16).toFixed(1)+'s"></i>';
+  d.innerHTML=b}
+ else if(k==='gothic'){let e='';
+  for(let i=0;i<12;i++)e+='<i class="em" style="left:'+(6+Math.random()*88).toFixed(1)+'%;--s:'+(2+Math.random()*3).toFixed(1)+'px;--t:'+(10+Math.random()*10).toFixed(1)+'s;--d:-'+(Math.random()*14).toFixed(1)+'s"></i>';
+  d.innerHTML='<i class="mist m1"></i><i class="mist m2"></i><i class="cgl cg1"></i><i class="cgl cg2"></i>'+e}
+ else if(k==='ocean'){let b='';for(let i=0;i<10;i++)b+='<i class="bub" style="left:'+(5+i*9+Math.random()*4).toFixed(1)+'%;--s:'+(5+Math.random()*10).toFixed(0)+'px;--t:'+(9+Math.random()*8).toFixed(1)+'s;--d:-'+(Math.random()*12).toFixed(1)+'s;--y:'+(10+Math.random()*70).toFixed(0)+'vh"></i>';
+  d.innerHTML='<i class="cau"></i><i class="weed wd1"></i><i class="weed wd2"></i><i class="weed wd3"></i>'+b+'<i class="fish f1"></i><i class="fish f2"></i><i class="wv wv1"></i><i class="wv wv2"></i><i class="wv wv3"></i><i class="shell"></i>'}
+ else if(k==='beach')d.innerHTML='<i class="shim"></i><i class="rays"></i><i class="sun"></i><i class="cloud"></i><i class="cloud cl2"></i><i class="gull"></i><i class="gull g2"></i><i class="sea"></i><i class="sand"></i><i class="palm"></i><i class="umb"></i><i class="lounger"></i><i class="star"></i><i class="shell"></i>';
  else if(k==='soccer')d.innerHTML='<i class="crowd"></i><i class="ln hl"></i><i class="ln cc"></i><i class="cs"></i><i class="ln pb"></i><i class="ln gb"></i><i class="ln arc"></i><i class="goal"></i><i class="ball"></i><i class="fl fl1"></i><i class="fl fl2"></i>';
- else if(k==='nature'){let pt='';for(let i=0;i<8;i++)pt+='<i class="pt" style="left:'+(5+i*12+Math.random()*6).toFixed(1)+'%;--t:'+(10+Math.random()*8).toFixed(1)+'s;--d:-'+(Math.random()*16).toFixed(1)+'s"></i>';
-  d.innerHTML='<i class="br"></i><i class="pb pb1"></i><i class="pb pb2"></i><i class="fb fb1"></i><i class="fb fb2"></i><i class="fb fb3"></i><i class="fb fb4"></i><i class="bf bf1"></i><i class="bf bf2"></i><i class="bf bf3"></i>'+pt+'<i class="grass g2"></i><i class="fl fl0"></i><i class="fl fl1"></i><i class="fl fl2"></i><i class="fl fl3"></i><i class="fl fl4"></i><i class="grass"></i>'}
+ else if(k==='nature'){let lv='',pt='';
+  for(let i=0;i<8;i++)lv+='<i class="lv l'+(i%3)+'" style="left:'+(4+Math.random()*92).toFixed(1)+'%;--s:'+(12+Math.random()*14).toFixed(0)+'px;--t:'+(16+Math.random()*12).toFixed(1)+'s;--d:-'+(Math.random()*18).toFixed(1)+'s"></i>';
+  for(let i=0;i<8;i++)pt+='<i class="pl" style="left:'+(6+i*11+Math.random()*5).toFixed(1)+'%;--t:'+(14+Math.random()*10).toFixed(1)+'s;--d:-'+(Math.random()*16).toFixed(1)+'s"></i>';
+  d.innerHTML='<i class="nray"></i>'+lv+pt+'<i class="grass g2"></i><i class="fl fl0"></i><i class="fl fl2"></i><i class="fl fl4"></i><i class="grass"></i>'}
  else if(k==='forest'){let f='';for(let i=0;i<16;i++){const sp=i>=11;f+='<i class="ff'+(sp?' sp':'')+'" style="left:'+(4+Math.random()*92).toFixed(1)+'%;'+(sp?'bottom:'+(40+Math.random()*80).toFixed(0)+'px':'top:'+(30+Math.random()*55).toFixed(1)+'%')+';--t:'+(7+Math.random()*9).toFixed(1)+'s;--d:-'+(Math.random()*12).toFixed(1)+'s"></i>'}
   d.innerHTML='<i class="tr3"></i><i class="rays"></i><i class="tr2"></i><i class="deer"></i><i class="trunk t1"></i><i class="trunk t2"></i><i class="canopy"></i><i class="owl"></i><i class="ground"></i><i class="toad to1"></i><i class="toad to2"></i><i class="sq"></i><i class="fern fe1"></i><i class="fern fe2"></i>'+f}
- else if(k==='winter'){let f='';for(let i=0;i<26;i++){const dot=i%3===0;f+='<i class="sf'+(dot?' dot':'')+'" style="left:'+(Math.random()*98).toFixed(1)+'%;--s:'+(dot?4+Math.random()*5:8+Math.random()*14).toFixed(0)+'px;--t:'+(8+Math.random()*10).toFixed(1)+'s;--d:-'+(Math.random()*18).toFixed(1)+'s"></i>'}
-  for(let i=0;i<7;i++)f+='<i class="spk" style="left:'+(5+Math.random()*90).toFixed(0)+'%;top:'+(10+Math.random()*75).toFixed(0)+'%;--d:-'+(Math.random()*3).toFixed(1)+'s"></i>';
-  for(let i=0;i<5;i++)f+='<i class="drip" style="left:'+(4+i*21+Math.random()*6).toFixed(0)+'%;--d:-'+(Math.random()*4).toFixed(1)+'s"></i>';
+ else if(k==='winter'){let f='';for(let i=0;i<22;i++){const layer=i<8?' far':i<15?' mid':' near',dot=i%3===0;f+='<i class="sf'+layer+(dot?' dot':'')+'" style="left:'+(Math.random()*98).toFixed(1)+'%;--s:'+(dot?3+Math.random()*4:(layer==='far'?5+Math.random()*5:layer==='mid'?8+Math.random()*6:11+Math.random()*8)).toFixed(0)+'px;--t:'+(layer==='far'?16+Math.random()*8:layer==='mid'?11+Math.random()*6:8+Math.random()*5).toFixed(1)+'s;--d:-'+(Math.random()*18).toFixed(1)+'s"></i>'}
+  for(let i=0;i<5;i++)f+='<i class="spk" style="left:'+(5+Math.random()*90).toFixed(0)+'%;top:'+(10+Math.random()*75).toFixed(0)+'%;--d:-'+(Math.random()*3).toFixed(1)+'s"></i>';
+  for(let i=0;i<4;i++)f+='<i class="drip" style="left:'+(8+i*22+Math.random()*6).toFixed(0)+'%;--d:-'+(Math.random()*4).toFixed(1)+'s"></i>';
   d.innerHTML='<i class="aur"></i><i class="hills"></i><i class="pines"></i><i class="pines p2"></i><i class="snowg"></i><i class="snowman"></i><i class="peng"></i>'+f+'<i class="ice"></i><i class="ishine"></i>'}
  else if(k==='sapphire'){let s='';
   for(let i=0;i<56;i++){const far=i<28;s+='<i class="st'+(far?' far':'')+'" style="left:'+(Math.random()*100).toFixed(2)+'%;top:'+(Math.random()*100).toFixed(2)+'%;--s:'+(far?1+Math.random()*1.4:1.6+Math.random()*2.4).toFixed(1)+'px;--t:'+(1.8+Math.random()*(far?3.8:2.6)).toFixed(1)+'s;--d:-'+(Math.random()*6).toFixed(1)+'s"></i>'}
@@ -1286,7 +1559,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611092300';
+const APP_VERSION='202611092330';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
