@@ -1,5 +1,5 @@
-const CACHE='kosci-shell-v10';
-const SHELL=['./','./index.html','./manifest.webmanifest','./icon-192.png?v=2','./icon-512.png?v=2','./icon-maskable-512.png?v=2','./apple-touch-icon.png?v=2','./flags.svg','./logo-banner.webp','./logo-banner.jpg'];
+const CACHE='kosci-shell-v11';
+const SHELL=['./','./index.html','./manifest.webmanifest','./icon-192.png?v=2','./icon-512.png?v=2','./icon-maskable-512.png?v=2','./apple-touch-icon.png?v=2','./flags.svg','./logo-banner.webp','./logo-banner.jpg','./av-donutduck77.webp','./av-donutduck77-128.webp','./av-donutduck77.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{

@@ -1722,6 +1722,9 @@ body:has(#game:not([hidden])) .dc-galaxy .galw{opacity:.6}body:has(#game:not([hi
 .noanim .dc-galaxy .comet{display:none}.noanim .dc-galaxy .st,.noanim .dc-galaxy .spx{opacity:.65;transform:none}
 .tabhid #deco i,.tabhid #deco i::after{animation-play-state:paused!important}
 @media (prefers-reduced-motion:reduce){.dc-galaxy i{animation:none!important}.dc-galaxy .comet,.dc-galaxy .sh{display:none}}
+
+img.av{object-fit:cover;background:#120626;box-sizing:border-box}img.av.avx{box-shadow:0 0 0 1.5px #ffd56a,0 0 0 2.5px rgba(0,0,0,.3),0 0 8px #ff9a3c88}
+.avt.avtx{position:relative}.avt .avxm{position:absolute;top:2px;right:4px;font-size:12px;line-height:1;filter:drop-shadow(0 0 3px #ffd56a)}
 </style></head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -1936,7 +1939,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611112300';
+const APP_VERSION='202611120000';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -2279,14 +2282,22 @@ const PILL={white:['#ffffff','#1b1b1b'],red:['#d62828','#ffffff'],blue:['#1f5fd1
 function colOf(n){return (S&&S.col&&S.col[n])?colMig(S.col[n]):'white'}
 function dieHTML(st,v,cls,i){const al=/alive/.test(cls||'');const pm=COLP.includes(st);let h='<div class="die st-'+st+(pm?' pm':'')+' '+(cls||'')+'" style="--hl:'+(COL[st]||COL.white)+(al?';--bd:'+(-(i*0.37+Math.random()*2)).toFixed(2)+'s;--kd:'+(-(Math.random()*5)).toFixed(2)+'s':'')+'">'+(al?'<b class="eyes"><b class="e"><b class="p"></b></b><b class="e"><b class="p"></b></b></b><b class="legs"><b></b><b></b></b><b class="frs"></b>':'');if(pm)h+='<b class="gl"></b>';for(let k=0;k<9;k++)h+='<i'+(v&&PIPS[v].includes(k)?' class="on"':'')+'></i>';return h+'</div>'}
 // ---- player avatars (inline SVG sprite #av-*) ----
-const AVK=['cat','dog','panda','ninja','alien','fairy','flame','skull','butterfly','angel'],AVN={pl:{cat:'Kot',dog:'Pies',panda:'Panda',ninja:'Ninja',alien:'Kosmita',fairy:'Wróżka',flame:'Płomień',skull:'Czaszka',butterfly:'Motyl',angel:'Anioł'},en:{cat:'Cat',dog:'Dog',panda:'Panda',ninja:'Ninja',alien:'Alien',fairy:'Fairy',flame:'Flame',skull:'Skull',butterfly:'Butterfly',angel:'Angel'}};
-const avOk=k=>typeof k==='string'&&AVK.includes(k)?k:'';let MYAV=avOk(localStorage.kav);
+const AVK=['cat','dog','panda','ninja','alien','fairy','flame','skull','butterfly','angel'],AVN={pl:{blackholecat:'Kot w czarnej dziurze',cat:'Kot',dog:'Pies',panda:'Panda',ninja:'Ninja',alien:'Kosmita',fairy:'Wróżka',flame:'Płomień',skull:'Czaszka',butterfly:'Motyl',angel:'Anioł'},en:{blackholecat:'Black-hole cat',cat:'Cat',dog:'Dog',panda:'Panda',ninja:'Ninja',alien:'Alien',fairy:'Fairy',flame:'Flame',skull:'Skull',butterfly:'Butterfly',angel:'Angel'}};
+// exclusive image avatars: anyone can SEE them (lobby, table, Top 10, results); only the listed player can PICK them.
+// Tied to the account login (case-insensitive) or, without an account, to the typed player name (case-insensitive).
+const AVX={blackholecat:{w:'donutduck77',s1:'av-donutduck77-128.webp',s2:'av-donutduck77.webp',png:'av-donutduck77.png'}};
+const avOk=k=>typeof k==='string'&&(AVK.includes(k)||Object.prototype.hasOwnProperty.call(AVX,k))?k:'';
+function avIds(){const ids=[];try{ids.push(localStorage.kacc||'',localStorage.kname||'',me||'')}catch(e){}try{const n=document.getElementById('name');if(n)ids.push(n.value||'')}catch(e){}return ids.map(x=>String(x).trim().toLowerCase()).filter(Boolean)}
+function avElig(k){const x=AVX[k];return !!x&&avIds().includes(x.w)}
+function avMine(k){return AVK.includes(k)||avElig(k)}
+let MYAV=avOk(localStorage.kav);if(MYAV&&!avMine(MYAV))MYAV='';
+function avAuto(){try{const ex=Object.keys(AVX).find(avElig);if(MYAV&&AVX[MYAV]&&!avElig(MYAV)){avSet('',true);return}if(ex&&!MYAV&&localStorage.kavxd!==ex)avSet(ex);else avGrid('avpick')}catch(e){}}
 function avName(k){return (AVN[LANG]||AVN.pl)[k]||k}
-function avHTML(k,cls){k=avOk(k);if(!k)return '';return '<svg class="av '+(cls||'')+'" viewBox="0 0 32 32" role="img" aria-label="'+esc(avName(k))+'"><title>'+esc(avName(k))+'</title><use href="#av-'+k+'"/></svg>'}
+function avHTML(k,cls){k=avOk(k);if(!k)return '';const x=AVX[k];if(x)return '<img class="av avx '+(cls||'')+'" src="'+x.s1+'" srcset="'+x.s1+' 128w, '+x.s2+' 256w" sizes="44px" alt="'+esc(avName(k))+'" title="'+esc(avName(k))+'" width="32" height="32" decoding="async" loading="lazy" draggable="false" onerror="this.onerror=null;this.removeAttribute(\'srcset\');this.src=\''+x.png+'\'">';return '<svg class="av '+(cls||'')+'" viewBox="0 0 32 32" role="img" aria-label="'+esc(avName(k))+'"><title>'+esc(avName(k))+'</title><use href="#av-'+k+'"/></svg>'}
 function avOf(n){return avOk(S&&S.av&&S.av[n])}
-function avGrid(id){const e=$(id);if(!e)return;e.innerHTML=AVK.map(k=>'<button type="button" class="avt'+(k===MYAV?' on':'')+'" role="radio" aria-checked="'+(k===MYAV)+'" aria-label="'+esc(avName(k))+'" title="'+esc(avName(k))+'" data-av="'+k+'">'+avHTML(k,'avg')+'<span>'+esc(avName(k))+'</span></button>').join('');
+function avGrid(id){const e=$(id);if(!e)return;e.innerHTML=Object.keys(AVX).filter(avElig).concat(AVK).map(k=>'<button type="button" class="avt'+(AVX[k]?' avtx':'')+(k===MYAV?' on':'')+'" role="radio" aria-checked="'+(k===MYAV)+'" aria-label="'+esc(avName(k))+'" title="'+esc(avName(k))+'" data-av="'+k+'">'+(AVX[k]?'<b class="avxm" aria-hidden="true">✨</b>':'')+avHTML(k,'avg')+'<span>'+esc(avName(k))+'</span></button>').join('');
  e.querySelectorAll('.avt').forEach(b=>b.onclick=()=>avSet(b.dataset.av===MYAV?'':b.dataset.av))}
-function avSet(k,quiet){MYAV=avOk(k);if(MYAV)localStorage.kav=MYAV;else localStorage.removeItem('kav');avGrid('avpick');avGrid('accav');const a=$('accavbig');if(a)a.innerHTML=MYAV?avHTML(MYAV,'avb'):'👤';
+function avSet(k,quiet){if(!k&&MYAV&&AVX[MYAV]&&avElig(MYAV))localStorage.kavxd=MYAV;if(k&&AVX[k])localStorage.removeItem('kavxd');k=avOk(k);if(k&&!avMine(k))k='';MYAV=k;if(MYAV)localStorage.kav=MYAV;else localStorage.removeItem('kav');avGrid('avpick');avGrid('accav');const a=$('accavbig');if(a)a.innerHTML=MYAV?avHTML(MYAV,'avb'):'👤';
  if(!quiet)try{accDirty()}catch(e){}try{if(S&&me&&ROOM){S.av=S.av||{};if((S.av[me]||'')!==MYAV){if(MYAV)S.av[me]=MYAV;else delete S.av[me];publish()}}}catch(e){}}
 function dot(n){const a=avOf(n);return a?avHTML(a,'avs'):dieHTML(colOf(n),1,'tiny')}
 function drawPickers(){document.querySelectorAll('.pick').forEach(p=>{const CN=(I18N[LANG]||I18N.pl).colNames||{};const g=(lbl,keys)=>'<div class="pg" role="radiogroup" aria-label="'+esc(t(lbl))+'"><b>'+t(lbl)+'</b> '+keys.map(k=>'<span class="sw'+(k===myCol?' on':'')+'" role="radio" aria-checked="'+(k===myCol)+'" tabindex="0" data-c="'+k+'" title="'+esc(CN[k]||k)+'" aria-label="'+esc(CN[k]||k)+'">'+dieHTML(k,5,'mini')+'</span>').join('')+'</div>';
@@ -2620,9 +2631,9 @@ function accErr(e){const c=(e&&e.code)||String(e&&e.message||e);if(/invalid-cred
  if(/too-many-requests/.test(c))return at('eMany');if(/network|unavailable|Failed to fetch/i.test(c))return at('eNet');if(/weak-password/.test(c))return at('ePw');return at('eGen',{c:esc(String(c).slice(0,60))})}
 function accData(){const d={name:PN||ACL,login:ACL,v:1,a:{u:ACV.u,st:ACV.st},t:Date.now()};if(MYAV)d.av=MYAV;return d}
 async function accAuth(usr){if(usr&&accRegP){try{await accRegP}catch(e){return}}const prev=ACU;ACU=usr||null;if(!usr){ACL='';localStorage.removeItem('kacc');PN='';localStorage.removeItem('kpname');accReady=false;accBtn();if(prev)accRefresh();return}
- {const k=(usr.email||'').split('@')[0];if(!ACL||ACL.toLowerCase()!==k)ACL=k}localStorage.kacc=ACL;accBtn();
+ {const k=(usr.email||'').split('@')[0];if(!ACL||ACL.toLowerCase()!==k)ACL=k}localStorage.kacc=ACL;accBtn();try{avAuto()}catch(e){}
  try{const {F,db}=FB;const s=await F.getDoc(F.doc(db,'users',usr.uid));if(ACU!==usr)return;const before=JSON.stringify([ACV.u,ACV.st]);
-  if(s.exists()){const d=s.data();if(d&&typeof d.login==='string'&&d.login.toLowerCase()===ACL.toLowerCase()&&accOk(d.login))ACL=d.login;const np=d&&accPnOk(d.name);if(np){PN=np;localStorage.kpname=PN}else if(!PN||PN.toLowerCase()===ACL.toLowerCase()){PN=ACL;localStorage.kpname=PN}localStorage.kacc=ACL;if(d&&d.a)achMerge(achSane(d.a));if(d&&avOk(d.av)&&d.av!==MYAV)avSet(d.av,true)}accReady=true;await accPush(true);if(before!==JSON.stringify([ACV.u,ACV.st])&&s.exists())accMsg=at('merged');
+  if(s.exists()){const d=s.data();if(d&&typeof d.login==='string'&&d.login.toLowerCase()===ACL.toLowerCase()&&accOk(d.login))ACL=d.login;const np=d&&accPnOk(d.name);if(np){PN=np;localStorage.kpname=PN}else if(!PN||PN.toLowerCase()===ACL.toLowerCase()){PN=ACL;localStorage.kpname=PN}localStorage.kacc=ACL;if(d&&d.a)achMerge(achSane(d.a));if(d&&avOk(d.av)&&avMine(d.av)&&d.av!==MYAV)avSet(d.av,true)}try{avAuto()}catch(e){}accReady=true;await accPush(true);if(before!==JSON.stringify([ACV.u,ACV.st])&&s.exists())accMsg=at('merged');
   if(!PN){PN=ACL;localStorage.kpname=PN}accBtn();try{const n=$('name');if(n&&(!n.value||n.value.toLowerCase()===ACL.toLowerCase())){n.value=PN;localStorage.kname=n.value}}catch(e){}}catch(e){accSt='err';console.warn('acc sync',e)}accRefresh()}
 let accMsg='',accRegP=null;
 async function accPush(now){if(!ACU||!accReady||!FB)return;clearTimeout(accT);if(!now){accT=setTimeout(()=>accPush(true),2500);return}accSt='busy';accLine();
@@ -2702,7 +2713,7 @@ async function fbSend(){const b=$('fbs');if(b.disabled)return;const body=fbBody(
  $('fbrt').onclick=()=>{e.hidden=true;fbSend()};e.scrollIntoView({block:'nearest'})}
 setTimeout(()=>{fbRetry().catch(()=>{})},8000);
 $('fbbtn').onclick=openFB;
-document.body.appendChild($("rov"));document.body.appendChild($("fx"));document.body.appendChild($("win"));document.body.appendChild($("ish"));document.body.appendChild($("gdv"));document.body.appendChild($("deco"));$('hsbtn').onclick=openHS;$('achbtn').onclick=()=>achOpen('grid');$('accbtn').onclick=()=>accOpen();try{avGrid('avpick')}catch(e){}try{accBtn()}catch(e){}try{achTheme(appTh);achFromStats();achBadge()}catch(e){}
+document.body.appendChild($("rov"));document.body.appendChild($("fx"));document.body.appendChild($("win"));document.body.appendChild($("ish"));document.body.appendChild($("gdv"));document.body.appendChild($("deco"));$('hsbtn').onclick=openHS;$('achbtn').onclick=()=>achOpen('grid');$('accbtn').onclick=()=>accOpen();try{avAuto()}catch(e){}try{accBtn()}catch(e){}try{achTheme(appTh);achFromStats();achBadge()}catch(e){}
 // ---- install app ----
 let instEv=null;const UA=navigator.userAgent;
 const IOS=/iPhone|iPad|iPod/i.test(UA)||(/Macintosh/.test(UA)&&navigator.maxTouchPoints>1),AND=/Android/i.test(UA);
@@ -2779,7 +2790,8 @@ function send(d){if(!S||!G)return;if(!cli||!cli.connected){toast(t('offMv'));res
  if(d.a==='roll')K.roll(G,localStorage.kfix?(()=>{const f=localStorage.kfix.split(',').map(Number);let j=0;return()=>(f[j++%f.length]-0.5)/6})():Math.random);if(d.a==='hold')K.toggleHold(G,d.i);if(d.a==='write'&&!K.write(G,d.cat,d.cross))return;S.G=G;publish()}
 $('go').onclick=()=>{if(!S||S.host!==me)return;S.G=K.newGame(S.lobby,S.nd===5?5:6,S.mode);publish()};
 document.querySelectorAll('#ndsel button').forEach(b=>b.onclick=()=>{if(!S||S.host!==me||S.G)return;S.nd=+b.dataset.nd;localStorage.knd=S.nd;publish()});
-function nm(){const n=$('name').value.trim();if(!n){$('msg').textContent=t('enterName');return null}localStorage.kname=n;return n}
+function nm(){const n=$('name').value.trim();if(!n){$('msg').textContent=t('enterName');return null}localStorage.kname=n;try{avAuto()}catch(e){}return n}
+$('name').addEventListener('change',()=>{try{const v=$('name').value.trim();if(v)localStorage.kname=v;avAuto()}catch(e){}});
 function code(){let c='';const u=new Uint32Array(6);try{crypto.getRandomValues(u)}catch(e){for(let i=0;i<6;i++)u[i]=Math.random()*1e9}for(let i=0;i<6;i++)c+=(i===0?1+u[i]%9:u[i]%10);return c}
 $('menub').onclick=leaveToMenu;
 $('newg').onclick=async()=>{if(await askNew())send({a:'new'})};
