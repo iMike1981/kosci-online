@@ -1,8 +1,8 @@
 {
-  "name": "Kości Online",
-  "short_name": "Kości",
-  "description": "Gra w kości online z rodziną / Online dice game",
-  "lang": "pl",
+  "name": "Dice Online",
+  "short_name": "Dice Online",
+  "description": "Dice Online – online dice game for family and friends / Kości online – gra w kości z rodziną",
+  "lang": "en",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
