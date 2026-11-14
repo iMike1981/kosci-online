@@ -38,6 +38,9 @@ th.cur{background:#ffe699}.opt{cursor:pointer;color:#2f5597;font-weight:bold;bac
 .st-ghost{background:radial-gradient(circle,#ffffffee,#e6e9ffcc);border-color:#b8bff0;box-shadow:0 0 12px 3px #c9d0ff}
 .st-ghost i{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1C5.5 1 3 4.5 3 8.5V19l2.3-2 2.3 2L10 17l2.4 2 2.3-2 2.3 2V8.5C17 4.5 14.5 1 10 1z' fill='%233a3a6e'/%3E%3Ccircle cx='7.6' cy='8.5' r='1.7' fill='%23fff'/%3E%3Ccircle cx='12.4' cy='8.5' r='1.7' fill='%23fff'/%3E%3Cellipse cx='10' cy='12.6' rx='1.5' ry='2' fill='%23fff'/%3E%3C/svg%3E") center/contain no-repeat;transform:scale(1.45)}
 .die.mini i,.die.tiny i{box-shadow:none}
+.adm .admlist{list-style:none;margin:10px 0;padding:0}.admrow{background:#fff;border:1px solid #d6dfeb;border-radius:10px;padding:8px 10px;margin:6px 0;font-size:14px;color:#1b2a40}.admold{opacity:.75;background:#f3f5f8}
+.admmeta{font-size:12.5px;color:#4a5a72;margin-bottom:4px}.admps{display:flex;flex-wrap:wrap;gap:6px 12px}.admp{display:inline-flex;align-items:center;gap:5px}.admp .flg{width:22px;height:16px}.admem{color:#5a6a82;font-size:12.5px}
+.admerr{background:#fff1f0;border:1px solid #f0b4ae;color:#8a1f12;border-radius:8px;padding:8px 10px;font-size:14px}.admfoot{text-align:center;color:#4a5a72}.admfoot button{padding:8px 16px}.admglobe{font-size:16px;line-height:1}
 #rov{position:fixed;inset:0;z-index:70;background:#f6f9fd;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .rhead{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;background:#1f3864;color:#fff;padding:10px 16px;font-size:20px;z-index:2}.rhead button{background:#fff;color:#1f3864;font-size:15px;padding:7px 12px}
 .rbody{max-width:760px;margin:auto;padding:12px 16px 40px;font-size:16px;line-height:1.55}
@@ -2288,7 +2291,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611122330';
+const APP_VERSION='202611141600';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -2831,7 +2834,8 @@ function hsSubmit(g){if(!g||g.phase!=='end')return;if(!g.players.length||g.playe
  const gid=g.gid||(ROOM+'-'+g.players.map(p=>p.name).join(','));if(hsDone[gid])return;hsDone[gid]=1;const d=hsNow();
  const ccm=(S&&S.cc)||{},add=g.players.map(p=>{const e={g:gid,n:hsClean(p.name),s:K.totals(p.sheet,K.ndOf(g)).total,d,k:K.ndOf(g)},cc=hsCC(ccm[p.name]),md=hsMd(g.mode),av=avOk(((S&&S.av)||{})[p.name]);if(cc)e.cc=cc;if(md)e.md=md;if(av)e.av=av;return e});
  hsMonthCheck();HS=hsMerge(HS,add);MS=hsMerge(MS.filter(e=>hsMk(e.d)===MK),add.filter(e=>hsMk(e.d)===MK));if(!hsGot||!GOTM[5]||!GOTM[6])hsPending.push(...add);hsSave();hsPublish();
- try{const o=gsMake(g,gid,d);if(o){gsStore(o);gsQ.push(o);gsFlush()}}catch(e){}}
+ try{const o=gsMake(g,gid,d);if(o){gsStore(o);gsQ.push(o);gsFlush()}}catch(e){}
+ gameLog(g,gid,d)}
 function hsDate(ms){const x=new Date(ms);return String(x.getDate()).padStart(2,'0')+'.'+String(x.getMonth()+1).padStart(2,'0')+'.'+x.getFullYear()}
 function hsCup(c1,c2){return '<svg class="hcup" viewBox="0 0 24 24"><path d="M6 3h12v4a6 6 0 0 1-12 0z" fill="'+c1+'" stroke="'+c2+'" stroke-width="1.2"/><path d="M6 5H3.5a3 3 0 0 0 3 4M18 5h2.5a3 3 0 0 1-3 4" fill="none" stroke="'+c2+'" stroke-width="1.6"/><path d="M10.5 13h3l.5 4h-4z" fill="'+c2+'"/><rect x="7.5" y="17" width="9" height="3.5" rx="1" fill="'+c1+'" stroke="'+c2+'" stroke-width="1.2"/><path d="M9 5.5q1 3 3.5 3.5" stroke="#fff" stroke-opacity=".7" stroke-width="1.2" fill="none"/></svg>'}
 function openHS(){fltHide();const o=$('rov');o.dataset.hs=1;const md=[hsCup('#ffcf33','#a87800'),hsCup('#d9dde3','#7d8590'),hsCup('#d98b4a','#8a4f1d')];
@@ -3005,8 +3009,8 @@ function accData(){const st=accFB>=2?Object.assign({},ACV.st,{th:ACV.st.th&4095}
 async function accAuth(usr){if(usr&&accRegP){try{await accRegP}catch(e){return}}const prev=ACU;ACU=usr||null;if(!usr){ACL='';localStorage.removeItem('kacc');PN='';localStorage.removeItem('kpname');accReady=false;accBtn();if(prev)accRefresh();return}
  {const k=(usr.email||'').split('@')[0];if(!ACL||ACL.toLowerCase()!==k)ACL=k}localStorage.kacc=ACL;accBtn();try{avAuto()}catch(e){}
  try{const {F,db}=FB;const s=await F.getDoc(F.doc(db,'users',usr.uid));if(ACU!==usr)return;const before=JSON.stringify([ACV.u,ACV.st]);
-  if(s.exists()){const d=s.data();if(d&&typeof d.login==='string'&&d.login.toLowerCase()===ACL.toLowerCase()&&accOk(d.login))ACL=d.login;const np=d&&accPnOk(d.name);if(np){PN=np;localStorage.kpname=PN}else if(!PN||PN.toLowerCase()===ACL.toLowerCase()){PN=ACL;localStorage.kpname=PN}localStorage.kacc=ACL;if(d&&d.a)achMerge(achSane(d.a));if(d&&d.tw){try{twMerge(d.tw)}catch(e){}}if(d&&avOk(d.av)&&avMine(d.av)&&d.av!==MYAV)avSet(d.av,true)}try{avAuto()}catch(e){}accReady=true;await accPush(true);if(before!==JSON.stringify([ACV.u,ACV.st])&&s.exists())accMsg=at('merged');
-  if(!PN){PN=ACL;localStorage.kpname=PN}accBtn();try{const n=$('name');if(n&&(!n.value||n.value.toLowerCase()===ACL.toLowerCase())){n.value=PN;localStorage.kname=n.value}}catch(e){}}catch(e){accSt='err';console.warn('acc sync',e)}accRefresh()}
+  if(s.exists()){const d=s.data();if(d&&typeof d.login==='string'&&d.login.toLowerCase()===ACL.toLowerCase()&&accOk(d.login))ACL=d.login;const np=d&&accPnOk(d.name);if(np){PN=np;localStorage.kpname=PN}else if(!PN||PN.toLowerCase()===ACL.toLowerCase()){PN=ACL;localStorage.kpname=PN}localStorage.kacc=ACL;if(d&&d.a)achMerge(achSane(d.a));if(d&&d.tw){try{twMerge(d.tw)}catch(e){}}if(d&&avOk(d.av)&&avMine(d.av)&&d.av!==MYAV)avSet(d.av,true)}try{avAuto()}catch(e){}accReady=true;loginLog(usr);await accPush(true);if(before!==JSON.stringify([ACV.u,ACV.st])&&s.exists())accMsg=at('merged');
+  if(!PN){PN=ACL;localStorage.kpname=PN}accBtn();try{const n=$('name');if(n&&(!n.value||n.value.toLowerCase()===ACL.toLowerCase())){n.value=PN;localStorage.kname=n.value}}catch(e){}}catch(e){accSt='err';console.warn('acc sync',e)}accRefresh();try{admHash()}catch(e){}}
 let accMsg='',accRegP=null;
 async function accPush(now){if(!ACU||!accReady||!FB)return;clearTimeout(accT);if(!now){accT=setTimeout(()=>accPush(true),2500);return}accSt='busy';accLine();
  try{await FB.F.setDoc(FB.F.doc(FB.db,'users',ACU.uid),accData());accSt='ok'}catch(e){if(/permission/i.test(String(e&&(e.code||e.message)||e))&&accFB<2){accFB++;localStorage.kaccfb=accFB;return accPush(true)}accSt='err';accT=setTimeout(()=>accPush(true),30000)}accLine()}
@@ -3042,12 +3046,73 @@ function accOpen(view){const o=$('gdv');o.className='gt-'+sset();o.hidden=false;
   if(!accOk(l)){m.textContent=at('eLogin');return}if(pw.length<6){m.textContent=at('ePw');return}if(reg&&pw!==$('accp2').value){m.textContent=at('ePw2');return}
   m.textContent=at('wait');$('accgo').disabled=true;let f;try{f=await fbLoad()}catch(e){m.textContent=at('eLoad');$('accgo').disabled=false;return}
   try{if(reg){const ex=await f.F.getDoc(f.F.doc(f.db,'usernames',l.toLowerCase()));if(ex.exists())throw {code:'already-exists'};let rr,rj;accRegP=new Promise((a,b)=>{rr=a;rj=b});accRegP.catch(()=>{});
-    try{const cr=await f.U.createUserWithEmailAndPassword(f.auth,accMail(l),pw);
+    accAct='signup';try{const cr=await f.U.createUserWithEmailAndPassword(f.auth,accMail(l),pw);
     try{const b=f.F.writeBatch(f.db);b.set(f.F.doc(f.db,'usernames',l.toLowerCase()),{uid:cr.user.uid,login:l});b.set(f.F.doc(f.db,'users',cr.user.uid),Object.assign(accData(),{login:l,name:l}));await b.commit()}
     catch(e){try{await f.U.deleteUser(cr.user)}catch(_){}throw e}rr()}catch(e){rj(e);throw e}finally{accRegP=null}}
-   else{await f.U.signInWithEmailAndPassword(f.auth,accMail(l),pw)}}catch(e){m.textContent=accErr(e);if($('accgo'))$('accgo').disabled=false}}}
+   else{accAct='signin';await f.U.signInWithEmailAndPassword(f.auth,accMail(l),pw)}}catch(e){m.textContent=accErr(e);if($('accgo'))$('accgo').disabled=false}}}
 // existing session: load the SDK in the background only when this device was logged in
 if(ACL)setTimeout(()=>fbLoad().catch(()=>{}),1500);
+// ---- hidden admin view (only the owner's account; Firestore rules enforce reads) ----
+const ADMIN_UID='j5banvmahQenBNjkw7C8eJuVEIS2',FS_BASE='https://firestore.googleapis.com/v1/projects/'+FBC.projectId+'/databases/(default)/documents';
+function isAdmin(){return !!(ACU&&ACU.uid===ADMIN_UID)}
+function fsV(v){if(v===null||v===undefined)return {nullValue:null};if(typeof v==='boolean')return {booleanValue:v};if(typeof v==='number')return Number.isInteger(v)?{integerValue:String(v)}:{doubleValue:v};if(typeof v==='string')return {stringValue:v};
+ if(Array.isArray(v))return {arrayValue:{values:v.map(fsV)}};const f={};for(const k in v)if(v[k]!==undefined)f[k]=fsV(v[k]);return {mapValue:{fields:f}}}
+function fsFields(o){const f={};for(const k in o)if(o[k]!==undefined)f[k]=fsV(o[k]);return f}
+// unauthenticated REST write (works for guests too); create-only, server timestamp in field t
+async function fsCreate(col,id,o){const name='projects/'+FBC.projectId+'/databases/(default)/documents/'+col+'/'+id;
+ const w={update:{name,fields:fsFields(o)},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:false}};
+ const r=await fetch(FS_BASE+':commit?key='+FBC.apiKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({writes:[w]})});return r.ok}
+function devStr(){const u=navigator.userAgent||'';let os=/Android/.test(u)?'Android':/iPhone|iPad|iPod/.test(u)?'iOS':/Windows/.test(u)?'Windows':/Mac OS X|Macintosh/.test(u)?'macOS':/CrOS/.test(u)?'ChromeOS':/Linux/.test(u)?'Linux':'?';
+ let br=/SamsungBrowser/.test(u)?'Samsung':/EdgA?\//.test(u)?'Edge':/OPR\/|Opera/.test(u)?'Opera':/Firefox|FxiOS/.test(u)?'Firefox':/CriOS|Chrome\//.test(u)?'Chrome':/Safari\//.test(u)?'Safari':'?';
+ let pwa=false;try{pwa=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){}
+ const m=/Mobi|Android|iPhone|iPad/.test(u)?'mob':'desk';return (os+' · '+br+' · '+m+(pwa?' · PWA':'')).slice(0,60)}
+function admCC(){return new Promise(res=>{const c0=ccCached();if(c0)return res(c0);const t0=Date.now(),iv=setInterval(()=>{const c=ccCached();if(c||Date.now()-t0>4500){clearInterval(iv);res(c||hsCC(myCC)||'')}},300)})}
+function gameRec(g,gid,d){const k=K.ndOf(g),ccm=(S&&S.cc)||{};return {g:String(gid).slice(0,64),d:Math.round(d),k,md:g.mode?String(g.mode).slice(0,12):'classic',th:String(appTh||'').slice(0,16),v:APP_VERSION,
+ p:g.players.slice(0,8).map(q=>({n:hsClean(q.name),s:Math.round(K.totals(q.sheet,k).total),cc:hsCC(ccm[q.name])||''}))}}
+function gameLog(g,gid,d){try{const o=gameRec(g,gid,d);fsCreate('games',gsId(gid)||('g'+d),o).catch(()=>{})}catch(e){}}
+let accAct='';
+async function loginLog(usr){try{const k=accAct||'session';accAct='';const key='klog_'+usr.uid;
+ if(k==='session'){const l=+localStorage[key]||0;if(Date.now()-l<216e5)return}localStorage[key]=Date.now();
+ const cc=await admCC();if(!FB||ACU!==usr)return;const login=(ACL||'').slice(0,40)||(usr.email||'').split('@')[0].slice(0,40);
+ const o={k,uid:usr.uid,login,name:String(PN||login).slice(0,40),cc:hsCC(cc)||'',dev:devStr(),v:APP_VERSION,lang:String(LANG).slice(0,5),t:FB.F.serverTimestamp()};
+ if(usr.email)o.email=usr.email;await FB.F.addDoc(FB.F.collection(FB.db,'logins'),o)}catch(e){console.warn('login log',e)}}
+async function guestLog(){try{if(ACL||ACU)return;const l=+localStorage.kglog||0;if(Date.now()-l<216e5)return;localStorage.kglog=Date.now();const cc=await admCC();if(ACL||ACU)return;
+ const nm=String(localStorage.kname||localStorage.kpname||'').slice(0,40);const o={k:'guest',cc:hsCC(cc)||'',dev:devStr(),v:APP_VERSION,lang:String(LANG).slice(0,5)};if(nm)o.name=nm;
+ await fsCreate('logins','gst-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8),o)}catch(e){}}
+setTimeout(guestLog,6000);
+let ADM={tab:'g',g:[],l:[],gc:null,lc:null,gEnd:false,lEnd:false,err:'',busy:false};
+const AT=k=>({pl:{t:'Panel admina',g:'Gry',l:'Logowania',more:'Wczytaj więcej',none:'Brak wpisów.',old:'starsze (lokalne / tablica)',rules:'Brak dostępu – reguły Firestore nie są jeszcze wdrożone dla kolekcji games/logins.',load:'Wczytywanie…',end:'To wszystko.',guest:'gość'},
+ en:{t:'Admin',g:'Games',l:'Logins',more:'Load more',none:'No entries.',old:'older (local / board)',rules:'No access – Firestore rules for games/logins are not deployed yet.',load:'Loading…',end:'That is all.',guest:'guest'}})[LANG==='pl'?'pl':'en'][k];
+function admTs(x){const ms=x&&typeof x.toMillis==='function'?x.toMillis():typeof x==='number'?x:0;if(!ms)return '—';const d=new Date(ms);return hsDate(ms)+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+function admFlag(cc){cc=hsCC(cc);return cc&&FLAGSET.has(cc)?flagHTML(cc):'<span class="admglobe" title="?">🌐</span>'}
+function admOlder(){const m={};try{const all=gsLoadAll();for(const id in all){const o=all[id];if(o&&o.g)m[o.g]={g:o.g,d:o.d,k:o.k,md:o.md||'classic',p:o.p.map(q=>({n:q.n,s:(()=>{try{return K.totals(q.s,o.k).total}catch(e){return null}})(),cc:q.cc||''})),old:1}}}catch(e){}
+ try{[...HS,...(typeof MS!=='undefined'?MS:[])].forEach(e=>{if(!e||!e.g)return;let r=m[e.g];if(!r)r=m[e.g]={g:e.g,d:e.d,k:e.k,md:e.md||'classic',p:[],old:1};if(!r.p.some(q=>q.n===e.n))r.p.push({n:e.n,s:e.s,cc:e.cc||''})})}catch(e){}
+ return Object.values(m)}
+async function admLoad(tab){if(ADM.busy||!isAdmin())return;const F=FB.F,db=FB.db,isG=tab==='g';if(isG?ADM.gEnd:ADM.lEnd)return;ADM.busy=true;admDraw();
+ try{const cs=[F.orderBy('t','desc'),F.limit(50)],cur=isG?ADM.gc:ADM.lc;if(cur)cs.push(F.startAfter(cur));const r=await F.getDocs(F.query(F.collection(db,isG?'games':'logins'),...cs));
+  const rows=r.docs.map(d=>Object.assign({id:d.id},d.data()));if(r.docs.length)isG?ADM.gc=r.docs[r.docs.length-1]:ADM.lc=r.docs[r.docs.length-1];if(r.docs.length<50)isG?ADM.gEnd=true:ADM.lEnd=true;
+  if(isG)ADM.g.push(...rows);else ADM.l.push(...rows);ADM.err=''}catch(e){ADM.err=/permission/i.test(String(e&&(e.code||e.message)))?AT('rules'):String(e&&(e.message||e)).slice(0,160);isG?ADM.gEnd=true:ADM.lEnd=true}
+ ADM.busy=false;admDraw()}
+function admDraw(){const o=$('rov');if(!o||o.hidden||!o.dataset.adm)return;const isG=ADM.tab==='g';let rows='';
+ if(isG){const seen=new Set(ADM.g.map(x=>x.g));const all=ADM.g.map(x=>Object.assign({},x,{ms:x.t&&x.t.toMillis?x.t.toMillis():x.d}));if(ADM.gEnd)admOlder().filter(x=>!seen.has(x.g)).forEach(x=>all.push(Object.assign(x,{ms:x.d})));
+  all.sort((a,b)=>(b.ms||0)-(a.ms||0));
+  rows=all.map(x=>'<li class="admrow'+(x.old?' admold':'')+'"><div class="admmeta"><b>'+admTs(x.ms)+'</b> · '+(x.k||'?')+'🎲 · '+esc(x.md||'classic')+(x.th?' · '+esc(x.th):'')+(x.old?' · <i>'+AT('old')+'</i>':'')+'</div><div class="admps">'+
+   (x.p||[]).slice().sort((a,b)=>(b.s||0)-(a.s||0)).map(q=>'<span class="admp">'+admFlag(q.cc)+' '+esc(q.n||'?')+' <b>'+(q.s==null?'?':q.s)+'</b></span>').join('')+'</div></li>').join('')}
+ else rows=ADM.l.map(x=>'<li class="admrow"><div class="admmeta"><b>'+admTs(x.t)+'</b> · '+esc(x.k||'?')+' · '+esc(x.dev||'')+(x.v?' · v'+esc(String(x.v).slice(-4)):'')+'</div><div class="admps"><span class="admp">'+admFlag(x.cc)+' '+(x.uid?'<b>'+esc(x.login||'?')+'</b>'+(x.name&&x.name!==x.login?' ('+esc(x.name)+')':''):'<i>'+AT('guest')+'</i>'+(x.name?' '+esc(x.name):''))+'</span>'+(x.email?'<span class="admp admem">'+esc(x.email)+'</span>':'')+'</div></li>').join('');
+ const end=isG?ADM.gEnd:ADM.lEnd;
+ o.innerHTML='<div class="rhead"><b>🛡️ '+AT('t')+'</b><button id="rclose">'+t('hsClose')+' ✕</button></div><div class="rbody adm"><div class="hstabs" role="tablist">'+[['g','🎲 '+AT('g')+' ('+ADM.g.length+')'],['l','🔑 '+AT('l')+' ('+ADM.l.length+')']].map(([c,l])=>'<button role="tab" data-at="'+c+'" class="hstab'+(c===ADM.tab?' on':'')+'">'+l+'</button>').join('')+'</div>'
+  +(ADM.err?'<p class="admerr">'+esc(ADM.err)+'</p>':'')+'<ul class="admlist">'+(rows||(ADM.busy?'':'<li class="admrow">'+AT('none')+'</li>'))+'</ul>'
+  +'<p class="admfoot">'+(ADM.busy?AT('load'):end?AT('end'):'<button id="admmore" type="button">'+AT('more')+'</button>')+'</p></div>';
+ o.querySelectorAll('[data-at]').forEach(b=>b.onclick=()=>{ADM.tab=b.dataset.at;const e=ADM.tab==='g'?(ADM.g.length||ADM.gEnd):(ADM.l.length||ADM.lEnd);admDraw();if(!e)admLoad(ADM.tab)});
+ const mb=$('admmore');if(mb)mb.onclick=()=>admLoad(ADM.tab);$('rclose').onclick=()=>{delete o.dataset.adm;if(location.hash==='#admin')history.replaceState(null,'',location.pathname+location.search);closeRules()}}
+function openAdmin(){if(!isAdmin()||!FB)return false;try{fltHide()}catch(e){}const o=$('rov');delete o.dataset.hs;o.dataset.adm=1;o.hidden=false;document.body.style.overflow='hidden';
+ ADM={tab:'g',g:[],l:[],gc:null,lc:null,gEnd:false,lEnd:false,err:'',busy:false};admDraw();admLoad('g');return true}
+function admHash(){if(location.hash!=='#admin')return;if(isAdmin())openAdmin();else if(ACL&&!FB)fbLoad().catch(()=>{})}
+addEventListener('hashchange',admHash);
+// discreet triggers: 5 quick taps on the header/logo, or a 1.2 s long-press on the stats footer
+(function(){let n=0,t0=0;document.addEventListener('click',e=>{const h=e.target&&e.target.closest&&e.target.closest('.hd');if(!h)return;const now=Date.now();if(now-t0>3000)n=0;t0=now;if(++n>=5){n=0;openAdmin()}},true);
+ let lp=0;const st=()=>{clearTimeout(lp);lp=setTimeout(()=>openAdmin(),1200)},cl=()=>clearTimeout(lp);
+ document.addEventListener('pointerdown',e=>{if(e.target&&e.target.closest&&e.target.closest('#stats2'))st()},true);['pointerup','pointercancel','pointerleave'].forEach(v=>document.addEventListener(v,cl,true))})();
 // ---- feedback (FormSubmit AJAX) ----
 const FB_URL='https://formsubmit.co/ajax/42073dda03e9611f6814cc6acede0c29',FB_MAIL=['janowicz.michal','gmail.com'].join('@');let fbOpenT=0;
 function fbLeft(){return Math.ceil((30000-(Date.now()-(+localStorage.kfbT||0)))/1000)}
