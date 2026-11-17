@@ -33,7 +33,7 @@ a.back{background:#0b1e45}table{border-collapse:collapse;width:100%;font-size:14
 <p>The game keeps its settings and progress in your browser's local storage on your device: nickname, language, theme, sound and animation settings, avatar, achievements and statistics, recent high scores and game summaries, your current room code, and a cached two-letter country code. This data stays on your device until you clear the site data or uninstall the app. In the Android app a temporary flag in session storage marks that the game runs inside the app.</p>
 
 <h3>2. Online multiplayer and high scores</h3>
-<p>Multiplayer rooms, the Top&nbsp;10 / monthly high-score lists and finished-game summaries are exchanged through public MQTT message brokers (shiftr.io, HiveMQ, EMQX). These messages contain your <b>nickname</b>, room code, dice, scores, the date and your <b>country flag</b> (two-letter country code). Top-10 entries and game summaries are visible to other players. Do not use your full real name as a nickname if you don't want it shown.</p>
+<p>Multiplayer rooms, the Top&nbsp;10 / monthly high-score lists and finished-game summaries are exchanged through public MQTT message brokers (shiftr.io, HiveMQ, EMQX). These messages contain your <b>nickname</b>, room code, dice, scores, the date and your <b>country flag</b> (two-letter country code); if you have an account, also your <b>username</b>, <b>player level</b> and chosen avatar frame, so other players can open your profile card. Top-10 entries and game summaries are visible to other players. Do not use your full real name as a nickname if you don't want it shown.</p>
 
 <h3>3. Country flag</h3>
 <p>To show a country flag next to your nickname, the game asks a country-lookup service (api.country.is, with get.geojs.io or ipapi.co as fallbacks) for the country of your IP address. Only the two-letter country code is kept; the game does not store your IP address. If the lookup fails, the country is guessed from your device time zone or language.</p>
@@ -42,8 +42,10 @@ a.back{background:#0b1e45}table{border-collapse:collapse;width:100%;font-size:14
 <p>If you create an account, we use Google Firebase Authentication and Cloud Firestore (project hosted by Google). We store:</p>
 <ul>
 <li>your <b>username</b> (internally turned into an address like <code>name@users.dice-online.invalid</code>, which is not a real e-mail) and your <b>password</b>, which Firebase stores in hashed form; we never see it;</li>
-<li>your display name, avatar, achievements, statistics and solo “Tower” progress, so you can use them on any device.</li>
+<li>your display name, avatar, achievements, statistics (games, wins, points, recent results, play time), player level/XP, unlocked and chosen rewards and solo “Tower” progress, so you can use them on any device.</li>
 </ul>
+<p><b>Public profile.</b> With an account, a small public profile is saved under your username so other players can tap your nickname and see it: display name, username, avatar, avatar frame and title, level and XP, number of games and wins, best and average score, longest streak, Tower progress, achievements, favourite category and country code. It contains no e-mail, password or device data. It is deleted together with your account.</p>
+<p><b>Google sign-in (optional, when offered).</b> You can sign in with Google or link Google to your account. Google then shares your Google account ID, name, e-mail address and profile photo with Firebase Authentication so you can sign in. The game does not show your Google e-mail or photo to anyone, does not use them for anything else and does not write them to its own logs or profiles; you still pick a separate username. You can unlink Google in 👤 Account (if your account also has a password) or delete the account.</p>
 
 <h3>5. Session, login and game logs</h3>
 <p>To run the game, spot problems and see how many people play, the game writes short records to Firestore that only the developer can read:</p>
@@ -70,7 +72,7 @@ a.back{background:#0b1e45}table{border-collapse:collapse;width:100%;font-size:14
 <p>Account data is kept until you delete the account. Logs and high-score entries are kept as long as they are needed to run and improve the game; you can ask us to delete entries that relate to you at any time.</p>
 
 <h3 id="delete-en">11. Deleting your account and data</h3>
-<p>In the game: <b>👤 Account → 🗑️ Delete account</b>, then confirm with your password. This permanently deletes your Firebase account, your username and the progress saved in it. To also remove login or game-log entries, or if you can no longer sign in, e-mail <a href="mailto:dice.online.game@gmail.com?subject=Delete%20my%20data">dice.online.game@gmail.com</a> with your username; we will delete it within 30 days. Data on your device is removed by clearing the site data or uninstalling the app.</p>
+<p>In the game: <b>👤 Account → 🗑️ Delete account</b>, then confirm with your password (or with Google if you signed up with Google). This permanently deletes your Firebase account, your username, your public profile and the progress saved in it. To also remove login or game-log entries, or if you can no longer sign in, e-mail <a href="mailto:dice.online.game@gmail.com?subject=Delete%20my%20data">dice.online.game@gmail.com</a> with your username; we will delete it within 30 days. Data on your device is removed by clearing the site data or uninstalling the app.</p>
 
 <h3>12. Your rights</h3>
 <p>Under the GDPR you can ask for access to, correction or deletion of your data, restrict or object to its use, and data portability. Write to <a href="mailto:dice.online.game@gmail.com">dice.online.game@gmail.com</a>. You can also complain to the Data Protection Commission in Ireland (<a href="https://www.dataprotection.ie">dataprotection.ie</a>) or your local authority.</p>
@@ -99,7 +101,7 @@ a.back{background:#0b1e45}table{border-collapse:collapse;width:100%;font-size:14
 <p>Gra zapisuje ustawienia i postępy w pamięci lokalnej przeglądarki na Twoim urządzeniu: pseudonim, język, motyw, ustawienia dźwięku i animacji, awatar, osiągnięcia i statystyki, ostatnie rekordy i podsumowania gier, kod bieżącego pokoju oraz zapamiętany dwuliterowy kod kraju. Te dane zostają na urządzeniu, dopóki nie wyczyścisz danych strony albo nie odinstalujesz aplikacji. W aplikacji na Androida tymczasowa flaga w pamięci sesji oznacza, że gra działa w aplikacji.</p>
 
 <h3>2. Gra online i rekordy</h3>
-<p>Pokoje gry wieloosobowej, listy Top&nbsp;10 i rekordy miesiąca oraz podsumowania zakończonych gier są przesyłane przez publiczne serwery wiadomości MQTT (shiftr.io, HiveMQ, EMQX). Zawierają one Twój <b>pseudonim</b>, kod pokoju, kości, punkty, datę i <b>flagę kraju</b> (dwuliterowy kod). Wpisy Top 10 i podsumowania gier widzą inni gracze. Jeśli nie chcesz, żeby Twoje imię i nazwisko było widoczne, nie używaj ich jako pseudonimu.</p>
+<p>Pokoje gry wieloosobowej, listy Top&nbsp;10 i rekordy miesiąca oraz podsumowania zakończonych gier są przesyłane przez publiczne serwery wiadomości MQTT (shiftr.io, HiveMQ, EMQX). Zawierają one Twój <b>pseudonim</b>, kod pokoju, kości, punkty, datę i <b>flagę kraju</b> (dwuliterowy kod), a jeśli masz konto – także <b>login</b>, <b>poziom gracza</b> i wybraną ramkę awatara, żeby inni gracze mogli otworzyć Twoją kartę profilu. Wpisy Top 10 i podsumowania gier widzą inni gracze. Jeśli nie chcesz, żeby Twoje imię i nazwisko było widoczne, nie używaj ich jako pseudonimu.</p>
 
 <h3>3. Flaga kraju</h3>
 <p>Żeby pokazać flagę przy pseudonimie, gra pyta usługę rozpoznawania kraju (api.country.is, zapasowo get.geojs.io lub ipapi.co) o kraj Twojego adresu IP. Zapisywany jest tylko dwuliterowy kod kraju, a gra nie przechowuje adresu IP. Jeśli to się nie uda, kraj jest zgadywany ze strefy czasowej lub języka urządzenia.</p>
@@ -108,8 +110,10 @@ a.back{background:#0b1e45}table{border-collapse:collapse;width:100%;font-size:14
 <p>Jeśli założysz konto, korzystamy z Google Firebase Authentication i Cloud Firestore (projekt utrzymywany przez Google). Przechowujemy:</p>
 <ul>
 <li><b>login</b> (wewnętrznie zamieniany na adres typu <code>login@users.dice-online.invalid</code>, który nie jest prawdziwym e-mailem) i <b>hasło</b>, które Firebase przechowuje w postaci zaszyfrowanej (hash) – my go nie widzimy;</li>
-<li>nazwę gracza, awatar, osiągnięcia, statystyki i postęp w trybie „Wieża”, żeby mieć je na każdym urządzeniu.</li>
+<li>nazwę gracza, awatar, osiągnięcia, statystyki (gry, wygrane, punkty, ostatnie wyniki, czas gry), poziom/XP, odblokowane i wybrane nagrody oraz postęp w trybie „Wieża”, żeby mieć je na każdym urządzeniu.</li>
 </ul>
+<p><b>Profil publiczny.</b> Przy koncie zapisujemy pod Twoim loginem mały profil publiczny, który inni gracze widzą po dotknięciu Twojego nicku: nazwa gracza, login, awatar, ramka i tytuł, poziom i XP, liczba gier i wygranych, najlepszy i średni wynik, najdłuższa seria, postęp w Wieży, osiągnięcia, ulubiona kategoria i kod kraju. Nie zawiera e-maila, hasła ani danych urządzenia. Usuwamy go razem z kontem.</p>
+<p><b>Logowanie przez Google (opcjonalne, gdy jest dostępne).</b> Możesz zalogować się przez Google albo połączyć Google z kontem. Google przekazuje wtedy do Firebase Authentication identyfikator konta Google, imię i nazwisko, adres e-mail i zdjęcie profilowe, żeby umożliwić logowanie. Gra nie pokazuje nikomu Twojego e-maila ani zdjęcia z Google, nie używa ich do niczego innego i nie zapisuje ich w swoich rejestrach ani profilach; nadal wybierasz osobny login. Google możesz odłączyć w 👤 Konto (jeśli konto ma też hasło) albo usunąć konto.</p>
 
 <h3>5. Rejestr sesji, logowań i gier</h3>
 <p>Żeby gra działała, żeby wykrywać problemy i wiedzieć, ile osób gra, gra zapisuje w Firestore krótkie wpisy, które może czytać tylko twórca gry:</p>
@@ -136,7 +140,7 @@ a.back{background:#0b1e45}table{border-collapse:collapse;width:100%;font-size:14
 <p>Dane konta – do czasu usunięcia konta. Wpisy w rejestrach i rekordy – tak długo, jak są potrzebne do działania i rozwoju gry. W każdej chwili możesz poprosić o usunięcie wpisów dotyczących Ciebie.</p>
 
 <h3 id="delete-pl">11. Usuwanie konta i danych</h3>
-<p>W grze: <b>👤 Konto → 🗑️ Usuń konto</b> i potwierdź hasłem. To trwale usuwa konto Firebase, login i zapisany w nim postęp. Żeby usunąć też wpisy z rejestru logowań lub gier albo jeśli nie możesz się zalogować, napisz na <a href="mailto:dice.online.game@gmail.com?subject=Usu%C5%84%20moje%20dane">dice.online.game@gmail.com</a> i podaj login – usuniemy dane w ciągu 30 dni. Dane na urządzeniu usuniesz, czyszcząc dane strony lub odinstalowując aplikację.</p>
+<p>W grze: <b>👤 Konto → 🗑️ Usuń konto</b> i potwierdź hasłem (albo przez Google, jeśli konto założono przez Google). To trwale usuwa konto Firebase, login, profil publiczny i zapisany w nim postęp. Żeby usunąć też wpisy z rejestru logowań lub gier albo jeśli nie możesz się zalogować, napisz na <a href="mailto:dice.online.game@gmail.com?subject=Usu%C5%84%20moje%20dane">dice.online.game@gmail.com</a> i podaj login – usuniemy dane w ciągu 30 dni. Dane na urządzeniu usuniesz, czyszcząc dane strony lub odinstalowując aplikację.</p>
 
 <h3>12. Twoje prawa</h3>
 <p>Zgodnie z RODO możesz żądać dostępu do danych, ich poprawienia lub usunięcia, ograniczenia przetwarzania, wnieść sprzeciw i żądać przeniesienia danych. Napisz na <a href="mailto:dice.online.game@gmail.com">dice.online.game@gmail.com</a>. Możesz też złożyć skargę do irlandzkiego organu ochrony danych (<a href="https://www.dataprotection.ie">Data Protection Commission</a>) lub do Prezesa UODO w Polsce.</p>
@@ -151,8 +155,8 @@ a.back{background:#0b1e45}table{border-collapse:collapse;width:100%;font-size:14
 <hr>
 <section id="delete">
 <h2>Delete your data / Usuń swoje dane</h2>
-<p><b>EN:</b> In the game: 👤 Account → 🗑️ Delete account → confirm with your password. Or e-mail <a href="mailto:dice.online.game@gmail.com?subject=Delete%20my%20data">dice.online.game@gmail.com</a> with your username, and we will delete your account and related records within 30 days.</p>
-<p><b>PL:</b> W grze: 👤 Konto → 🗑️ Usuń konto → potwierdź hasłem. Albo napisz na <a href="mailto:dice.online.game@gmail.com?subject=Usu%C5%84%20moje%20dane">dice.online.game@gmail.com</a> i podaj login – usuniemy konto i powiązane wpisy w ciągu 30 dni.</p>
+<p><b>EN:</b> In the game: 👤 Account → ⚙️ Account → 🗑️ Delete account → confirm with your password (or Google). Or e-mail <a href="mailto:dice.online.game@gmail.com?subject=Delete%20my%20data">dice.online.game@gmail.com</a> with your username, and we will delete your account and related records within 30 days.</p>
+<p><b>PL:</b> W grze: 👤 Konto → ⚙️ Konto → 🗑️ Usuń konto → potwierdź hasłem (lub przez Google). Albo napisz na <a href="mailto:dice.online.game@gmail.com?subject=Usu%C5%84%20moje%20dane">dice.online.game@gmail.com</a> i podaj login – usuniemy konto i powiązane wpisy w ciągu 30 dni.</p>
 </section>
 <p style="margin-top:30px"><a class="back" href="./">🎲 Back to the game / Wróć do gry</a></p>
 </main></body></html>
