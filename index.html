@@ -2909,6 +2909,28 @@ body:not(#z) #rov .hst thead th{background:#1f2b47!important;color:#fff!importan
 #lvup h2{margin:clamp(6px,2vh,14px) 0 2px;font-size:clamp(18px,5vh,24px)}#lvup.lu100 h2{font-size:clamp(20px,6vh,28px)}#lvup .lulv{font-size:clamp(13px,3.2vh,15px)}#lvup .lurk.new{font-size:clamp(14px,3.6vh,17px)}#lvup .lunew{margin:clamp(6px,2vh,14px) 0 6px}
 #lvup button{position:sticky;bottom:0;z-index:2;margin-top:clamp(8px,2.5vh,16px);box-shadow:0 -6px 14px #0006}
 #lvup .lurays{top:clamp(40px,12vh,70px)}
+/* ---- fx_emo.css ---- */
+#emofab{all:unset;position:fixed;left:calc(12px + env(safe-area-inset-left));bottom:calc(14px + env(safe-area-inset-bottom));z-index:80;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:26px;line-height:1;cursor:pointer;background:linear-gradient(160deg,#34405e,#1c2336);box-shadow:0 0 0 2px #ffffffb3,0 6px 16px #0006;-webkit-tap-highlight-color:transparent}
+#emofab[hidden]{display:none}#emofab:active{transform:scale(.92)}#emofab:focus-visible{outline:3px solid #ffd36b;outline-offset:2px}
+#emofab.muted::after{content:'🔕';position:absolute;right:-4px;top:-4px;font-size:14px}
+#emopk{position:fixed;left:calc(12px + env(safe-area-inset-left));bottom:calc(72px + env(safe-area-inset-bottom));z-index:81;width:min(300px,calc(100vw - 24px));padding:10px;border-radius:16px;background:#1c2336f2;color:#fff;box-shadow:0 0 0 1px #ffffff2e,0 12px 30px #0008;font:600 13px/1.2 system-ui,-apple-system,sans-serif}
+#emopk[hidden]{display:none}
+#emopk .emog{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+#emopk button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;border-radius:12px;background:#ffffff14;font-size:24px;color:#fff;-webkit-tap-highlight-color:transparent}
+#emopk button:hover{background:#ffffff26}#emopk button:focus-visible{outline:2px solid #ffd36b}
+#emopk .emopb{grid-column:span 5;justify-content:flex-start;padding:0 12px;font-size:20px}#emopk .emopb span{font-size:14px;font-weight:700}
+#emopk .emomute{width:100%;margin-top:8px;min-height:38px;font-size:13px;background:#ffffff0d;color:#c9d2e6}
+#emol{position:fixed;inset:0;pointer-events:none;z-index:79;overflow:hidden}
+#emol .emob{position:fixed;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 10px 5px;border-radius:16px;background:#fffffff2;color:#1f2a44;box-shadow:0 6px 18px #0005,0 0 0 2px #ffd36b;font:700 13px/1.15 system-ui,-apple-system,sans-serif;white-space:nowrap;animation:emoUp 2.8s ease-out forwards}
+#emol .emob::after{content:'';position:absolute;bottom:-6px;left:50%;margin-left:-6px;border:6px solid transparent;border-bottom:0;border-top-color:#fffffff2}
+#emol .emob .emoi{font-size:28px;line-height:1}#emol .emob small{font-size:10.5px;font-weight:600;opacity:.7;max-width:120px;overflow:hidden;text-overflow:ellipsis}
+#emol .emob.emome{box-shadow:0 6px 18px #0005,0 0 0 2px #6fd3ff}
+#emol .emob.emotop{left:50%;top:90px;transform:translate(-50%,0)}#emol .emob.emotop::after{display:none}
+@keyframes emoUp{0%{opacity:0;margin-top:14px;scale:.6}12%{opacity:1;margin-top:0;scale:1.08}20%{scale:1}80%{opacity:1;margin-top:-18px}100%{opacity:0;margin-top:-30px}}
+@keyframes emoFade{0%,85%{opacity:1}100%{opacity:0}}
+.noanim #emol .emob{animation:emoFade 2.8s linear forwards}
+@media(prefers-reduced-motion:reduce){#emol .emob{animation:emoFade 2.8s linear forwards}}
+
 </style></head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -3045,7 +3067,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='1.34';
+const APP_VER='1.40';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -3487,7 +3509,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611171810';
+const APP_VERSION='202611171900';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -3807,9 +3829,9 @@ function connect(onUp){clearTimeout(connFail);
  const c=cli=mqtt.connect(u,Object.assign(opt,o));
  let ok=false;connFail=setTimeout(()=>{if(!ok&&cli===c){c.removeAllListeners();c.end(true);srv++;connect(onUp)}},9000);
  c.on('connect',()=>{if(cli!==c)return;ok=true;clearTimeout(connFail);status('🟢 online');const f=onUp;onUp=null;resyncing=resyncing||!f;
-  if(me&&ROOM)c.publish(ptop(me),document.hidden?'a':'1',{qos:1,retain:true});c.subscribe([topic(),'kosci-mk-v2/'+ROOM+'/p/+'],{qos:1},()=>f&&f())});
+  if(me&&ROOM)c.publish(ptop(me),document.hidden?'a':'1',{qos:1,retain:true});c.subscribe([topic(),'kosci-mk-v2/'+ROOM+'/p/+','kosci-mk-v2/'+ROOM+'/e'],{qos:1},()=>f&&f())});
  c.on('reconnect',()=>{resyncing=true;status('🟠 '+t('reconnecting'))});c.on('offline',()=>status('🔴 offline – '+t('reconnecting')));
- c.on('message',(tp,m)=>{if(cli!==c)return;if(tp.indexOf('/p/')>0){presMsg(tp,m.toString());return}
+ c.on('message',(tp,m)=>{if(cli!==c)return;if(tp.indexOf('/p/')>0){presMsg(tp,m.toString());return}if(/\/e$/.test(tp)){try{emoRecv(m.toString())}catch(e){}return}
   let d;try{d=JSON.parse(m.toString())}catch(e){return}if(!d||(S&&d.v<S.v&&!resyncing))return;if(!stOk(d))return;resyncing=false;S=d;onState()});}
 function presMsg(tp,v){let n;try{n=decodeURIComponent(tp.split('/p/')[1])}catch(e){return}if(!n)return;if(n===me){if(v!=='1'&&ROOM&&!document.hidden&&cli&&cli.connected)cli.publish(ptop(me),'1',{qos:1,retain:true});return}
  if(!v){delete PRES[n]}else{const on=v==='1',o=PRES[n];if(!o||o.on!==on)PRES[n]={on,a:v==='a',t:Date.now()}}presUI()}
@@ -4649,6 +4671,52 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  try{gsiAfterRedirect()}catch(e){}
  // ?preview100=1 → show the level-100 celebration once (display only; PX.lv is not touched)
  if(PF_PREV100)setTimeout(()=>{try{pfLuQ.push({from:PF_MAXLV-1,to:PF_MAXLV});pfLuShow()}catch(e){}},1800);
+})();
+
+// ---- fx_emo.js ----
+// ===== 1.40 – quick reactions in multiplayer rooms =====
+// Separate non-retained MQTT topic kosci-mk-v2/<ROOM>/e : older clients never subscribe to it, so they simply don't see reactions.
+(function(){
+ const EMO=[['clap','👏'],['wow','😱'],['fire','🔥'],['lol','😂'],['dice','🎲'],['nice','👍'],['bad','🙈'],['gg','🤝']];
+ const EK=Object.fromEntries(EMO);const PHR={nice:1,bad:1,gg:1};
+ const ET={pl:{nice:'Dobry rzut!',bad:'Pech!',gg:'GG',btn:'Reakcje',mute:'🔕 Wycisz reakcje innych',unmute:'🔔 Pokaż reakcje innych',slow:'Za szybko – chwila przerwy 🙂',muted:'Reakcje innych są wyciszone'},
+  en:{nice:'Nice roll!',bad:'Unlucky!',gg:'GG',btn:'Reactions',mute:'🔕 Mute other players’ reactions',unmute:'🔔 Show other players’ reactions',slow:'Too fast – take a short break 🙂',muted:'Other players’ reactions are muted'},
+  de:{nice:'Guter Wurf!',bad:'Pech!',gg:'GG',btn:'Reaktionen',mute:'🔕 Reaktionen anderer stummschalten',unmute:'🔔 Reaktionen anderer anzeigen',slow:'Zu schnell – kurz Pause 🙂',muted:'Reaktionen anderer sind stummgeschaltet'},
+  es:{nice:'¡Buena tirada!',bad:'¡Qué mala suerte!',gg:'GG',btn:'Reacciones',mute:'🔕 Silenciar reacciones de otros',unmute:'🔔 Mostrar reacciones de otros',slow:'Demasiado rápido: espera un momento 🙂',muted:'Las reacciones de otros están silenciadas'}};
+ const et=k=>(ET[LANG]||ET.en)[k]||ET.en[k];
+ window.EMO_T=ET;window.EMO_LIST=EMO;
+ const etop=()=>'kosci-mk-v2/'+ROOM+'/e';
+ let sent=[];const lastIn={};
+ const muted=()=>{try{return localStorage.kemomute==='1'}catch(e){return false}};
+ const players=()=>{const s=new Set();try{(S&&S.lobby||[]).forEach(n=>s.add(n));(G&&G.players||[]).forEach(p=>{if(!p.left)s.add(p.name)})}catch(e){}return s};
+ function avail(){try{if(!ROOM||TW||!S||!me)return false;const ps=players();if(!ps.has(me)||ps.size<2)return false;return !$('game').hidden||!$('lobby').hidden}catch(e){return false}}
+ // rate limit: >=1.8 s between reactions, max 5 per 20 s
+ function canSend(now){sent=sent.filter(t=>now-t<20000);if(sent.length&&now-sent[sent.length-1]<1800)return false;return sent.length<5}
+ window.emoSend=function(k){if(!EK[k]||!avail())return false;const now=Date.now();if(!canSend(now)){try{toast(et('slow'))}catch(e){}return false}
+  sent.push(now);show(me,k);try{if(cli&&cli.connected)cli.publish(etop(),JSON.stringify({n:me,k,t:now}),{qos:0,retain:false})}catch(e){}try{window.fxHap&&fxHap('tap')}catch(e){}return true};
+ window.emoRecv=function(raw){let d;try{d=JSON.parse(String(raw))}catch(e){return}if(!d||typeof d.n!=='string'||!EK[d.k]||d.n===me||d.n.length>20)return;
+  if(!players().has(d.n))return;const now=Date.now();if(lastIn[d.n]&&now-lastIn[d.n]<1200)return;lastIn[d.n]=now;if(muted())return;show(d.n,d.k);try{window.fxHap&&fxHap('tap')}catch(e){}};
+ function layer(){let l=$('emol');if(!l){l=document.createElement('div');l.id='emol';l.setAttribute('aria-live','polite');document.body.appendChild(l)}return l}
+ function anchor(n){const q='[data-pn="'+(window.CSS&&CSS.escape?CSS.escape(n):n.replace(/"/g,''))+'"]';
+  for(const sel of ['#tab th .pfn'+q,'#plist .pfn'+q]){const e=document.querySelector(sel);if(e){const r=e.getBoundingClientRect();if(r.width&&r.bottom>0&&r.top<innerHeight)return r}}return null}
+ function show(n,k){const l=layer();while(l.children.length>=6)l.firstChild.remove();const b=document.createElement('div');const r=anchor(n);
+  b.className='emob'+(PHR[k]?' emop':'')+(n===me?' emome':'')+(r?'':' emotop');
+  b.innerHTML='<span class="emoi" aria-hidden="true">'+EK[k]+'</span>'+(PHR[k]?'<b>'+esc(et(k))+'</b>':'')+'<small>'+esc(n)+'</small>';b.setAttribute('aria-label',n+': '+(PHR[k]?et(k):EK[k]));
+  if(r){b.style.left=Math.round(Math.min(Math.max(r.left+r.width/2,60),innerWidth-60))+'px';b.style.top=Math.round(Math.max(r.top,70))+'px'}
+  l.appendChild(b);setTimeout(()=>b.remove(),2800)}
+ window.emoShowTest=show;
+ function fab(){let f=$('emofab');if(f)return f;f=document.createElement('button');f.type='button';f.id='emofab';f.hidden=true;f.textContent='😀';document.body.appendChild(f);
+  f.onclick=ev=>{ev.stopPropagation();const p=$('emopk');if(p&&!p.hidden){p.hidden=true;f.setAttribute('aria-expanded','false')}else picker()};return f}
+ function picker(){let p=$('emopk');if(!p){p=document.createElement('div');p.id='emopk';p.setAttribute('role','menu');document.body.appendChild(p)}
+  p.innerHTML='<div class="emog">'+EMO.map(([k,i])=>'<button type="button" role="menuitem" data-k="'+k+'"'+(PHR[k]?' class="emopb"':'')+' aria-label="'+esc(PHR[k]?et(k):i)+'">'+i+(PHR[k]?'<span>'+esc(et(k))+'</span>':'')+'</button>').join('')+'</div>'+
+   '<button type="button" class="emomute">'+esc(muted()?et('unmute'):et('mute'))+'</button>';p.hidden=false;$('emofab').setAttribute('aria-expanded','true');
+  p.querySelectorAll('[data-k]').forEach(b=>b.onclick=ev=>{ev.stopPropagation();if(emoSend(b.dataset.k)){p.hidden=true;$('emofab').setAttribute('aria-expanded','false')}});
+  p.querySelector('.emomute').onclick=ev=>{ev.stopPropagation();try{if(muted())localStorage.removeItem('kemomute');else localStorage.kemomute='1'}catch(e){}picker();try{toast(muted()?et('muted'):'🔔')}catch(e){}}}
+ window.emoUI=function(){const f=fab(),a=avail();if(f.hidden===a){f.hidden=!a;f.title=et('btn');f.setAttribute('aria-label',et('btn'));f.setAttribute('aria-haspopup','menu');f.classList.toggle('muted',muted())}if(!a){const p=$('emopk');if(p)p.hidden=true}};
+ document.addEventListener('click',ev=>{const p=$('emopk');if(p&&!p.hidden&&!p.contains(ev.target)){p.hidden=true;try{$('emofab').setAttribute('aria-expanded','false')}catch(e){}}});
+ document.addEventListener('keydown',ev=>{if(ev.key==='Escape'){const p=$('emopk');if(p&&!p.hidden){p.hidden=true;try{$('emofab').focus()}catch(e){}}}});
+ const _os=onState;onState=function(){const r=_os.apply(this,arguments);try{emoUI()}catch(e){}return r};
+ setInterval(()=>{try{emoUI()}catch(e){}},1500);try{emoUI()}catch(e){}
 })();
 
 </script></body></html>
