@@ -2881,6 +2881,25 @@ body:not(#z) #rov .hst thead th{background:#1f2b47!important;color:#fff!importan
 @media(max-width:400px){.agrid>.abtn{position:relative;flex-direction:column;flex-wrap:nowrap;gap:3px;padding:6px 4px!important;font-size:14px!important;min-height:54px}.agrid>.abtn>.ai{font-size:20px;line-height:1}.agrid>.abtn>.acnt{position:absolute;top:4px;right:5px;margin:0;font-size:10.5px;padding:1px 5px}}
 #stats2 .vcount.vver{flex-basis:100%;font:500 11.5px/1.3 system-ui,-apple-system,sans-serif;opacity:.62;letter-spacing:.2px;margin:2px 0 0;white-space:nowrap}
 .pfver{text-align:center;font-size:11.5px;opacity:.6;margin:10px 0 2px;letter-spacing:.2px}
+@keyframes pfSpin{to{transform:rotate(1turn)}}@keyframes pfSpark{0%,100%{opacity:0;transform:scale(.4) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(45deg)}}@keyframes pfCrown{0%{transform:translateY(-60px) scale(.3);opacity:0}60%{transform:translateY(6px) scale(1.15);opacity:1}100%{transform:none;opacity:1}}@keyframes pfFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.lvb.lt13{position:relative;isolation:isolate;overflow:visible}
+.lvb.lt13::before{content:'';position:absolute;inset:-70%;z-index:-1;border-radius:50%;background:repeating-conic-gradient(#ffd36b00 0 9deg,#ffd36bcc 11deg 14deg,#ffd36b00 16deg 30deg);-webkit-mask:radial-gradient(circle,#000 28%,#0000 70%);mask:radial-gradient(circle,#000 28%,#0000 70%);animation:pfSpin 10s linear infinite;pointer-events:none}
+.lvb.lt13::after{content:'✦';position:absolute;top:-30%;right:-26%;font-size:.62em;line-height:1;color:#fff8d6;text-shadow:0 0 6px #ffd36b,0 0 12px #ffb300;animation:pfSpark 1.9s ease-in-out infinite;pointer-events:none}
+.lvc.lt13::before{content:'👑';font-size:9px;margin-right:2px;vertical-align:1px}
+.pfn.l100{background:linear-gradient(90deg,#c88a00,#ffd36b,#fff6c9,#ffd36b,#c88a00) 0 0/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;font-weight:800;filter:drop-shadow(0 1px 0 #0009) drop-shadow(0 0 4px #ffd36b88);animation:pfSheen 3.2s linear infinite}.pfn.l100 .lvc{-webkit-text-fill-color:#3a2400;color:#3a2400}
+.av100{display:inline-block;position:relative;border-radius:50%;box-shadow:0 0 0 2px #ffd36b,0 0 10px 2px #ffd36bb0;animation:pfHalo 3s ease-in-out infinite}
+.pfhead.lv100{position:relative;box-shadow:0 0 0 2px #ffd36b,0 0 22px 4px #ffd36b80,inset 0 0 30px #ffd36b30;animation:pfHalo 3.2s ease-in-out infinite}
+.pfhead.lv100 .pfav{position:relative;isolation:isolate}.pfhead.lv100 .pfav::before{content:'';position:absolute;inset:-6px;z-index:-1;border-radius:50%;background:conic-gradient(#ffd36b,#fff6c9,#e9a400,#ff9fe0,#9fe9ff,#ffd36b);-webkit-mask:radial-gradient(circle,#0000 calc(100% - 7px),#000 calc(100% - 6px));mask:radial-gradient(circle,#0000 calc(100% - 7px),#000 calc(100% - 6px));animation:pfSpin 4s linear infinite;filter:drop-shadow(0 0 6px #ffd36b)}
+.pfhead.lv100 .pfav::after{content:'👑';position:absolute;top:-16px;left:50%;margin-left:-10px;font-size:20px;line-height:1;filter:drop-shadow(0 0 6px #ffd36b);animation:pfFloat 2.4s ease-in-out infinite}
+#lvup.lu100{background:radial-gradient(circle at 50% 42%,#5a3d00e6,#140a00f2 70%)}#lvup.lu100 .lucard{background:linear-gradient(160deg,#3d2a00,#1a1000);box-shadow:0 0 0 2px #ffd36b,0 0 60px 10px #ffd36b66,0 20px 60px #000c;overflow:visible}
+#lvup.lu100 .lurays{background:repeating-conic-gradient(#ffd36b55 0 7deg,#0000 7deg 15deg)}#lvup.lu100 h2,#lvup.lu100 .lurk{background:linear-gradient(90deg,#ffd36b,#fff6c9,#ffd36b) 0 0/200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}#lvup.lu100 h2{font-size:28px}
+#lvup .lugold{position:fixed;left:50%;top:42%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;border-radius:50%;background:repeating-conic-gradient(#ffd36b26 0 6deg,#0000 6deg 14deg);-webkit-mask:radial-gradient(circle,#000 8%,#0000 55%);mask:radial-gradient(circle,#000 8%,#0000 55%);pointer-events:none}#lvup.anim .lugold{animation:pfSpin 24s linear infinite}
+#lvup .lucf{position:fixed;inset:0;overflow:hidden;pointer-events:none}#lvup .lucf i{position:absolute;top:0;width:8px;height:13px;border-radius:2px;background:var(--c);opacity:0;box-shadow:0 0 6px var(--c)}#lvup.anim .lucf i{animation:pfFall var(--t) linear infinite var(--d)}#lvup:not(.anim) .lucf{display:none}
+#lvup .lucrown{position:relative;font-size:46px;line-height:1;margin:-58px 0 6px;filter:drop-shadow(0 0 12px #ffd36b)}#lvup.anim .lucrown{animation:pfCrown 1s cubic-bezier(.2,1.4,.4,1) both .3s}
+#lvup .luprev{position:relative;margin:0 0 6px;font:800 11px/1 system-ui,sans-serif;letter-spacing:3px;color:#ffd36b;opacity:.8}
+#lvup.anim .lvhuge.lt13{animation:pfBadge 1.2s ease-out both .15s,pfLord 5s linear 1.4s infinite,pfHalo 3s ease-in-out 1.4s infinite}
+.noanim .lvb.lt13::before,.noanim .lvb.lt13::after,.noanim .pfn.l100,.noanim .av100,.noanim .pfhead.lv100,.noanim .pfhead.lv100 .pfav::before,.noanim .pfhead.lv100 .pfav::after{animation:none!important}
+@media(prefers-reduced-motion:reduce){.lvb.lt13::before,.lvb.lt13::after,.pfn.l100,.av100,.pfhead.lv100,.pfhead.lv100 .pfav::before,.pfhead.lv100 .pfav::after,#lvup .lugold{animation:none!important}#lvup .lucf{display:none}}
 </style></head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -3017,11 +3036,13 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release number shown in the menu footer + Account tab (bump together with APP_VERSION)
-const APP_VER_NUM=32;
+const APP_VER_NUM=33;
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER_NUM+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
-const PF_MAXLV=99,PF_RKL=[1,5,10,15,20,25,30,35,40,45,50,60,75,99];
+const PF_MAXLV=100,PF_RKL=[1,5,10,15,20,25,30,35,40,45,50,60,75,100];
+// ?preview100=1: local-only preview of the level-100 look (never saved, never sent to rooms/Top 10/profiles)
+const PF_PREV100=(()=>{try{return new URLSearchParams(location.search).get('preview100')==='1'}catch(e){return false}})();
 const XTH=['neon','aurora','royal','sakura'];
 const PF_COLX=['ruby','emerald','obsidian','prism'];
 const PF_HARD=['w100','s800','mon1','tw10','lord'];
@@ -3035,7 +3056,7 @@ const PF_UNL=[
  {k:'unlucky',ty:'ti',a:'pech'},{k:'nerves',ty:'ti',a:'w1p'},{k:'social',ty:'ti',a:'soc3'},{k:'streak',ty:'ti',a:'d7'},{k:'champ',ty:'ti',a:'mon1'},{k:'tower',ty:'ti',a:'tw10'},{k:'seer',ty:'ti',a:'andrz'}];
 const PF_FR=PF_UNL.filter(x=>x.ty==='fr').map(x=>x.k),PF_TI=PF_UNL.filter(x=>x.ty==='ti').map(x=>x.k);
 const PFT={pl:{lvl:'Poziom',lvS:'Poz.',xpTo:'{a} / {b} XP do poziomu {n}',xpMax:'{a} XP – najwyższy poziom!',xpTot:'{x} XP łącznie',
- rk:['Nowicjusz','Turlacz','Łowca par','Strateg stritu','Szef Fulla','As karety','Generał','Rekin pokera','Mistrz kości','Lord kości','Legenda','Arcymistrz','Mityczny','Lord of the Dice'],
+ rk:['Nowicjusz','Turlacz','Łowca par','Strateg stritu','Szef Fulla','As karety','Generał','Rekin pokera','Mistrz kości','Książę kości','Legenda','Arcymistrz','Mityczny','Lord of the Dice'],
  tSt:'📊 Statystyki',tRw:'🎁 Nagrody',tAc:'⚙️ Konto',
  sG:'Ukończone gry',sW:'Wygrane',sWR:'Procent wygranych',sBest:'Najlepszy wynik',sAvg:'Średnio punktów',sTot:'Punkty łącznie',sStreak:'Najdłuższa seria dni',sDays:'Dni gry',sTower:'Najwyższe piętro Wieży',sStars:'Gwiazdki w Wieży',sAce:'Bonusy Prymusa',sClean:'Czyste gry',sTime:'Czas gry',sMp:'Gry z innymi',s2nd:'Drugie miejsca',sAch:'Osiągnięcia',sFav:'Ulubiona kategoria',sFavN:'{p} pkt łącznie',sCombo:'Figury z punktami',sChart:'Ostatnie gry',sChartE:'Tu pojawi się wykres Twoich ostatnich gier.',cWin:'wygrana',cLoss:'przegrana',cSolo:'solo',cAvg:'średnia',sNote:'Statystyki liczą się od tej wersji gry; starsze gry są wliczone w poziom i liczbę gier.',
  rTh:'Motywy specjalne',rFr:'Ramki awatara',rCol:'Kolory kości',rTi:'Tytuły',lkLv:'🔒 Od poziomu {n}',lkAch:'🔒 Osiągnięcie: {a}',use:'Użyj',inUse:'✓ Używasz',none:'Bez ramki',tiRank:'Ranga (automatycznie)',got:'odblokowane',
@@ -3050,7 +3071,7 @@ const PFT={pl:{lvl:'Poziom',lvS:'Poz.',xpTo:'{a} / {b} XP do poziomu {n}',xpMax:
  gPickT:'Wybierz login',gPickI:'Pierwsze logowanie przez Google. Wybierz login (3–20 znaków: litery, cyfry, _ lub -) – zobaczą go inni gracze.',gPickGo:'✅ Gotowe',gCancel:'Anuluj',gReauth:'🔐 Potwierdź przez Google',gRedir:'⏳ Przechodzę do logowania Google…',gErr:'Logowanie przez Google nie powiodło się ({c}).',gPriv:'Przy logowaniu przez Google Firebase zna Twój adres e-mail Google – nie pokazujemy go nikomu i nie zapisujemy w grze.',gLinkI:'Połącz konto z Google, żeby logować się jednym dotknięciem (np. w aplikacji z Play Store). Login i hasło dalej działają.',
  pubOn:'🌍 Twój profil publiczny widzą inni gracze (dotknij nicku w Top 10 lub w pokoju).'},
 en:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP to level {n}',xpMax:'{a} XP – maximum level!',xpTot:'{x} XP in total',
- rk:['Rookie','Dice Roller','Pair Hunter','Straight Strategist','Full House Boss','Four-of-a-Kind Ace','General','Poker Shark','Dice Master','Dice Lord','Legend','Grandmaster','Mythic','Lord of the Dice'],
+ rk:['Rookie','Dice Roller','Pair Hunter','Straight Strategist','Full House Boss','Four-of-a-Kind Ace','General','Poker Shark','Dice Master','Dice Prince','Legend','Grandmaster','Mythic','Lord of the Dice'],
  tSt:'📊 Stats',tRw:'🎁 Rewards',tAc:'⚙️ Account',
  sG:'Games finished',sW:'Wins',sWR:'Win rate',sBest:'Best score',sAvg:'Average score',sTot:'Total points',sStreak:'Longest daily streak',sDays:'Days played',sTower:'Highest Tower floor',sStars:'Tower stars',sAce:'School Ace bonuses',sClean:'Clean games',sTime:'Time played',sMp:'Games with others',s2nd:'Second places',sAch:'Achievements',sFav:'Favourite category',sFavN:'{p} pts in total',sCombo:'Combinations scored',sChart:'Recent games',sChartE:'A chart of your recent games will appear here.',cWin:'win',cLoss:'loss',cSolo:'solo',cAvg:'average',sNote:'Detailed stats are counted from this version on; older games still count towards your level and games played.',
  rTh:'Special themes',rFr:'Avatar frames',rCol:'Dice colours',rTi:'Titles',lkLv:'🔒 From level {n}',lkAch:'🔒 Achievement: {a}',use:'Use',inUse:'✓ In use',none:'No frame',tiRank:'Rank (automatic)',got:'unlocked',
@@ -3065,7 +3086,7 @@ en:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP to level {n}',xpMax:'{a} XP – max
  gPickT:'Choose a username',gPickI:'First Google sign-in. Choose a username (3–20 characters: letters, digits, _ or -) – other players will see it.',gPickGo:'✅ Done',gCancel:'Cancel',gReauth:'🔐 Confirm with Google',gRedir:'⏳ Opening Google sign-in…',gErr:'Google sign-in failed ({c}).',gPriv:'With Google sign-in Firebase knows your Google e-mail address – we never show it to anyone or store it in the game.',gLinkI:'Link your account with Google to log in with one tap (e.g. in the Play Store app). Your username and password keep working.',
  pubOn:'🌍 Other players can see your public profile (tap a name in the Top 10 or in a room).'},
 de:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP bis Level {n}',xpMax:'{a} XP – höchstes Level!',xpTot:'{x} XP insgesamt',
- rk:['Neuling','Würfler','Paarjäger','Straßenstratege','Full-House-Boss','Viererpasch-Ass','General','Poker-Hai','Würfelmeister','Würfellord','Legende','Großmeister','Mythisch','Lord of the Dice'],
+ rk:['Neuling','Würfler','Paarjäger','Straßenstratege','Full-House-Boss','Viererpasch-Ass','General','Poker-Hai','Würfelmeister','Würfelprinz','Legende','Großmeister','Mythisch','Lord of the Dice'],
  tSt:'📊 Statistik',tRw:'🎁 Belohnungen',tAc:'⚙️ Konto',
  sG:'Beendete Spiele',sW:'Siege',sWR:'Siegquote',sBest:'Bestes Ergebnis',sAvg:'Durchschnitt',sTot:'Punkte insgesamt',sStreak:'Längste Tagesserie',sDays:'Spieltage',sTower:'Höchste Turm-Etage',sStars:'Sterne im Turm',sAce:'Klassenbester-Boni',sClean:'Saubere Spiele',sTime:'Spielzeit',sMp:'Spiele mit anderen',s2nd:'Zweite Plätze',sAch:'Erfolge',sFav:'Lieblingskategorie',sFavN:'{p} Pkt. insgesamt',sCombo:'Gewertete Kombinationen',sChart:'Letzte Spiele',sChartE:'Hier erscheint ein Diagramm deiner letzten Spiele.',cWin:'Sieg',cLoss:'Niederlage',cSolo:'solo',cAvg:'Durchschnitt',sNote:'Detaillierte Statistiken zählen ab dieser Version; ältere Spiele zählen trotzdem für Level und Spielanzahl.',
  rTh:'Spezial-Designs',rFr:'Avatar-Rahmen',rCol:'Würfelfarben',rTi:'Titel',lkLv:'🔒 Ab Level {n}',lkAch:'🔒 Erfolg: {a}',use:'Verwenden',inUse:'✓ Aktiv',none:'Kein Rahmen',tiRank:'Rang (automatisch)',got:'freigeschaltet',
@@ -3080,7 +3101,7 @@ de:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP bis Level {n}',xpMax:'{a} XP – h�
  gPickT:'Benutzernamen wählen',gPickI:'Erste Anmeldung mit Google. Wähle einen Benutzernamen (3–20 Zeichen: Buchstaben, Ziffern, _ oder -) – andere Spieler sehen ihn.',gPickGo:'✅ Fertig',gCancel:'Abbrechen',gReauth:'🔐 Mit Google bestätigen',gRedir:'⏳ Google-Anmeldung wird geöffnet…',gErr:'Anmeldung mit Google fehlgeschlagen ({c}).',gPriv:'Bei der Anmeldung mit Google kennt Firebase deine Google-E-Mail-Adresse – wir zeigen sie niemandem und speichern sie nicht im Spiel.',gLinkI:'Verknüpfe dein Konto mit Google, um dich mit einem Tippen anzumelden (z. B. in der Play-Store-App). Benutzername und Passwort funktionieren weiter.',
  pubOn:'🌍 Andere Spieler sehen dein öffentliches Profil (tippe auf einen Namen in den Top 10 oder im Raum).'},
 es:{lvl:'Nivel',lvS:'Nv.',xpTo:'{a} / {b} XP para el nivel {n}',xpMax:'{a} XP – ¡nivel máximo!',xpTot:'{x} XP en total',
- rk:['Novato','Lanzador','Cazaparejas','Estratega de escaleras','Jefe del Full','As de cuatro iguales','General','Tiburón del póker','Maestro de los dados','Señor de los dados','Leyenda','Gran maestro','Mítico','Lord of the Dice'],
+ rk:['Novato','Lanzador','Cazaparejas','Estratega de escaleras','Jefe del Full','As de cuatro iguales','General','Tiburón del póker','Maestro de los dados','Príncipe de los dados','Leyenda','Gran maestro','Mítico','Lord of the Dice'],
  tSt:'📊 Estadísticas',tRw:'🎁 Recompensas',tAc:'⚙️ Cuenta',
  sG:'Partidas terminadas',sW:'Victorias',sWR:'Porcentaje de victorias',sBest:'Mejor puntuación',sAvg:'Puntuación media',sTot:'Puntos en total',sStreak:'Racha de días más larga',sDays:'Días jugados',sTower:'Piso más alto de la Torre',sStars:'Estrellas en la Torre',sAce:'Bonos de Alumno estrella',sClean:'Partidas limpias',sTime:'Tiempo de juego',sMp:'Partidas con otros',s2nd:'Segundos puestos',sAch:'Logros',sFav:'Categoría favorita',sFavN:'{p} pts en total',sCombo:'Combinaciones anotadas',sChart:'Últimas partidas',sChartE:'Aquí aparecerá un gráfico de tus últimas partidas.',cWin:'victoria',cLoss:'derrota',cSolo:'solo',cAvg:'media',sNote:'Las estadísticas detalladas se cuentan desde esta versión; las partidas anteriores siguen contando para el nivel y el número de partidas.',
  rTh:'Temas especiales',rFr:'Marcos de avatar',rCol:'Colores de dados',rTi:'Títulos',lkLv:'🔒 Desde el nivel {n}',lkAch:'🔒 Logro: {a}',use:'Usar',inUse:'✓ En uso',none:'Sin marco',tiRank:'Rango (automático)',got:'desbloqueados',
@@ -3115,6 +3136,9 @@ function pfLockTxt(it){if(!it)return '';if(it.a){let n=it.a;try{n=achN(it.a)||it
 function pfItemName(it){if(!it)return '';if(it.ty==='th')return pt('th')[it.k];if(it.ty==='fr')return pt('fr')[it.k];if(it.ty==='col')return pt('col')[it.k];if(it.ty==='ti')return pt('ti')[it.k];return it.k}
 function pfFrOk(k){return PF_FR.includes(k)?k:''}
 function pfLoginOk(u){return typeof u==='string'&&/^[A-Za-z0-9_-]{3,20}$/.test(u)?u:''}
+function pfXpFor(L){let x=0;for(let i=1;i<L;i++)x+=pfNeed(i);return x}
+// display level for the local player (preview only changes what this screen shows)
+function pfDispLv(lv){return PF_PREV100?PF_MAXLV:lv}
 function pfLvOk(l){l=Math.floor(+l);return l>=1&&l<=PF_MAXLV?l:0}
 // ---- detailed stats (localStorage kpx, synced as users/<uid>.px) ----
 const PF_CATS=['u1','u2','u3','u4','u5','u6','para','dpary','tpary','trojka','dtrojki','mstrit','dstrit','lstrit','general','full','kareta','poker','lord','parz','nparz','szansa'];
@@ -3171,9 +3195,9 @@ function pfAvFr(avk,fr,cls,id){const a=avk?avHTML(avk,cls||'avb'):'<span class="
 function pfFmtTime(s){s=Math.max(0,Math.floor(s||0));const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+' h '+m+' min':m+' min'}
 function pfFav(cp){let bk='',bv=0;for(const k in cp||{})if(cp[k]>bv){bv=cp[k];bk=k}return bk?{k:bk,p:bv}:null}
 function pfHead(o){// o:{n,login,av,fr,ti,lv,xp,cc,me}
- const L=pfLevel(o.xp);const lv=o.lv||L.lv;return '<div class="pfhead lt'+pfRank(lv)+'"><div class="pfav">'+pfAvFr(o.av,o.fr,'avb',o.me?'accavbig':'')+'</div><div class="pfid"><div class="pfnm">'+(o.cc?flagHTML(o.cc):'')+'<b'+(o.me?' id="accpn"':'')+'>'+esc(o.n||'?')+'</b></div>'+
+ const L=pfLevel(o.xp);const lv=o.lv||L.lv;return '<div class="pfhead lt'+pfRank(lv)+(lv>=PF_MAXLV?' lv100':'')+'"><div class="pfav">'+pfAvFr(o.av,o.fr,'avb',o.me?'accavbig':'')+'</div><div class="pfid"><div class="pfnm">'+(o.cc?flagHTML(o.cc):'')+'<b'+(o.me?' id="accpn"':'')+'>'+esc(o.n||'?')+'</b></div>'+
   '<div class="pfti">'+esc(o.ti||pfRankName(lv))+'</div>'+(o.login?'<small class="pflg">@<span'+(o.me?' id="acclogin"':'')+'>'+esc(o.login)+'</span></small>':'')+'</div><div class="pflv">'+pfBadge(lv,'lvbig')+'<small>'+esc(pfRankName(lv))+'</small></div></div>'+(o.xp!=null?pfXPBar(o.xp,true):'')}
-function pfMyHead(){const xp=pxXP(),L=pfLevel(xp);let av='';try{av=MYAV}catch(e){}let n='';try{n=PN||ACL||(localStorage.kname||'')}catch(e){}let cc='';try{cc=hsCC(myCC)||''}catch(e){}
+function pfMyHead(){const xp0=pxXP(),L0=pfLevel(xp0),xp=PF_PREV100?Math.max(xp0,pfXpFor(PF_MAXLV)):xp0,L=PF_PREV100?pfLevel(xp):L0;let av='';try{av=MYAV}catch(e){}let n='';try{n=PN||ACL||(localStorage.kname||'')}catch(e){}let cc='';try{cc=hsCC(myCC)||''}catch(e){}
  return pfHead({n:n||'?',login:(typeof ACL!=='undefined'&&ACL)||'',av,fr:pfEqFr(),ti:pfEqTi(L.lv),lv:L.lv,xp,cc,me:!!(typeof ACL!=='undefined'&&ACL)})}
 function pfTiles(a){return '<div class="pfst">'+a.filter(Boolean).map(([i,v,k])=>'<div><span>'+i+'</span><b>'+v+'</b><small>'+esc(pt(k))+'</small></div>').join('')+'</div>'}
 function pfChart(r){if(!r||!r.length)return '<p class="pfempty">'+esc(pt('sChartE'))+'</p>';const W=300,H=96,n=r.length,bw=Math.min(24,(W-8)/n-3),mx=Math.max(400,...r.map(e=>e.s)),avg=r.reduce((s,e)=>s+e.s,0)/n;
@@ -3215,8 +3239,9 @@ function pfLuShow(){clearTimeout(pfLuT);const busy=()=>{const w=$('win'),g=$('gd
  if(!pfLuQ.length)return;if(busy()){pfLuT=setTimeout(pfLuShow,1500);return}
  const q=pfLuQ.splice(0),from=q[0].from,to=q[q.length-1].to,nu=pfNewUnlocks(from,to),rk=pfRank(to)>pfRank(from);
  let o=$('lvup');if(!o){o=document.createElement('div');o.id='lvup';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');document.body.appendChild(o)}
- o.className=(typeof animOn!=='undefined'&&animOn?'anim ':'')+'gt-'+(typeof sset==='function'?sset():'classic');
- o.innerHTML='<div class="lucard"><div class="lurays" aria-hidden="true"></div>'+pfBadge(to,'lvhuge')+'<h2>'+esc(pt('luT'))+'</h2><p class="lulv">'+esc(pt('lvl'))+' <b>'+to+'</b></p><p class="lurk'+(rk?' new':'')+'">'+esc(pt('luR',{r:pfRankName(to)}))+'</p>'+
+ const top=to>=PF_MAXLV;o.className=(typeof animOn!=='undefined'&&animOn?'anim ':'')+(top?'lu100 ':'')+'gt-'+(typeof sset==='function'?sset():'classic');
+ let fx='';if(top){fx='<div class="lugold" aria-hidden="true"></div><div class="lucf" aria-hidden="true">';const C=['#ffd36b','#fff3b0','#e9a400','#ffffff','#ff9fe0','#9fe9ff'];for(let i=0;i<42;i++)fx+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;--c:'+C[i%C.length]+';--t:'+(2.6+Math.random()*2.4).toFixed(2)+'s;--d:-'+(Math.random()*4).toFixed(2)+'s;--x:'+(Math.random()*40-20).toFixed(0)+'vw;--r:'+(360+Math.random()*720).toFixed(0)+'deg"></i>';fx+='</div>'}
+ o.innerHTML=fx+'<div class="lucard"><div class="lurays" aria-hidden="true"></div>'+(top?'<div class="lucrown" aria-hidden="true">👑</div>':'')+(PF_PREV100&&top?'<p class="luprev">PREVIEW</p>':'')+pfBadge(to,'lvhuge')+'<h2>'+esc(pt('luT'))+'</h2><p class="lulv">'+esc(pt('lvl'))+' <b>'+to+'</b></p><p class="lurk'+(rk?' new':'')+'">'+esc(pt('luR',{r:pfRankName(to)}))+'</p>'+
   (nu.length?'<p class="lunew">'+esc(pt('luNew'))+'</p><div class="luitems">'+nu.map(it=>'<span>'+(it.ty==='col'?dieHTML(it.k,5,'mini'):it.ty==='fr'?pfAvFr((typeof MYAV!=='undefined'&&MYAV)||'',it.k,'avg'):'🎁')+'<b>'+esc(pfItemName(it))+'</b></span>').join('')+'</div>':'')+
   '<button type="button" id="luok">'+esc(pt('luOk'))+'</button></div>';o.hidden=false;
  try{playS('combo','chime')}catch(e){}const cl=()=>{o.hidden=true;o.innerHTML=''};$('luok').onclick=cl;o.onclick=ev=>{if(ev.target===o)cl()};setTimeout(()=>{try{$('luok').focus()}catch(e){}},50)}
@@ -3227,14 +3252,14 @@ let pfPubT=0,pfPubOff=false,pfPubLast='';
 function pfPubSoon(){clearTimeout(pfPubT);pfPubT=setTimeout(()=>pfPublish().catch(()=>{}),4000)}
 function pfPubDoc(){let st={g:0,w:0,bs:0};try{st=ACV.st}catch(e){}const xp=pxXP(),L=pfLevel(xp),c=PX.c,tw=pxTw(),fav=pfFav(c.cp);let cc='';try{cc=hsCC(myCC)||''}catch(e){}
  const al=pxAchIds().filter(id=>/^[a-z0-9]{1,8}$/.test(id)).slice(0,48).join(',');
- const d={uid:ACU.uid,l:ACL,n:String(PN||ACL).slice(0,20),av:(typeof MYAV!=='undefined'&&MYAV)||'',fr:pfEqFr(),ti:PX.eq.ti||'',lv:L.lv,xp:Math.min(xp,5e7),g:Math.min(st.g,1e6),w:Math.min(st.w,st.g),bs:Math.min(st.bs,99999),bsc:Math.min(c.bsc,2000),avg:c.gp?Math.min(2000,Math.round(c.pts/c.gp)):0,ac:pxAchIds().length,al,tf:tw.hi,ts:tw.s,cc,fc:fav?fav.k:''};return d}
+ const d={uid:ACU.uid,l:ACL,n:String(PN||ACL).slice(0,20),av:(typeof MYAV!=='undefined'&&MYAV)||'',fr:pfEqFr(),ti:PX.eq.ti||'',lv:Math.min(L.lv,99),xp:Math.min(xp,5e7),g:Math.min(st.g,1e6),w:Math.min(st.w,st.g),bs:Math.min(st.bs,99999),bsc:Math.min(c.bsc,2000),avg:c.gp?Math.min(2000,Math.round(c.pts/c.gp)):0,ac:pxAchIds().length,al,tf:tw.hi,ts:tw.s,cc,fc:fav?fav.k:''};return d}
 async function pfPublish(force){if(pfPubOff||!ACU||!accReady||!ACL||!FB)return;const d=pfPubDoc(),sig=JSON.stringify(d);if(!force&&sig===pfPubLast)return;
  try{await FB.F.setDoc(FB.F.doc(FB.db,'publicProfiles',ACL.toLowerCase()),Object.assign({},d,{t:FB.F.serverTimestamp()}));pfPubLast=sig}
  catch(e){const c=String(e&&(e.code||e.message)||e);if(/permission/i.test(c))pfPubOff=true;else console.warn('pub profile',c)}}
 async function pfPubDelete(f,login){try{await f.F.deleteDoc(f.F.doc(f.db,'publicProfiles',String(login).toLowerCase()))}catch(e){}}
 async function pfFetch(login){login=pfLoginOk(login);if(!login)return null;const f=await fbLoad();try{const s=await f.F.getDoc(f.F.doc(f.db,'publicProfiles',login.toLowerCase()));return s.exists()?s.data():null}catch(e){return null}}
 function pfPubSane(d){if(!d||typeof d!=='object')return null;const n=(x,m)=>typeof x==='number'&&isFinite(x)&&x>=0?Math.min(Math.floor(x),m):0;
- return {l:pfLoginOk(d.l),n:hsClean(d.n),av:avOk(d.av),fr:pfFrOk(d.fr),ti:typeof d.ti==='string'?d.ti:'',lv:pfLvOk(d.lv)||1,xp:n(d.xp,5e7),g:n(d.g,1e6),w:n(d.w,1e6),bs:n(d.bs,99999),bsc:n(d.bsc,2000),avg:n(d.avg,2000),ac:n(d.ac,99),al:(typeof d.al==='string'?d.al.split(','):[]).filter(id=>AL.concat(ALX).some(x=>x[0]===id)),tf:n(d.tf,10),ts:n(d.ts,30),cc:hsCC(d.cc)||'',fc:PF_CATS.includes(d.fc)?d.fc:''}}
+ return {l:pfLoginOk(d.l),n:hsClean(d.n),av:avOk(d.av),fr:pfFrOk(d.fr),ti:typeof d.ti==='string'?d.ti:'',lv:((pfLvOk(d.lv)||1)===99&&pfLevel(n(d.xp,5e7)).lv===PF_MAXLV)?PF_MAXLV:(pfLvOk(d.lv)||1),xp:n(d.xp,5e7),g:n(d.g,1e6),w:n(d.w,1e6),bs:n(d.bs,99999),bsc:n(d.bsc,2000),avg:n(d.avg,2000),ac:n(d.ac,99),al:(typeof d.al==='string'?d.al.split(','):[]).filter(id=>AL.concat(ALX).some(x=>x[0]===id)),tf:n(d.tf,10),ts:n(d.ts,30),cc:hsCC(d.cc)||'',fc:PF_CATS.includes(d.fc)?d.fc:''}}
 // ---- profile card (tap a nick) ----
 function pfIsMe(i){try{if(i.u&&ACL&&i.u.toLowerCase()===ACL.toLowerCase())return true;if(!i.u&&i.n&&me&&i.n===me&&ROOM)return true}catch(e){}return false}
 let pfLast=null;
@@ -3257,9 +3282,10 @@ function pfOf(n){const x=(typeof S!=='undefined'&&S&&S.pf&&S.pf[n])||null;if(!x|
 function pfRoomSync(){try{if(!ROOM||!S||!me||TW||!cli||!cli.connected)return;const inG=(S.lobby||[]).includes(me)||(S.G&&S.G.players&&S.G.players.some(p=>p.name===me));if(!inG)return;
  const w=pfMine(),cur=S.pf&&S.pf[me];if(cur&&JSON.stringify(cur)===JSON.stringify(w))return;S.pf=S.pf||{};S.pf[me]=w;publish()}catch(e){}}
 function pfAttrs(i){return ' data-pn="'+esc(i.n||'')+'"'+(i.u?' data-pu="'+esc(i.u)+'"':'')+(i.l?' data-pl="'+i.l+'"':'')+(i.av?' data-pa="'+esc(i.av)+'"':'')+(i.cc?' data-pc="'+esc(i.cc)+'"':'')+(i.f?' data-pf="'+esc(i.f)+'"':'')}
-function pfNameHTML(n){const x=pfOf(n);let av='',cc='';try{av=avOf(n)}catch(e){}try{cc=hsCC(((S&&S.cc)||{})[n])||''}catch(e){}
- return '<span class="pfn" role="button" tabindex="0"'+pfAttrs({n,u:x.u,l:x.l,av,cc,f:x.f})+'>'+esc(n)+pfChip(x.l)+'</span>'}
-function pfHsName(e){return '<span class="hsnn pfn" role="button" tabindex="0"'+pfAttrs({n:e.n,u:e.u,l:e.lv,av:e.av,cc:e.cc})+'>'+e.n+pfChip(e.lv)+'</span>'}
+function pfOfD(n){const x=pfOf(n);if(PF_PREV100){let m='';try{m=(typeof me!=='undefined'&&me)||''}catch(e){}if(n&&n===m)return Object.assign({},x,{l:PF_MAXLV})}return x}
+function pfNameHTML(n){const x=pfOfD(n);let av='',cc='';try{av=avOf(n)}catch(e){}try{cc=hsCC(((S&&S.cc)||{})[n])||''}catch(e){}
+ return '<span class="pfn'+(x.l===PF_MAXLV?' l100':'')+'" role="button" tabindex="0"'+pfAttrs({n,u:x.u,l:x.l,av,cc,f:x.f})+'>'+esc(n)+pfChip(x.l)+'</span>'}
+function pfHsName(e){return '<span class="hsnn pfn'+(pfLvOk(e.lv)===PF_MAXLV?' l100':'')+'" role="button" tabindex="0"'+pfAttrs({n:e.n,u:e.u,l:e.lv,av:e.av,cc:e.cc})+'>'+e.n+pfChip(e.lv)+'</span>'}
 function pfFromEl(el){return {n:el.dataset.pn||'',u:el.dataset.pu||'',l:+el.dataset.pl||0,av:el.dataset.pa||'',cc:el.dataset.pc||'',f:el.dataset.pf||''}}
 // ---- Google sign-in (Firebase GoogleAuthProvider) ----
 function gsiOn(){let k='';try{const q=new URLSearchParams(location.search).get('gsi');if(q==='1')localStorage.kgsi='1';else if(q==='0')localStorage.kgsi='0';k=localStorage.kgsi||''}catch(e){}return k==='1'||(GSI_CFG.on&&k!=='0')}
@@ -3313,7 +3339,7 @@ function pfDeco(k,d){const r=(a,b)=>a+Math.random()*(b-a),fx=(n,s)=>n.toFixed(s=
 function pfThOptions(){const N=I18N[LANG].thNames||{};return XTH.map(k=>{const ok=pfThOk(k);return '<option value="'+k+'"'+(k===appTh?' selected':'')+(ok?'':' disabled')+'>'+(ok?'👑 ':'🔒 ')+esc(N[k]||pt('th')[k])+'</option>'}).join('')}
 function pfColGroup(cur){const CN=(I18N[LANG]||I18N.pl).colNames||{},lv=pfLvNow();return '<div class="pg pgx" role="radiogroup" aria-label="'+esc(pt('colLv'))+'"><b>'+esc(pt('colLv'))+'</b> '+PF_COLX.map(k=>{const ok=pfHas('col',k,lv),it=pfItem('col',k),nm=CN[k]||k;
  return '<span class="sw'+(ok?'':' swl')+(k===cur?' on':'')+'" role="radio" aria-checked="'+(k===cur)+'"'+(ok?'':' aria-disabled="true"')+' tabindex="0" data-c="'+k+'" title="'+esc(ok?nm:nm+' – '+pfLockTxt(it))+'" aria-label="'+esc(ok?nm:nm+' – '+pfLockTxt(it))+'">'+dieHTML(k,5,'mini')+(ok?'':'<b class="swlk" aria-hidden="true">🔒<small>'+it.lv+'</small></b>')+'</span>'}).join('')+'</div>'}
-function pfGuestStrip(){const L=pfLevel(pxXP());return '<div class="pfguest"><div class="pfgrow">'+pfBadge(L.lv)+'<div><b>'+esc(pt('gTi'))+'</b><small>'+esc(pfRankName(L.lv))+'</small></div></div>'+pfXPBar(L.xp)+
+function pfGuestStrip(){const L=pfLevel(PF_PREV100?Math.max(pxXP(),pfXpFor(PF_MAXLV)):pxXP());return '<div class="pfguest"><div class="pfgrow">'+pfBadge(L.lv)+'<div><b>'+esc(pt('gTi'))+'</b><small>'+esc(pfRankName(L.lv))+'</small></div></div>'+pfXPBar(L.xp)+
  '<div class="achrow pfgbt"><button type="button" class="alt" data-gv="gst">'+esc(pt('gSt'))+'</button><button type="button" class="alt" data-gv="grw">'+esc(pt('gRw'))+'</button></div><p class="acchint">'+esc(pt('gHi'))+'</p></div>'}
 function pfLoginExtras(o,reg){try{const intro=o.querySelector('.accintro');if(intro)intro.insertAdjacentHTML('beforebegin',pfGuestStrip());o.querySelectorAll('[data-gv]').forEach(b=>b.onclick=()=>accOpen(b.dataset.gv));
  if(gsiOn()){const f=o.querySelector('#accf');if(f){f.insertAdjacentHTML('afterend',gsiBtnHTML());$('gsibtn').onclick=async()=>{const m=$('accmsg');m.className='accmsg';m.textContent=at('wait');$('gsibtn').disabled=true;accAct='signin';const ok=await gsiRun('in',m);if(!ok&&$('gsibtn'))$('gsibtn').disabled=false}}}}catch(e){console.warn(e)}}
@@ -3452,7 +3478,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611171600';
+const APP_VERSION='202611171700';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -4424,7 +4450,7 @@ function render(){const MD=K.modeOf(G);$('lobby').hidden=true;$('start').hidden=
  const P=G.players[G.cur],my=P.name===me&&G.phase==='play';
  const key=G.dice.join()+G.rolls+G.cur,first=lastDice==='',anim=key!==lastDice&&G.rolls>0;lastDice=key;
  if(G.phase==='end'){const w=G.players.map(p=>[p.name,K.totals(p.sheet,K.ndOf(G)).total]).sort((a,b)=>b[1]-a[1]);$('turn').textContent=t('end',{n:w[0][0],p:w[0][1]})}
- else{const pc=PILL[colOf(P.name)]||PILL.white;$('turn').innerHTML='<div class="trow'+(my?' mine':'')+'"><div class="tmeta"><span class="tlab">'+(my?t('tMine'):t('tRolls'))+'</span><span class="trnd">'+(MD==='hw'&&K.hwLeft(P.sheet)>0?t('mRound',{r:HW_N_()-K.hwLeft(P.sheet)+1}):t('round')+' '+Math.min(G.round,K.catsFor(K.ndOf(G)).length))+'</span><span class="tmode m-'+MD+'">'+MI_[MD]+' '+t('s_'+MD)+'</span></div><span class="tpill" style="--pb:'+pc[0]+';--pf:'+pc[1]+'">'+(avOf(P.name)?avHTML(avOf(P.name),'avp'):'🎲')+' <span class="tnm">'+esc(P.name)+'</span>'+pfChip(pfOf(P.name).l)+'</span></div>'}
+ else{const pc=PILL[colOf(P.name)]||PILL.white;$('turn').innerHTML='<div class="trow'+(my?' mine':'')+'"><div class="tmeta"><span class="tlab">'+(my?t('tMine'):t('tRolls'))+'</span><span class="trnd">'+(MD==='hw'&&K.hwLeft(P.sheet)>0?t('mRound',{r:HW_N_()-K.hwLeft(P.sheet)+1}):t('round')+' '+Math.min(G.round,K.catsFor(K.ndOf(G)).length))+'</span><span class="tmode m-'+MD+'">'+MI_[MD]+' '+t('s_'+MD)+'</span></div><span class="tpill" style="--pb:'+pc[0]+';--pf:'+pc[1]+'">'+(avOf(P.name)?avHTML(avOf(P.name),'avp'):'🎲')+' <span class="tnm">'+esc(P.name)+'</span>'+pfChip(pfOfD(P.name).l)+'</span></div>'}
  const sc=G.rolls>0?K.scores(G.dice):{},excAll=G.rolls>0&&(sc.lord!==null||sc.lstrit!==null),excSet=new Set(excAll?G.dice.map((_,i)=>i):G.rolls>0&&sc.poker!=null?countDice('poker',G.dice)[0].i:G.rolls>0&&sc.dstrit!==null?dPick(G.dice,[2,3,4,5,6]):G.rolls>0&&sc.mstrit!==null?dPick(G.dice,[1,2,3,4,5]):[]);const L0=G.log[0],sad=G.rolls===0&&L0&&typeof L0==='object'&&(L0.v==='x'||L0.v<0);
  $('dice').innerHTML=G.dice.map((v,i)=>dieHTML(colOf(P.name),v,'alive'+(G.held[i]?' held':'')+(anim&&!G.held[i]?' roll':'')+(excSet.has(i)?' excited':'')+(sad?' sad':''),i)).join('');document.querySelectorAll('#dice .die.held').forEach(d=>{const b=document.createElement('span');b.className='hbadge';b.setAttribute('aria-hidden','true');b.textContent='🔒';d.appendChild(b)});applyLook();sounds(G,anim&&!first,sc);try{turnPop(G,anim&&!first,first)}catch(e){}
  $('dice').querySelectorAll('.die').forEach((d,i)=>d.onclick=()=>{if(my)send({a:'hold',i})});scoreAnim(G);
@@ -4598,7 +4624,7 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  const _ap=accPush;accPush=async function(now){const r=await _ap.apply(this,arguments);try{if(now&&accSt==='ok')pfPubSoon()}catch(e){}return r};
  const _dd=drawDeco;drawDeco=function(k){if(XTH.includes(k)){const d=$('deco');if(!d||d.dataset.k===k)return;d.dataset.k=k;d.className='dc-'+k;pfDeco(k,d);return}return _dd.apply(this,arguments)};
  const _os=onState;onState=function(){_os.apply(this,arguments);try{pfRoomSync()}catch(e){}};
- const _dot=dot;dot=function(n){const h=_dot(n),f=pfOf(n).f;return f?'<span class="avf avfs fr-'+f+'">'+h+'</span>':h};
+ const _dot=dot;dot=function(n){const h=_dot(n),x=pfOfD(n),f=x.f,r=f?'<span class="avf avfs fr-'+f+'">'+h+'</span>':h;return x.l===PF_MAXLV?'<span class="av100">'+r+'</span>':r};
  const _al=applyLang;applyLang=function(){_al.apply(this,arguments);try{const o=$('gdv');if(o&&!o.hidden&&o.querySelector('.pfcard')&&pfLast)pfOpenCard(pfLast)}catch(e){}};
  // tap / Enter on a nick → profile card
  const go=el=>{try{pfOpenCard(pfFromEl(el))}catch(e){console.warn(e)}};
@@ -4612,6 +4638,8 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  try{drawThemes();drawPickers();dcSum()}catch(e){}
  setTimeout(()=>{try{pfIntro()}catch(e){}},2500);
  try{gsiAfterRedirect()}catch(e){}
+ // ?preview100=1 → show the level-100 celebration once (display only; PX.lv is not touched)
+ if(PF_PREV100)setTimeout(()=>{try{pfLuQ.push({from:PF_MAXLV-1,to:PF_MAXLV});pfLuShow()}catch(e){}},1800);
 })();
 
 </script></body></html>
