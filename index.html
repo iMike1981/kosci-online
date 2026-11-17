@@ -2797,7 +2797,13 @@ body.th-sakura{background:linear-gradient(180deg,#12071a 0%,#251030 42%,#3b1a42 
 .lt10{--a:#ff6fd8;--b:#7b1fa2}
 .lt11{--a:#ff5252;--b:#7f0000}
 .lt12{--a:#ffffff;--b:#7c4dff}
+.lt13{--a:#ffe9a8;--b:#b8860b}
 .lvb.lt12{color:#3a1a7a;text-shadow:none;background:conic-gradient(from 200deg,#fff,#ffd36b,#ff6fd8,#7c4dff,#29e7ff,#fff)}.lvc.lt12{color:#3a1a7a;text-shadow:none;background:linear-gradient(90deg,#ffd36b,#ff6fd8,#29e7ff)}
+@keyframes pfLord{0%{background-position:0% 50%}100%{background-position:300% 50%}}@keyframes pfHalo{0%,100%{box-shadow:inset 0 1px 0 #fff,0 0 0 1.5px #fff,0 0 0 3px #b8860b,0 0 12px 2px #ffd36b,0 0 22px 4px #ff6fd866}50%{box-shadow:inset 0 1px 0 #fff,0 0 0 1.5px #fff,0 0 0 3px #b8860b,0 0 16px 4px #ffe58a,0 0 28px 8px #29e7ff66}}
+.lvb.lt13,.lvc.lt13{color:#3a2400;text-shadow:0 1px 0 #fff8;background:linear-gradient(110deg,#fff7d1,#ffd36b 18%,#e9a400 32%,#fff3b0 46%,#ffd36b 60%,#ff9fe0 72%,#9fe9ff 84%,#fff7d1) 0 50%/300% 100%;animation:pfLord 5s linear infinite}
+.lvb.lt13{animation:pfLord 5s linear infinite,pfHalo 3s ease-in-out infinite;box-shadow:inset 0 1px 0 #fff,0 0 0 1.5px #fff,0 0 0 3px #b8860b,0 0 14px 3px #ffd36b}.lvc.lt13{box-shadow:0 0 0 1px #b8860b,0 0 6px #ffd36b}
+.lvb.lt13.lvhuge{box-shadow:inset 0 2px 0 #fff,0 0 0 3px #fff,0 0 0 6px #b8860b,0 0 40px 10px #ffd36b}
+.noanim .lvb.lt13,.noanim .lvc.lt13{animation:none!important}@media(prefers-reduced-motion:reduce){.lvb.lt13,.lvc.lt13{animation:none!important}}
 .lvb.lt8,.lvb.lt9,.lvb.lt10,.lvb.lt11{box-shadow:inset 0 1px 0 #fff8,0 0 0 1.5px #fffa,0 0 10px var(--a),0 2px 5px #0005}
 
 .pfhead{background:#8080801a;display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--a) 26%,transparent),color-mix(in srgb,var(--b) 14%,transparent));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--a) 45%,transparent);margin:4px 0 8px;text-align:left}
@@ -3011,11 +3017,11 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release number shown in the menu footer + Account tab (bump together with APP_VERSION)
-const APP_VER_NUM=31;
+const APP_VER_NUM=32;
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER_NUM+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
-const PF_MAXLV=99,PF_RKL=[1,5,10,15,20,25,30,35,40,45,50,60,75];
+const PF_MAXLV=99,PF_RKL=[1,5,10,15,20,25,30,35,40,45,50,60,75,99];
 const XTH=['neon','aurora','royal','sakura'];
 const PF_COLX=['ruby','emerald','obsidian','prism'];
 const PF_HARD=['w100','s800','mon1','tw10','lord'];
@@ -3029,7 +3035,7 @@ const PF_UNL=[
  {k:'unlucky',ty:'ti',a:'pech'},{k:'nerves',ty:'ti',a:'w1p'},{k:'social',ty:'ti',a:'soc3'},{k:'streak',ty:'ti',a:'d7'},{k:'champ',ty:'ti',a:'mon1'},{k:'tower',ty:'ti',a:'tw10'},{k:'seer',ty:'ti',a:'andrz'}];
 const PF_FR=PF_UNL.filter(x=>x.ty==='fr').map(x=>x.k),PF_TI=PF_UNL.filter(x=>x.ty==='ti').map(x=>x.k);
 const PFT={pl:{lvl:'Poziom',lvS:'Poz.',xpTo:'{a} / {b} XP do poziomu {n}',xpMax:'{a} XP – najwyższy poziom!',xpTot:'{x} XP łącznie',
- rk:['Nowicjusz','Turlacz','Łowca par','Strateg stritu','Szef Fulla','As karety','Generał','Rekin pokera','Mistrz kości','Lord kości','Legenda','Arcymistrz','Mityczny'],
+ rk:['Nowicjusz','Turlacz','Łowca par','Strateg stritu','Szef Fulla','As karety','Generał','Rekin pokera','Mistrz kości','Lord kości','Legenda','Arcymistrz','Mityczny','Lord of the Dice'],
  tSt:'📊 Statystyki',tRw:'🎁 Nagrody',tAc:'⚙️ Konto',
  sG:'Ukończone gry',sW:'Wygrane',sWR:'Procent wygranych',sBest:'Najlepszy wynik',sAvg:'Średnio punktów',sTot:'Punkty łącznie',sStreak:'Najdłuższa seria dni',sDays:'Dni gry',sTower:'Najwyższe piętro Wieży',sStars:'Gwiazdki w Wieży',sAce:'Bonusy Prymusa',sClean:'Czyste gry',sTime:'Czas gry',sMp:'Gry z innymi',s2nd:'Drugie miejsca',sAch:'Osiągnięcia',sFav:'Ulubiona kategoria',sFavN:'{p} pkt łącznie',sCombo:'Figury z punktami',sChart:'Ostatnie gry',sChartE:'Tu pojawi się wykres Twoich ostatnich gier.',cWin:'wygrana',cLoss:'przegrana',cSolo:'solo',cAvg:'średnia',sNote:'Statystyki liczą się od tej wersji gry; starsze gry są wliczone w poziom i liczbę gier.',
  rTh:'Motywy specjalne',rFr:'Ramki awatara',rCol:'Kolory kości',rTi:'Tytuły',lkLv:'🔒 Od poziomu {n}',lkAch:'🔒 Osiągnięcie: {a}',use:'Użyj',inUse:'✓ Używasz',none:'Bez ramki',tiRank:'Ranga (automatycznie)',got:'odblokowane',
@@ -3044,7 +3050,7 @@ const PFT={pl:{lvl:'Poziom',lvS:'Poz.',xpTo:'{a} / {b} XP do poziomu {n}',xpMax:
  gPickT:'Wybierz login',gPickI:'Pierwsze logowanie przez Google. Wybierz login (3–20 znaków: litery, cyfry, _ lub -) – zobaczą go inni gracze.',gPickGo:'✅ Gotowe',gCancel:'Anuluj',gReauth:'🔐 Potwierdź przez Google',gRedir:'⏳ Przechodzę do logowania Google…',gErr:'Logowanie przez Google nie powiodło się ({c}).',gPriv:'Przy logowaniu przez Google Firebase zna Twój adres e-mail Google – nie pokazujemy go nikomu i nie zapisujemy w grze.',gLinkI:'Połącz konto z Google, żeby logować się jednym dotknięciem (np. w aplikacji z Play Store). Login i hasło dalej działają.',
  pubOn:'🌍 Twój profil publiczny widzą inni gracze (dotknij nicku w Top 10 lub w pokoju).'},
 en:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP to level {n}',xpMax:'{a} XP – maximum level!',xpTot:'{x} XP in total',
- rk:['Rookie','Dice Roller','Pair Hunter','Straight Strategist','Full House Boss','Four-of-a-Kind Ace','General','Poker Shark','Dice Master','Dice Lord','Legend','Grandmaster','Mythic'],
+ rk:['Rookie','Dice Roller','Pair Hunter','Straight Strategist','Full House Boss','Four-of-a-Kind Ace','General','Poker Shark','Dice Master','Dice Lord','Legend','Grandmaster','Mythic','Lord of the Dice'],
  tSt:'📊 Stats',tRw:'🎁 Rewards',tAc:'⚙️ Account',
  sG:'Games finished',sW:'Wins',sWR:'Win rate',sBest:'Best score',sAvg:'Average score',sTot:'Total points',sStreak:'Longest daily streak',sDays:'Days played',sTower:'Highest Tower floor',sStars:'Tower stars',sAce:'School Ace bonuses',sClean:'Clean games',sTime:'Time played',sMp:'Games with others',s2nd:'Second places',sAch:'Achievements',sFav:'Favourite category',sFavN:'{p} pts in total',sCombo:'Combinations scored',sChart:'Recent games',sChartE:'A chart of your recent games will appear here.',cWin:'win',cLoss:'loss',cSolo:'solo',cAvg:'average',sNote:'Detailed stats are counted from this version on; older games still count towards your level and games played.',
  rTh:'Special themes',rFr:'Avatar frames',rCol:'Dice colours',rTi:'Titles',lkLv:'🔒 From level {n}',lkAch:'🔒 Achievement: {a}',use:'Use',inUse:'✓ In use',none:'No frame',tiRank:'Rank (automatic)',got:'unlocked',
@@ -3059,7 +3065,7 @@ en:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP to level {n}',xpMax:'{a} XP – max
  gPickT:'Choose a username',gPickI:'First Google sign-in. Choose a username (3–20 characters: letters, digits, _ or -) – other players will see it.',gPickGo:'✅ Done',gCancel:'Cancel',gReauth:'🔐 Confirm with Google',gRedir:'⏳ Opening Google sign-in…',gErr:'Google sign-in failed ({c}).',gPriv:'With Google sign-in Firebase knows your Google e-mail address – we never show it to anyone or store it in the game.',gLinkI:'Link your account with Google to log in with one tap (e.g. in the Play Store app). Your username and password keep working.',
  pubOn:'🌍 Other players can see your public profile (tap a name in the Top 10 or in a room).'},
 de:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP bis Level {n}',xpMax:'{a} XP – höchstes Level!',xpTot:'{x} XP insgesamt',
- rk:['Neuling','Würfler','Paarjäger','Straßenstratege','Full-House-Boss','Viererpasch-Ass','General','Poker-Hai','Würfelmeister','Würfellord','Legende','Großmeister','Mythisch'],
+ rk:['Neuling','Würfler','Paarjäger','Straßenstratege','Full-House-Boss','Viererpasch-Ass','General','Poker-Hai','Würfelmeister','Würfellord','Legende','Großmeister','Mythisch','Lord of the Dice'],
  tSt:'📊 Statistik',tRw:'🎁 Belohnungen',tAc:'⚙️ Konto',
  sG:'Beendete Spiele',sW:'Siege',sWR:'Siegquote',sBest:'Bestes Ergebnis',sAvg:'Durchschnitt',sTot:'Punkte insgesamt',sStreak:'Längste Tagesserie',sDays:'Spieltage',sTower:'Höchste Turm-Etage',sStars:'Sterne im Turm',sAce:'Klassenbester-Boni',sClean:'Saubere Spiele',sTime:'Spielzeit',sMp:'Spiele mit anderen',s2nd:'Zweite Plätze',sAch:'Erfolge',sFav:'Lieblingskategorie',sFavN:'{p} Pkt. insgesamt',sCombo:'Gewertete Kombinationen',sChart:'Letzte Spiele',sChartE:'Hier erscheint ein Diagramm deiner letzten Spiele.',cWin:'Sieg',cLoss:'Niederlage',cSolo:'solo',cAvg:'Durchschnitt',sNote:'Detaillierte Statistiken zählen ab dieser Version; ältere Spiele zählen trotzdem für Level und Spielanzahl.',
  rTh:'Spezial-Designs',rFr:'Avatar-Rahmen',rCol:'Würfelfarben',rTi:'Titel',lkLv:'🔒 Ab Level {n}',lkAch:'🔒 Erfolg: {a}',use:'Verwenden',inUse:'✓ Aktiv',none:'Kein Rahmen',tiRank:'Rang (automatisch)',got:'freigeschaltet',
@@ -3074,7 +3080,7 @@ de:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP bis Level {n}',xpMax:'{a} XP – h�
  gPickT:'Benutzernamen wählen',gPickI:'Erste Anmeldung mit Google. Wähle einen Benutzernamen (3–20 Zeichen: Buchstaben, Ziffern, _ oder -) – andere Spieler sehen ihn.',gPickGo:'✅ Fertig',gCancel:'Abbrechen',gReauth:'🔐 Mit Google bestätigen',gRedir:'⏳ Google-Anmeldung wird geöffnet…',gErr:'Anmeldung mit Google fehlgeschlagen ({c}).',gPriv:'Bei der Anmeldung mit Google kennt Firebase deine Google-E-Mail-Adresse – wir zeigen sie niemandem und speichern sie nicht im Spiel.',gLinkI:'Verknüpfe dein Konto mit Google, um dich mit einem Tippen anzumelden (z. B. in der Play-Store-App). Benutzername und Passwort funktionieren weiter.',
  pubOn:'🌍 Andere Spieler sehen dein öffentliches Profil (tippe auf einen Namen in den Top 10 oder im Raum).'},
 es:{lvl:'Nivel',lvS:'Nv.',xpTo:'{a} / {b} XP para el nivel {n}',xpMax:'{a} XP – ¡nivel máximo!',xpTot:'{x} XP en total',
- rk:['Novato','Lanzador','Cazaparejas','Estratega de escaleras','Jefe del Full','As de cuatro iguales','General','Tiburón del póker','Maestro de los dados','Señor de los dados','Leyenda','Gran maestro','Mítico'],
+ rk:['Novato','Lanzador','Cazaparejas','Estratega de escaleras','Jefe del Full','As de cuatro iguales','General','Tiburón del póker','Maestro de los dados','Señor de los dados','Leyenda','Gran maestro','Mítico','Lord of the Dice'],
  tSt:'📊 Estadísticas',tRw:'🎁 Recompensas',tAc:'⚙️ Cuenta',
  sG:'Partidas terminadas',sW:'Victorias',sWR:'Porcentaje de victorias',sBest:'Mejor puntuación',sAvg:'Puntuación media',sTot:'Puntos en total',sStreak:'Racha de días más larga',sDays:'Días jugados',sTower:'Piso más alto de la Torre',sStars:'Estrellas en la Torre',sAce:'Bonos de Alumno estrella',sClean:'Partidas limpias',sTime:'Tiempo de juego',sMp:'Partidas con otros',s2nd:'Segundos puestos',sAch:'Logros',sFav:'Categoría favorita',sFavN:'{p} pts en total',sCombo:'Combinaciones anotadas',sChart:'Últimas partidas',sChartE:'Aquí aparecerá un gráfico de tus últimas partidas.',cWin:'victoria',cLoss:'derrota',cSolo:'solo',cAvg:'media',sNote:'Las estadísticas detalladas se cuentan desde esta versión; las partidas anteriores siguen contando para el nivel y el número de partidas.',
  rTh:'Temas especiales',rFr:'Marcos de avatar',rCol:'Colores de dados',rTi:'Títulos',lkLv:'🔒 Desde el nivel {n}',lkAch:'🔒 Logro: {a}',use:'Usar',inUse:'✓ En uso',none:'Sin marco',tiRank:'Rango (automático)',got:'desbloqueados',
@@ -3446,7 +3452,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611171500';
+const APP_VERSION='202611171600';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
