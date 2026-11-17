@@ -2931,6 +2931,12 @@ body:not(#z) #rov .hst thead th{background:#1f2b47!important;color:#fff!importan
 .noanim #emol .emob{animation:emoFade 2.8s linear forwards}
 @media(prefers-reduced-motion:reduce){#emol .emob{animation:emoFade 2.8s linear forwards}}
 
+/* ---- fx_ref.css ---- */
+body:not(#z) #lobby .refinv{margin:6px 0 0;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#ffd36b,#ffb347);color:#2a1d00;border:0;font-weight:800}
+.pfref{padding:10px 12px;border-radius:14px;background:color-mix(in srgb,currentColor 7%,transparent);margin:4px 0 10px}
+.pfref p{margin:0 0 6px}.pfref .pfnote{margin:0 0 8px}
+body:not(#z) .pfref .refshare{font-weight:700}
+
 /* ---- fx_snd.css ---- */
 .tchip.fxvolb{user-select:none;-webkit-user-select:none}
 .tchip.fxvolb:focus-visible{outline:2px solid currentColor;outline-offset:2px}
@@ -3113,7 +3119,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='1.60';
+const APP_VER='1.70';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -3201,8 +3207,9 @@ function pfLevel(xp){xp=Math.max(0,Math.floor(+xp||0));let L=1,base=0;while(L<PF
 function pfRank(L){let i=0;PF_RKL.forEach((l,j)=>{if(L>=l)i=j});return i}
 function pfRankName(L){return (pt('rk')||[])[pfRank(L)]||''}
 // lifetime counters -> XP. c:{g,w,p2,pts,pe,dd,ach:[ids],twf,tws}
+const PF_REFXP=150;
 function pfXP(c){const n=x=>Math.max(0,Math.floor(+x||0));const ach=(c.ach||[]).reduce((s,id)=>s+(PF_HARD.includes(id)?100:50),0);
- return 25*n(c.g)+40*n(c.w)+15*n(c.p2)+Math.floor((n(c.pts)+n(c.pe))/20)+30*n(c.dd)+ach+60*n(c.twf)+20*n(c.tws)}
+ return 25*n(c.g)+40*n(c.w)+15*n(c.p2)+Math.floor((n(c.pts)+n(c.pe))/20)+30*n(c.dd)+ach+60*n(c.twf)+20*n(c.tws)+PF_REFXP*n(c.rf)}
 // achievement ids, readable before the main script has initialised ACV (boot-time theme check)
 function pfAchU(){try{if(typeof ACV!=='undefined'&&ACV&&ACV.u)return ACV.u}catch(e){}try{const a=JSON.parse(localStorage.kach||'null');return a&&a.u&&typeof a.u==='object'?a.u:{}}catch(e){return {}}}
 function pfLvNow(){try{return pfLevel(pxXP()).lv}catch(e){return +localStorage.kpxlv||1}}
@@ -3219,10 +3226,10 @@ function pfDispLv(lv){return PF_PREV100?PF_MAXLV:lv}
 function pfLvOk(l){l=Math.floor(+l);return l>=1&&l<=PF_MAXLV?l:0}
 // ---- detailed stats (localStorage kpx, synced as users/<uid>.px) ----
 const PF_CATS=['u1','u2','u3','u4','u5','u6','para','dpary','tpary','trojka','dtrojki','mstrit','dstrit','lstrit','general','full','kareta','poker','lord','parz','nparz','szansa'];
-function pxBlank(){return {v:1,c:{pts:0,gp:0,pe:0,bsc:0,p2:0,mp:0,sb:0,cb:0,dd:0,ld:-1,tm:0,ct:{},cp:{}},r:[],lv:0,eq:{fr:'',ti:''},mig:0,gd:[]}}
+function pxBlank(){return {v:1,c:{pts:0,gp:0,pe:0,bsc:0,p2:0,mp:0,sb:0,cb:0,dd:0,ld:-1,tm:0,rf:0,ct:{},cp:{}},r:[],lv:0,eq:{fr:'',ti:''},mig:0,gd:[]}}
 function pxSane(o){const b=pxBlank();if(!o||typeof o!=='object')return b;const n=(x,m)=>typeof x==='number'&&isFinite(x)&&x>=0?Math.min(Math.floor(x),m):0;const c=o.c&&typeof o.c==='object'?o.c:{};
  b.c.gp=n(c.gp,1e6);b.c.pts=Math.min(n(c.pts,2e9),b.c.gp*2000);b.c.pe=n(c.pe,1e6*250);b.c.bsc=n(c.bsc,2000);b.c.mp=Math.min(n(c.mp,1e6),b.c.gp);b.c.p2=Math.min(n(c.p2,1e6),b.c.mp);
- b.c.sb=Math.min(n(c.sb,1e6),b.c.gp);b.c.cb=Math.min(n(c.cb,1e6),b.c.gp);b.c.dd=n(c.dd,99999);b.c.ld=typeof c.ld==='number'&&isFinite(c.ld)?Math.max(-1,Math.min(Math.floor(c.ld),99999)):-1;b.c.tm=n(c.tm,1e9);
+ b.c.sb=Math.min(n(c.sb,1e6),b.c.gp);b.c.cb=Math.min(n(c.cb,1e6),b.c.gp);b.c.dd=n(c.dd,99999);b.c.ld=typeof c.ld==='number'&&isFinite(c.ld)?Math.max(-1,Math.min(Math.floor(c.ld),99999)):-1;b.c.tm=n(c.tm,1e9);b.c.rf=n(c.rf,100000);
  ['ct','cp'].forEach(f=>{const s=c[f]&&typeof c[f]==='object'?c[f]:{};PF_CATS.forEach(k=>{const v=n(s[k],f==='ct'?1e6:2e9);if(v)b.c[f][k]=f==='ct'?Math.min(v,b.c.gp):Math.min(v,b.c.gp*600)})});
  b.r=(Array.isArray(o.r)?o.r:[]).filter(e=>e&&typeof e==='object'&&typeof e.s==='number'&&isFinite(e.s)&&Math.abs(e.s)<3000).slice(-20).map(e=>({d:n(e.d,99999),s:Math.round(e.s),o:e.o===1?1:e.o===2?2:0,k:e.k===5?5:6,m:e.m==='train'||e.m==='hw'?e.m:'classic'}));
  b.lv=pfLvOk(o.lv)||0;const eq=o.eq&&typeof o.eq==='object'?o.eq:{};b.eq.fr=pfFrOk(eq.fr);b.eq.ti=PF_TI.includes(eq.ti)||/^rk([0-9]|1[0-2])$/.test(eq.ti||'')?eq.ti:'';b.mig=o.mig?1:0;
@@ -3232,7 +3239,7 @@ function pxSave(){try{localStorage.kpx=JSON.stringify(PX)}catch(e){}}
 function pxPack(){const o=JSON.parse(JSON.stringify(PX));delete o.gd;return o}
 function pxTw(){let f=0,s=0,hi=0;try{const S_=TWD.s||{};for(const i in S_){const v=+S_[i]||0;if(v>0){f++;s+=Math.min(3,v);hi=Math.max(hi,+i+1)}}}catch(e){}return {f,s,hi}}
 function pxAchIds(){const u=pfAchU();return Object.keys(u).filter(id=>typeof AL!=='undefined'?(AL.concat(ALX).some(x=>x[0]===id)):true)}
-function pxCounters(){let st={g:0,w:0,bs:0};try{st=ACV.st}catch(e){}const tw=pxTw();return {g:st.g,w:st.w,p2:PX.c.p2,pts:PX.c.pts,pe:PX.c.pe,dd:Math.max(PX.c.dd,st.bs||0),ach:pxAchIds(),twf:tw.f,tws:tw.s}}
+function pxCounters(){let st={g:0,w:0,bs:0};try{st=ACV.st}catch(e){}const tw=pxTw();return {g:st.g,w:st.w,p2:PX.c.p2,pts:PX.c.pts,pe:PX.c.pe,dd:Math.max(PX.c.dd,st.bs||0),ach:pxAchIds(),twf:tw.f,tws:tw.s,rf:PX.c.rf||0}}
 function pxXP(){return pfXP(pxCounters())}
 function pxMyNames(){const s=new Set();try{[localStorage.kname,localStorage.kpname,localStorage.kacc,typeof me!=='undefined'?me:'',typeof PN!=='undefined'?PN:''].forEach(x=>{x=String(x||'').trim().toLowerCase();if(x)s.add(x)})}catch(e){}return s}
 // record one finished game sheet into PX (pure-ish: g = game object, mi = my index)
@@ -3253,7 +3260,7 @@ function pxMigrate(){if(PX.mig)return false;const names=pxMyNames();let n=0;
  PX.c.pe=Math.max(0,st.g-PX.c.gp)*250;PX.c.dd=Math.max(PX.c.dd,st.bs||0,st.g>0?1:0);if(st.ls>=0)PX.c.ld=Math.max(PX.c.ld,st.ls);
  PX.mig=1;PX.lv=pfLevel(pxXP()).lv;if(st.g>0||pxAchIds().length>0)try{localStorage.kpxintro='1'}catch(e){}pxSave();return true}
 function pxMerge(o){const b=pxSane(o),a=PX.c,s=b.c;let ch=false;const mx=k=>{if(s[k]>a[k]){a[k]=s[k];ch=true}};
- ['pts','gp','pe','bsc','p2','mp','sb','cb','dd','ld','tm'].forEach(mx);['ct','cp'].forEach(f=>{for(const k in s[f])if((s[f][k]||0)>(a[f][k]||0)){a[f][k]=s[f][k];ch=true}});
+ ['pts','gp','pe','bsc','p2','mp','sb','cb','dd','ld','tm','rf'].forEach(mx);['ct','cp'].forEach(f=>{for(const k in s[f])if((s[f][k]||0)>(a[f][k]||0)){a[f][k]=s[f][k];ch=true}});
  // after a merge the estimate for untracked old games must not double count tracked ones
  try{const g=ACV.st.g;a.pe=Math.min(a.pe,Math.max(0,g-a.gp)*250)}catch(e){}
  const key=e=>e.d+'|'+e.s+'|'+e.k+'|'+e.o,seen=new Set(PX.r.map(key));b.r.forEach(e=>{if(!seen.has(key(e))){PX.r.push(e);seen.add(key(e));ch=true}});PX.r.sort((x,y)=>x.d-y.d);PX.r=PX.r.slice(-20);
@@ -3555,7 +3562,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611172000';
+const APP_VERSION='202611172030';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -3875,9 +3882,9 @@ function connect(onUp){clearTimeout(connFail);
  const c=cli=mqtt.connect(u,Object.assign(opt,o));
  let ok=false;connFail=setTimeout(()=>{if(!ok&&cli===c){c.removeAllListeners();c.end(true);srv++;connect(onUp)}},9000);
  c.on('connect',()=>{if(cli!==c)return;ok=true;clearTimeout(connFail);status('🟢 online');const f=onUp;onUp=null;resyncing=resyncing||!f;
-  if(me&&ROOM)c.publish(ptop(me),document.hidden?'a':'1',{qos:1,retain:true});c.subscribe([topic(),'kosci-mk-v2/'+ROOM+'/p/+','kosci-mk-v2/'+ROOM+'/e'],{qos:1},()=>f&&f())});
+  if(me&&ROOM)c.publish(ptop(me),document.hidden?'a':'1',{qos:1,retain:true});c.subscribe([topic(),'kosci-mk-v2/'+ROOM+'/p/+','kosci-mk-v2/'+ROOM+'/e'].concat(window.refTopic?[refTopic()]:[]),{qos:1},()=>f&&f())});
  c.on('reconnect',()=>{resyncing=true;status('🟠 '+t('reconnecting'))});c.on('offline',()=>status('🔴 offline – '+t('reconnecting')));
- c.on('message',(tp,m)=>{if(cli!==c)return;if(tp.indexOf('/p/')>0){presMsg(tp,m.toString());return}if(/\/e$/.test(tp)){try{emoRecv(m.toString())}catch(e){}return}
+ c.on('message',(tp,m)=>{if(cli!==c)return;if(tp.indexOf('kosci-mk-v2/ref/')===0){try{refRecv(tp,m.toString())}catch(e){}return}if(tp.indexOf('/p/')>0){presMsg(tp,m.toString());return}if(/\/e$/.test(tp)){try{emoRecv(m.toString())}catch(e){}return}
   let d;try{d=JSON.parse(m.toString())}catch(e){return}if(!d||(S&&d.v<S.v&&!resyncing))return;if(!stOk(d))return;resyncing=false;S=d;onState()});}
 function presMsg(tp,v){let n;try{n=decodeURIComponent(tp.split('/p/')[1])}catch(e){return}if(!n)return;if(n===me){if(v!=='1'&&ROOM&&!document.hidden&&cli&&cli.connected)cli.publish(ptop(me),'1',{qos:1,retain:true});return}
  if(!v){delete PRES[n]}else{const on=v==='1',o=PRES[n];if(!o||o.on!==on)PRES[n]={on,a:v==='a',t:Date.now()}}presUI()}
@@ -4763,6 +4770,63 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  document.addEventListener('keydown',ev=>{if(ev.key==='Escape'){const p=$('emopk');if(p&&!p.hidden){p.hidden=true;try{$('emofab').focus()}catch(e){}}}});
  const _os=onState;onState=function(){const r=_os.apply(this,arguments);try{emoUI()}catch(e){}return r};
  setInterval(()=>{try{emoUI()}catch(e){}},1500);try{emoUI()}catch(e){}
+})();
+
+// ---- fx_ref.js ----
+// ===== 1.70 – invite a friend: one-tap room invite + referral XP =====
+// Transport: retained MQTT message kosci-mk-v2/ref/<inviterId>/<inviteeDevice> (additive topic, older clients never subscribe).
+(function(){
+ const RT={pl:{inv:'📨 Zaproś znajomego',shTxt:'Zagraj ze mną w Kości Online! Wejdź prosto do mojego pokoju {c}:',shTxt0:'Zagraj ze mną w Kości Online!',copied:'Link z zaproszeniem skopiowany',got:'🤝 {n} – pierwsza gra z Twojego zaproszenia ukończona: +{x} XP',cap:'Dzienny limit nagród za zaproszenia osiągnięty – kolejne przyjdą jutro.',sec:'Zaproś znajomych',stat:'Zaproszeni gracze: {k} · zdobyte XP: {x}',how:'+{x} XP, gdy nowy gracz z Twojego linku ukończy swoją pierwszą grę w pokoju (raz na urządzenie, maks. {d} dziennie).',btn:'📨 Udostępnij mój link',welcome:'Zaproszenie przyjęte 🎁 Ukończ pierwszą grę w pokoju, a znajomy dostanie bonus XP.'},
+  en:{inv:'📨 Invite a friend',shTxt:'Play Kości Online with me! Jump straight into my room {c}:',shTxt0:'Play Kości Online with me!',copied:'Invite link copied',got:'🤝 {n} finished their first game from your invite: +{x} XP',cap:'Daily invite reward limit reached – more tomorrow.',sec:'Invite friends',stat:'Players invited: {k} · XP earned: {x}',how:'+{x} XP when a new player from your link finishes their first room game (once per device, max {d} a day).',btn:'📨 Share my link',welcome:'Invite accepted 🎁 Finish your first room game and your friend gets bonus XP.'},
+  de:{inv:'📨 Freund einladen',shTxt:'Spiel mit mir Kości Online! Direkt in meinen Raum {c}:',shTxt0:'Spiel mit mir Kości Online!',copied:'Einladungslink kopiert',got:'🤝 {n} hat das erste Spiel über deine Einladung beendet: +{x} XP',cap:'Tageslimit für Einladungsbelohnungen erreicht – morgen geht’s weiter.',sec:'Freunde einladen',stat:'Eingeladene Spieler: {k} · erhaltene XP: {x}',how:'+{x} XP, wenn ein neuer Spieler über deinen Link sein erstes Raumspiel beendet (einmal pro Gerät, max. {d} pro Tag).',btn:'📨 Meinen Link teilen',welcome:'Einladung angenommen 🎁 Beende dein erstes Raumspiel und dein Freund bekommt Bonus-XP.'},
+  es:{inv:'📨 Invitar a un amigo',shTxt:'¡Juega conmigo a Kości Online! Entra directo a mi sala {c}:',shTxt0:'¡Juega conmigo a Kości Online!',copied:'Enlace de invitación copiado',got:'🤝 {n} terminó su primera partida con tu invitación: +{x} XP',cap:'Límite diario de recompensas por invitación alcanzado: más mañana.',sec:'Invita a tus amigos',stat:'Jugadores invitados: {k} · XP ganada: {x}',how:'+{x} XP cuando un jugador nuevo de tu enlace termine su primera partida en sala (una vez por dispositivo, máx. {d} al día).',btn:'📨 Compartir mi enlace',welcome:'Invitación aceptada 🎁 Termina tu primera partida en sala y tu amigo recibirá XP extra.'}};
+ const rt=(k,o)=>{let s=(RT[LANG]||RT.en)[k]||RT.en[k];if(o)for(const x in o)s=s.split('{'+x+'}').join(o[x]);return s};window.REF_T=RT;
+ const CAP=3,XP=(typeof PF_REFXP!=='undefined'?PF_REFXP:150),OK=/^[a-z0-9]{6,16}$/;
+ const LS=(k,v)=>{try{if(v===undefined)return localStorage[k];if(v===null)localStorage.removeItem(k);else localStorage[k]=v}catch(e){}};
+ window.refId=function(){let id=LS('krefid');if(!id||!OK.test(id)){id='';const a=new Uint8Array(8);try{crypto.getRandomValues(a)}catch(e){for(let i=0;i<8;i++)a[i]=Math.random()*256|0}a.forEach(b=>id+=(b%36).toString(36));id=id.slice(0,10).padEnd(10,'x');LS('krefid',id)}return id};
+ window.refTopic=()=>'kosci-mk-v2/ref/'+refId()+'/+';
+ const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+ function store(){let o;try{o=JSON.parse(LS('kref')||'null')}catch(e){}if(!o||typeof o!=='object')o={};if(!Array.isArray(o.devs))o.devs=[];if(!o.days||typeof o.days!=='object')o.days={};return o}
+ function save(o){const t=today();for(const k in o.days)if(k!==t)delete o.days[k];o.devs=o.devs.slice(-500);LS('kref',JSON.stringify(o))}
+ const isNew=()=>{let g=0;try{g=ACV.st.g|0}catch(e){}return (PX.c.gp|0)===0&&g===0};
+ const pend=()=>{try{const o=JSON.parse(LS('krefby')||'null');return o&&OK.test(o.by)?o:null}catch(e){return null}};
+ // --- invitee: landing with ?ref= ---
+ (function(){let q='';try{q=(typeof params!=='undefined'?params:new URLSearchParams(location.search)).get('ref')||''}catch(e){}q=String(q).toLowerCase();
+  const p=pend();if(p&&((PX.c.gp|0)>=2||Date.now()-(+p.t||0)>30*864e5)){LS('krefby',null);LS('kreffed','x')}
+  if(OK.test(q)&&q!==refId()&&!LS('kreffed')&&!pend()&&isNew()){LS('krefby',JSON.stringify({by:q,t:Date.now()}));setTimeout(()=>{try{toast(rt('welcome'))}catch(e){}},1600)}})();
+ function report(){const p=pend();if(!p||!ROOM||TW||!G||G.phase!=='end'||!me||!cli||!cli.connected)return false;const pl=G.players||[],mine=pl.find(x=>x.name===me);
+  if(!mine||mine.left||pl.filter(x=>!x.left).length<2)return false;try{if(!K.done(mine,K.ndOf(G)))return false}catch(e){return false}if((PX.c.gp|0)>1){LS('krefby',null);LS('kreffed','x');return false}
+  let u='';try{u=(typeof ACL!=='undefined'&&ACL)||''}catch(e){}
+  try{cli.publish('kosci-mk-v2/ref/'+p.by+'/'+refId(),JSON.stringify({n:String(me).slice(0,20),d:refId(),u:String(u).slice(0,20),t:Date.now()}),{qos:1,retain:true})}catch(e){return false}
+  LS('krefby',null);LS('kreffed','1');return true}
+ window.refReport=report;
+ // --- inviter: retained referral messages on my topic ---
+ let capT=0;
+ window.refRecv=function(tp,raw){const a=String(tp).split('/');if(a.length!==4||a[1]!=='ref'||a[2]!==refId())return false;if(!raw)return false;let d;try{d=JSON.parse(raw)}catch(e){return false}
+  const dev=a[3];if(!d||d.d!==dev||!OK.test(dev)||dev===refId()||typeof d.n!=='string')return false;const clr=()=>{try{cli&&cli.connected&&cli.publish(tp,'',{qos:1,retain:true})}catch(e){}};
+  const o=store(),uk=d.u&&/^[A-Za-z0-9_-]{3,20}$/.test(d.u)?'u:'+d.u.toLowerCase():'';if(o.devs.includes(dev)||(uk&&o.devs.includes(uk))){clr();return false}
+  const t=today();if((o.days[t]|0)>=CAP){if(Date.now()-capT>6e5){capT=Date.now();try{toast(rt('cap'))}catch(e){}}return false}
+  o.devs.push(dev);if(uk)o.devs.push(uk);o.days[t]=(o.days[t]|0)+1;o.k=(o.k|0)+1;save(o);PX.c.rf=(PX.c.rf|0)+1;pxSave();clr();
+  try{toast(rt('got',{n:hsClean(d.n),x:XP}))}catch(e){}try{pfCheckLevel()}catch(e){}try{pfPubSoon()}catch(e){}try{window.fxSig&&fxSig('full')}catch(e){}return true};
+ // --- sharing ---
+ const base=()=>location.origin+location.pathname;
+ window.refLink=c=>base()+'?'+(c?'pokoj='+encodeURIComponent(c)+'&':'')+'ref='+refId();
+ async function share(c){const url=refLink(c),tx=c?rt('shTxt',{c}):rt('shTxt0');try{if(navigator.share){await navigator.share({title:'Kości Online',text:tx,url});return 'share'}}catch(e){if(e&&e.name==='AbortError')return 'abort'}
+  try{await navigator.clipboard.writeText(tx+' '+url);toast(rt('copied'));return 'clip'}catch(e){}
+  try{const ta=document.createElement('textarea');ta.value=tx+' '+url;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(rt('copied'));return 'exec'}catch(e){return 'fail'}}
+ window.refShare=share;
+ // host bar links carry the referral too
+ if(typeof hbLink==='function'){const _h=hbLink;hbLink=function(){const u=_h.apply(this,arguments);return /[?&]ref=/.test(u)?u:u+'&ref='+refId()}}
+ // lobby: invite button + link field with referral
+ function lobbyUI(){const L=$('lobby');if(!L)return;const cp=$('copy');if(cp&&!$('refinv')){const b=document.createElement('button');b.type='button';b.id='refinv';b.className='refinv';cp.after(b);b.onclick=()=>share(ROOM)}
+  const b=$('refinv');if(b&&b.textContent!==rt('inv'))b.textContent=rt('inv');const ln=$('link');if(ln&&ln.value&&ROOM&&!/[?&]ref=/.test(ln.value))ln.value=ln.value+'&ref='+refId()}
+ const _os=onState;onState=function(){const r=_os.apply(this,arguments);try{lobbyUI();report()}catch(e){}return r};
+ if(typeof showLobby==='function'){const _sl=showLobby;showLobby=function(){const r=_sl.apply(this,arguments);try{lobbyUI()}catch(e){}return r}}
+ // profile section
+ window.refStatsHTML=function(){const k=PX.c.rf|0;return '<h3 class="achg"><span>'+esc(rt('sec'))+'</span></h3><div class="pfref"><p><b>'+esc(rt('stat',{k,x:k*XP}))+'</b></p><p class="pfnote">'+esc(rt('how',{x:XP,d:CAP}))+'</p><button type="button" class="refshare">'+esc(rt('btn'))+'</button></div>'};
+ if(typeof pfStatsMine==='function'){const _ps=pfStatsMine;pfStatsMine=function(){const h=_ps.apply(this,arguments);try{return h.replace(/(<p class="pfnote">[^<]*<\/p>)$/,refStatsHTML()+'$1')}catch(e){return h}}}
+ document.addEventListener('click',ev=>{const b=ev.target&&ev.target.closest&&ev.target.closest('.refshare');if(b){ev.preventDefault();share('')}});
+ try{lobbyUI()}catch(e){}
 })();
 
 // ---- fx_snd.js ----
