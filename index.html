@@ -3017,6 +3017,50 @@ body:not(#z) #szov .szx{position:absolute;right:10px;top:10px;width:34px;height:
 #szov .sztr{margin:0;padding-left:18px}
 @media(prefers-reduced-motion:reduce){#szov .szcard{animation:none}}
 
+/* ---- fx_tut.css ---- */
+#tab td.hintc{box-shadow:inset 0 0 0 3px #ffd36b;background:#ffd36b33!important;position:relative}
+#tab td.hintc::after{content:'💡';position:absolute;right:1px;top:-2px;font-size:10px;line-height:1;pointer-events:none}
+body:not(.noanim) #tab td.hintc{animation:hintP 1.6s ease-in-out infinite}@keyframes hintP{50%{box-shadow:inset 0 0 0 3px #ffd36b,0 0 10px #ffd36b88}}
+@media(prefers-reduced-motion:reduce){#tab td.hintc{animation:none!important}}
+#tutban{display:flex;align-items:center;gap:8px;margin:0 0 10px;padding:8px 10px;border-radius:14px;background:linear-gradient(135deg,#ffd36b33,#6fd3ff22);box-shadow:inset 0 0 0 1px #ffd36b66;font-weight:600}
+#tutban .tbi{font-size:22px}#tutban .tbt{flex:1;min-width:0;font-size:14px}
+body:not(#z) #tutban .tbgo{margin:0;white-space:nowrap;font-weight:800}
+.tutpill{margin-right:6px}
+#tutov{position:fixed;inset:0;z-index:96;background:rgba(8,10,26,.8);display:flex;align-items:center;justify-content:center;padding:max(14px,env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom));overflow-y:auto}
+#tutov[hidden]{display:none}
+#tutov .tutcard{position:relative;width:min(440px,100%);box-sizing:border-box;padding:18px 16px 16px;border-radius:22px;background:linear-gradient(180deg,#24304d,#161d30);color:#eef2fb;box-shadow:0 0 0 1px #ffffff26,0 20px 50px #000a;font:500 15px/1.4 system-ui,-apple-system,sans-serif;text-align:center}
+#tutov.anim .tutcard{animation:sumIn .3s ease-out}@keyframes sumIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+#tutov h2{margin:4px 0 8px;font-size:21px}#tutov p{margin:0 0 12px}
+#tutov .tutprog{display:flex;gap:5px;justify-content:center;margin:0 30px 12px}#tutov .tutprog i{width:22px;height:5px;border-radius:3px;background:#ffffff26}#tutov .tutprog i.on{background:#ffd36b}
+body:not(#z) #tutov button{all:unset;box-sizing:border-box;cursor:pointer;-webkit-tap-highlight-color:transparent}
+body:not(#z) #tutov .tutbtns button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:14px;background:#ffd36b;color:#2a1d00;font:800 15px system-ui,-apple-system,sans-serif}
+body:not(#z) #tutov .tutbtns button.alt{background:#ffffff1c;color:#eef2fb}
+body:not(#z) #tutov .tutbtns button[disabled]{opacity:.4;cursor:default}
+body:not(#z) #tutov button:focus-visible{outline:3px solid #6fd3ff;outline-offset:2px}
+body:not(#z) #tutov .tutx{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;background:#ffffff1c;display:grid;place-items:center;color:#fff}
+#tutov .tutbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px}#tutov .tutbtns.col{flex-direction:column}
+body:not(.noanim) #tutov .troll.pulse{animation:tutPulse 1.4s ease-in-out infinite}@keyframes tutPulse{50%{transform:scale(1.06);box-shadow:0 0 0 6px #ffd36b33}}
+#tutov .tutdice{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0 14px}
+body:not(#z) #tutov .tdw{position:relative;width:46px;height:46px;border-radius:10px;display:grid;place-items:center;transition:transform .15s}
+#tutov .tdw .die{width:44px;height:44px;margin:0}
+#tutov .tdw.held{transform:translateY(-6px)}#tutov .tdw.held .die{box-shadow:0 0 0 3px #ffd36b,0 6px 12px #0006}
+#tutov .tdw.want{animation:tutWant 1.2s ease-in-out infinite}@keyframes tutWant{50%{transform:translateY(-3px);filter:drop-shadow(0 0 6px #ffd36b)}}
+#tutov .tlock{position:absolute;right:-4px;top:-6px;font-size:13px;font-style:normal}
+#tutov .tdq{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;background:#ffffff1a;font:800 20px system-ui;color:#ffffff88}
+#tutov .tutdice.roll .tdw{animation:sumTumble .8s cubic-bezier(.2,.8,.3,1.2) both}#tutov .tutdice.roll .tdw:nth-child(2){animation-delay:.05s}#tutov .tutdice.roll .tdw:nth-child(3){animation-delay:.1s}#tutov .tutdice.roll .tdw:nth-child(4){animation-delay:.15s}#tutov .tutdice.roll .tdw:nth-child(5){animation-delay:.2s}#tutov .tutdice.roll .tdw:nth-child(6){animation-delay:.25s}
+#tutov .tutdice.roll .tdw.held{animation:none}
+@keyframes sumTumble{0%{transform:translateY(-30px) rotate(-240deg) scale(.6);opacity:0}60%{opacity:1}100%{transform:none}}
+#tutov .tcnt{color:#ffd36b;white-space:nowrap}
+#tutov .tuttab{display:flex;flex-direction:column;gap:5px;text-align:left}
+body:not(#z) #tutov .tcat{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:10px;background:#ffffff0f;font:600 14px system-ui,-apple-system,sans-serif;color:#eef2fb}
+body:not(#z) #tutov .tcat[disabled]{opacity:.55;cursor:default}
+body:not(#z) #tutov .tcat.best{background:#ffd36b2e;box-shadow:inset 0 0 0 2px #ffd36b}
+body:not(.noanim) #tutov .tcat.best{animation:hintP2 1.4s ease-in-out infinite}@keyframes hintP2{50%{box-shadow:inset 0 0 0 2px #ffd36b,0 0 12px #ffd36b88}}
+#tutov .tutgot{font-size:20px;font-weight:800;color:#ffd36b;margin-bottom:4px}
+#tutov .tuttips{text-align:left;margin:0 0 12px;padding-left:4px;list-style:none}#tutov .tuttips li{margin:0 0 8px;font-size:14px}
+.noanim #tutov *{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){#tutov *{animation:none!important;transition:none!important}}
+
 </style></head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -3153,7 +3197,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='1.80';
+const APP_VER='1.90';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -3597,7 +3641,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611172100';
+const APP_VERSION='202611172130';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -5062,6 +5106,88 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  let rT=0;function refresh(){if(!VIEW)return;clearTimeout(rT);rT=setTimeout(()=>{const o=$('szov');if(o&&!o.hidden&&VIEW){const f=document.activeElement&&document.activeElement.dataset?document.activeElement.dataset.m:null;o.innerHTML=szHTML(VIEW);if(f)try{o.querySelector('[data-m="'+f+'"]').focus()}catch(e){}}},120)}
  if(typeof applyLang2==='function'){const _al=applyLang2;applyLang2=function(){const r=_al.apply(this,arguments);try{btn();if(VIEW)refresh()}catch(e){}return r}}
  tick();setInterval(()=>{try{tick()}catch(e){}},30000);setTimeout(()=>{try{attach();pub()}catch(e){}},2500);
+})();
+
+// ---- fx_tut.js ----
+// ===== 1.90 – interactive tutorial + optional best-move hint (solo only) =====
+(function(){
+ const TT={pl:{menu:'🎓 Samouczek',ban:'Pierwszy raz? Zobacz 1-minutowy samouczek',start:'Zaczynamy',skip:'Pomiń',next:'Dalej',t0:'🎓 Samouczek',i0:'Rzucasz 6 kośćmi – maksymalnie 3 razy w turze – i wpisujesz wynik do jednej rubryki tabeli. Zagrajmy razem jedną turę!',
+   s1:'Dotknij „Rzuć”, aby wykonać pierwszy rzut.',roll:'🎲 Rzuć',s2:'Masz trzy szóstki! Dotknij je, aby je zatrzymać 🔒 – zatrzymane kości nie są przerzucane.',held:'Zatrzymane: {n}/3',s3:'Świetnie. Rzuć ponownie – zmienią się tylko niezatrzymane kości.',
+   s4:'Pięć szóstek – Poker! Tabela pokazuje punkty za każdą rubrykę. Najlepszy wybór jest podświetlony – dotknij go.',pts:'{p} pkt',got:'+{p} pkt – brawo! 🎉',
+   tipsT:'Najważniejsze zasady',tip1:'Górna część (Jedynki–Szóstki) liczy kości ponad trzy: 4 szóstki = +6, 2 szóstki = −6. Tych rubryk nie można skreślić.',tip2:'Dolna część to układy: pary, strity, full, kareta, poker… Gdy nic nie pasuje, skreśl rubrykę ✕ (0 pkt).',tip3:'Układ z pierwszego rzutu (poza Szansą) liczy się podwójnie!',tip4:'Bez skreśleń w dolnej części dostajesz +50 pkt premii.',
+   doneT:'Gotowe! 🎉',doneS:'Znasz już podstawy. Potrenuj solo w Wieży (możesz tam włączyć 💡 podpowiedzi) albo stwórz pokój i zaproś znajomych.',tower:'🗼 Wieża (solo)',room:'🎲 Stwórz pokój',close:'Zamknij',
+   hint:'Podpowiedź najlepszego ruchu (tylko gra solo)',hintOn:'💡 Podpowiedzi włączone – działają w grze solo (Wieża)',hintOff:'Podpowiedzi wyłączone',hintRoom:'💡 Podpowiedzi nie działają w pokojach z innymi graczami',hintL:'💡 Podpowiedź'},
+  en:{menu:'🎓 Tutorial',ban:'First time? Take the 1-minute tutorial',start:'Let’s go',skip:'Skip',next:'Next',t0:'🎓 Tutorial',i0:'You roll 6 dice – up to 3 times per turn – and write the result into one row of the score sheet. Let’s play one turn together!',
+   s1:'Tap “Roll” to make your first roll.',roll:'🎲 Roll',s2:'Three sixes! Tap them to hold them 🔒 – held dice are not rerolled.',held:'Held: {n}/3',s3:'Great. Roll again – only the dice you didn’t hold will change.',
+   s4:'Five sixes – Poker! The sheet shows the points for every row. The best choice is highlighted – tap it.',pts:'{p} pts',got:'+{p} pts – well done! 🎉',
+   tipsT:'Key rules',tip1:'The upper section (Ones–Sixes) counts dice above three: 4 sixes = +6, 2 sixes = −6. These rows can’t be crossed out.',tip2:'The lower section holds combos: pairs, straights, full house, four of a kind, poker… If nothing fits, cross a row out ✕ (0 pts).',tip3:'A combo from your first roll (except Chance) counts double!',tip4:'With no crossed-out rows in the lower section you get a +50 pts bonus.',
+   doneT:'All set! 🎉',doneS:'You know the basics. Practise solo in the Tower (you can turn on 💡 hints there) or create a room and invite friends.',tower:'🗼 Tower (solo)',room:'🎲 Create a room',close:'Close',
+   hint:'Best-move hint (solo games only)',hintOn:'💡 Hints on – they work in solo games (Tower)',hintOff:'Hints off',hintRoom:'💡 Hints are not available in rooms with other players',hintL:'💡 Hint'},
+  de:{menu:'🎓 Tutorial',ban:'Zum ersten Mal hier? Mach das 1-Minuten-Tutorial',start:'Los geht’s',skip:'Überspringen',next:'Weiter',t0:'🎓 Tutorial',i0:'Du würfelst mit 6 Würfeln – bis zu 3-mal pro Zug – und trägst das Ergebnis in eine Zeile des Blocks ein. Spielen wir zusammen einen Zug!',
+   s1:'Tippe auf „Würfeln“ für deinen ersten Wurf.',roll:'🎲 Würfeln',s2:'Drei Sechsen! Tippe sie an, um sie zu halten 🔒 – gehaltene Würfel werden nicht neu geworfen.',held:'Gehalten: {n}/3',s3:'Super. Würfle noch einmal – nur die nicht gehaltenen Würfel ändern sich.',
+   s4:'Fünf Sechsen – Poker! Der Block zeigt die Punkte für jede Zeile. Die beste Wahl ist markiert – tippe darauf.',pts:'{p} Pkt.',got:'+{p} Pkt. – stark! 🎉',
+   tipsT:'Die wichtigsten Regeln',tip1:'Der obere Teil (Einser–Sechser) zählt Würfel über drei: 4 Sechsen = +6, 2 Sechsen = −6. Diese Zeilen kann man nicht streichen.',tip2:'Der untere Teil sind Kombinationen: Paare, Straßen, Full House, Viererpasch, Poker… Passt nichts, streiche eine Zeile ✕ (0 Pkt.).',tip3:'Eine Kombination aus dem ersten Wurf (außer Chance) zählt doppelt!',tip4:'Ohne Streichungen im unteren Teil gibt es +50 Pkt. Bonus.',
+   doneT:'Fertig! 🎉',doneS:'Du kennst die Grundlagen. Übe solo im Turm (dort kannst du 💡 Tipps einschalten) oder erstelle einen Raum und lade Freunde ein.',tower:'🗼 Turm (solo)',room:'🎲 Raum erstellen',close:'Schließen',
+   hint:'Tipp für den besten Zug (nur Solospiel)',hintOn:'💡 Tipps an – sie wirken im Solospiel (Turm)',hintOff:'Tipps aus',hintRoom:'💡 Tipps sind in Räumen mit anderen Spielern nicht verfügbar',hintL:'💡 Tipp'},
+  es:{menu:'🎓 Tutorial',ban:'¿Primera vez? Haz el tutorial de 1 minuto',start:'¡Vamos!',skip:'Saltar',next:'Siguiente',t0:'🎓 Tutorial',i0:'Tiras 6 dados –hasta 3 veces por turno– y anotas el resultado en una fila de la hoja. ¡Juguemos un turno juntos!',
+   s1:'Toca «Tirar» para hacer tu primera tirada.',roll:'🎲 Tirar',s2:'¡Tres seises! Tócalos para guardarlos 🔒: los dados guardados no se vuelven a tirar.',held:'Guardados: {n}/3',s3:'Genial. Vuelve a tirar: solo cambian los dados que no guardaste.',
+   s4:'¡Cinco seises: Póquer! La hoja muestra los puntos de cada fila. La mejor opción está resaltada: tócala.',pts:'{p} pts',got:'+{p} pts, ¡bien hecho! 🎉',
+   tipsT:'Reglas clave',tip1:'La parte superior (Unos–Seises) cuenta los dados por encima de tres: 4 seises = +6, 2 seises = −6. Estas filas no se pueden tachar.',tip2:'La parte inferior son combinaciones: parejas, escaleras, full, póquer de cuatro, póquer… Si nada encaja, tacha una fila ✕ (0 pts).',tip3:'¡Una combinación de la primera tirada (salvo Chance) cuenta doble!',tip4:'Sin filas tachadas en la parte inferior recibes +50 pts de bonus.',
+   doneT:'¡Listo! 🎉',doneS:'Ya conoces lo básico. Practica en solitario en la Torre (allí puedes activar las 💡 pistas) o crea una sala e invita a tus amigos.',tower:'🗼 Torre (solo)',room:'🎲 Crear sala',close:'Cerrar',
+   hint:'Pista de la mejor jugada (solo partidas en solitario)',hintOn:'💡 Pistas activadas: funcionan en solitario (Torre)',hintOff:'Pistas desactivadas',hintRoom:'💡 Las pistas no están disponibles en salas con otros jugadores',hintL:'💡 Pista'}};
+ const tt=(k,o)=>{let s=(TT[LANG]||TT.en)[k]||TT.en[k];if(o)for(const x in o)s=s.split('{'+x+'}').join(o[x]);return s};window.TUT_T=TT;
+ const LS=(k,v)=>{try{if(v===undefined)return localStorage[k];if(v===null)localStorage.removeItem(k);else localStorage[k]=v}catch(e){}};
+ const anim=()=>{try{return animOn&&!matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return !!animOn}};
+ const cn=c=>{try{return catName(c)}catch(e){return c}};
+ const snd=n=>{try{play(n)}catch(e){}};const hap=k=>{try{window.fxHap&&fxHap(k)}catch(e){}};
+ // ---------- best-move heuristic (shared by tutorial + hint) ----------
+ const PAR={para:9,dpary:16,tpary:20,trojka:12,dtrojki:18,mstrit:6,dstrit:8,lstrit:8,general:7,full:17,kareta:14,poker:30,lord:60,parz:10,nparz:8,szansa:24};
+ window.hintBest=function(sheet,dice,rolls,nd,mode){let best=null;try{K.catsFor(nd).forEach(([k])=>{if(k in sheet)return;if(!K.allowed(mode||'classic',nd,sheet,k))return;const v=K.finalScore(k,dice,rolls===1);if(v===null)return;
+   const sc=/^u\d$/.test(k)?v+(v>0?+k[1]:0):v-(PAR[k]||0);if(!best||sc>best.sc)best={k,v,sc}})}catch(e){}return best};
+ // ---------- hint in solo games ----------
+ const hintOn=()=>LS('khint')==='1';
+ const solo=()=>{try{return !!TW&&ROOM==='TOWER'}catch(e){return false}};
+ window.hintApply=function(){try{document.querySelectorAll('#tab .hintc').forEach(e=>e.classList.remove('hintc'));if(!hintOn()||!solo()||!G||G.phase!=='play'||!G.rolls)return null;const P=G.players[G.cur];if(!P||P.name!==me)return null;
+  const b=hintBest(P.sheet,G.dice,G.rolls,K.ndOf(G),K.modeOf(G));if(!b)return null;const sp=document.querySelector('#tab .opt[data-c="'+b.k+'"]');if(!sp)return null;const td=sp.closest('td');td.classList.add('hintc');td.setAttribute('title',tt('hintL'));return b.k}catch(e){return null}};
+ if(typeof render==='function'){const _r=render;render=function(){const r=_r.apply(this,arguments);try{hintApply()}catch(e){}return r}}
+ function hintChip(){const tp=$('tpopt');const after=tp&&tp.closest('.tchip');if(!after||$('hintt'))return;const l=document.createElement('label');l.className='tchip';l.innerHTML='<input type="checkbox" id="hintt"><span class="ticon" aria-hidden="true">💡</span>';after.after(l);
+  const i=$('hintt');i.checked=hintOn();i.onchange=()=>{LS('khint',i.checked?'1':'0');try{toast(i.checked?(ROOM&&!TW?tt('hintRoom'):tt('hintOn')):tt('hintOff'))}catch(e){}lbl();try{if(G&&!$('game').hidden)render()}catch(e){}}}
+ function lbl(){const i=$('hintt');if(i){const l=i.closest('.tchip');l.title=tt('hint');l.setAttribute('aria-label',tt('hint'));l.setAttribute('aria-pressed',i.checked?'true':'false')}
+  const b=$('tutbtn');if(b)b.textContent=tt('menu');const bn=$('tutban');if(bn){bn.querySelector('.tbt').textContent=tt('ban');bn.querySelector('.tbgo').textContent=tt('start')}}
+ if(typeof syncSettingsUI==='function'){const _ss=syncSettingsUI;syncSettingsUI=function(){const r=_ss.apply(this,arguments);try{hintChip();lbl()}catch(e){}return r}}
+ // ---------- tutorial ----------
+ const D1=[6,3,6,2,6,1],D2=[6,6,6,6,6,5];let T=null;
+ const isNew=()=>{let g=0;try{g=ACV.st.g|0}catch(e){}return (PX.c.gp|0)===0&&g===0};
+ function dice(cls){let col='white';try{col=myCol||'white'}catch(e){}return '<div class="tutdice'+(cls||'')+'">'+T.d.map((v,i)=>{let h='';try{h=v?dieHTML(col,v,'tdie',i):'<span class="tdq">?</span>'}catch(e){h='<b>'+v+'</b>'}const can=T.st===2&&v;
+   return '<button type="button" class="tdw'+(T.h[i]?' held':'')+(T.st===2&&v===6&&!T.h[i]?' want':'')+'" data-i="'+i+'"'+(can?'':' tabindex="-1" disabled')+' aria-pressed="'+!!T.h[i]+'" aria-label="'+v+(T.h[i]?' 🔒':'')+'">'+h+(T.h[i]?'<i class="tlock" aria-hidden="true">🔒</i>':'')+'</button>'}).join('')+'</div>'}
+ function table(){const C=['u6','trojka','kareta','poker','szansa'],b=hintBest({},T.d,2,6,'classic');return '<div class="tuttab" role="list">'+C.map(k=>{const v=K.finalScore(k,T.d,false);const best=!!b&&k===b.k;
+   return '<button type="button" role="listitem" class="tcat'+(best?' best':'')+'" data-c="'+k+'"'+(best?'':' disabled tabindex="-1"')+'><span>'+esc(cn(k))+'</span><b>'+esc(tt('pts',{p:v}))+'</b></button>'}).join('')+'</div>'}
+ function view(){const o=$('tutov');if(!o||!T)return;let h='<div class="tutcard"><button type="button" class="tutx" aria-label="'+esc(tt('skip'))+'">✕</button><div class="tutprog" aria-hidden="true">'+[0,1,2,3,4,5,6].map(i=>'<i class="'+(i<=T.st?'on':'')+'"></i>').join('')+'</div>';
+  if(T.st===0)h+='<h2>'+esc(tt('t0'))+'</h2><p>'+esc(tt('i0'))+'</p><div class="tutbtns"><button type="button" class="tgo">'+esc(tt('start'))+'</button><button type="button" class="alt tskip">'+esc(tt('skip'))+'</button></div>';
+  else if(T.st<=3){h+='<p class="tutmsg" aria-live="polite">'+esc(tt(['','s1','s2','s3'][T.st]))+(T.st===2?' <b class="tcnt">'+esc(tt('held',{n:T.h.filter((x,i)=>x&&T.d[i]===6).length}))+'</b>':'')+'</p>'+dice(T.anim?' roll':'')+
+   '<div class="tutbtns"><button type="button" class="troll'+(T.st===1||T.st===3?' pulse':'')+'"'+(T.st===1||T.st===3?'':' disabled')+'>'+esc(tt('roll'))+'</button></div>'}
+  else if(T.st===4)h+='<p class="tutmsg" aria-live="polite">'+esc(tt('s4'))+'</p>'+dice('')+table();
+  else if(T.st===5)h+='<p class="tutgot">'+esc(tt('got',{p:T.pts}))+'</p><h2>'+esc(tt('tipsT'))+'</h2><ul class="tuttips"><li>⬆️ '+esc(tt('tip1'))+'</li><li>✕ '+esc(tt('tip2'))+'</li><li>✨ '+esc(tt('tip3'))+'</li><li>🎁 '+esc(tt('tip4'))+'</li></ul><div class="tutbtns"><button type="button" class="tnext">'+esc(tt('next'))+'</button></div>';
+  else h+='<h2>'+esc(tt('doneT'))+'</h2><p>'+esc(tt('doneS'))+'</p><div class="tutbtns col"><button type="button" class="ttower">'+esc(tt('tower'))+'</button><button type="button" class="alt troom">'+esc(tt('room'))+'</button><button type="button" class="alt tclose">'+esc(tt('close'))+'</button></div>';
+  o.innerHTML=h+'</div>';T.anim=false;const f=o.querySelector('.tgo,.troll:not([disabled]),.tdw.want,.tcat.best,.tnext,.ttower');try{f&&f.focus()}catch(e){}}
+ window.tutOpen=function(){T={st:0,d:[0,0,0,0,0,0],h:[false,false,false,false,false,false]};let o=$('tutov');if(!o){o=document.createElement('div');o.id='tutov';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');document.body.appendChild(o);
+   o.addEventListener('click',onClick);o.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();tutClose(T&&T.st>=5?'done':'skip')}})}
+  o.className=anim()?'anim':'';o.setAttribute('aria-label',tt('t0'));o.hidden=false;const bn=$('tutban');if(bn)bn.hidden=true;view();return o};
+ window.tutClose=function(r){const o=$('tutov');if(o){o.hidden=true;o.innerHTML=''}if(r==='done')LS('ktut','done');else if(!LS('ktut'))LS('ktut','skip');T=null;const bn=$('tutban');if(bn)bn.remove()};
+ window.tutState=()=>T&&{st:T.st,d:T.d.slice(),h:T.h.slice()};
+ function onClick(e){if(!T)return;const q=s=>e.target.closest&&e.target.closest(s);
+  if(q('.tutx')||q('.tskip'))return tutClose('skip');if(q('.tclose'))return tutClose('done');
+  if(q('.ttower')){tutClose('done');try{twOpen()}catch(x){}return}if(q('.troom')){tutClose('done');try{$('create').click()}catch(x){}return}
+  if(q('.tgo')){T.st=1;return view()}if(q('.tnext')){T.st=6;snd('chime');return view()}
+  const r=q('.troll');if(r&&!r.disabled){if(T.st===1){T.d=D1.slice();T.st=2}else if(T.st===3){T.d=T.d.map((v,i)=>T.h[i]?v:D2[i]);T.st=4}T.anim=anim();snd('roll');setTimeout(()=>snd('land'),560);hap('roll');return view()}
+  const d=q('.tdw');if(d&&T.st===2&&!d.disabled){const i=+d.dataset.i;T.h[i]=!T.h[i];snd('click');hap('hold');const ok=T.d.every((v,j)=>(v===6)===!!T.h[j]);if(ok)T.st=3;view();return}
+  const c=q('.tcat');if(c&&T.st===4&&c.classList.contains('best')){T.pts=K.finalScore(c.dataset.c,T.d,false);T.st=5;snd('combo');hap('combo');return view()}}
+ // menu entry + first-run banner
+ function ui(){const sub=document.querySelector('.asub');if(sub&&!$('tutbtn')){const b=document.createElement('button');b.type='button';b.id='tutbtn';b.className='fbpill tutpill';b.onclick=()=>tutOpen();sub.prepend(b)}
+  const st=$('start');if(st&&!$('tutban')&&!LS('ktut')&&isNew()&&!T){const d=document.createElement('div');d.id='tutban';d.innerHTML='<span class="tbi" aria-hidden="true">🎓</span><span class="tbt"></span><button type="button" class="tbgo"></button><button type="button" class="ibx tbx" aria-label="✕">✕</button>';
+   const ref=$('resban');ref?ref.after(d):st.prepend(d);d.querySelector('.tbgo').onclick=()=>tutOpen();d.querySelector('.tbx').onclick=()=>{LS('ktut','skip');d.remove()}}
+  hintChip();lbl()}
+ try{ui()}catch(e){}
 })();
 
 </script></body></html>
