@@ -2821,13 +2821,28 @@ body.th-sakura{background:linear-gradient(180deg,#12071a 0%,#251030 42%,#3b1a42 
 .pfch figcaption .c1{background:#ffc94d}.pfch figcaption .c0{background:#8fa3c0}.pfch figcaption .c2{background:#6fd3ff}
 .pfempty{opacity:.8;font-size:13px;text-align:center;padding:10px}.pfnote{font-size:11.5px;opacity:.75;margin:8px 0 2px}.pfme{text-align:center;font-weight:700;margin:0 0 4px}
 .pfrw{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin:6px 0 12px}
-.pfit{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;border-radius:14px;background:#8080801f;box-shadow:inset 0 0 0 1px #80808040;cursor:pointer;text-align:center;font:inherit;color:inherit;min-height:96px}
-.pfit:focus-visible{outline:2px solid #ffd36b;outline-offset:2px}.pfit b{font-size:12.5px;line-height:1.15}.pfit small{font-size:10.5px;opacity:.8;line-height:1.15}
-.pfit.on{box-shadow:inset 0 0 0 2px #ffd36b,0 0 12px #ffd36b55;background:#ffd36b1f}.pfit.lk{opacity:.62}.pfit.lk>*:first-child{filter:grayscale(.75)}
-.pfit .thc{width:84px;padding:0;border:0;background:none;pointer-events:none}.pfit .thc .thb{height:40px;border-radius:8px}
+body:not(#z) .pfit{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:stretch;gap:5px;margin:0;padding:6px 6px 8px;border:0;border-radius:14px;background:linear-gradient(165deg,#34405e,#1c2336);box-shadow:inset 0 0 0 1px #ffffff24,0 2px 6px #0000002e;cursor:pointer;text-align:center;font:600 13px/1.15 system-ui,-apple-system,"Segoe UI",sans-serif;color:#f5f7fc;text-shadow:none;min-height:0;min-width:0;width:auto;transform:none;-webkit-tap-highlight-color:transparent}
+body:not(#z) .pfit:hover{background:linear-gradient(165deg,#3d4a6c,#222a40);color:#fff}
+body:not(#z) .pfit:active{transform:scale(.97)}
+body:not(#z) .pfit>*:first-child:not(.pfpv){align-self:center}
+body:not(#z) .pfit b{display:block;font-size:12.5px;line-height:1.15;font-weight:700;color:#fff;overflow-wrap:anywhere}
+body:not(#z) .pfit small{display:block;font-size:11px;line-height:1.2;font-weight:600;color:#c3cde3;opacity:1}
+body:not(#z) .pfit.on{background:linear-gradient(165deg,#7a5a12,#3b2a05);box-shadow:inset 0 0 0 2px #ffd36b,0 0 0 2px #ffd36b40,0 4px 14px #0000004d}
+body:not(#z) .pfit.on small{color:#ffe08a}
+body:not(#z) .pfit.lk{opacity:1;cursor:help}body:not(#z) .pfit.lk small{color:#ffcf9a}
+body:not(#z) .pfit.lk>*:first-child:not(.pfpv){filter:grayscale(.7) brightness(.7)}
+body:not(#z) .pfit:focus-visible,body:not(#z) .pftg:focus-visible{outline:3px solid #ffd36b;outline-offset:2px}
+body:not(#z) .pfit .pfpv{display:block;position:relative;width:100%;margin:0;padding:0;pointer-events:none}
+body:not(#z) .pfit .pfpv .thb{display:block;box-sizing:border-box;width:100%;height:62px;margin:0;padding:0;border:0;border-radius:10px;box-shadow:inset 0 0 0 1px #ffffff30}
+body:not(#z) .pfit .pfpv .thb span{display:none}
+body:not(#z) .pfit.lk .pfpv .thb{filter:grayscale(.5) brightness(.6) saturate(.8)}
+.pfpv .pflock{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.pfpv .pflock i{font-style:normal;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#000000a6;box-shadow:0 0 0 2px #ffffffb3;font-size:15px;line-height:1}
 .pfti2{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
-.pftg{all:unset;box-sizing:border-box;padding:6px 10px;border-radius:20px;background:#8080801f;box-shadow:inset 0 0 0 1px #80808040;font-size:12.5px;cursor:pointer;color:inherit}
-.pftg.on{box-shadow:inset 0 0 0 2px #ffd36b;background:#ffd36b22;font-weight:700}.pftg.lk{opacity:.55;cursor:help}.pftg:focus-visible{outline:2px solid #ffd36b}
+body:not(#z) .pftg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:4px;margin:0;padding:7px 12px;border:0;border-radius:999px;background:#2b3550;box-shadow:inset 0 0 0 1px #ffffff2e;font:600 13px/1.15 system-ui,-apple-system,"Segoe UI",sans-serif;color:#f5f7fc;text-shadow:none;cursor:pointer;min-height:0;min-width:0;width:auto;transform:none}
+body:not(#z) .pftg:hover{background:#38446a;color:#fff}
+body:not(#z) .pftg.on{background:linear-gradient(180deg,#ffe08a,#ffc53d);color:#2a1c00;font-weight:800;box-shadow:inset 0 0 0 1px #b8860b,0 0 0 2px #ffd36b55}
+body:not(#z) .pftg.lk{opacity:1;background:#2b355099;color:#d4dbea;cursor:help}
 .pfach{display:flex;flex-wrap:wrap;gap:6px;font-size:22px;margin:4px 0 8px}.pfach span{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#8080801f}
 .pfguest{padding:10px 12px;border-radius:14px;background:#8080801a;box-shadow:inset 0 0 0 1px #80808038;margin:0 0 10px;text-align:left}
 .pfgrow{display:flex;align-items:center;gap:10px;margin-bottom:6px}.pfgrow div{display:flex;flex-direction:column}.pfgrow small{font-size:11.5px;opacity:.8}
@@ -2853,6 +2868,11 @@ button.gsibtn,.gsibtn{display:flex!important;align-items:center;justify-content:
 #lvup button{position:relative;margin-top:16px;min-width:140px}
 @media (prefers-reduced-motion:reduce){#lvup *{animation:none!important;transition:none!important}}
 
+.tpill .lvc{flex:none;font-size:13px;padding:3px 6px;border-radius:8px;margin-left:2px;vertical-align:0}
+body:not(#z) #rov .hst thead th{background:#1f2b47!important;color:#fff!important;opacity:1!important;font-weight:700;letter-spacing:.2px;text-shadow:none!important;padding-top:7px;padding-bottom:7px;border:0!important}body:not(#z) #rov .hst thead th:first-child{border-radius:10px 0 0 10px}body:not(#z) #rov .hst thead th:last-child{border-radius:0 10px 10px 0}
+.agrid>.abtn{flex-wrap:wrap;row-gap:2px;align-content:center}.agrid>.abtn>span[data-t]{flex:0 1 auto;overflow:visible;text-overflow:clip}
+@media(max-width:520px){.agrid>.abtn{font-size:15px!important}}
+@media(max-width:400px){.agrid>.abtn{position:relative;flex-direction:column;flex-wrap:nowrap;gap:3px;padding:6px 4px!important;font-size:14px!important;min-height:54px}.agrid>.abtn>.ai{font-size:20px;line-height:1}.agrid>.abtn>.acnt{position:absolute;top:4px;right:5px;margin:0;font-size:10.5px;padding:1px 5px}}
 </style></head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -3034,13 +3054,13 @@ en:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP to level {n}',xpMax:'{a} XP – max
 de:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP bis Level {n}',xpMax:'{a} XP – höchstes Level!',xpTot:'{x} XP insgesamt',
  rk:['Neuling','Würfler','Paarjäger','Straßenstratege','Full-House-Boss','Viererpasch-Ass','General','Poker-Hai','Würfelmeister','Würfellord','Legende','Großmeister','Mythisch'],
  tSt:'📊 Statistik',tRw:'🎁 Belohnungen',tAc:'⚙️ Konto',
- sG:'Beendete Spiele',sW:'Siege',sWR:'Siegquote',sBest:'Bestes Ergebnis',sAvg:'Durchschnitt',sTot:'Punkte insgesamt',sStreak:'Längste Tagesserie',sDays:'Spieltage',sTower:'Höchste Turmetage',sStars:'Sterne im Turm',sAce:'Klassenbester-Boni',sClean:'Saubere Spiele',sTime:'Spielzeit',sMp:'Spiele mit anderen',s2nd:'Zweite Plätze',sAch:'Erfolge',sFav:'Lieblingskategorie',sFavN:'{p} Pkt. insgesamt',sCombo:'Gewertete Kombinationen',sChart:'Letzte Spiele',sChartE:'Hier erscheint ein Diagramm deiner letzten Spiele.',cWin:'Sieg',cLoss:'Niederlage',cSolo:'solo',cAvg:'Durchschnitt',sNote:'Detaillierte Statistiken zählen ab dieser Version; ältere Spiele zählen trotzdem für Level und Spielanzahl.',
+ sG:'Beendete Spiele',sW:'Siege',sWR:'Siegquote',sBest:'Bestes Ergebnis',sAvg:'Durchschnitt',sTot:'Punkte insgesamt',sStreak:'Längste Tagesserie',sDays:'Spieltage',sTower:'Höchste Turm-Etage',sStars:'Sterne im Turm',sAce:'Klassenbester-Boni',sClean:'Saubere Spiele',sTime:'Spielzeit',sMp:'Spiele mit anderen',s2nd:'Zweite Plätze',sAch:'Erfolge',sFav:'Lieblingskategorie',sFavN:'{p} Pkt. insgesamt',sCombo:'Gewertete Kombinationen',sChart:'Letzte Spiele',sChartE:'Hier erscheint ein Diagramm deiner letzten Spiele.',cWin:'Sieg',cLoss:'Niederlage',cSolo:'solo',cAvg:'Durchschnitt',sNote:'Detaillierte Statistiken zählen ab dieser Version; ältere Spiele zählen trotzdem für Level und Spielanzahl.',
  rTh:'Spezial-Designs',rFr:'Avatar-Rahmen',rCol:'Würfelfarben',rTi:'Titel',lkLv:'🔒 Ab Level {n}',lkAch:'🔒 Erfolg: {a}',use:'Verwenden',inUse:'✓ Aktiv',none:'Kein Rahmen',tiRank:'Rang (automatisch)',got:'freigeschaltet',
  th:{neon:'Neonstadt',aurora:'Polarlicht',royal:'Königsgold',sakura:'Nacht-Sakura'},
- fr:{bronze:'Bronze',silver:'Silber',gold:'Gold',jade:'Smaragd',ruby:'Rubin',diamond:'Diamant',legend:'Legendär',flame:'Flammen',laurel:'Lorbeer',crown:'Krone',stars:'Sternen'},
+ fr:{bronze:'Bronze',silver:'Silber',gold:'Gold',jade:'Smaragd',ruby:'Rubin',diamond:'Diamant',legend:'Legendär',flame:'Flammen',laurel:'Lorbeer',crown:'Krone',stars:'Sterne'},
  col:{ruby:'Rubin',emerald:'Smaragd',obsidian:'Obsidian',prism:'Prisma'},colLv:'Level-Belohnungen:',
  ti:{lucky:'Glückspilz',royal:'Königlicher Wurf',general:'Feldherr',school:'Klassenbester',clean:'Perfektionist',rocket:'Rakete',unlucky:'Pechvogel',nerves:'Nerven aus Stahl',social:'Partylöwe',streak:'Unaufhaltsam',champ:'Monatschampion',tower:'Turmbezwinger',seer:'Wahrsager'},
- luT:'Level aufgestiegen!',luR:'Rang: {r}',luNew:'Freigeschaltet:',luOk:'👍 Super!',luFirst:'Wir haben alle deine bisherigen Spiele und Erfolge mitgezählt.',
+ luT:'Level-Aufstieg!',luR:'Rang: {r}',luNew:'Freigeschaltet:',luOk:'👍 Super!',luFirst:'Wir haben alle deine bisherigen Spiele und Erfolge mitgezählt.',
  pcT:'Spielerprofil',pcNo:'Dieser Spieler hat (noch) kein öffentliches Profil – es werden nur Daten aus dem Spiel gezeigt.',pcLoad:'⏳ Profil wird geladen…',pcMe:'Das bist du',pcAch:'Erfolge',pcLv:'Level im Spiel',
  gTi:'Dein Fortschritt auf diesem Gerät',gHi:'Erstelle ein Konto, um Level und Belohnungen auf jedem Gerät zu behalten und ein öffentliches Profil zu bekommen.',gSt:'📊 Statistik',gRw:'🎁 Belohnungen',back:'← Zurück',
  gBtn:'Weiter mit Google',gOr:'oder',gSec:'Google-Konto',gLink:'🔗 Mit Google verknüpfen',gUnlink:'Google trennen',gLinked:'✅ Mit Google verknüpft – du kannst dich auch mit Google anmelden.',gLinkOk:'✅ Google-Konto verknüpft.',gUnOk:'Google-Konto getrennt.',gInUse:'Dieses Google-Konto wird bereits von einem anderen Spieler verwendet.',
@@ -3157,9 +3177,9 @@ function pfStatsMine(){let st={g:0,w:0,bs:0};try{st=ACV.st}catch(e){}const c=PX.
  return h+'<p class="pfnote">'+esc(pt('sNote'))+'</p>'}
 function pfRewards(){const lv=pfLvNow(),u=pfAchU();const sec=(ty,title,items)=>{const all=PF_UNL.filter(x=>x.ty===ty),got=all.filter(x=>pfHas(ty,x.k,lv,u)).length;return '<h3 class="achg"><span>'+esc(title)+'</span><small>'+got+'/'+all.length+' '+esc(pt('got'))+'</small></h3><div class="pfrw pfrw-'+ty+'">'+items+'</div>'};
  const cur={th:(typeof appTh!=='undefined'?appTh:''),fr:PX.eq.fr,col:(typeof myCol!=='undefined'?myCol:''),ti:PX.eq.ti};
- const card=(it,prev)=>{const ok=pfHas(it.ty,it.k,lv,u),on=ok&&cur[it.ty]===it.k;return '<button type="button" class="pfit'+(ok?'':' lk')+(on?' on':'')+'" data-ty="'+it.ty+'" data-k="'+it.k+'" aria-pressed="'+on+'">'+prev+'<b>'+esc(pfItemName(it))+'</b><small>'+esc(ok?(on?pt('inUse'):pt('use')):pfLockTxt(it))+'</small></button>'};
+ const card=(it,prev)=>{const ok=pfHas(it.ty,it.k,lv,u),on=ok&&cur[it.ty]===it.k;if(typeof prev==='function')prev=prev(ok);return '<button type="button" class="pfit'+(ok?'':' lk')+(on?' on':'')+'" data-ty="'+it.ty+'" data-k="'+it.k+'" aria-pressed="'+on+'">'+prev+'<b>'+esc(pfItemName(it))+'</b><small>'+esc(ok?(on?pt('inUse'):pt('use')):pfLockTxt(it))+'</small></button>'};
  let av='';try{av=MYAV}catch(e){}
- let h=sec('th',pt('rTh'),PF_UNL.filter(x=>x.ty==='th').map(it=>card(it,'<span class="thc pv-'+it.k+'"><span class="thb"></span></span>')).join(''));
+ let h=sec('th',pt('rTh'),PF_UNL.filter(x=>x.ty==='th').map(it=>card(it,ok=>'<span class="pfpv pv-'+it.k+'" aria-hidden="true"><span class="thb"></span>'+(ok?'':'<span class="pflock"><i>🔒</i></span>')+'</span>')).join(''));
  h+=sec('fr',pt('rFr'),'<button type="button" class="pfit'+(!PX.eq.fr?' on':'')+'" data-ty="fr" data-k="" aria-pressed="'+(!PX.eq.fr)+'">'+pfAvFr(av,'','avg')+'<b>'+esc(pt('none'))+'</b><small>'+esc(!PX.eq.fr?pt('inUse'):pt('use'))+'</small></button>'+PF_UNL.filter(x=>x.ty==='fr').map(it=>card(it,pfAvFr(av,it.k,'avg'))).join(''));
  h+=sec('col',pt('rCol'),PF_UNL.filter(x=>x.ty==='col').map(it=>card(it,dieHTML(it.k,5,'mini'))).join(''));
  const rk=PF_RKL.map((l,i)=>({k:'rk'+i,lv:l,i})).filter(x=>x.lv<=lv);
@@ -3220,7 +3240,7 @@ function pfOpenCard(i){pfLast=i;const o=$('gdv');o.className='gt-'+sset();o.hidd
   put(h)}).catch(()=>{if(!o.hidden&&o.querySelector('.pfcard'))put(base+'<p class="pfempty">'+esc(pt('pcNo'))+'</p>')})}
 // ---- rooms: S.pf[name] = {l: level, u: login, f: frame} ----
 function pfMine(){const L=pfLevel(pxXP());const o={l:L.lv};try{if(ACL&&accReady)o.u=ACL}catch(e){}const f=pfEqFr();if(f)o.f=f;return o}
-function pfOf(n){const x=(typeof S!=='undefined'&&S&&S.pf&&S.pf[n])||null;if(!x||typeof x!=='object')return {};return {l:pfLvOk(x.l),u:pfLoginOk(x.u),f:pfFrOk(x.f)}}
+function pfOf(n){const x=(typeof S!=='undefined'&&S&&S.pf&&S.pf[n])||null;if(!x||typeof x!=='object'){let m='';try{m=(typeof me!=='undefined'&&me)||''}catch(e){}if(n&&m&&n===m)return pfMine();return {}}return {l:pfLvOk(x.l),u:pfLoginOk(x.u),f:pfFrOk(x.f)}}
 function pfRoomSync(){try{if(!ROOM||!S||!me||TW||!cli||!cli.connected)return;const inG=(S.lobby||[]).includes(me)||(S.G&&S.G.players&&S.G.players.some(p=>p.name===me));if(!inG)return;
  const w=pfMine(),cur=S.pf&&S.pf[me];if(cur&&JSON.stringify(cur)===JSON.stringify(w))return;S.pf=S.pf||{};S.pf[me]=w;publish()}catch(e){}}
 function pfAttrs(i){return ' data-pn="'+esc(i.n||'')+'"'+(i.u?' data-pu="'+esc(i.u)+'"':'')+(i.l?' data-pl="'+i.l+'"':'')+(i.av?' data-pa="'+esc(i.av)+'"':'')+(i.cc?' data-pc="'+esc(i.cc)+'"':'')+(i.f?' data-pf="'+esc(i.f)+'"':'')}
@@ -3411,7 +3431,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611171200';
+const APP_VERSION='202611171300';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -4383,7 +4403,7 @@ function render(){const MD=K.modeOf(G);$('lobby').hidden=true;$('start').hidden=
  const P=G.players[G.cur],my=P.name===me&&G.phase==='play';
  const key=G.dice.join()+G.rolls+G.cur,first=lastDice==='',anim=key!==lastDice&&G.rolls>0;lastDice=key;
  if(G.phase==='end'){const w=G.players.map(p=>[p.name,K.totals(p.sheet,K.ndOf(G)).total]).sort((a,b)=>b[1]-a[1]);$('turn').textContent=t('end',{n:w[0][0],p:w[0][1]})}
- else{const pc=PILL[colOf(P.name)]||PILL.white;$('turn').innerHTML='<div class="trow'+(my?' mine':'')+'"><div class="tmeta"><span class="tlab">'+(my?t('tMine'):t('tRolls'))+'</span><span class="trnd">'+(MD==='hw'&&K.hwLeft(P.sheet)>0?t('mRound',{r:HW_N_()-K.hwLeft(P.sheet)+1}):t('round')+' '+Math.min(G.round,K.catsFor(K.ndOf(G)).length))+'</span><span class="tmode m-'+MD+'">'+MI_[MD]+' '+t('s_'+MD)+'</span></div><span class="tpill" style="--pb:'+pc[0]+';--pf:'+pc[1]+'">'+(avOf(P.name)?avHTML(avOf(P.name),'avp'):'🎲')+' <span class="tnm">'+esc(P.name)+'</span></span></div>'}
+ else{const pc=PILL[colOf(P.name)]||PILL.white;$('turn').innerHTML='<div class="trow'+(my?' mine':'')+'"><div class="tmeta"><span class="tlab">'+(my?t('tMine'):t('tRolls'))+'</span><span class="trnd">'+(MD==='hw'&&K.hwLeft(P.sheet)>0?t('mRound',{r:HW_N_()-K.hwLeft(P.sheet)+1}):t('round')+' '+Math.min(G.round,K.catsFor(K.ndOf(G)).length))+'</span><span class="tmode m-'+MD+'">'+MI_[MD]+' '+t('s_'+MD)+'</span></div><span class="tpill" style="--pb:'+pc[0]+';--pf:'+pc[1]+'">'+(avOf(P.name)?avHTML(avOf(P.name),'avp'):'🎲')+' <span class="tnm">'+esc(P.name)+'</span>'+pfChip(pfOf(P.name).l)+'</span></div>'}
  const sc=G.rolls>0?K.scores(G.dice):{},excAll=G.rolls>0&&(sc.lord!==null||sc.lstrit!==null),excSet=new Set(excAll?G.dice.map((_,i)=>i):G.rolls>0&&sc.poker!=null?countDice('poker',G.dice)[0].i:G.rolls>0&&sc.dstrit!==null?dPick(G.dice,[2,3,4,5,6]):G.rolls>0&&sc.mstrit!==null?dPick(G.dice,[1,2,3,4,5]):[]);const L0=G.log[0],sad=G.rolls===0&&L0&&typeof L0==='object'&&(L0.v==='x'||L0.v<0);
  $('dice').innerHTML=G.dice.map((v,i)=>dieHTML(colOf(P.name),v,'alive'+(G.held[i]?' held':'')+(anim&&!G.held[i]?' roll':'')+(excSet.has(i)?' excited':'')+(sad?' sad':''),i)).join('');document.querySelectorAll('#dice .die.held').forEach(d=>{const b=document.createElement('span');b.className='hbadge';b.setAttribute('aria-hidden','true');b.textContent='🔒';d.appendChild(b)});applyLook();sounds(G,anim&&!first,sc);try{turnPop(G,anim&&!first,first)}catch(e){}
  $('dice').querySelectorAll('.die').forEach((d,i)=>d.onclick=()=>{if(my)send({a:'hold',i})});scoreAnim(G);
