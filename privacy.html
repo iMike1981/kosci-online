@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy – Dice Online / Polityka prywatności – Kości online</title>
+<meta name="description" content="Privacy policy of Dice Online (Kości online), a free online dice game.">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2">
+<meta name="theme-color" content="#2f5597">
+<style>
+body{margin:0;font:16px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#1d2433;background:#eef2f9}
+main{max-width:820px;margin:0 auto;padding:20px 18px 48px;background:#fff;min-height:100vh;box-sizing:border-box}
+h1{font-size:26px;margin:.2em 0 .1em;color:#2f5597}h2{font-size:20px;margin:1.6em 0 .4em;color:#2f5597}h3{font-size:17px;margin:1.2em 0 .3em}
+nav.lang{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}nav.lang a,a.back{display:inline-block;padding:6px 14px;border-radius:999px;background:#2f5597;color:#fff;text-decoration:none;font-weight:700}
+a.back{background:#0b1e45}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #d6dceb;padding:6px 8px;vertical-align:top;text-align:left}th{background:#f2f5fb}
+.small{font-size:13px;color:#56607a}hr{border:0;border-top:2px solid #d6dceb;margin:36px 0}
+</style></head><body><main>
+<a class="back" href="./">🎲 Dice Online / Kości online</a>
+<h1>Privacy Policy / Polityka prywatności</h1>
+<p class="small">Last updated / Ostatnia aktualizacja: 17 November 2026 / 17 listopada 2026</p>
+<nav class="lang"><a href="#en">English</a><a href="#pl">Polski</a><a href="#delete">Delete data / Usuń dane</a></nav>
+
+<section id="en" lang="en">
+<h2>English</h2>
+<p>This policy explains what data the game <b>Dice Online</b> (Polish name: <b>Kości online</b>) uses, at <a href="https://imike1981.github.io/kosci-online/">imike1981.github.io/kosci-online</a> and in the Android app <i>Dice Online</i> (package <code>io.github.imike1981.diceonline</code>), which shows the same web game. The game is made by an independent developer, <b>iMike1981</b> (Cork, Ireland), who is responsible for the data described here. Contact: <a href="mailto:dice.online.game@gmail.com">dice.online.game@gmail.com</a>.</p>
+
+<h3>Short version</h3>
+<ul>
+<li>The game is free. There are <b>no ads</b>, no advertising IDs, no analytics or tracking SDKs, and we <b>never sell</b> or share your data for advertising.</li>
+<li>You can play <b>without an account</b>. An account is optional and needs only a username and a password, no e-mail.</li>
+<li>You can <b>delete your account in the game</b> at any time (see <a href="#delete">below</a>).</li>
+</ul>
+
+<h3>1. Data stored on your device</h3>
+<p>The game keeps its settings and progress in your browser's local storage on your device: nickname, language, theme, sound and animation settings, avatar, achievements and statistics, recent high scores and game summaries, your current room code, and a cached two-letter country code. This data stays on your device until you clear the site data or uninstall the app. In the Android app a temporary flag in session storage marks that the game runs inside the app.</p>
+
+<h3>2. Online multiplayer and high scores</h3>
+<p>Multiplayer rooms, the Top&nbsp;10 / monthly high-score lists and finished-game summaries are exchanged through public MQTT message brokers (shiftr.io, HiveMQ, EMQX). These messages contain your <b>nickname</b>, room code, dice, scores, the date and your <b>country flag</b> (two-letter country code). Top-10 entries and game summaries are visible to other players. Do not use your full real name as a nickname if you don't want it shown.</p>
+
+<h3>3. Country flag</h3>
+<p>To show a country flag next to your nickname, the game asks a country-lookup service (api.country.is, with get.geojs.io or ipapi.co as fallbacks) for the country of your IP address. Only the two-letter country code is kept; the game does not store your IP address. If the lookup fails, the country is guessed from your device time zone or language.</p>
+
+<h3>4. Optional player account (Google Firebase)</h3>
+<p>If you create an account, we use Google Firebase Authentication and Cloud Firestore (project hosted by Google). We store:</p>
+<ul>
+<li>your <b>username</b> (internally turned into an address like <code>name@users.dice-online.invalid</code>, which is not a real e-mail) and your <b>password</b>, which Firebase stores in hashed form; we never see it;</li>
+<li>your display name, avatar, achievements, statistics and solo “Tower” progress, so you can use them on any device.</li>
+</ul>
+
+<h3>5. Session, login and game logs</h3>
+<p>To run the game, spot problems and see how many people play, the game writes short records to Firestore that only the developer can read:</p>
+<ul>
+<li><b>Logins</b> (account sign-up, sign-in, or a new session, at most every 6 hours): account ID, username, display name, country code, a short device summary (e.g. “Android · Chrome · mob · PWA”), app version, language and time.</li>
+<li><b>Guest sessions</b> (at most every 6 hours): country code, device summary, app version, language and nickname if you set one.</li>
+<li><b>Finished games</b>: game ID, date, number of dice, game mode, theme, app version, and each player's nickname, score and country code.</li>
+</ul>
+<p>The full browser user-agent string, IP address and precise location are <b>not</b> stored in these logs.</p>
+
+<h3>6. Visit counters</h3>
+<p>The visit, visitor and games-played counters shown in the game use the free counter service abacus.jasoncameron.dev. Only the counts are stored there; no name or account data is sent.</p>
+
+<h3>7. Feedback form</h3>
+<p>If you send ideas or feedback, the message is delivered by e-mail to the developer through formsubmit.co. It contains what you type (name, optional e-mail address, message type and text) plus the app version, language, theme and your browser's user-agent string, so bugs can be reproduced. We use your e-mail only to reply to you.</p>
+
+<h3>8. Other services</h3>
+<p>Like any website, the game loads files from third parties, which receive your IP address as part of normal internet traffic: GitHub Pages (hosting), Google Fonts (fonts), jsDelivr (MQTT library) and Google's gstatic.com (Firebase library, only when you open the account window). Share buttons (WhatsApp, Facebook, Messenger, Telegram, X) only open those services when you tap them. In the web version, the optional “Buy me a coffee” link opens Revolut.</p>
+
+<h3>9. Why we use the data (legal basis)</h3>
+<p>To provide the game and the account you asked for (performance of a contract), and for our legitimate interest in keeping the game working, preventing abuse and understanding how much it is played. We do not use your data for advertising or profiling.</p>
+
+<h3>10. How long we keep it</h3>
+<p>Account data is kept until you delete the account. Logs and high-score entries are kept as long as they are needed to run and improve the game; you can ask us to delete entries that relate to you at any time.</p>
+
+<h3 id="delete-en">11. Deleting your account and data</h3>
+<p>In the game: <b>👤 Account → 🗑️ Delete account</b>, then confirm with your password. This permanently deletes your Firebase account, your username and the progress saved in it. To also remove login or game-log entries, or if you can no longer sign in, e-mail <a href="mailto:dice.online.game@gmail.com?subject=Delete%20my%20data">dice.online.game@gmail.com</a> with your username; we will delete it within 30 days. Data on your device is removed by clearing the site data or uninstalling the app.</p>
+
+<h3>12. Your rights</h3>
+<p>Under the GDPR you can ask for access to, correction or deletion of your data, restrict or object to its use, and data portability. Write to <a href="mailto:dice.online.game@gmail.com">dice.online.game@gmail.com</a>. You can also complain to the Data Protection Commission in Ireland (<a href="https://www.dataprotection.ie">dataprotection.ie</a>) or your local authority.</p>
+
+<h3>13. Children</h3>
+<p>The game is not directed at children under 13, and we do not knowingly collect personal data from them. If you think a child has created an account, contact us and we will delete it.</p>
+
+<h3>14. Security and changes</h3>
+<p>Connections use HTTPS / secure WebSockets, and the account database is protected by access rules. We will post any changes to this policy on this page with a new date.</p>
+</section>
+
+<hr>
+
+<section id="pl" lang="pl">
+<h2>Polski</h2>
+<p>Ta polityka opisuje, jakich danych używa gra <b>Kości online</b> (ang. <b>Dice Online</b>) na stronie <a href="https://imike1981.github.io/kosci-online/">imike1981.github.io/kosci-online</a> oraz w aplikacji na Androida <i>Dice Online</i> (pakiet <code>io.github.imike1981.diceonline</code>), która wyświetla tę samą grę. Grę tworzy niezależny twórca <b>iMike1981</b> (Cork, Irlandia), który odpowiada za opisane tu dane. Kontakt: <a href="mailto:dice.online.game@gmail.com">dice.online.game@gmail.com</a>.</p>
+
+<h3>W skrócie</h3>
+<ul>
+<li>Gra jest darmowa. <b>Nie ma reklam</b>, identyfikatorów reklamowych ani narzędzi analitycznych i śledzących. <b>Nie sprzedajemy</b> danych i nie udostępniamy ich reklamodawcom.</li>
+<li>Możesz grać <b>bez konta</b>. Konto jest opcjonalne i wymaga tylko loginu i hasła, bez e-maila.</li>
+<li>Konto możesz w każdej chwili <b>usunąć w grze</b> (patrz <a href="#delete">niżej</a>).</li>
+</ul>
+
+<h3>1. Dane na Twoim urządzeniu</h3>
+<p>Gra zapisuje ustawienia i postępy w pamięci lokalnej przeglądarki na Twoim urządzeniu: pseudonim, język, motyw, ustawienia dźwięku i animacji, awatar, osiągnięcia i statystyki, ostatnie rekordy i podsumowania gier, kod bieżącego pokoju oraz zapamiętany dwuliterowy kod kraju. Te dane zostają na urządzeniu, dopóki nie wyczyścisz danych strony albo nie odinstalujesz aplikacji. W aplikacji na Androida tymczasowa flaga w pamięci sesji oznacza, że gra działa w aplikacji.</p>
+
+<h3>2. Gra online i rekordy</h3>
+<p>Pokoje gry wieloosobowej, listy Top&nbsp;10 i rekordy miesiąca oraz podsumowania zakończonych gier są przesyłane przez publiczne serwery wiadomości MQTT (shiftr.io, HiveMQ, EMQX). Zawierają one Twój <b>pseudonim</b>, kod pokoju, kości, punkty, datę i <b>flagę kraju</b> (dwuliterowy kod). Wpisy Top 10 i podsumowania gier widzą inni gracze. Jeśli nie chcesz, żeby Twoje imię i nazwisko było widoczne, nie używaj ich jako pseudonimu.</p>
+
+<h3>3. Flaga kraju</h3>
+<p>Żeby pokazać flagę przy pseudonimie, gra pyta usługę rozpoznawania kraju (api.country.is, zapasowo get.geojs.io lub ipapi.co) o kraj Twojego adresu IP. Zapisywany jest tylko dwuliterowy kod kraju, a gra nie przechowuje adresu IP. Jeśli to się nie uda, kraj jest zgadywany ze strefy czasowej lub języka urządzenia.</p>
+
+<h3>4. Opcjonalne konto gracza (Google Firebase)</h3>
+<p>Jeśli założysz konto, korzystamy z Google Firebase Authentication i Cloud Firestore (projekt utrzymywany przez Google). Przechowujemy:</p>
+<ul>
+<li><b>login</b> (wewnętrznie zamieniany na adres typu <code>login@users.dice-online.invalid</code>, który nie jest prawdziwym e-mailem) i <b>hasło</b>, które Firebase przechowuje w postaci zaszyfrowanej (hash) – my go nie widzimy;</li>
+<li>nazwę gracza, awatar, osiągnięcia, statystyki i postęp w trybie „Wieża”, żeby mieć je na każdym urządzeniu.</li>
+</ul>
+
+<h3>5. Rejestr sesji, logowań i gier</h3>
+<p>Żeby gra działała, żeby wykrywać problemy i wiedzieć, ile osób gra, gra zapisuje w Firestore krótkie wpisy, które może czytać tylko twórca gry:</p>
+<ul>
+<li><b>Logowania</b> (założenie konta, zalogowanie lub nowa sesja, najwyżej co 6 godzin): ID konta, login, nazwa gracza, kod kraju, krótki opis urządzenia (np. „Android · Chrome · mob · PWA”), wersja gry, język i czas.</li>
+<li><b>Sesje gości</b> (najwyżej co 6 godzin): kod kraju, opis urządzenia, wersja gry, język i pseudonim, jeśli go ustawiłeś.</li>
+<li><b>Zakończone gry</b>: ID gry, data, liczba kości, tryb, motyw, wersja gry oraz pseudonim, wynik i kod kraju każdego gracza.</li>
+</ul>
+<p>W tych wpisach <b>nie</b> zapisujemy pełnego identyfikatora przeglądarki, adresu IP ani dokładnej lokalizacji.</p>
+
+<h3>6. Liczniki odwiedzin</h3>
+<p>Liczniki odwiedzin, graczy i rozegranych gier korzystają z darmowej usługi abacus.jasoncameron.dev. Zapisywane są tam tylko liczby, bez imion i danych konta.</p>
+
+<h3>7. Formularz „Pomysły i uwagi”</h3>
+<p>Wiadomość z formularza trafia e-mailem do twórcy gry przez usługę formsubmit.co. Zawiera to, co wpiszesz (imię, opcjonalny e-mail, rodzaj i treść wiadomości), oraz wersję gry, język, motyw i identyfikator przeglądarki (user-agent), żeby dało się odtworzyć błąd. E-maila używamy tylko do odpowiedzi.</p>
+
+<h3>8. Inne usługi</h3>
+<p>Jak każda strona, gra pobiera pliki z zewnętrznych serwerów, które widzą Twój adres IP w ramach zwykłego ruchu w internecie: GitHub Pages (hosting), Google Fonts (czcionki), jsDelivr (biblioteka MQTT) i gstatic.com Google'a (biblioteka Firebase, tylko po otwarciu okna konta). Przyciski udostępniania (WhatsApp, Facebook, Messenger, Telegram, X) otwierają te serwisy dopiero po kliknięciu. W wersji przeglądarkowej opcjonalny link „Postaw kawę” prowadzi do Revolut.</p>
+
+<h3>9. Podstawa prawna</h3>
+<p>Wykonanie usługi (gra i konto, o które prosisz) oraz nasz prawnie uzasadniony interes: utrzymanie działania gry, zapobieganie nadużyciom i wiedza o tym, ile osób gra. Nie używamy danych do reklam ani profilowania.</p>
+
+<h3>10. Jak długo przechowujemy dane</h3>
+<p>Dane konta – do czasu usunięcia konta. Wpisy w rejestrach i rekordy – tak długo, jak są potrzebne do działania i rozwoju gry. W każdej chwili możesz poprosić o usunięcie wpisów dotyczących Ciebie.</p>
+
+<h3 id="delete-pl">11. Usuwanie konta i danych</h3>
+<p>W grze: <b>👤 Konto → 🗑️ Usuń konto</b> i potwierdź hasłem. To trwale usuwa konto Firebase, login i zapisany w nim postęp. Żeby usunąć też wpisy z rejestru logowań lub gier albo jeśli nie możesz się zalogować, napisz na <a href="mailto:dice.online.game@gmail.com?subject=Usu%C5%84%20moje%20dane">dice.online.game@gmail.com</a> i podaj login – usuniemy dane w ciągu 30 dni. Dane na urządzeniu usuniesz, czyszcząc dane strony lub odinstalowując aplikację.</p>
+
+<h3>12. Twoje prawa</h3>
+<p>Zgodnie z RODO możesz żądać dostępu do danych, ich poprawienia lub usunięcia, ograniczenia przetwarzania, wnieść sprzeciw i żądać przeniesienia danych. Napisz na <a href="mailto:dice.online.game@gmail.com">dice.online.game@gmail.com</a>. Możesz też złożyć skargę do irlandzkiego organu ochrony danych (<a href="https://www.dataprotection.ie">Data Protection Commission</a>) lub do Prezesa UODO w Polsce.</p>
+
+<h3>13. Dzieci</h3>
+<p>Gra nie jest skierowana do dzieci poniżej 13 lat i świadomie nie zbieramy ich danych. Jeśli dziecko założyło konto, napisz do nas, a je usuniemy.</p>
+
+<h3>14. Bezpieczeństwo i zmiany</h3>
+<p>Połączenia są szyfrowane (HTTPS / bezpieczne WebSockety), a baza kont jest chroniona regułami dostępu. Zmiany tej polityki opublikujemy na tej stronie z nową datą.</p>
+</section>
+
+<hr>
+<section id="delete">
+<h2>Delete your data / Usuń swoje dane</h2>
+<p><b>EN:</b> In the game: 👤 Account → 🗑️ Delete account → confirm with your password. Or e-mail <a href="mailto:dice.online.game@gmail.com?subject=Delete%20my%20data">dice.online.game@gmail.com</a> with your username, and we will delete your account and related records within 30 days.</p>
+<p><b>PL:</b> W grze: 👤 Konto → 🗑️ Usuń konto → potwierdź hasłem. Albo napisz na <a href="mailto:dice.online.game@gmail.com?subject=Usu%C5%84%20moje%20dane">dice.online.game@gmail.com</a> i podaj login – usuniemy konto i powiązane wpisy w ciągu 30 dni.</p>
+</section>
+<p style="margin-top:30px"><a class="back" href="./">🎲 Back to the game / Wróć do gry</a></p>
+</main></body></html>
