@@ -2983,6 +2983,40 @@ body:not(#z) #sumov .sumx{position:absolute;right:10px;top:10px;min-height:34px;
 body:not(#z) #win .wsum{background:linear-gradient(135deg,#ffd36b,#ffb347);color:#2a1d00}
 @media(prefers-reduced-motion:reduce){#sumov .sumcard,#sumov .sumln,#sumov .sumdot,#sumov .sumdw,#sumov .sumdice{animation:none!important;stroke-dasharray:none!important;opacity:1!important}}
 
+/* ---- fx_sz.css ---- */
+.avf.fr-sz1{background:conic-gradient(#a87800,#fff7c7,#ffcf33,#fff,#e9a400,#fff7c7,#a87800);--fg:#ffd36bdd}
+.avf.fr-sz2{background:conic-gradient(#6d7680,#ffffff,#b9c2cc,#ffffff,#8a939d);--fg:#e3e9f0cc}
+.avf.fr-sz3{background:conic-gradient(#7a3f12,#ffd0a3,#c7803f,#ffe2c4,#7a3f12);--fg:#e6a466cc}
+.avf.fr-sz1::before,.avf.fr-sz2::before,.avf.fr-sz3::before{content:'🏆';position:absolute;bottom:-.45em;left:50%;transform:translateX(-50%);font-size:13px;line-height:1;filter:drop-shadow(0 1px 1px #0009)}
+.avf.fr-sz2::before{content:'🥈'}.avf.fr-sz3::before{content:'🥉'}
+.avf.avfs.fr-sz1::before,.avf.avfs.fr-sz2::before,.avf.avfs.fr-sz3::before{font-size:8px}
+.avf.fr-sz1{animation:szShine 3.5s ease-in-out infinite}@keyframes szShine{50%{box-shadow:0 0 16px #ffd36b}}
+.noanim .avf.fr-sz1{animation:none}@media(prefers-reduced-motion:reduce){.avf.fr-sz1{animation:none}}
+#szbtn{position:relative}#szbtn .szcd{font-size:11px;font-weight:700;opacity:.8;margin-left:4px;white-space:nowrap}
+@media(max-width:400px){#szbtn .szcd{margin:0;font-size:10.5px}}
+#szov{position:fixed;inset:0;z-index:94;background:rgba(8,10,26,.78);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:max(14px,env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom))}
+#szov[hidden]{display:none}
+#szov .szcard{position:relative;width:min(460px,100%);margin:auto 0;box-sizing:border-box;padding:16px;border-radius:20px;background:linear-gradient(180deg,#2a2440,#171528);color:#f1eefb;box-shadow:0 0 0 1px #ffd36b44,0 20px 50px #000a;font:500 14px/1.35 system-ui,-apple-system,sans-serif}
+#szov.anim .szcard{animation:sumIn .35s ease-out}@keyframes sumIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+#szov h2{margin:0 34px 4px 0;font-size:20px}#szov h3{margin:14px 0 6px;font-size:14px;opacity:.85}
+#szov .szend{margin:0 0 10px;font-weight:700;color:#ffd36b}
+#szov .szme{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}#szov .szme div{padding:8px 10px;border-radius:12px;background:#ffffff12}#szov .szme small{display:block;opacity:.75;font-size:11.5px}#szov .szme b{font-size:20px}
+#szov .szmon{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:8px;scrollbar-width:thin}
+body:not(#z) #szov button{all:unset;box-sizing:border-box;cursor:pointer;-webkit-tap-highlight-color:transparent}
+body:not(#z) #szov .szmon button{flex:none;padding:7px 11px;border-radius:999px;background:#ffffff14;font:700 12.5px system-ui,-apple-system,sans-serif;color:#f1eefb;white-space:nowrap}
+body:not(#z) #szov .szmon button.on{background:#ffd36b;color:#2a1d00}
+body:not(#z) #szov button:focus-visible{outline:3px solid #6fd3ff;outline-offset:2px}
+body:not(#z) #szov .szx{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;background:#ffffff1c;display:grid;place-items:center;color:#fff}
+#szov .szl{list-style:none;margin:0;padding:0}
+#szov .szl li{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:10px;margin-bottom:3px;background:#ffffff08}
+#szov .szl li.top{background:linear-gradient(90deg,#ffd36b22,#ffffff06)}#szov .szl li.me{box-shadow:inset 0 0 0 2px #6fd3ff}
+#szov .szr{width:28px;text-align:center;font-weight:800}#szov .szn{flex:1;min-width:0;display:flex;align-items:center;gap:4px;overflow:hidden}#szov .szn b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#szov .szs{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+#szov .szem,#szov .szoff{opacity:.8;font-size:13px}
+#szov .szrew{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}#szov .szrew div{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:12px;background:#ffffff0d}#szov .szrew b{font-size:12px}#szov .szrew small{font-size:11px;opacity:.75}
+#szov .sztr{margin:0;padding-left:18px}
+@media(prefers-reduced-motion:reduce){#szov .szcard{animation:none}}
+
 </style></head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -3119,7 +3153,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='1.70';
+const APP_VER='1.80';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -3133,7 +3167,7 @@ const PF_HARD=['w100','s800','mon1','tw10','lord'];
 const PF_UNL=[
  {k:'neon',ty:'th',a:'poker'},{k:'aurora',ty:'th',a:'d7'},{k:'royal',ty:'th',a:'lord'},{k:'sakura',ty:'th',a:'tw10'},
  {k:'bronze',ty:'fr',lv:3},{k:'silver',ty:'fr',lv:8},{k:'gold',ty:'fr',lv:15},{k:'jade',ty:'fr',lv:22},{k:'ruby',ty:'fr',lv:30},{k:'diamond',ty:'fr',lv:40},{k:'legend',ty:'fr',lv:50},
- {k:'flame',ty:'fr',a:'d7'},{k:'laurel',ty:'fr',a:'ace'},{k:'crown',ty:'fr',a:'w50'},{k:'stars',ty:'fr',a:'tws3'},
+ {k:'flame',ty:'fr',a:'d7'},{k:'laurel',ty:'fr',a:'ace'},{k:'crown',ty:'fr',a:'w50'},{k:'stars',ty:'fr',a:'tws3'},{k:'sz1',ty:'fr',s:1},{k:'sz2',ty:'fr',s:2},{k:'sz3',ty:'fr',s:3},{k:'sz1',ty:'ti',s:1},{k:'sz2',ty:'ti',s:2},{k:'sz3',ty:'ti',s:3},
  {k:'ruby',ty:'col',lv:10},{k:'emerald',ty:'col',lv:20},{k:'obsidian',ty:'col',lv:30},{k:'prism',ty:'col',lv:45},
  {k:'lucky',ty:'ti',a:'poker'},{k:'royal',ty:'ti',a:'lord'},{k:'general',ty:'ti',a:'gen'},{k:'school',ty:'ti',a:'ace'},{k:'clean',ty:'ti',a:'cln'},{k:'rocket',ty:'ti',a:'s800'},
  {k:'unlucky',ty:'ti',a:'pech'},{k:'nerves',ty:'ti',a:'w1p'},{k:'social',ty:'ti',a:'soc3'},{k:'streak',ty:'ti',a:'d7'},{k:'champ',ty:'ti',a:'mon1'},{k:'tower',ty:'ti',a:'tw10'},{k:'seer',ty:'ti',a:'andrz'}];
@@ -3142,11 +3176,11 @@ const PFT={pl:{lvl:'Poziom',lvS:'Poz.',xpTo:'{a} / {b} XP do poziomu {n}',xpMax:
  rk:['Nowicjusz','Turlacz','Łowca par','Strateg stritu','Szef Fulla','As karety','Generał','Rekin pokera','Mistrz kości','Książę kości','Legenda','Arcymistrz','Mityczny','Lord of the Dice'],
  tSt:'📊 Statystyki',tRw:'🎁 Nagrody',tAc:'⚙️ Konto',
  sG:'Ukończone gry',sW:'Wygrane',sWR:'Procent wygranych',sBest:'Najlepszy wynik',sAvg:'Średnio punktów',sTot:'Punkty łącznie',sStreak:'Najdłuższa seria dni',sDays:'Dni gry',sTower:'Najwyższe piętro Wieży',sStars:'Gwiazdki w Wieży',sAce:'Bonusy Prymusa',sClean:'Czyste gry',sTime:'Czas gry',sMp:'Gry z innymi',s2nd:'Drugie miejsca',sAch:'Osiągnięcia',sFav:'Ulubiona kategoria',sFavN:'{p} pkt łącznie',sCombo:'Figury z punktami',sChart:'Ostatnie gry',sChartE:'Tu pojawi się wykres Twoich ostatnich gier.',cWin:'wygrana',cLoss:'przegrana',cSolo:'solo',cAvg:'średnia',sNote:'Statystyki liczą się od tej wersji gry; starsze gry są wliczone w poziom i liczbę gier.',
- rTh:'Motywy specjalne',rFr:'Ramki awatara',rCol:'Kolory kości',rTi:'Tytuły',lkLv:'🔒 Od poziomu {n}',lkAch:'🔒 Osiągnięcie: {a}',use:'Użyj',inUse:'✓ Używasz',none:'Bez ramki',tiRank:'Ranga (automatycznie)',got:'odblokowane',
+ rTh:'Motywy specjalne',rFr:'Ramki awatara',rCol:'Kolory kości',rTi:'Tytuły',lkLv:'🔒 Od poziomu {n}',lkAch:'🔒 Osiągnięcie: {a}',lkSz:'🔒 Top {r} sezonu miesięcznego',use:'Użyj',inUse:'✓ Używasz',none:'Bez ramki',tiRank:'Ranga (automatycznie)',got:'odblokowane',
  th:{neon:'Neonowe miasto',aurora:'Zorza polarna',royal:'Królewskie złoto',sakura:'Nocna sakura'},
- fr:{bronze:'Brązowa',silver:'Srebrna',gold:'Złota',jade:'Szmaragdowa',ruby:'Rubinowa',diamond:'Diamentowa',legend:'Legendarna',flame:'Płomienna',laurel:'Laurowa',crown:'Koronna',stars:'Gwiezdna'},
+ fr:{bronze:'Brązowa',silver:'Srebrna',gold:'Złota',jade:'Szmaragdowa',ruby:'Rubinowa',diamond:'Diamentowa',legend:'Legendarna',flame:'Płomienna',laurel:'Laurowa',crown:'Koronna',stars:'Gwiezdna',sz1:'Złoty laur sezonu',sz2:'Srebrny laur sezonu',sz3:'Brązowy laur sezonu'},
  col:{ruby:'Rubinowe',emerald:'Szmaragdowe',obsidian:'Obsydianowe',prism:'Pryzmatyczne'},colLv:'Za poziomy:',
- ti:{lucky:'Szczęściarz',royal:'Królewski rzut',general:'Generał pola',school:'Prymus',clean:'Perfekcjonista',rocket:'Rakieta',unlucky:'Pechowiec',nerves:'Nerwy ze stali',social:'Dusza towarzystwa',streak:'Niezłomny',champ:'Mistrz miesiąca',tower:'Zdobywca wieży',seer:'Wróżbita'},
+ ti:{lucky:'Szczęściarz',royal:'Królewski rzut',general:'Generał pola',school:'Prymus',clean:'Perfekcjonista',rocket:'Rakieta',unlucky:'Pechowiec',nerves:'Nerwy ze stali',social:'Dusza towarzystwa',streak:'Niezłomny',champ:'Mistrz miesiąca',tower:'Zdobywca wieży',seer:'Wróżbita',sz1:'Mistrz sezonu',sz2:'Wicemistrz sezonu',sz3:'Podium sezonu'},
  luT:'Nowy poziom!',luR:'Ranga: {r}',luNew:'Odblokowano:',luOk:'👍 Super!',luFirst:'Policzyliśmy Twoje dotychczasowe gry i osiągnięcia.',
  pcT:'Profil gracza',pcNo:'Ten gracz nie ma (jeszcze) publicznego profilu – widać tylko dane z gry.',pcLoad:'⏳ Wczytywanie profilu…',pcMe:'To Ty',pcAch:'Osiągnięcia',pcLv:'Poziom z gry',
  gTi:'Twój postęp na tym urządzeniu',gHi:'Załóż konto, żeby mieć poziom i nagrody na każdym urządzeniu oraz publiczny profil.',gSt:'📊 Statystyki',gRw:'🎁 Nagrody',back:'← Wróć',
@@ -3157,11 +3191,11 @@ en:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP to level {n}',xpMax:'{a} XP – max
  rk:['Rookie','Dice Roller','Pair Hunter','Straight Strategist','Full House Boss','Four-of-a-Kind Ace','General','Poker Shark','Dice Master','Dice Prince','Legend','Grandmaster','Mythic','Lord of the Dice'],
  tSt:'📊 Stats',tRw:'🎁 Rewards',tAc:'⚙️ Account',
  sG:'Games finished',sW:'Wins',sWR:'Win rate',sBest:'Best score',sAvg:'Average score',sTot:'Total points',sStreak:'Longest daily streak',sDays:'Days played',sTower:'Highest Tower floor',sStars:'Tower stars',sAce:'School Ace bonuses',sClean:'Clean games',sTime:'Time played',sMp:'Games with others',s2nd:'Second places',sAch:'Achievements',sFav:'Favourite category',sFavN:'{p} pts in total',sCombo:'Combinations scored',sChart:'Recent games',sChartE:'A chart of your recent games will appear here.',cWin:'win',cLoss:'loss',cSolo:'solo',cAvg:'average',sNote:'Detailed stats are counted from this version on; older games still count towards your level and games played.',
- rTh:'Special themes',rFr:'Avatar frames',rCol:'Dice colours',rTi:'Titles',lkLv:'🔒 From level {n}',lkAch:'🔒 Achievement: {a}',use:'Use',inUse:'✓ In use',none:'No frame',tiRank:'Rank (automatic)',got:'unlocked',
+ rTh:'Special themes',rFr:'Avatar frames',rCol:'Dice colours',rTi:'Titles',lkLv:'🔒 From level {n}',lkAch:'🔒 Achievement: {a}',lkSz:'🔒 Top {r} in a monthly season',use:'Use',inUse:'✓ In use',none:'No frame',tiRank:'Rank (automatic)',got:'unlocked',
  th:{neon:'Neon City',aurora:'Aurora',royal:'Royal Gold',sakura:'Night Sakura'},
- fr:{bronze:'Bronze',silver:'Silver',gold:'Gold',jade:'Emerald',ruby:'Ruby',diamond:'Diamond',legend:'Legendary',flame:'Flame',laurel:'Laurel',crown:'Crown',stars:'Starry'},
+ fr:{bronze:'Bronze',silver:'Silver',gold:'Gold',jade:'Emerald',ruby:'Ruby',diamond:'Diamond',legend:'Legendary',flame:'Flame',laurel:'Laurel',crown:'Crown',stars:'Starry',sz1:'Season Gold Laurel',sz2:'Season Silver Laurel',sz3:'Season Bronze Laurel'},
  col:{ruby:'Ruby',emerald:'Emerald',obsidian:'Obsidian',prism:'Prism'},colLv:'Level rewards:',
- ti:{lucky:'Lucky One',royal:'Royal Roller',general:'Field General',school:'Top of the Class',clean:'Perfectionist',rocket:'Rocket',unlucky:'Jinxed',nerves:'Nerves of Steel',social:'Life of the Party',streak:'Unstoppable',champ:'Champion of the Month',tower:'Tower Conqueror',seer:'Fortune-Teller'},
+ ti:{lucky:'Lucky One',royal:'Royal Roller',general:'Field General',school:'Top of the Class',clean:'Perfectionist',rocket:'Rocket',unlucky:'Jinxed',nerves:'Nerves of Steel',social:'Life of the Party',streak:'Unstoppable',champ:'Champion of the Month',tower:'Tower Conqueror',seer:'Fortune-Teller',sz1:'Season Champion',sz2:'Season Runner-up',sz3:'Season Podium'},
  luT:'Level up!',luR:'Rank: {r}',luNew:'Unlocked:',luOk:'👍 Great!',luFirst:'We counted all your games and achievements so far.',
  pcT:'Player profile',pcNo:'This player has no public profile (yet) – only data from the game is shown.',pcLoad:'⏳ Loading profile…',pcMe:'This is you',pcAch:'Achievements',pcLv:'Level shown in game',
  gTi:'Your progress on this device',gHi:'Create an account to keep your level and rewards on every device and get a public profile.',gSt:'📊 Stats',gRw:'🎁 Rewards',back:'← Back',
@@ -3172,11 +3206,11 @@ de:{lvl:'Level',lvS:'Lv.',xpTo:'{a} / {b} XP bis Level {n}',xpMax:'{a} XP – h�
  rk:['Neuling','Würfler','Paarjäger','Straßenstratege','Full-House-Boss','Viererpasch-Ass','General','Poker-Hai','Würfelmeister','Würfelprinz','Legende','Großmeister','Mythisch','Lord of the Dice'],
  tSt:'📊 Statistik',tRw:'🎁 Belohnungen',tAc:'⚙️ Konto',
  sG:'Beendete Spiele',sW:'Siege',sWR:'Siegquote',sBest:'Bestes Ergebnis',sAvg:'Durchschnitt',sTot:'Punkte insgesamt',sStreak:'Längste Tagesserie',sDays:'Spieltage',sTower:'Höchste Turm-Etage',sStars:'Sterne im Turm',sAce:'Klassenbester-Boni',sClean:'Saubere Spiele',sTime:'Spielzeit',sMp:'Spiele mit anderen',s2nd:'Zweite Plätze',sAch:'Erfolge',sFav:'Lieblingskategorie',sFavN:'{p} Pkt. insgesamt',sCombo:'Gewertete Kombinationen',sChart:'Letzte Spiele',sChartE:'Hier erscheint ein Diagramm deiner letzten Spiele.',cWin:'Sieg',cLoss:'Niederlage',cSolo:'solo',cAvg:'Durchschnitt',sNote:'Detaillierte Statistiken zählen ab dieser Version; ältere Spiele zählen trotzdem für Level und Spielanzahl.',
- rTh:'Spezial-Designs',rFr:'Avatar-Rahmen',rCol:'Würfelfarben',rTi:'Titel',lkLv:'🔒 Ab Level {n}',lkAch:'🔒 Erfolg: {a}',use:'Verwenden',inUse:'✓ Aktiv',none:'Kein Rahmen',tiRank:'Rang (automatisch)',got:'freigeschaltet',
+ rTh:'Spezial-Designs',rFr:'Avatar-Rahmen',rCol:'Würfelfarben',rTi:'Titel',lkLv:'🔒 Ab Level {n}',lkAch:'🔒 Erfolg: {a}',lkSz:'🔒 Top {r} einer Monatssaison',use:'Verwenden',inUse:'✓ Aktiv',none:'Kein Rahmen',tiRank:'Rang (automatisch)',got:'freigeschaltet',
  th:{neon:'Neonstadt',aurora:'Polarlicht',royal:'Königsgold',sakura:'Nacht-Sakura'},
- fr:{bronze:'Bronze',silver:'Silber',gold:'Gold',jade:'Smaragd',ruby:'Rubin',diamond:'Diamant',legend:'Legendär',flame:'Flammen',laurel:'Lorbeer',crown:'Krone',stars:'Sterne'},
+ fr:{bronze:'Bronze',silver:'Silber',gold:'Gold',jade:'Smaragd',ruby:'Rubin',diamond:'Diamant',legend:'Legendär',flame:'Flammen',laurel:'Lorbeer',crown:'Krone',stars:'Sterne',sz1:'Saison-Goldlorbeer',sz2:'Saison-Silberlorbeer',sz3:'Saison-Bronzelorbeer'},
  col:{ruby:'Rubin',emerald:'Smaragd',obsidian:'Obsidian',prism:'Prisma'},colLv:'Level-Belohnungen:',
- ti:{lucky:'Glückspilz',royal:'Königlicher Wurf',general:'Feldherr',school:'Klassenbester',clean:'Perfektionist',rocket:'Rakete',unlucky:'Pechvogel',nerves:'Nerven aus Stahl',social:'Partylöwe',streak:'Unaufhaltsam',champ:'Monatschampion',tower:'Turmbezwinger',seer:'Wahrsager'},
+ ti:{lucky:'Glückspilz',royal:'Königlicher Wurf',general:'Feldherr',school:'Klassenbester',clean:'Perfektionist',rocket:'Rakete',unlucky:'Pechvogel',nerves:'Nerven aus Stahl',social:'Partylöwe',streak:'Unaufhaltsam',champ:'Monatschampion',tower:'Turmbezwinger',seer:'Wahrsager',sz1:'Saisonmeister',sz2:'Saison-Vizemeister',sz3:'Saison-Podium'},
  luT:'Level-Aufstieg!',luR:'Rang: {r}',luNew:'Freigeschaltet:',luOk:'👍 Super!',luFirst:'Wir haben alle deine bisherigen Spiele und Erfolge mitgezählt.',
  pcT:'Spielerprofil',pcNo:'Dieser Spieler hat (noch) kein öffentliches Profil – es werden nur Daten aus dem Spiel gezeigt.',pcLoad:'⏳ Profil wird geladen…',pcMe:'Das bist du',pcAch:'Erfolge',pcLv:'Level im Spiel',
  gTi:'Dein Fortschritt auf diesem Gerät',gHi:'Erstelle ein Konto, um Level und Belohnungen auf jedem Gerät zu behalten und ein öffentliches Profil zu bekommen.',gSt:'📊 Statistik',gRw:'🎁 Belohnungen',back:'← Zurück',
@@ -3187,11 +3221,11 @@ es:{lvl:'Nivel',lvS:'Nv.',xpTo:'{a} / {b} XP para el nivel {n}',xpMax:'{a} XP �
  rk:['Novato','Lanzador','Cazaparejas','Estratega de escaleras','Jefe del Full','As de cuatro iguales','General','Tiburón del póker','Maestro de los dados','Príncipe de los dados','Leyenda','Gran maestro','Mítico','Lord of the Dice'],
  tSt:'📊 Estadísticas',tRw:'🎁 Recompensas',tAc:'⚙️ Cuenta',
  sG:'Partidas terminadas',sW:'Victorias',sWR:'Porcentaje de victorias',sBest:'Mejor puntuación',sAvg:'Puntuación media',sTot:'Puntos en total',sStreak:'Racha de días más larga',sDays:'Días jugados',sTower:'Piso más alto de la Torre',sStars:'Estrellas en la Torre',sAce:'Bonos de Alumno estrella',sClean:'Partidas limpias',sTime:'Tiempo de juego',sMp:'Partidas con otros',s2nd:'Segundos puestos',sAch:'Logros',sFav:'Categoría favorita',sFavN:'{p} pts en total',sCombo:'Combinaciones anotadas',sChart:'Últimas partidas',sChartE:'Aquí aparecerá un gráfico de tus últimas partidas.',cWin:'victoria',cLoss:'derrota',cSolo:'solo',cAvg:'media',sNote:'Las estadísticas detalladas se cuentan desde esta versión; las partidas anteriores siguen contando para el nivel y el número de partidas.',
- rTh:'Temas especiales',rFr:'Marcos de avatar',rCol:'Colores de dados',rTi:'Títulos',lkLv:'🔒 Desde el nivel {n}',lkAch:'🔒 Logro: {a}',use:'Usar',inUse:'✓ En uso',none:'Sin marco',tiRank:'Rango (automático)',got:'desbloqueados',
+ rTh:'Temas especiales',rFr:'Marcos de avatar',rCol:'Colores de dados',rTi:'Títulos',lkLv:'🔒 Desde el nivel {n}',lkAch:'🔒 Logro: {a}',lkSz:'🔒 Top {r} de una temporada mensual',use:'Usar',inUse:'✓ En uso',none:'Sin marco',tiRank:'Rango (automático)',got:'desbloqueados',
  th:{neon:'Ciudad neón',aurora:'Aurora boreal',royal:'Oro real',sakura:'Sakura nocturna'},
- fr:{bronze:'Bronce',silver:'Plata',gold:'Oro',jade:'Esmeralda',ruby:'Rubí',diamond:'Diamante',legend:'Legendario',flame:'Llamas',laurel:'Laurel',crown:'Corona',stars:'Estrellas'},
+ fr:{bronze:'Bronce',silver:'Plata',gold:'Oro',jade:'Esmeralda',ruby:'Rubí',diamond:'Diamante',legend:'Legendario',flame:'Llamas',laurel:'Laurel',crown:'Corona',stars:'Estrellas',sz1:'Laurel de oro de temporada',sz2:'Laurel de plata de temporada',sz3:'Laurel de bronce de temporada'},
  col:{ruby:'Rubí',emerald:'Esmeralda',obsidian:'Obsidiana',prism:'Prisma'},colLv:'Por niveles:',
- ti:{lucky:'Afortunado',royal:'Tirada real',general:'General de campo',school:'Primero de la clase',clean:'Perfeccionista',rocket:'Cohete',unlucky:'Gafado',nerves:'Nervios de acero',social:'Alma de la fiesta',streak:'Imparable',champ:'Campeón del mes',tower:'Conquistador de la torre',seer:'Adivino'},
+ ti:{lucky:'Afortunado',royal:'Tirada real',general:'General de campo',school:'Primero de la clase',clean:'Perfeccionista',rocket:'Cohete',unlucky:'Gafado',nerves:'Nervios de acero',social:'Alma de la fiesta',streak:'Imparable',champ:'Campeón del mes',tower:'Conquistador de la torre',seer:'Adivino',sz1:'Campeón de temporada',sz2:'Subcampeón de temporada',sz3:'Podio de temporada'},
  luT:'¡Subes de nivel!',luR:'Rango: {r}',luNew:'Desbloqueado:',luOk:'👍 ¡Genial!',luFirst:'Hemos contado todas tus partidas y logros hasta ahora.',
  pcT:'Perfil del jugador',pcNo:'Este jugador no tiene (todavía) un perfil público; solo se muestran datos de la partida.',pcLoad:'⏳ Cargando perfil…',pcMe:'Eres tú',pcAch:'Logros',pcLv:'Nivel en la partida',
  gTi:'Tu progreso en este dispositivo',gHi:'Crea una cuenta para conservar tu nivel y recompensas en cualquier dispositivo y tener un perfil público.',gSt:'📊 Estadísticas',gRw:'🎁 Recompensas',back:'← Volver',
@@ -3214,9 +3248,10 @@ function pfXP(c){const n=x=>Math.max(0,Math.floor(+x||0));const ach=(c.ach||[]).
 function pfAchU(){try{if(typeof ACV!=='undefined'&&ACV&&ACV.u)return ACV.u}catch(e){}try{const a=JSON.parse(localStorage.kach||'null');return a&&a.u&&typeof a.u==='object'?a.u:{}}catch(e){return {}}}
 function pfLvNow(){try{return pfLevel(pxXP()).lv}catch(e){return +localStorage.kpxlv||1}}
 function pfItem(ty,k){return PF_UNL.find(x=>x.ty===ty&&x.k===k)||null}
-function pfHas(ty,k,lv,u){const it=pfItem(ty,k);if(!it)return false;if(it.a)return (u||pfAchU())[it.a]!==undefined;return (lv==null?pfLvNow():lv)>=it.lv}
+function pfSzHas(r){try{const w=JSON.parse(localStorage.kszw||'[]');return Array.isArray(w)&&w.some(x=>x&&typeof x.m==='string'&&x.r>=1&&x.r<=r)}catch(e){return false}}
+function pfHas(ty,k,lv,u){const it=pfItem(ty,k);if(!it)return false;if(it.s)return pfSzHas(it.s);if(it.a)return (u||pfAchU())[it.a]!==undefined;return (lv==null?pfLvNow():lv)>=it.lv}
 function pfThOk(k){return XTH.includes(k)&&pfHas('th',k)}
-function pfLockTxt(it){if(!it)return '';if(it.a){let n=it.a;try{n=achN(it.a)||it.a}catch(e){}return pt('lkAch',{a:n})}return pt('lkLv',{n:it.lv})}
+function pfLockTxt(it){if(!it)return '';if(it.s)return pt('lkSz',{r:it.s});if(it.a){let n=it.a;try{n=achN(it.a)||it.a}catch(e){}return pt('lkAch',{a:n})}return pt('lkLv',{n:it.lv})}
 function pfItemName(it){if(!it)return '';if(it.ty==='th')return pt('th')[it.k];if(it.ty==='fr')return pt('fr')[it.k];if(it.ty==='col')return pt('col')[it.k];if(it.ty==='ti')return pt('ti')[it.k];return it.k}
 function pfFrOk(k){return PF_FR.includes(k)?k:''}
 function pfLoginOk(u){return typeof u==='string'&&/^[A-Za-z0-9_-]{3,20}$/.test(u)?u:''}
@@ -3562,7 +3597,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611172030';
+const APP_VERSION='202611172100';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -4957,6 +4992,76 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  const A0=g=>anim()&&!!sumAnalyze(g).best?.d;
  // --- button in the end-of-game card ---
  if(typeof showWin==='function'){const _sw=showWin;showWin=function(g){const o=$('win'),was=o&&!o.hidden;const r=_sw.apply(this,arguments);try{if(o&&!o.hidden&&!was&&g&&g.players){const bb=o.querySelector('.wbtns');if(bb&&!o.querySelector('#wsum')){const b=document.createElement('button');b.type='button';b.id='wsum';b.className='wsum';b.textContent=sm('btn');bb.prepend(b);b.onclick=()=>sumOpen(g)}}}catch(e){}return r};window.__win=showWin}
+})();
+
+// ---- fx_sz.js ----
+// ===== 1.80 – monthly seasons: season XP leaderboard, countdown, archive, Top-3 frames & titles =====
+// Storage: one retained MQTT message per device: kosci-online/season/v1/<YYYY-MM>/<deviceId> (same broker + trust model as the highscores).
+(function(){
+ const ZT={pl:{btn:'Sezon',title:'Sezon: {m}',ends:'Koniec sezonu za {t}',ended:'Sezon zakończony',my:'Twoje sezonowe XP',rank:'Twoje miejsce',none:'–',how:'Ranking liczy XP zdobyte w ukończonych grach w danym miesiącu. Nowy sezon startuje 1. dnia miesiąca, poprzednie trafiają do archiwum. Top 3 dostaje ekskluzywną ramkę i tytuł.',rew:'Nagrody za Top 3',arch:'Archiwum',cur:'Bieżący sezon',empty:'Jeszcze nikt nie zdobył XP w tym sezonie.',off:'🟠 offline – pokazuję tylko Twój wynik',load:'Ładowanie…',won:'🏆 Sezon {m}: {r}. miejsce! Odblokowano ramkę i tytuł.',troph:'Twoje trofea sezonowe',close:'Zamknij',you:'Ty',xp:'XP',d:'{n} d',h:'{n} h',mi:'{n} min'},
+  en:{btn:'Season',title:'Season: {m}',ends:'Season ends in {t}',ended:'Season finished',my:'Your season XP',rank:'Your rank',none:'–',how:'The ranking counts XP earned in finished games during the month. A new season starts on the 1st; past seasons go to the archive. The Top 3 get an exclusive frame and title.',rew:'Top 3 rewards',arch:'Archive',cur:'Current season',empty:'Nobody has earned XP this season yet.',off:'🟠 offline – showing only your score',load:'Loading…',won:'🏆 Season {m}: rank {r}! Frame and title unlocked.',troph:'Your season trophies',close:'Close',you:'You',xp:'XP',d:'{n} d',h:'{n} h',mi:'{n} min'},
+  de:{btn:'Saison',title:'Saison: {m}',ends:'Saisonende in {t}',ended:'Saison beendet',my:'Deine Saison-XP',rank:'Dein Platz',none:'–',how:'Die Rangliste zählt XP aus beendeten Spielen im laufenden Monat. Am 1. startet eine neue Saison, alte Saisons kommen ins Archiv. Die Top 3 erhalten einen exklusiven Rahmen und Titel.',rew:'Belohnungen Top 3',arch:'Archiv',cur:'Aktuelle Saison',empty:'In dieser Saison hat noch niemand XP gesammelt.',off:'🟠 offline – nur dein Ergebnis',load:'Lädt…',won:'🏆 Saison {m}: Platz {r}! Rahmen und Titel freigeschaltet.',troph:'Deine Saison-Trophäen',close:'Schließen',you:'Du',xp:'XP',d:'{n} T',h:'{n} Std',mi:'{n} Min'},
+  es:{btn:'Temporada',title:'Temporada: {m}',ends:'La temporada termina en {t}',ended:'Temporada terminada',my:'Tu XP de temporada',rank:'Tu puesto',none:'–',how:'El ranking cuenta la XP ganada en partidas terminadas durante el mes. El día 1 empieza una nueva temporada y las anteriores pasan al archivo. El Top 3 recibe un marco y un título exclusivos.',rew:'Premios del Top 3',arch:'Archivo',cur:'Temporada actual',empty:'Nadie ha ganado XP en esta temporada todavía.',off:'🟠 sin conexión: solo tu resultado',load:'Cargando…',won:'🏆 Temporada {m}: ¡puesto {r}! Marco y título desbloqueados.',troph:'Tus trofeos de temporada',close:'Cerrar',you:'Tú',xp:'XP',d:'{n} d',h:'{n} h',mi:'{n} min'}};
+ const zt=(k,o)=>{let s=(ZT[LANG]||ZT.en)[k]||ZT.en[k];if(o)for(const x in o)s=s.split('{'+x+'}').join(o[x]);return s};window.SZ_T=ZT;
+ const SZ='kosci-online/season/v1/',KOK=/^[A-Za-z0-9_-]{3,24}$/,MOK=/^\d{4}-\d{2}$/,MAXS=100000;
+ const LS=(k,v)=>{try{if(v===undefined)return localStorage[k];if(v===null)localStorage.removeItem(k);else localStorage[k]=v}catch(e){}};
+ const now=()=>{try{return hsNow()}catch(e){return Date.now()}};
+ const mk=()=>{try{return hsMk(now())}catch(e){const d=new Date();return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')}};
+ const prevMk=m=>{let [y,n]=m.split('-').map(Number);n--;if(!n){n=12;y--}return y+'-'+String(n).padStart(2,'0')};
+ const mName=m=>{try{return hsMonthName(m)}catch(e){return m}};
+ window.szEnd=function(){const m=mk();let lo=now(),hi=lo+33*864e5;for(let i=0;i<48&&hi-lo>1000;i++){const mid=Math.floor((lo+hi)/2);if(hsMk(mid)===m)lo=mid;else hi=mid}return hi};
+ window.szLeft=function(){const ms=Math.max(0,szEnd()-now()),d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);return d?zt('d',{n:d})+' '+zt('h',{n:h}):h?zt('h',{n:h})+' '+zt('mi',{n:m}):zt('mi',{n:Math.max(1,m)})};
+ const dev=()=>{try{return refId()}catch(e){let d=LS('kszdev');if(!d||!KOK.test(d)){d='s'+Math.random().toString(36).slice(2,12);LS('kszdev',d)}return d}};
+ const login=()=>{try{return pfLoginOk((typeof ACL!=='undefined'&&accReady&&ACL)||'')}catch(e){return ''}};
+ // --- my season XP (only XP from finished games) ---
+ function mine(){let o;try{o=JSON.parse(LS('kszx')||'null')}catch(e){}const m=mk();if(!o||o.m!==m||!(o.x>=0))o={m,x:0};return o}
+ window.szMine=()=>mine().x;
+ function add(d){const o=mine();o.x=Math.min(MAXS,o.x+Math.floor(d));LS('kszx',JSON.stringify(o));PEND=true;pub()}
+ window.szAdd=add;
+ if(typeof achScan==='function'){const _as=achScan;achScan=function(){let b=0;try{b=pxXP()}catch(e){}const r=_as.apply(this,arguments);try{const d=pxXP()-b;if(d>0&&d<5000)add(d)}catch(e){}return r}}
+ // --- board data ---
+ const BD={},GOT={};let PEND=mine().x>0,att=null;
+ function onMsg(tp,m){tp=String(tp);if(tp.indexOf(SZ)!==0)return;const a=tp.slice(SZ.length).split('/');if(a.length!==2||!MOK.test(a[0])||!KOK.test(a[1]))return;const M=a[0],K_=a[1];BD[M]=BD[M]||{};GOT[M]=true;
+  const raw=m==null?'':m.toString();if(!raw){delete BD[M][K_];return refresh()}let e;try{e=JSON.parse(raw)}catch(x){return}
+  if(!e||typeof e.s!=='number'||!isFinite(e.s)||e.s<0)return;BD[M][K_]={k:K_,n:hsClean(e.n),s:Math.min(MAXS,Math.floor(e.s)),l:pfLvOk(e.l)||1,f:pfFrOk(e.f),u:pfLoginOk(e.u),t:+e.t||0};refresh()}
+ window.szMsg=onMsg;
+ window.szBoard=function(M){const g={};Object.values(BD[M]||{}).forEach(e=>{const id=e.u?'u:'+e.u.toLowerCase():'d:'+e.k;const o=g[id];if(!o)g[id]=Object.assign({id,ks:[e.k]},e);else{o.s=Math.min(MAXS,o.s+e.s);o.ks.push(e.k);if(e.t>o.t){o.n=e.n;o.l=e.l;o.f=e.f;o.t=e.t}}});
+  const me_=dev(),L=Object.values(g).filter(e=>e.s>0).sort((a,b)=>b.s-a.s||a.t-b.t);L.forEach((e,i)=>{e.r=i+1;e.me=e.ks.includes(me_)});return L};
+ const subM=new Set();function sub(M){subM.add(M);try{if(hsCli&&hsCli.connected)hsCli.subscribe(SZ+M+'/+',{qos:1})}catch(e){}}
+ function pub(){if(!PEND)return;try{if(!hsCli||!hsCli.connected)return;const o=mine();let n='';try{n=(typeof me!=='undefined'&&me)||LS('kname')||''}catch(e){}
+  const e={n:hsClean(n),s:o.x,l:pfLvNow(),t:now()};const f=pfEqFr();if(f)e.f=f;const u=login();if(u)e.u=u;hsCli.publish(SZ+o.m+'/'+dev(),JSON.stringify(e),{qos:1,retain:true});PEND=false;onMsg(SZ+o.m+'/'+dev(),JSON.stringify(e))}catch(x){}}
+ window.szPub=()=>{PEND=true;pub()};
+ function attach(){try{if(typeof hsCli==='undefined'||!hsCli||hsCli===att)return;att=hsCli;const c=hsCli;c.on('message',onMsg);c.on('connect',()=>{subM.forEach(M=>sub(M));pub()});if(c.connected){subM.forEach(M=>sub(M));pub()}}catch(e){}}
+ // --- end-of-season awards (checked once per finished season) ---
+ let chkT=0;function award(){const P=prevMk(mk());if(LS('kszchk')===P)return;sub(P);if(!chkT)chkT=setTimeout(()=>{chkT=0;try{if(!GOT[P]&&!(hsCli&&hsCli.connected))return;const L=szBoard(P),me_=L.find(e=>e.me);LS('kszchk',P);
+   if(me_&&me_.r<=3){let w=[];try{w=JSON.parse(LS('kszw')||'[]')}catch(e){}if(!Array.isArray(w))w=[];if(!w.some(x=>x.m===P)){w.push({m:P,r:me_.r,s:me_.s});LS('kszw',JSON.stringify(w.slice(-60)));
+    try{toast(zt('won',{m:mName(P),r:me_.r}))}catch(e){}try{window.fxSig&&fxSig('fan');window.fxHap&&fxHap('lvl')}catch(e){}try{accDirty()}catch(e){}}}}catch(e){}},8000)}
+ window.szAward=award;
+ let curM=mk();function tick(){attach();const m=mk();if(m!==curM){curM=m;PEND=mine().x>0;}sub(m);award();btn()}
+ // --- UI: menu button + overlay ---
+ function btn(){const hb=$('hsbtn');if(!hb)return;let b=$('szbtn');if(!b){b=document.createElement('button');b.id='szbtn';b.className='alt abtn';b.innerHTML='<span class="ai">🎖️</span><span class="szl"></span><small class="szcd"></small>';hb.after(b);b.onclick=()=>szOpen()}
+  b.querySelector('.szl').textContent=zt('btn');b.querySelector('.szcd').textContent=szLeft();b.setAttribute('aria-label',zt('btn')+' – '+zt('ends',{t:szLeft()}))}
+ let VIEW=null;
+ function rowHTML(e){const md=['🥇','🥈','🥉'][e.r-1]||e.r+'.';return '<li class="'+(e.me?'me ':'')+(e.r<=3?'top':'')+'"><span class="szr">'+md+'</span><span class="szn">'+'<b>'+esc(e.n)+'</b>'+(e.me?' <small>('+esc(zt('you'))+')</small>':'')+'</span>'+pfChip(e.l)+'<span class="szs">'+e.s+' '+esc(zt('xp'))+'</span></li>'}
+ window.szHTML=function(M){M=M||mk();const cur=M===mk(),L=szBoard(M),me_=L.find(e=>e.me),on=(()=>{try{return hsCli&&hsCli.connected}catch(e){return false}})();
+  let w=[];try{w=JSON.parse(LS('kszw')||'[]')}catch(e){}if(!Array.isArray(w))w=[];
+  const ms=[mk()];for(let i=0;i<6;i++)ms.push(prevMk(ms[ms.length-1]));
+  let h='<div class="szcard"><button type="button" class="szx" aria-label="'+esc(zt('close'))+'">✕</button><h2>🎖️ '+esc(zt('title',{m:mName(M)}))+'</h2>';
+  h+='<p class="szend">'+(cur?'⏳ '+esc(zt('ends',{t:szLeft()})):'🏁 '+esc(zt('ended')))+'</p>';
+  if(cur)h+='<div class="szme"><div><small>'+esc(zt('my'))+'</small><b>'+mine().x+'</b></div><div><small>'+esc(zt('rank'))+'</small><b>'+(me_?me_.r+' / '+L.length:esc(zt('none')))+'</b></div></div>';
+  h+='<div class="szmon" role="tablist" aria-label="'+esc(zt('arch'))+'">'+ms.map(m=>'<button type="button" role="tab" data-m="'+m+'" aria-selected="'+(m===M)+'" class="'+(m===M?'on':'')+'">'+esc(m===mk()?zt('cur'):mName(m))+'</button>').join('')+'</div>';
+  h+=L.length?'<ol class="szl">'+L.slice(0,25).map(rowHTML).join('')+(me_&&me_.r>25?rowHTML(me_):'')+'</ol>':'<p class="szem">'+esc(GOT[M]||!on?zt('empty'):zt('load'))+'</p>';
+  if(!on)h+='<p class="szoff">'+esc(zt('off'))+'</p>';
+  h+='<h3>'+esc(zt('rew'))+'</h3><div class="szrew">'+[1,2,3].map(r=>'<div>'+pfAvFr((typeof MYAV!=='undefined'&&MYAV)||'','sz'+r,'avb')+'<b>'+['🥇','🥈','🥉'][r-1]+' '+esc(pt('fr')['sz'+r])+'</b><small>'+esc(pt('ti')['sz'+r])+'</small></div>').join('')+'</div>';
+  if(w.length)h+='<h3>'+esc(zt('troph'))+'</h3><ul class="sztr">'+w.slice().reverse().map(x=>'<li>'+(['🥇','🥈','🥉'][x.r-1]||'🏅')+' '+esc(mName(x.m))+' – '+x.r+'.</li>').join('')+'</ul>';
+  return h+'<p class="pfnote">'+esc(zt('how'))+'</p></div>'};
+ window.szOpen=function(M){M=M||mk();VIEW=M;sub(M);let o=$('szov');if(!o){o=document.createElement('div');o.id='szov';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');document.body.appendChild(o);
+   o.addEventListener('click',e=>{if(e.target===o)szClose();const b=e.target.closest&&e.target.closest('[data-m]');if(b&&o.contains(b))szOpen(b.dataset.m);if(e.target.closest&&e.target.closest('.szx'))szClose()});o.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();szClose()}})}
+  o.className=(typeof animOn!=='undefined'&&animOn)?'anim':'';o.setAttribute('aria-label',zt('btn'));o.innerHTML=szHTML(M);o.hidden=false;try{(o.querySelector('[data-m].on')||o.querySelector('.szx')).focus()}catch(e){}return o};
+ window.szClose=function(){const o=$('szov');if(o){o.hidden=true;o.innerHTML=''}VIEW=null;try{$('szbtn').focus()}catch(e){}};
+ let rT=0;function refresh(){if(!VIEW)return;clearTimeout(rT);rT=setTimeout(()=>{const o=$('szov');if(o&&!o.hidden&&VIEW){const f=document.activeElement&&document.activeElement.dataset?document.activeElement.dataset.m:null;o.innerHTML=szHTML(VIEW);if(f)try{o.querySelector('[data-m="'+f+'"]').focus()}catch(e){}}},120)}
+ if(typeof applyLang2==='function'){const _al=applyLang2;applyLang2=function(){const r=_al.apply(this,arguments);try{btn();if(VIEW)refresh()}catch(e){}return r}}
+ tick();setInterval(()=>{try{tick()}catch(e){}},30000);setTimeout(()=>{try{attach();pub()}catch(e){}},2500);
 })();
 
 </script></body></html>
