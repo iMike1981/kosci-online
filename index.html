@@ -3598,7 +3598,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='2.32';
+const APP_VER='2.33';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -4042,7 +4042,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611232200';
+const APP_VERSION='202611232330';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -7982,6 +7982,34 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
 }
 
 </style>
+<style id="v233css">
+/* 2.33: restore 2.31 aurora (fix banding only) */
+html:has(body.th-aurora){background:#0a1a2d}
+body.th-aurora{
+  background:linear-gradient(180deg,#02070f 0%,#06142a 40%,#0b2440 72%,#123552 100%) fixed;
+  background-color:#0a1a2d;
+}
+.dc-aurora #aurcv{display:none!important}
+.dc-aurora .aub,.dc-aurora .amtn,.dc-aurora .asn{display:block!important}
+body:not(.noanim) .dc-aurora .sh{display:block!important}
+
+/* Feather each sheet so stacked box/filter edges blend instead of striping */
+.dc-aurora .aub{
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 58%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 58%,transparent 100%);
+  -webkit-mask-mode:alpha;
+  mask-mode:alpha;
+  -webkit-mask-size:100% 100%;
+  mask-size:100% 100%;
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+}
+/* Taller overlapping sheets so the colour bands meet through the faded edges */
+.dc-aurora .a1{top:2%;height:48vh;opacity:.85}
+.dc-aurora .a2{top:8%;height:44vh;opacity:.62;animation-duration:23s;animation-delay:-6s}
+.dc-aurora .a3{top:-4%;height:40vh;opacity:.4;filter:hue-rotate(70deg);animation-duration:29s;animation-direction:alternate-reverse}
+
+</style>
 <script id="v232">
 /* 2.32 Galaxy + Aurora visual engines */
 (function(){
@@ -8024,7 +8052,7 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
  /* ===================== GALAXY ===================== */
  function layoutGalaxy(W,H){
   const wide=W>=1120, mid=W>=840, mn=Math.min(W,H);
-  const rBh=Math.max(68,Math.min(wide?128:mid?108:92, mn*(wide?0.155:mid?0.175:0.205)));
+  const rBh=Math.max(36,Math.min(wide?72:mid?62:50, mn*(wide?0.085:mid?0.096:0.115)));
   const rNb=Math.max(70,Math.min(wide?170:mid?140:120, mn*(wide?0.20:mid?0.22:0.26)));
   const bh={
    kind:'bh',
@@ -8034,7 +8062,7 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
    tilt:-0.38,
    squash:0.30,
    dir:1,
-   omega:0.18,
+   omega:0.12,
    beam:0, // Doppler-bright side is +x in disk plane (left on screen after tilt is modest)
    alpha:1
   };
@@ -8153,51 +8181,33 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
   return 'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+(a==null?1:a)+')';
  }
 
- function fillAnnulus(c,r0,r1,front){
+ function fillAnnulus(c,r0,r1){
   c.save();
   c.beginPath();
-  if(front)c.rect(-r1*2.2, -r1*0.02, r1*4.4, r1*2.4);
-  else c.rect(-r1*2.2, -r1*2.4, r1*4.4, r1*2.42);
-  c.clip();
-  c.beginPath();
   c.arc(0,0,r1,0,Math.PI*2);
-  c.arc(0,0,r0,0,Math.PI*2,true);
+  c.arc(0,0,r0*0.85,0,Math.PI*2,true);
   c.closePath();
   c.clip();
 
-  const rg=c.createRadialGradient(0,0,r0*0.98,0,0,r1);
-  if(front){
-   rg.addColorStop(0,'rgba(255,236,200,0.95)');
-   rg.addColorStop(0.12,'rgba(255,186,110,0.80)');
-   rg.addColorStop(0.4,'rgba(210,90,40,0.42)');
-   rg.addColorStop(0.75,'rgba(90,25,20,0.12)');
-   rg.addColorStop(1,'rgba(20,5,10,0)');
-  }else{
-   rg.addColorStop(0,'rgba(255,200,150,0.55)');
-   rg.addColorStop(0.18,'rgba(210,120,70,0.36)');
-   rg.addColorStop(0.5,'rgba(140,50,30,0.16)');
-   rg.addColorStop(1,'rgba(20,5,10,0)');
-  }
+  const rg=c.createRadialGradient(0,0,r0*0.7,0,0,r1);
+  rg.addColorStop(0,'rgba(255,236,200,0.00)');
+  rg.addColorStop(0.10,'rgba(255,236,200,0.55)');
+  rg.addColorStop(0.22,'rgba(255,186,110,0.50)');
+  rg.addColorStop(0.48,'rgba(200,90,40,0.22)');
+  rg.addColorStop(0.78,'rgba(80,25,20,0.06)');
+  rg.addColorStop(1,'rgba(20,5,10,0)');
   c.fillStyle=rg;
   c.fillRect(-r1,-r1,r1*2,r1*2);
 
   if(typeof c.createConicGradient==='function'){
    const cg=c.createConicGradient(0,0,0);
-   if(front){
-    cg.addColorStop(0,'rgba(255,255,240,0.95)');
-    cg.addColorStop(0.08,'rgba(255,230,170,0.55)');
-    cg.addColorStop(0.22,'rgba(180,70,30,0.12)');
-    cg.addColorStop(0.5,'rgba(20,0,0,0.55)');
-    cg.addColorStop(0.78,'rgba(180,70,30,0.12)');
-    cg.addColorStop(0.92,'rgba(255,230,170,0.55)');
-    cg.addColorStop(1,'rgba(255,255,240,0.95)');
-   }else{
-    cg.addColorStop(0,'rgba(255,230,200,0.40)');
-    cg.addColorStop(0.15,'rgba(200,110,60,0.12)');
-    cg.addColorStop(0.5,'rgba(20,0,0,0.35)');
-    cg.addColorStop(0.85,'rgba(200,110,60,0.12)');
-    cg.addColorStop(1,'rgba(255,230,200,0.40)');
-   }
+   cg.addColorStop(0,'rgba(255,255,240,0.85)');
+   cg.addColorStop(0.10,'rgba(255,230,170,0.40)');
+   cg.addColorStop(0.28,'rgba(180,70,30,0.08)');
+   cg.addColorStop(0.5,'rgba(20,0,0,0.35)');
+   cg.addColorStop(0.72,'rgba(180,70,30,0.08)');
+   cg.addColorStop(0.90,'rgba(255,230,170,0.40)');
+   cg.addColorStop(1,'rgba(255,255,240,0.85)');
    c.globalCompositeOperation='overlay';
    c.fillStyle=cg;
    c.fillRect(-r1,-r1,r1*2,r1*2);
@@ -8206,20 +8216,18 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
   c.restore();
  }
 
- function drawHotStreaks(c,r0,r1,spin,front){
-  const n=front?9:6;
+ function drawHotStreaks(c,r0,r1,spin){
+  const n=5;
   c.save();
   c.globalCompositeOperation='lighter';
   for(let i=0;i<n;i++){
-   const a=spin*(0.55+i*0.13)+i*1.71;
+   const a=spin*(0.45+i*0.11)+i*1.71;
    const na=((a%(Math.PI*2))+Math.PI*2)%(Math.PI*2);
-   const isFront=na<Math.PI;
-   if(isFront!==front)continue;
    const dop=Math.max(0,Math.cos(na));
-   const rad=r0+(r1-r0)*(0.18+(i%5)/9);
-   const arc=0.28+((i*3)%5)*0.07;
-   c.strokeStyle=heatColor(0.55+0.45*dop,(front?0.16:0.08)*(0.35+dop));
-   c.lineWidth=3.2+(i%3)*1.8;
+   const rad=r0+(r1-r0)*(0.2+(i%5)/10);
+   const arc=0.34+((i*3)%5)*0.08;
+   c.strokeStyle=heatColor(0.55+0.45*dop,0.08*(0.35+dop));
+   c.lineWidth=4.5+(i%3)*1.6;
    c.lineCap='round';
    c.beginPath();c.arc(0,0,rad,na,na+arc);c.stroke();
   }
@@ -8232,88 +8240,78 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
   c.save();
   c.translate(x,y);
 
-  // Outer gravitational glow
-  const halo=c.createRadialGradient(0,0,r*0.55,0,0,r*4.6);
-  halo.addColorStop(0,'rgba(255,210,150,0.22)');
-  halo.addColorStop(0.16,'rgba(255,140,70,0.13)');
-  halo.addColorStop(0.4,'rgba(140,60,200,0.10)');
+  // Soft gravitational glow, fading into the sky
+  const halo=c.createRadialGradient(0,0,r*0.4,0,0,r*5.2);
+  halo.addColorStop(0,'rgba(255,210,150,0.16)');
+  halo.addColorStop(0.18,'rgba(255,140,70,0.10)');
+  halo.addColorStop(0.45,'rgba(140,60,200,0.07)');
   halo.addColorStop(1,'rgba(40,10,80,0)');
-  c.fillStyle=halo;c.beginPath();c.arc(0,0,r*4.6,0,Math.PI*2);c.fill();
+  c.fillStyle=halo;c.beginPath();c.arc(0,0,r*5.2,0,Math.PI*2);c.fill();
 
-  // Back half of the accretion disk (behind the shadow)
+  // Soft full accretion disk (no hard half-clip, long feathered edge)
   c.save();
   c.rotate(tilt);
   c.scale(1,squash);
-  fillAnnulus(c,r*1.16,r*3.5,false);
-  drawHotStreaks(c,r*1.25,r*3.2,spin,false);
+  fillAnnulus(c,r*1.12,r*3.7);
+  drawHotStreaks(c,r*1.25,r*3.3,spin);
   c.restore();
 
-  // Gravitational lensing arcs — far disk wrapped over/under the shadow
+  // Soft lensing glow above and below — no hard rect clips
   c.save();
   c.rotate(tilt);
-  c.save();
-  c.beginPath();c.rect(-r*2.4,-r*2.2,r*4.8,r*2.15);c.clip();
-  c.scale(1,0.64);
-  const up=c.createRadialGradient(0,-r*0.10,r*0.90,0,-r*0.10,r*1.58);
-  up.addColorStop(0,'rgba(255,230,190,0)');
-  up.addColorStop(0.46,'rgba(255,230,190,0)');
-  up.addColorStop(0.60,'rgba(255,242,220,0.95)');
-  up.addColorStop(0.72,'rgba(255,170,80,0.40)');
+  c.scale(1,0.72);
+  const up=c.createRadialGradient(0,-r*0.08,r*0.85,0,-r*0.08,r*1.7);
+  up.addColorStop(0,'rgba(255,236,200,0)');
+  up.addColorStop(0.50,'rgba(255,236,200,0)');
+  up.addColorStop(0.64,'rgba(255,242,220,0.55)');
+  up.addColorStop(0.78,'rgba(255,170,80,0.22)');
   up.addColorStop(1,'rgba(120,40,20,0)');
-  c.fillStyle=up;c.beginPath();c.arc(0,-r*0.10,r*1.58,0,Math.PI*2);c.fill();
-  c.restore();
-  c.save();
-  c.beginPath();c.rect(-r*2.2,0,r*4.4,r*2.0);c.clip();
-  c.scale(1,0.50);
-  const lo=c.createRadialGradient(0,r*0.12,r*0.92,0,r*0.12,r*1.46);
-  lo.addColorStop(0,'rgba(255,200,140,0)');
-  lo.addColorStop(0.52,'rgba(255,200,140,0)');
-  lo.addColorStop(0.68,'rgba(255,220,180,0.62)');
-  lo.addColorStop(0.84,'rgba(200,80,30,0.22)');
+  c.fillStyle=up;c.beginPath();c.arc(0,-r*0.08,r*1.7,0,Math.PI*2);c.fill();
+  const lo=c.createRadialGradient(0,r*0.10,r*0.9,0,r*0.10,r*1.55);
+  lo.addColorStop(0,'rgba(255,210,160,0)');
+  lo.addColorStop(0.55,'rgba(255,210,160,0)');
+  lo.addColorStop(0.72,'rgba(255,220,180,0.32)');
   lo.addColorStop(1,'rgba(80,20,10,0)');
-  c.fillStyle=lo;c.beginPath();c.arc(0,r*0.12,r*1.46,0,Math.PI*2);c.fill();
-  c.restore();
+  c.fillStyle=lo;c.beginPath();c.arc(0,r*0.10,r*1.55,0,Math.PI*2);c.fill();
   c.restore();
 
-  // Pure black event-horizon shadow
-  c.fillStyle='#000000';
-  c.beginPath();c.arc(0,0,r,0,Math.PI*2);c.fill();
-  // subtle falloff just at the rim so the photon ring sits cleanly
-  const rim=c.createRadialGradient(0,0,r*0.86,0,0,r*1.01);
-  rim.addColorStop(0,'rgba(0,0,0,0)');
-  rim.addColorStop(0.7,'rgba(0,0,0,0)');
-  rim.addColorStop(1,'rgba(0,0,0,1)');
-  c.fillStyle='#000000';
-  c.beginPath();c.arc(0,0,r,0,Math.PI*2);c.fill();
+  // Event-horizon shadow with a soft rim (no hard outline)
+  const shadow=c.createRadialGradient(0,0,r*0.55,0,0,r*1.16);
+  shadow.addColorStop(0,'#000000');
+  shadow.addColorStop(0.72,'#000000');
+  shadow.addColorStop(0.90,'rgba(0,0,0,0.75)');
+  shadow.addColorStop(1,'rgba(0,0,0,0)');
+  c.fillStyle=shadow;
+  c.beginPath();c.arc(0,0,r*1.16,0,Math.PI*2);c.fill();
 
-  // Bright thin photon ring, Doppler-brighter on the approaching side
+  // Soft glowing photon ring — brighter on the approaching side, no hard outline
   c.save();
   c.rotate(tilt);
   c.scale(1,0.97);
+  const ring=c.createRadialGradient(0,0,r*0.88,0,0,r*1.28);
+  ring.addColorStop(0,'rgba(255,236,200,0)');
+  ring.addColorStop(0.36,'rgba(255,236,200,0)');
+  ring.addColorStop(0.50,'rgba(255,240,210,0.42)');
+  ring.addColorStop(0.62,'rgba(255,190,110,0.18)');
+  ring.addColorStop(1,'rgba(255,160,80,0)');
+  c.fillStyle=ring;
+  c.beginPath();c.arc(0,0,r*1.28,0,Math.PI*2);c.fill();
   if(typeof c.createConicGradient==='function'){
+   c.save();
+   c.globalCompositeOperation='screen';
    const pr=c.createConicGradient(0,0,0);
-   pr.addColorStop(0,'rgba(255,255,245,1)');
-   pr.addColorStop(0.10,'rgba(255,220,150,0.7)');
-   pr.addColorStop(0.5,'rgba(255,140,60,0.28)');
-   pr.addColorStop(0.90,'rgba(255,220,150,0.7)');
-   pr.addColorStop(1,'rgba(255,255,245,1)');
-   c.strokeStyle=pr;
-  }else{
-   c.strokeStyle='rgba(255,236,200,0.9)';
+   pr.addColorStop(0,'rgba(255,255,245,0.55)');
+   pr.addColorStop(0.12,'rgba(255,220,150,0.18)');
+   pr.addColorStop(0.5,'rgba(255,140,60,0)');
+   pr.addColorStop(0.88,'rgba(255,220,150,0.18)');
+   pr.addColorStop(1,'rgba(255,255,245,0.55)');
+   c.fillStyle=pr;
+   c.beginPath();
+   c.arc(0,0,r*1.18,0,Math.PI*2);
+   c.arc(0,0,r*0.96,0,Math.PI*2,true);
+   c.fill();
+   c.restore();
   }
-  c.lineWidth=Math.max(1.6,r*0.035);
-  c.beginPath();c.arc(0,0,r*1.028,0,Math.PI*2);c.stroke();
-  c.strokeStyle='rgba(255,220,160,0.28)';
-  c.lineWidth=Math.max(3,r*0.07);
-  c.beginPath();c.arc(0,0,r*1.06,0,Math.PI*2);c.stroke();
-  c.restore();
-
-  // Front half of the accretion disk
-  c.save();
-  c.rotate(tilt);
-  c.scale(1,squash);
-  fillAnnulus(c,r*1.16,r*3.65,true);
-  drawHotStreaks(c,r*1.25,r*3.4,spin,true);
   c.restore();
 
   c.restore();
@@ -8731,9 +8729,9 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
  function start(){
   stop();
   const d=$('deco');
-  if(!d||(d.dataset.k!=='galaxy'&&d.dataset.k!=='aurora'))return;
+  if(!d||d.dataset.k!=='galaxy')return;
   kind=d.dataset.k;
-  cv=d.querySelector(kind==='galaxy'?'#galcv':'#aurcv');
+  cv=d.querySelector('#galcv');
   if(!cv)return;
   try{ctx=cv.getContext('2d',{alpha:false})}catch(e){ctx=null}
   if(!ctx)return;
@@ -8759,7 +8757,7 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
 
  function syncMotion(){
   const d=$('deco');
-  if(!d||(d.dataset.k!=='galaxy'&&d.dataset.k!=='aurora')){stop();return}
+  if(!d||d.dataset.k!=='galaxy'){stop();return}
   if(!ANIM()||document.hidden){
    stop();
    if(cv&&ctx)drawFrame(performance.now(),false);
@@ -8771,12 +8769,12 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
  function mount(k){
   const d=$('deco');if(!d)return;
   try{if(window.__v222&&typeof __v222.stop==='function')__v222.stop()}catch(e){}
-  if(d.dataset.k===k&&d.dataset.v==='232'&&d.querySelector(k==='galaxy'?'#galcv':'#aurcv')){
+  if(d.dataset.k===k&&d.dataset.v==='232'&&d.querySelector('#galcv')){
    start();return;
   }
   stop();
   d.dataset.k=k;d.dataset.v='232';d.className='dc-'+k;
-  d.innerHTML=k==='galaxy'?'<canvas id="galcv" aria-hidden="true"></canvas>':'<canvas id="aurcv" aria-hidden="true"></canvas>';
+  d.innerHTML='<canvas id="galcv" aria-hidden="true"></canvas>';
   kind=k;cv=null;ctx=null;bgW=0;meteors.length=0;
   start();
   try{sceneKick()}catch(e){}
@@ -8785,7 +8783,7 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
  try{
   const _dd=drawDeco;
   drawDeco=function(k){
-   if(k==='galaxy'||k==='aurora'){mount(k);return}
+   if(k==='galaxy'){mount(k);return}
    stop();cv=null;ctx=null;kind='';
    const d=$('deco');if(d)delete d.dataset.v;
    return _dd.apply(this,arguments);
@@ -8799,7 +8797,6 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
     if(ANIM()&&cv&&ctx)spawnMeteor(bgW||cv.clientWidth||412,bgH||cv.clientHeight||860);
     return;
    }
-   if(k==='aurora')return;
    return _se.apply(this,arguments);
   };
  }catch(e){}
@@ -8818,14 +8815,14 @@ body:has(#game:not([hidden])) .dc-aurora #aurcv{opacity:.84}
   clearTimeout(resizeT);
   resizeT=setTimeout(()=>{
    const d=$('deco');
-   if(d&&(d.dataset.k==='galaxy'||d.dataset.k==='aurora')&&cv&&ctx){
+   if(d&&d.dataset.k==='galaxy'&&cv&&ctx){
     bgW=0;drawFrame(performance.now(),ANIM()&&!document.hidden);
    }
   },120);
  },{passive:true});
 
  try{
-  if(typeof appTh!=='undefined'&&(appTh==='galaxy'||appTh==='aurora')){
+  if(typeof appTh!=='undefined'&&appTh==='galaxy'){
    const d=$('deco');
    if(d){d.dataset.k='';d.dataset.v='';drawDeco(appTh)}
   }
