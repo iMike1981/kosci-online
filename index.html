@@ -3577,7 +3577,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='2.24';
+const APP_VER='2.25';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -4021,7 +4021,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611231200';
+const APP_VERSION='202611231800';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -4348,16 +4348,21 @@ function status(s){$('net').textContent=s}
 // ignore states that break the game mode (crafted/buggy clients): mode switched mid-game, or a move that wasn't allowed
 function stOk(d){const g=d.G;if(!g)return true;try{if(g.mode!==undefined&&!K.MODES.includes(g.mode))return false;
  if(S&&S.G&&S.G.gid===g.gid&&K.modeOf(S.G)!==K.modeOf(g))return false;return K.movesOk(g)}catch(e){return false}}
-let connFail=null,resyncing=false,hidAt=0;const PRES={};
+let connFail=null,resyncing=false,hidAt=0,wdT=null,recT=null;const PRES={};
 function ptop(n){return 'kosci-mk-v2/'+ROOM+'/p/'+encodeURIComponent(n)}
-function connect(onUp){clearTimeout(connFail);
+function wdClear(){clearTimeout(wdT);wdT=null}
+function wdArm(){if(!ROOM||wdT)return;wdT=setTimeout(()=>{wdT=null;if(!ROOM||(cli&&cli.connected))return;srv++;resync(true)},10000)}
+function recover(force){if(!ROOM||!me)return;if(!force&&cli&&cli.connected)return;if(recT){if(force)recT.force=true;return}const x={force:!!force};recT=x;setTimeout(()=>{if(recT!==x)return;recT=null;if(!ROOM||!me)return;if(!x.force&&cli&&cli.connected)return;resync(x.force)},300)}
+function connect(onUp){clearTimeout(connFail);wdClear();
  const [u,o]=SERVERS[srv%SERVERS.length];status('⏳ '+t('connecting'));
  const opt={connectTimeout:7000,reconnectPeriod:2000,keepalive:20,clientId:'k'+Math.random().toString(16).slice(2,10)};if(me&&ROOM)opt.will={topic:ptop(me),payload:'0',qos:1,retain:true};
  const c=cli=mqtt.connect(u,Object.assign(opt,o));
  let ok=false;connFail=setTimeout(()=>{if(!ok&&cli===c){c.removeAllListeners();c.end(true);srv++;connect(onUp)}},9000);
- c.on('connect',()=>{if(cli!==c)return;ok=true;clearTimeout(connFail);status('🟢 online');const f=onUp;onUp=null;resyncing=resyncing||!f;
+ c.on('connect',()=>{if(cli!==c)return;ok=true;clearTimeout(connFail);wdClear();status('🟢 online');const f=onUp;onUp=null;resyncing=resyncing||!f;
   if(me&&ROOM)c.publish(ptop(me),document.hidden?'a':'1',{qos:1,retain:true});c.subscribe([topic(),'kosci-mk-v2/'+ROOM+'/p/+','kosci-mk-v2/'+ROOM+'/e'].concat(window.refTopic?[refTopic()]:[]),{qos:1},()=>f&&f())});
- c.on('reconnect',()=>{resyncing=true;status('🟠 '+t('reconnecting'))});c.on('offline',()=>status('🔴 offline – '+t('reconnecting')));
+ c.on('reconnect',()=>{resyncing=true;status('🟠 '+t('reconnecting'));if(ok)wdArm()});
+ c.on('offline',()=>{status('🔴 offline – '+t('reconnecting'));if(ok)wdArm()});
+ c.on('close',()=>{if(ok)wdArm()});c.on('error',()=>{if(ok)wdArm()});
  c.on('message',(tp,m)=>{if(cli!==c)return;if(tp.indexOf('kosci-mk-v2/ref/')===0){try{refRecv(tp,m.toString())}catch(e){}return}if(tp.indexOf('/p/')>0){presMsg(tp,m.toString());return}if(/\/e$/.test(tp)){try{emoRecv(m.toString())}catch(e){}return}
   let d;try{d=JSON.parse(m.toString())}catch(e){return}try{if(d&&S&&S.G&&d.G&&S.G.gid===d.G.gid&&window.__v210){d=window.__v210.mergeIn(d);if(S&&d.v<S.v&&!resyncing){S.G.xpr=d.G.xpr;S.G.frb=d.G.frb;if(window.__v211)S.G.fra=window.__v211.unionFra(S.G.fra,d.G.fra);try{window.__v210.paint(S.G)}catch(e){}return}}}catch(e){}if(!d||(S&&d.v<S.v&&!resyncing))return;if(!stOk(d))return;resyncing=false;S=d;onState()});}
 function presMsg(tp,v){let n;try{n=decodeURIComponent(tp.split('/p/')[1])}catch(e){return}if(!n)return;if(n===me){if(v!=='1'&&ROOM&&!document.hidden&&cli&&cli.connected)cli.publish(ptop(me),'1',{qos:1,retain:true});return}
@@ -4375,11 +4380,12 @@ function sessGet(){try{const x=JSON.parse(localStorage.ksess||'null');if(x&&x.r&
 function sessClear(){try{localStorage.removeItem('ksess')}catch(e){}}
 function resumeUI(){const b=$('resban');if(!b)return;const x=sessGet();let inRoom=false;try{inRoom=!!ROOM}catch(e){}if(!x||inRoom){b.hidden=true;return}$('resgo').textContent=t('resume',{c:x.r});b.hidden=false}
 function resync(force){if(!ROOM||!me)return;if(cli&&cli.connected&&!force){try{cli.publish(ptop(me),'1',{qos:1,retain:true})}catch(e){}return}
- const old=cli;cli=null;try{if(old){old.removeAllListeners();old.end(true)}}catch(e){}resyncing=true;connect(null)}
+ const old=cli;cli=null;wdClear();try{if(old){old.removeAllListeners();old.end(true)}}catch(e){}resyncing=true;connect(null)}
 document.addEventListener('visibilitychange',()=>{if(document.hidden){hidAt=Date.now();try{ROOM&&me&&cli&&cli.connected&&cli.publish(ptop(me),'a',{qos:0,retain:true})}catch(e){}}
- else if(ROOM){resync(hidAt>0&&Date.now()-hidAt>8000);hidAt=0}});
-addEventListener('pageshow',e=>{if(e.persisted&&ROOM)resync(true)});
-addEventListener('online',()=>{if(ROOM)resync(!(cli&&cli.connected))});
+ else{const long=hidAt>0&&Date.now()-hidAt>8000;hidAt=0;if(ROOM)recover(long)}});
+addEventListener('pageshow',e=>{if(ROOM)recover(!!e.persisted)});
+addEventListener('online',()=>{if(ROOM)recover(false)});
+addEventListener('focus',()=>{if(ROOM)recover(false)});
 function hbLink(){return location.origin+location.pathname+'?pokoj='+ROOM}
 function hbarUI(){const b=$('hbar');if(!b)return;const show=!!(!TW&&ROOM&&S&&S.host===me&&!$('game').hidden);b.hidden=!show;document.body.classList.toggle('hbar',show);if(!show)return;
  $('hbc').textContent=ROOM.length===6?ROOM.slice(0,3)+' '+ROOM.slice(3):ROOM;b.setAttribute('aria-label',t('hbRoom')+' '+ROOM);
