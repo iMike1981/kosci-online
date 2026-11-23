@@ -3598,7 +3598,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='2.30';
+const APP_VER='2.31';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -4042,7 +4042,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611232000';
+const APP_VERSION='202611232100';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -7682,9 +7682,9 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
   ctx.save();ctx.translate(x,y);ctx.scale(sc,sc);
   const bob=Math.sin(t*14)*1.4;
   ctx.translate(0,bob);
-  // hitch
+  // hitch (front = right: horses pull the coach to the right)
   ctx.strokeStyle='#5a3a18';ctx.lineWidth=4;ctx.lineCap='round';
-  ctx.beginPath();ctx.moveTo(-70,8);ctx.lineTo(-118,10);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(60,8);ctx.lineTo(122,10);ctx.stroke();
   // body
   const body=ctx.createLinearGradient(0,-40,0,28);
   body.addColorStop(0,'#3a2a68');
@@ -7717,12 +7717,12 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
    ctx.fillStyle='rgba(255,210,80,.35)';
    ctx.beginPath();ctx.arc(p[0],p[1],16,0,Math.PI*2);ctx.fill();
   });
-  // driver's seat
+  // driver's seat at the front (right)
   ctx.fillStyle='#2a1a10';
-  roundRect(ctx,-66,-48,22,14,3);ctx.fill();
+  roundRect(ctx,38,-48,22,14,3);ctx.fill();
   // wheels
   [[-42,28,18],[42,28,20]].forEach(w=>{
-   ctx.save();ctx.translate(w[0],w[1]);ctx.rotate(t*12);
+   ctx.save();ctx.translate(w[0],w[1]);ctx.rotate(t*12); // clockwise = rightward roll
    ctx.beginPath();ctx.arc(0,0,w[2],0,Math.PI*2);
    ctx.fillStyle='#2a1a10';ctx.fill();
    ctx.strokeStyle='#e0b25a';ctx.lineWidth=3;ctx.stroke();
@@ -7733,6 +7733,16 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
    ctx.restore();
   });
   ctx.restore();
+ }
+
+ function coachMotion(t,w,h){
+  const s=Math.min(w,h);
+  const ride=easeInOut(clamp((t-0.12)/0.88));
+  const sc=Math.min(1.15,Math.max(0.7,s/520));
+  const y=h*0.64;
+  const x=lerp(-300*sc,w+90*sc,ride);
+  const hx1=x+150*sc,hx2=x+210*sc;
+  return {t,w,h,s,sc,ride,x,y,hx1,hx2,face:1,wheelSign:1,left:x-72*sc,right:hx2+60*sc,travel:1};
  }
 
  function paintCoach(ctx,w,h,t,rec,red){
@@ -7764,18 +7774,17 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
   ctx.strokeStyle='rgba(180,150,90,.3)';ctx.lineWidth=3;
   ctx.beginPath();ctx.moveTo(0,ground+s*0.06);ctx.lineTo(w,ground+s*0.06);ctx.stroke();
   const enter=easeOut(clamp(t/0.22));
-  const ride=easeInOut(clamp((t-0.12)/0.88));
-  const sc=Math.min(1.15,Math.max(0.7,s/520));
-  const x=lerp(-s*0.08,w+s*0.55,ride);
-  const y=ground;
-  // sparkle trail
+  const mot=coachMotion(t,w,h);
+  const sc=mot.sc,x=mot.x,y=ground;
+  // sparkle trail behind the coach (left, since travel is right)
   for(let i=0;i<14;i++){
     const p=i/14;
     ctx.fillStyle=hexA('#ffe7a0',0.18*(1-p)*enter);
     ctx.beginPath();ctx.arc(x-p*s*0.35,y-8+Math.sin(t*8+i)*6,3+p*4,0,Math.PI*2);ctx.fill();
   }
-  drawHorse(ctx,x-s*0.26,y-s*0.015,sc*1.35,t*14,false);
-  drawHorse(ctx,x-s*0.38,y+s*0.02,sc*1.22,t*14+0.8,false);
+  // horses in front (to the right), facing right, pulling the coach
+  drawHorse(ctx,mot.hx1,y-s*0.015,sc*1.35,t*14,false);
+  drawHorse(ctx,mot.hx2,y+s*0.02,sc*1.22,t*14+0.8,false);
   drawCoach(ctx,x,y,sc,t);
   // four six-dice as floating lanterns behind the coach
   const pal={a:'#fff4c8',b:'#e0b25a',c:'#8a5a18',rim:'#4a2a08',pip:'#2a1408',shine:'rgba(255,255,255,.4)'};
@@ -7944,6 +7953,6 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  hookWrite();
  hookV211();
 
- window.__v230={SA,CA,KINDS,DUR,gameXpParts,gameXp,earned,fillDet,pubMine,unionFxb,recsFromWrite,onWrite,attach,play,stop,intake,awardBonus,titleOf};
+ window.__v230={SA,CA,KINDS,DUR,gameXpParts,gameXp,earned,fillDet,pubMine,unionFxb,recsFromWrite,onWrite,attach,play,stop,intake,awardBonus,titleOf,coachMotion};
 })();
 </script></body></html>
