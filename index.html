@@ -3598,7 +3598,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='2.35';
+const APP_VER='2.36';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -3850,7 +3850,7 @@ function pfAttrs(i){return ' data-pn="'+esc(i.n||'')+'"'+(i.u?' data-pu="'+esc(i
 function pfOfD(n){const x=pfOf(n);if(PF_PREV100){let m='';try{m=(typeof me!=='undefined'&&me)||''}catch(e){}if(n&&n===m)return Object.assign({},x,{l:PF_MAXLV})}return x}
 function pfNameHTML(n){const x=pfOfD(n);let av='',cc='';try{av=avOf(n)}catch(e){}try{cc=hsCC(((S&&S.cc)||{})[n])||''}catch(e){}
  return '<span class="pfn'+(x.l===PF_MAXLV?' l100':'')+'" role="button" tabindex="0"'+pfAttrs({n,u:x.u,l:x.l,av,cc,f:x.f})+'>'+esc(n)+pfChip(x.l)+'</span>'}
-function pfHsName(e){return '<span class="hsnn pfn'+(pfLvOk(e.lv)===PF_MAXLV?' l100':'')+'" role="button" tabindex="0"'+pfAttrs({n:e.n,u:e.u,l:e.lv,av:e.av,cc:e.cc})+'>'+e.n+pfChip(e.lv)+'</span>'}
+function pfHsName(e){return typeof hsPlyHTML==='function'?hsPlyHTML(e,{cls:'hsnn pfn',neutral:true,av:false,flag:false}):'<span class="hsnn pfn'+(pfLvOk(e.lv)===PF_MAXLV?' l100':'')+'" role="button" tabindex="0"'+pfAttrs({n:e.n,u:e.u,l:e.lv,av:e.av,cc:e.cc})+'>'+e.n+pfChip(e.lv)+'</span>'}
 function pfFromEl(el){return {n:el.dataset.pn||'',u:el.dataset.pu||'',l:+el.dataset.pl||0,av:el.dataset.pa||'',cc:el.dataset.pc||'',f:el.dataset.pf||''}}
 // ---- Google sign-in (Firebase GoogleAuthProvider) ----
 function gsiOn(){let k='';try{const q=new URLSearchParams(location.search).get('gsi');if(q==='1')localStorage.kgsi='1';else if(q==='0')localStorage.kgsi='0';k=localStorage.kgsi||''}catch(e){}return k==='1'||(GSI_CFG.on&&k!=='0')}
@@ -4042,7 +4042,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611232500';
+const APP_VERSION='202611232600';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -4527,6 +4527,46 @@ function hsMk(ms){try{const p=new Intl.DateTimeFormat('en-CA',{timeZone:HS_MZ,ye
 function hsMT(mk,k){return 'kosci-online/highscores/v3/'+mk+'/d'+k}
 /* ---- v4: separate retained boards per game mode (classic / train / hw); v2 + v3 topics are read-only legacy (migrated by entry.md) ---- */
 const HS_MODES=['classic','train','hw'],HS4='kosci-online/highscores/v4',HS3='kosci-online/highscores/v3',HS_BS=HS_MODES.flatMap(m=>[5,6].map(k=>[m,k]));
+/* 2.36: live profiles on Top 10 / lists + hide (and drop) unviewable high-score games */
+const HS_POOL=30,HS_SHOW=10;
+function hsGid(g){return String(g||'').replace(/[^A-Za-z0-9_-]/g,'_').slice(0,60)}
+let hsDropSet=new Set();
+try{(JSON.parse(localStorage.khsDrop||'[]')||[]).forEach(x=>{if(typeof x==='string'&&x)hsDropSet.add(x.slice(0,60))})}catch(e){}
+function hsDropSave(){try{localStorage.khsDrop=JSON.stringify([...hsDropSet].slice(-400))}catch(e){}}
+function hsDropAdd(ids){let n=0;[].concat(ids||[]).forEach(g=>{const id=hsGid(g);if(id&&!hsDropSet.has(id)){hsDropSet.add(id);n++}});if(n)hsDropSave();return n}
+function hsViewable(e){const id=hsGid(e&&e.g);if(!id)return false;if(hsDropSet.has(id))return false;try{if(typeof gsLoadAll==='function'&&gsLoadAll()[id])return true}catch(e){}
+ const st=typeof GDA!=='undefined'&&GDA[id]&&GDA[id].st;if(st==='full')return true;if(st==='none'||st==='sum')return false;return null}
+function hsPick(list){const yes=[],unk=[];(list||[]).forEach(e=>{const v=hsViewable(e);if(v===false)return;if(v===true)yes.push(e);else unk.push(e)});return yes.concat(unk).slice(0,HS_SHOW)}
+function hsPubList(all){return (all||[]).filter(e=>hsViewable(e)!==false).slice(0,HS_POOL)}
+function hsPrune(){const ids=[];try{(HS||[]).concat(MS||[]).forEach(e=>{if(hsViewable(e)===false)ids.push(e.g)})}catch(e){}
+ if(!ids.length)return 0;hsDropAdd(ids);try{HS=hsMerge(HS,MS||[])}catch(e){}try{MS=hsMerge((MS||[]).filter(e=>hsMk(e.d)===MK),[])}catch(e){}
+ try{hsSave()}catch(e){}try{hsPublish()}catch(e){}return ids.length}
+
+const PF_TTL=6e4,pfMem={};
+function pfMemGet(u){u=pfLoginOk(u);if(!u)return undefined;const x=pfMem[u.toLowerCase()];if(!x||Date.now()-x.t>PF_TTL)return undefined;return x.d}
+function pfMemPut(u,d){u=pfLoginOk(u);if(u)pfMem[u.toLowerCase()]={t:Date.now(),d}}
+function pfNameIndex(){const m={};const add=(n,u)=>{u=pfLoginOk(u);n=hsClean(n);if(!u||!n)return;const k=n.toLowerCase();(m[k]=m[k]||new Set()).add(u)};
+ try{(HS||[]).concat(MS||[]).forEach(e=>add(e.n,e.u))}catch(e){}
+ try{if(typeof S!=='undefined'&&S&&S.pf)for(const n in S.pf)add(n,S.pf[n]&&S.pf[n].u)}catch(e){}
+ const out={};for(const n in m)if(m[n].size===1)out[n]=[...m[n]][0];return out}
+function pfLoginOf(e){if(!e)return '';if(typeof e==='string'){const u=pfLoginOk(e);if(u)return u;return pfLoginOk(pfNameIndex()[hsClean(e).toLowerCase()]||'')}
+ const u=pfLoginOk(e.u);if(u)return u;const n=hsClean(e.n);return n?pfLoginOk(pfNameIndex()[n.toLowerCase()]||''):''}
+function pfApply(e){e=e||{};const snap={n:hsClean(e.n),av:avOk(e.av),cc:hsCC(e.cc),lv:pfLvOk(e.lv||e.l)||0,u:pfLoginOk(e.u),fr:pfFrOk(e.fr||e.f)};
+ const u=pfLoginOf(e);if(u)snap.u=u;const d=u?pfMemGet(u):undefined;if(!d)return snap;
+ return {n:hsClean(d.n)||snap.n,av:d.av||snap.av,cc:d.cc||snap.cc,lv:pfLvOk(d.lv)||snap.lv,u:pfLoginOk(d.l)||u,fr:d.fr||snap.fr}}
+function hsPlyHTML(e,opt){opt=opt||{};const p=pfApply(e);const n=p.n||'?';
+ const name='<span class="'+(opt.cls||'pfn')+(pfLvOk(p.lv)===PF_MAXLV?' l100':'')+'" role="button" tabindex="0"'+pfAttrs({n,u:p.u,l:p.lv,av:p.av,cc:p.cc,f:p.fr})+'>'+esc(n)+pfChip(p.lv)+'</span>';
+ return (opt.flag!==false?flagHTML(p.cc,!!opt.neutral):'')+(opt.av!==false?avHTML(p.av,opt.avCls||'avh'):'')+name}
+async function pfHydrate(list){const need=[];(list||[]).forEach(e=>{const u=pfLoginOf(e);if(u&&pfMemGet(u)===undefined&&!need.some(x=>x.toLowerCase()===u.toLowerCase()))need.push(u)});
+ if(!need.length)return false;
+ try{const pfx='projects/'+FBC.projectId+'/databases/(default)/documents/publicProfiles/';
+  const r=await fetch(FS_BASE+':batchGet?key='+FBC.apiKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({documents:need.map(u=>pfx+u.toLowerCase())})});
+  if(!r.ok)return false;const arr=await r.json(),got={};
+  if(Array.isArray(arr))arr.forEach(x=>{if(x&&x.found){const id=x.found.name.slice(x.found.name.lastIndexOf('/')+1);got[id.toLowerCase()]=pfPubSane(typeof fsDoc==='function'?fsDoc(x.found):x.found)}});
+  need.forEach(u=>pfMemPut(u,got[u.toLowerCase()]||null));return true}catch(e){return false}}
+window.__v236={HS_POOL,HS_SHOW,hsGid,hsDropAdd,hsDropSet,hsViewable,hsPick,hsPubList,hsPrune,pfApply,pfLoginOf,pfHydrate,pfMemGet,pfMemPut,hsPlyHTML};
+
+
 function hsT4(m,k){return HS4+'/all/'+m+'/d'+k}
 function hsMT4(mk,m,k){return HS4+'/'+mk+'/'+m+'/d'+k}
 function hsM(e){return e&&(e.md==='train'||e.md==='hw')?e.md:'classic'}
@@ -4561,14 +4601,14 @@ function hsMonthName(mk){const [y,m]=mk.split('-').map(Number);try{const n=new D
 function hsClean(n){return String(n||'').replace(/[<>&"'`\u0000-\u001f]/g,'').trim().slice(0,20)||'?'}
 function hsValid(e){return e&&typeof e.g==='string'&&e.g.length<40&&typeof e.s==='number'&&isFinite(e.s)&&Math.abs(e.s)<5000&&typeof e.d==='number'}
 function hsMd(m){return m==='train'||m==='hw'?m:undefined}
-function hsMerge(a,b){const m={};[...a,...b].filter(hsValid).forEach(e=>{const cc=hsCC(e.cc),md=hsMd(e.md),av=avOk(e.av),hu=pfLoginOk(e.u),hl=pfLvOk(e.lv);e={g:e.g.slice(0,40),n:hsClean(e.n),s:Math.round(e.s),d:e.d,k:e.k===5?5:6};if(cc)e.cc=cc;if(md)e.md=md;if(av)e.av=av;if(hu)e.u=hu;if(hl)e.lv=hl;const key=e.g+'|'+e.n,o=m[key];if(!o||e.s>o.s||(e.s===o.s&&(e.d<o.d||(e.d===o.d&&e.k<o.k)))){if(o&&o.cc&&!e.cc)e.cc=o.cc;if(o&&o.md&&!e.md)e.md=o.md;if(o&&o.av&&!e.av)e.av=o.av;if(o&&o.u&&!e.u)e.u=o.u;if(o&&o.lv&&!e.lv)e.lv=o.lv;m[key]=e}else{if(!o.cc&&e.cc)o.cc=e.cc;if(!o.md&&e.md)o.md=e.md;if(!o.av&&e.av)o.av=e.av;if(!o.u&&e.u)o.u=e.u;if(!o.lv&&e.lv)o.lv=e.lv}});
- const all=Object.values(m).sort((x,y)=>y.s-x.s||x.d-y.d);return HS_BS.flatMap(([m,k])=>all.filter(e=>e.k===k&&hsM(e)===m).slice(0,10))}
+function hsMerge(a,b){const m={};[...a,...b].filter(hsValid).filter(e=>!(typeof hsDropSet!=='undefined'&&hsDropSet.has(hsGid(e.g)))).forEach(e=>{const cc=hsCC(e.cc),md=hsMd(e.md),av=avOk(e.av),hu=pfLoginOk(e.u),hl=pfLvOk(e.lv);e={g:e.g.slice(0,40),n:hsClean(e.n),s:Math.round(e.s),d:e.d,k:e.k===5?5:6};if(cc)e.cc=cc;if(md)e.md=md;if(av)e.av=av;if(hu)e.u=hu;if(hl)e.lv=hl;const key=e.g+'|'+e.n,o=m[key];if(!o||e.s>o.s||(e.s===o.s&&(e.d<o.d||(e.d===o.d&&e.k<o.k)))){if(o&&o.cc&&!e.cc)e.cc=o.cc;if(o&&o.md&&!e.md)e.md=o.md;if(o&&o.av&&!e.av)e.av=o.av;if(o&&o.u&&!e.u)e.u=o.u;if(o&&o.lv&&!e.lv)e.lv=o.lv;m[key]=e}else{if(!o.cc&&e.cc)o.cc=e.cc;if(!o.md&&e.md)o.md=e.md;if(!o.av&&e.av)o.av=e.av;if(!o.u&&e.u)o.u=e.u;if(!o.lv&&e.lv)o.lv=e.lv}});
+ const all=Object.values(m).sort((x,y)=>y.s-x.s||x.d-y.d);return HS_BS.flatMap(([m,k])=>all.filter(e=>e.k===k&&hsM(e)===m&&!(typeof hsDropSet!=='undefined'&&hsDropSet.has(hsGid(e.g)))).slice(0,typeof HS_POOL==='number'?HS_POOL:30))}
 function hsBoard(k,m){m=m||'classic';return HS.filter(e=>e.k===k&&hsM(e)===m)}
 function msBoard(k,m){m=m||'classic';return MS.filter(e=>e.k===k&&hsM(e)===m&&hsMk(e.d)===MK)}
 try{MS=JSON.parse(localStorage.kms||'[]').filter(e=>hsMk(e.d)===MK);MS=hsMerge(MS,[])}catch(e){MS=[]}
-try{HS=hsMerge(JSON.parse(localStorage.khs||'[]'),[])}catch(e){HS=[]}try{MS=hsMerge(MS,HS.filter(e=>hsMk(e.d)===MK))}catch(e){}
+try{HS=hsMerge(JSON.parse(localStorage.khs||'[]'),[])}catch(e){HS=[]}try{MS=hsMerge(MS,HS.filter(e=>hsMk(e.d)===MK))}catch(e){}try{HS=hsMerge(HS,MS)}catch(e){}
 function hsSave(){try{setTimeout(achBoard,0)}catch(e){}try{MS=hsMerge(MS.filter(e=>hsMk(e.d)===MK),HS.filter(e=>hsMk(e.d)===MK))}catch(e){}localStorage.khs=JSON.stringify(HS);localStorage.kms=JSON.stringify(MS);if(!$('rov').hidden&&$('rov').dataset.hs)openHS()}
-let hsPubN=0,hsPubT=0;function hsPublish(){if(!hsCli||!hsCli.connected)return;const nw=Date.now();if(nw-hsPubT>60000){hsPubT=nw;hsPubN=0}if(++hsPubN>20)return;HS_BS.forEach(([m,k])=>{const id=m+k,b=hsBoard(k,m),j=JSON.stringify(b);if(GB[id]&&b.length&&j!==REM[id]){REM[id]=j;hsCli.publish(hsT4(m,k),j,{qos:1,retain:true})}const mb=msBoard(k,m),mj=JSON.stringify(mb);if(GBM[id]&&mb.length&&mj!==REMM[id]){REMM[id]=mj;hsCli.publish(hsMT4(MK,m,k),mj,{qos:1,retain:true})}})}
+let hsPubN=0,hsPubT=0;function hsPublish(){if(!hsCli||!hsCli.connected)return;const nw=Date.now();if(nw-hsPubT>60000){hsPubT=nw;hsPubN=0}if(++hsPubN>20)return;HS_BS.forEach(([m,k])=>{const id=m+k,b=typeof hsPubList==='function'?hsPubList(hsBoard(k,m)):hsBoard(k,m),j=JSON.stringify(b);if(GB[id]&&j!==REM[id]&&(b.length||_hsEmptyOk(REM[id]))){REM[id]=j;hsCli.publish(hsT4(m,k),j,{qos:1,retain:true})}const mb=typeof hsPubList==='function'?hsPubList(msBoard(k,m)):msBoard(k,m),mj=JSON.stringify(mb);if(GBM[id]&&mj!==REMM[id]&&(mb.length||_hsEmptyOk(REMM[id]))){REMM[id]=mj;hsCli.publish(hsMT4(MK,m,k),mj,{qos:1,retain:true})}})}function _hsEmptyOk(prev){try{const old=JSON.parse(prev||'[]');return Array.isArray(old)&&old.length&&old.every(e=>hsDropSet.has(hsGid(e.g)))}catch(e){return false}}
 function hsMonthCheck(){const nk=hsMk(hsNow());if(nk===MK)return false;const old=MK;MK=nk;MS=[];GOTM[5]=GOTM[6]=false;for(const x in REMM)delete REMM[x];for(const x in GBM)delete GBM[x];localStorage.kms='[]';
  if(hsCli&&hsCli.connected){try{hsCli.unsubscribe(hsMTs(old))}catch(e){}hsCli.subscribe(hsMTs(MK),{qos:1},()=>{const m0=MK;setTimeout(()=>{if(m0===MK){GOTM[5]=GOTM[6]=true;HS_BS.forEach(([m,k])=>{GBM[m+k]=true});hsSync()}},6000)})}
  if(!$('rov').hidden&&$('rov').dataset.hs)openHS();return true}
@@ -4666,17 +4706,17 @@ function gsFetch(gid,cb,stage){const id=gsId(gid),loc=gsLoadAll()[id];
 function gdMark(id,ok){document.querySelectorAll('#rov .hsdet[data-id="'+id+'"]').forEach(b=>{b.classList.toggle('gdna',!ok);b.title=b.getAttribute('aria-label')+(ok?'':' – '+t('gdNoDet'))})}
 function gdAvail(B,ov){const loc=gsLoadAll(),need=[];
  B.forEach((e,i)=>{const b=ov.querySelector('.hsdet[data-i="'+i+'"]');if(!b)return;const id=gsId(e.g);b.dataset.id=id;if(loc[id])GDA[id]={st:'full'};if(GDA[id])gdMark(id,GDA[id].st==='full');else if(!GDP[id]&&!need.includes(id))need.push(id)});
- if(!need.length)return;need.forEach(id=>GDP[id]=1);const rel=ids=>ids.forEach(id=>delete GDP[id]);const pfx='projects/'+FBC.projectId+'/databases/(default)/documents/games/',FS={};let fsOk=false;
+ if(!need.length){try{if(typeof hsPrune==='function')hsPrune()}catch(e){}return}need.forEach(id=>GDP[id]=1);const rel=ids=>ids.forEach(id=>delete GDP[id]);const pfx='projects/'+FBC.projectId+'/databases/(default)/documents/games/',FS={};let fsOk=false;
  const docs=[];need.forEach(id=>docs.push(pfx+id,pfx+id+'~d'));
  fetch(FS_BASE+':batchGet?key='+FBC.apiKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({documents:docs})}).then(r=>r.ok?r.json():null).catch(()=>null).then(arr=>{
   if(Array.isArray(arr)){fsOk=true;arr.forEach(x=>{if(x&&x.found){const nm=x.found.name.slice(x.found.name.lastIndexOf('/')+1);FS[nm]=fsDoc(x.found)}})}
   const rest=[];need.forEach(id=>{let s=null,sm=null;if(FS[id]){[s,sm]=gdFromRec(FS[id],id);if(!s&&FS[id+'~d'])s=gdFromRec(FS[id+'~d'],id+'~d')[0]}
    if(s){delete GDP[id];gsStore(s);gsFMark(id);GDA[id]={st:'full'};gdMark(id,true)}else rest.push([id,fsOk?(FS[id]?'sum':'none'):'?'])});
-  if(!rest.length)return;const c=hsCli;if(!c||!c.connected)return rel(rest.map(r=>r[0]));
+  if(!rest.length){try{if(typeof hsPrune==='function')hsPrune()}catch(e){}return}const c=hsCli;if(!c||!c.connected)return rel(rest.map(r=>r[0]));
   const tps=rest.map(([id])=>GS_T+id),got={},h=(t2,m)=>{if(!tps.includes(t2))return;let o=null;try{o=gsSan(JSON.parse(m.toString()))}catch(e){}if(o&&GS_T+gsId(o.g)===t2)got[t2]=o};
   c.on('message',h);c.subscribe(tps,{qos:1});
   setTimeout(()=>{try{c.removeListener('message',h);c.unsubscribe(tps)}catch(e){}rel(rest.map(r=>r[0]));rest.forEach(([id,f])=>{const o=got[GS_T+id];
-   if(o){gsStore(o);GDA[id]={st:'full'};gdMark(id,true);gsFsSave(o,true)}else if(!GDA[id]){GDA[id]={st:f==='sum'?'sum':'none'};gdMark(id,false)}})},3500)})}
+   if(o){gsStore(o);GDA[id]={st:'full'};gdMark(id,true);gsFsSave(o,true)}else if(!GDA[id]){GDA[id]={st:f==='sum'?'sum':f==='none'?'none':'?'};if(f==='sum'||f==='none')gdMark(id,false)}});try{if(typeof hsPrune==='function')hsPrune()}catch(e){}},3500)})}
 function hsSubmit(g){if(!g||g.phase!=='end')return;if(K.ndOf(g)===5)return;if(!g.players.length||g.players.some(p=>p.left||!K.done(p,K.ndOf(g))))return;
  const gid=g.gid||(ROOM+'-'+g.players.map(p=>p.name).join(','));if(hsDone[gid])return;hsDone[gid]=1;const d=hsNow();
  const ccm=(S&&S.cc)||{},add=g.players.map(p=>{const e={g:gid,n:hsClean(p.name),s:K.totals(p.sheet,K.ndOf(g)).total,d,k:K.ndOf(g)},cc=hsCC(ccm[p.name]),md=hsMd(g.mode),av=avOk(((S&&S.av)||{})[p.name]),pf=pfOf(p.name);if(cc)e.cc=cc;if(md)e.md=md;if(av)e.av=av;if(pf.u)e.u=pf.u;if(pf.l)e.lv=pf.l;return e});
@@ -4687,12 +4727,12 @@ function hsDate(ms){const x=new Date(ms);return String(x.getDate()).padStart(2,'
 function hsCup(c1,c2){return '<svg class="hcup" viewBox="0 0 24 24"><path d="M6 3h12v4a6 6 0 0 1-12 0z" fill="'+c1+'" stroke="'+c2+'" stroke-width="1.2"/><path d="M6 5H3.5a3 3 0 0 0 3 4M18 5h2.5a3 3 0 0 1-3 4" fill="none" stroke="'+c2+'" stroke-width="1.6"/><path d="M10.5 13h3l.5 4h-4z" fill="'+c2+'"/><rect x="7.5" y="17" width="9" height="3.5" rx="1" fill="'+c1+'" stroke="'+c2+'" stroke-width="1.2"/><path d="M9 5.5q1 3 3.5 3.5" stroke="#fff" stroke-opacity=".7" stroke-width="1.2" fill="none"/></svg>'}
 function openHS(){fltHide();const o=$('rov');o.dataset.hs=1;const md=[hsCup('#ffcf33','#a87800'),hsCup('#d9dde3','#7d8590'),hsCup('#d98b4a','#8a4f1d')];
  HSTAB=6;if(!HSM)HSM=G?K.modeOf(G):(localStorage.klastmode==='train'||localStorage.klastmode==='hw'?localStorage.klastmode:'classic');
- hsMonthCheck();const MON=HSSC==='m',B=MON?msBoard(HSTAB,HSM):hsBoard(HSTAB,HSM),MN=t('m_'+HSM);
+ hsMonthCheck();const MON=HSSC==='m',_pool=MON?msBoard(HSTAB,HSM):hsBoard(HSTAB,HSM),B=typeof hsPick==='function'?hsPick(_pool):_pool,MN=t('m_'+HSM);
  let h='<div class="rhead"><b>'+t('hsT')+'</b><button id="rclose">'+t('hsClose')+' ✕</button></div><div class="rbody hsb"><div class="hstabs hsmodes" role="tablist" aria-label="'+t('modeLbl')+'">'+HS_MODES.map(m=>'<button role="tab" data-m="'+m+'" class="hstab hsm'+(m===HSM?' on':'')+'" aria-selected="'+(m===HSM)+'"><span class="hmi">'+MI_[m]+'</span><span class="hmn">'+t('s_'+m)+'</span></button>').join('')+'</div><p class="hsmdesc"><b>'+MI_[HSM]+' '+MN+'</b> – '+t('d_'+HSM)+'</p>'
  +'<div class="hstabs hsscope" role="tablist">'+[['all','hsAll'],['m','hsMonth']].map(([c,l])=>'<button role="tab" data-s="'+c+'" class="hstab hsc'+(c===HSSC?' on':'')+'" aria-selected="'+(c===HSSC)+'">'+(c==='all'?'🏆 ':'📅 ')+t(l)+'</button>').join('')+'</div>'+(MON?'<p class="hsmon">📅 <b>'+hsMonthName(MK)+'</b> · '+t('hsReset')+'</p>':'')+'<p class="note">'+t(MON?'hsNoteM':'hsNote')+'</p>';
- if(!B.length)h+='<div class="hsempty"><div class="hei">'+MI_[HSM]+'</div><p>'+t(MON?'hsMEmpty2':'hsEmpty2',{m:MN})+'</p></div>';else h+='<table class="hst"><thead><tr><th>#</th><th>'+t('hsName')+'</th><th>'+t('hsDate')+'</th><th>'+t('hsScore')+'</th></tr></thead><tbody>'+B.map((e,i)=>'<tr class="r'+(i+1)+'"><td>'+(md[i]||i+1)+'</td><td><span class="hsn">'+flagHTML(e.cc,true)+avHTML(e.av,'avh')+pfHsName(e)+'</span></td><td>'+hsDate(e.d)+'</td><td><b>'+e.s+'</b><button class="hsdet" data-i="'+i+'" aria-label="'+t('gdBtn')+'" title="'+t('gdBtn')+'">📋</button></td></tr>').join('')+'</tbody></table>';
+ if(!B.length)h+='<div class="hsempty"><div class="hei">'+MI_[HSM]+'</div><p>'+t(MON?'hsMEmpty2':'hsEmpty2',{m:MN})+'</p></div>';else h+='<table class="hst"><thead><tr><th>#</th><th>'+t('hsName')+'</th><th>'+t('hsDate')+'</th><th>'+t('hsScore')+'</th></tr></thead><tbody>'+B.map((e,i)=>'<tr class="r'+(i+1)+'"><td>'+(md[i]||i+1)+'</td><td><span class="hsn">'+(typeof hsPlyHTML==='function'?hsPlyHTML(e,{cls:'hsnn pfn',neutral:true,avCls:'avh'}):flagHTML(e.cc,true)+avHTML(e.av,'avh')+pfHsName(e))+'</span></td><td>'+hsDate(e.d)+'</td><td><b>'+e.s+'</b><button class="hsdet" data-i="'+i+'" aria-label="'+t('gdBtn')+'" title="'+t('gdBtn')+'">📋</button></td></tr>').join('')+'</tbody></table>';
  o.innerHTML=h+'<p class="small hsst">'+(hsGot?'🟢 online':'🟠 offline – local')+'</p></div>';o.hidden=false;document.body.style.overflow='hidden';
- o.querySelectorAll('.hstab[data-k]').forEach(b=>b.onclick=()=>{HSTAB=+b.dataset.k;openHS()});o.querySelectorAll('.hstab[data-s]').forEach(b=>b.onclick=()=>{HSSC=b.dataset.s;openHS()});o.querySelectorAll('.hstab[data-m]').forEach(b=>b.onclick=()=>{HSM=b.dataset.m;openHS()});o.querySelectorAll('.hsdet').forEach(b=>b.onclick=()=>openGD(B[+b.dataset.i]));try{gdAvail(B,o)}catch(e){}$('rclose').onclick=()=>{delete o.dataset.hs;HSTAB=0;HSSC='all';HSM='';closeRules()}}
+ o.querySelectorAll('.hstab[data-k]').forEach(b=>b.onclick=()=>{HSTAB=+b.dataset.k;openHS()});o.querySelectorAll('.hstab[data-s]').forEach(b=>b.onclick=()=>{HSSC=b.dataset.s;openHS()});o.querySelectorAll('.hstab[data-m]').forEach(b=>b.onclick=()=>{HSM=b.dataset.m;openHS()});o.querySelectorAll('.hsdet').forEach(b=>b.onclick=()=>openGD(B[+b.dataset.i]));try{gdAvail(_pool,o)}catch(e){}try{pfHydrate(_pool).then(ok=>{if(ok&&$('rov')&&!$('rov').hidden&&$('rov').dataset.hs)openHS()})}catch(e){}$('rclose').onclick=()=>{delete o.dataset.hs;HSTAB=0;HSSC='all';HSM='';closeRules()}}
 function closeGD(){const o=$('gdv');o.hidden=true;o.innerHTML=''}
 function openGD(e){if(!e)return;const o=$('gdv');o.className='gt-'+sset();
  const shell=b=>'<div class="gdcard" role="dialog" aria-modal="true"><div class="gdhead"><b>📋 '+t('gdT')+'</b><button id="gdx" aria-label="close">✕</button></div><div class="gdbody">'+b+'</div></div>';
@@ -4704,14 +4744,14 @@ function gdSumHTML(e,sum,busy){const nd=(sum&&sum.k)||e.k||6,md=(sum&&sum.md)||h
  P.sort((a,b)=>b.s-a.s);const best=P[0].s,full=!!sum&&P.length>1;
  let h='<p class="gdmeta">📅 '+hsDate((sum&&sum.d)||e.d)+' · 🎲 '+nd+' '+t('gdDice')+(md?' · '+MI_[md]+' '+t('m_'+md):'')+(sum?' · 👥 '+P.length:'')+'</p>'
  +'<table class="gdt gdsumt"><thead><tr><th>#</th><th>'+t('hsName')+'</th><th>'+t('hsScore')+'</th></tr></thead><tbody>'
- +P.map((q,i)=>{const w=full&&q.s===best,me=q.n===e.n&&q.s===e.s,c=(w?' gwin':'')+(me?' ghs':'');return '<tr><td class="'+c+'">'+(i+1)+'</td><td class="'+c+'">'+(w?'👑 ':'')+(me?'⭐ ':'')+flagHTML(q.cc)+q.n+'</td><td class="'+c+'"><b>'+q.s+'</b></td></tr>'}).join('')+'</tbody></table>'
+ +P.map((q,i)=>{const w=full&&q.s===best,me=q.n===e.n&&q.s===e.s,c=(w?' gwin':'')+(me?' ghs':'');return '<tr><td class="'+c+'">'+(i+1)+'</td><td class="'+c+'">'+(w?'👑 ':'')+(me?'⭐ ':'')+(typeof hsPlyHTML==='function'?hsPlyHTML(q,{cls:'pfn',avCls:'avh'}):flagHTML(q.cc)+q.n)+'</td><td class="'+c+'"><b>'+q.s+'</b></td></tr>'}).join('')+'</tbody></table>'
  +'<p class="gdleg">'+(full?'👑 '+t('gdWin')+' · ':'')+'⭐ '+t('gdHs')+'</p>';
  h+=busy?'<p class="gdmsg gdbusy">⏳ '+t('gdSrch')+'</p>':'<div class="gdnote"><p><b>🗂️ '+t('gdNA')+'</b></p><p>'+t('gdNA2')+'</p></div>';return h}
 function gdHTML(x,e){const nd=x.k;let cats=K.catsFor(nd);const T=x.p.map(q=>K.totals(q.s,nd)),best=Math.max(...T.map(z=>z.total));
  const lgAll=T.every(z=>z.legacy);if(lgAll)cats=cats.filter(c=>!K.NEWC.includes(c[0]));
  const dbl={};x.m.forEach(m=>{if(m[3])dbl[m[0]+'|'+m[1]]=1});const hi=x.p.findIndex(q=>q.n===e.n);
  const cc=i=>(T[i].total===best?' gwin':'')+(i===hi?' ghs':'');
- let h='<p class="gdmeta">📅 '+hsDate(x.d||e.d)+' · 🎲 '+nd+' '+t('gdDice')+(x.md?' · '+MI_[x.md]+' '+t('m_'+x.md):'')+' · 👥 '+x.p.length+'</p><div class="gdscroll"><table class="gdt"><thead><tr><th>'+t('cat')+'</th>'+x.p.map((q,i)=>'<th class="'+cc(i)+'">'+(T[i].total===best?'👑 ':'')+(i===hi?'⭐ ':'')+flagHTML(q.cc)+q.n+'</th>').join('')+'</tr></thead><tbody>';
+ let h='<p class="gdmeta">📅 '+hsDate(x.d||e.d)+' · 🎲 '+nd+' '+t('gdDice')+(x.md?' · '+MI_[x.md]+' '+t('m_'+x.md):'')+' · 👥 '+x.p.length+'</p><div class="gdscroll"><table class="gdt"><thead><tr><th>'+t('cat')+'</th>'+x.p.map((q,i)=>'<th class="'+cc(i)+'">'+(T[i].total===best?'👑 ':'')+(i===hi?'⭐ ':'')+(typeof hsPlyHTML==='function'?hsPlyHTML(q,{cls:'pfn',avCls:'avh'}):flagHTML(q.cc)+q.n)+'</th>').join('')+'</tr></thead><tbody>';
  const row=(k,ci)=>'<tr><td>'+catName(k)+'</td>'+x.p.map((q,i)=>{const v=q.s[k];let c='',txt='';
    if(v===undefined)txt='';else if(v==='x'){c='gx';txt='✕'}else if(ci<6&&v===0){c='gz';txt='x'}else{txt=v;c=v<0?'gneg':''}
    if((k==='poker'||k==='lord')&&typeof v==='number')c+=' ggold';
@@ -5036,9 +5076,9 @@ function showWin(g){if(!g||g.phase!=='end'||!g.players.length||g.players.some(p=
  let conf='';if(animOn)for(let i=0;i<60;i++){const em=i%5===0;conf+='<i class="'+(em?'em':'')+'" style="left:'+(Math.random()*100).toFixed(1)+'%;--d:'+(Math.random()*2.5).toFixed(2)+'s;--t:'+(2.6+Math.random()*2).toFixed(2)+'s;--r:'+(Math.random()*720-360).toFixed(0)+'deg;'+(em?'':'background:'+C[i%C.length])+'">'+(em?E[i%E.length]:'')+'</i>'}
  const dice=[6,5,6,5,6].map((v,i)=>dieHTML(myCol||'white',v,(animOn?'alive ':'')+'wdie',i)).join('');
  let rank=0,prev=null;const md=['🥇','🥈','🥉'];
- const rows=r.map((x,i)=>{if(x.s!==prev){rank=i;prev=x.s}return '<tr class="'+(x.s===top?'wtop':'')+'"><td>'+(md[rank]||rank+1)+'</td><td>'+avHTML(x.a,'avw')+x.n+'</td><td><b>'+x.s+'</b> '+t('pts')+'</td><td class="wxp" data-xp="'+esc(x.rn)+'">'+(g.xpr&&g.xpr[x.rn]!=null?('+'+g.xpr[x.rn]+' XP'):t('xpWait'))+'</td></tr>'}).join('');
+ const rows=r.map((x,i)=>{if(x.s!==prev){rank=i;prev=x.s}return '<tr class="'+(x.s===top?'wtop':'')+'"><td>'+(md[rank]||rank+1)+'</td><td>'+avHTML(x.a,'avw')+(typeof pfNameHTML==='function'?pfNameHTML(x.rn):x.n)+'</td><td><b>'+x.s+'</b> '+t('pts')+'</td><td class="wxp" data-xp="'+esc(x.rn)+'">'+(g.xpr&&g.xpr[x.rn]!=null?('+'+g.xpr[x.rn]+' XP'):t('xpWait'))+'</td></tr>'}).join('');
  const o=$('win');o.className=(animOn?'anim ':'')+'wt-'+th;
- o.innerHTML='<div class="wconf">'+conf+'</div><div class="wcard"><button class="wx" id="wx" aria-label="close">✕</button><div class="wdice">'+dice+'</div><h2 class="wtitle">'+(w.length>1?t('winTie')+' '+t('winTs'):t('winT'))+'</h2><div class="wname">'+w.map(x=>avHTML(x.a,'avW')+x.n).join(' &amp; ')+'</div><div class="wpts">'+top+' '+t('pts')+'</div>'+(inHS?'<div class="whs">'+t('winHS')+'</div>':'')+'<h3>'+t('winRank')+'</h3><table class="wtab">'+rows+'</table><div class="wbtns">'+(evAndrzOn()?'<button id="wfort" type="button">'+t('evBtn')+'</button>':'')+(isHost?'<button id="wnew">'+t('newGame')+'</button>':'')+'<button id="wmenu" class="alt">'+t('menu')+'</button></div>'+(isTWA()?'':'<a class="coffee wcof" href="https://revolut.me/solariis" target="_blank" rel="noopener noreferrer">'+t('coffee')+'</a>')+'</div>';
+ o.innerHTML='<div class="wconf">'+conf+'</div><div class="wcard"><button class="wx" id="wx" aria-label="close">✕</button><div class="wdice">'+dice+'</div><h2 class="wtitle">'+(w.length>1?t('winTie')+' '+t('winTs'):t('winT'))+'</h2><div class="wname">'+w.map(x=>avHTML(x.a,'avW')+(typeof pfNameHTML==='function'?pfNameHTML(x.rn):x.n)).join(' &amp; ')+'</div><div class="wpts">'+top+' '+t('pts')+'</div>'+(inHS?'<div class="whs">'+t('winHS')+'</div>':'')+'<h3>'+t('winRank')+'</h3><table class="wtab">'+rows+'</table><div class="wbtns">'+(evAndrzOn()?'<button id="wfort" type="button">'+t('evBtn')+'</button>':'')+(isHost?'<button id="wnew">'+t('newGame')+'</button>':'')+'<button id="wmenu" class="alt">'+t('menu')+'</button></div>'+(isTWA()?'':'<a class="coffee wcof" href="https://revolut.me/solariis" target="_blank" rel="noopener noreferrer">'+t('coffee')+'</a>')+'</div>';
  o.hidden=false;playS('end','poker');const cl=()=>{o.hidden=true;o.innerHTML=''};const after=()=>{if(evAndrzOn()&&!sessionStorage['kfort_'+gid])evShowFort(evCtxFromGame(g),gid)};
  $('wx').onclick=()=>{cl();after()};if($('wnew'))$('wnew').onclick=()=>{cl();send({a:'new'})};$('wmenu').onclick=()=>{cl();leaveToMenu()};if($('wfort'))$('wfort').onclick=()=>{sessionStorage['kfort_'+gid]=1;evShowFort(evCtxFromGame(g),gid)}}
 window.__win=showWin;window.KHS={cc:()=>myCC,setNow:f=>{hsNow=f;return hsMonthCheck()},month:()=>MK,monthList:()=>MS,mtopic:hsMT,gotm:()=>GOTM,submit:g=>hsSubmit(g),list:()=>HS,online:()=>hsGot};
@@ -5588,7 +5628,7 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  function btn(){const hb=$('hsbtn');if(!hb)return;let b=$('szbtn');if(!b){b=document.createElement('button');b.id='szbtn';b.className='alt abtn';b.innerHTML='<span class="ai">🎖️</span><span class="szl"></span><small class="szcd"></small>';hb.after(b);b.onclick=()=>szOpen()}
   b.querySelector('.szl').textContent=zt('btn');b.querySelector('.szcd').textContent=szLeft();b.setAttribute('aria-label',zt('btn')+' – '+zt('ends',{t:szLeft()}))}
  let VIEW=null;
- function rowHTML(e){const md=['🥇','🥈','🥉'][e.r-1]||e.r+'.';return '<li class="'+(e.me?'me ':'')+(e.r<=3?'top':'')+'"><span class="szr">'+md+'</span><span class="szn">'+'<b>'+esc(e.n)+'</b>'+(e.me?' <small>('+esc(zt('you'))+')</small>':'')+'</span>'+pfChip(e.l)+'<span class="szs">'+e.s+' '+esc(zt('xp'))+'</span></li>'}
+ function rowHTML(e){const p=typeof pfApply==='function'?pfApply({n:e.n,u:e.u,lv:e.l,l:e.l,av:e.av,cc:e.cc,fr:e.f}):{n:e.n,lv:e.l};const md=['🥇','🥈','🥉'][e.r-1]||e.r+'.';return '<li class="'+(e.me?'me ':'')+(e.r<=3?'top':'')+'"><span class="szr">'+md+'</span><span class="szn">'+'<b>'+esc(p.n)+'</b>'+(e.me?' <small>('+esc(zt('you'))+')</small>':'')+'</span>'+pfChip(p.lv||e.l)+'<span class="szs">'+e.s+' '+esc(zt('xp'))+'</span></li>'}
  window.szHTML=function(M){M=M||mk();const cur=M===mk(),L=szBoard(M),me_=L.find(e=>e.me),on=(()=>{try{return hsCli&&hsCli.connected}catch(e){return false}})();
   let w=[];try{w=JSON.parse(LS('kszw')||'[]')}catch(e){}if(!Array.isArray(w))w=[];
   const ms=[mk()];for(let i=0;i<6;i++)ms.push(prevMk(ms[ms.length-1]));
@@ -5603,7 +5643,7 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
   return h+'<p class="pfnote">'+esc(zt('how'))+'</p></div>'};
  window.szOpen=function(M){M=M||mk();VIEW=M;sub(M);let o=$('szov');if(!o){o=document.createElement('div');o.id='szov';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');document.body.appendChild(o);
    o.addEventListener('click',e=>{if(e.target===o)szClose();const b=e.target.closest&&e.target.closest('[data-m]');if(b&&o.contains(b))szOpen(b.dataset.m);if(e.target.closest&&e.target.closest('.szx'))szClose()});o.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();szClose()}})}
-  o.className=(typeof animOn!=='undefined'&&animOn)?'anim':'';o.setAttribute('aria-label',zt('btn'));o.innerHTML=szHTML(M);o.hidden=false;try{(o.querySelector('[data-m].on')||o.querySelector('.szx')).focus()}catch(e){}return o};
+  o.className=(typeof animOn!=='undefined'&&animOn)?'anim':'';o.setAttribute('aria-label',zt('btn'));o.innerHTML=szHTML(M);o.hidden=false;try{pfHydrate(typeof szBoard==='function'?szBoard(M):[]).then(ok=>{if(ok&&VIEW===M){const f=document.activeElement&&document.activeElement.dataset?document.activeElement.dataset.m:null;o.innerHTML=szHTML(M);if(f)try{o.querySelector('[data-m="'+f+'"]').focus()}catch(e){}}})}catch(e){}try{(o.querySelector('[data-m].on')||o.querySelector('.szx')).focus()}catch(e){}return o};
  window.szClose=function(){const o=$('szov');if(o){o.hidden=true;o.innerHTML=''}VIEW=null;try{$('szbtn').focus()}catch(e){}};
  let rT=0;function refresh(){if(!VIEW)return;clearTimeout(rT);rT=setTimeout(()=>{const o=$('szov');if(o&&!o.hidden&&VIEW){const f=document.activeElement&&document.activeElement.dataset?document.activeElement.dataset.m:null;o.innerHTML=szHTML(VIEW);if(f)try{o.querySelector('[data-m="'+f+'"]').focus()}catch(e){}}},120)}
  if(typeof applyLang2==='function'){const _al=applyLang2;applyLang2=function(){const r=_al.apply(this,arguments);try{btn();if(VIEW)refresh()}catch(e){}return r}}
