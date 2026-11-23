@@ -3440,6 +3440,27 @@ body:not(.noanim) #tab .opt.opt-gold{
 }
 
 </style>
+<style id="v230css">
+#fxa{position:fixed;inset:0;z-index:95;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;pointer-events:auto;background:transparent}
+#fxa[hidden]{display:none!important}
+#fxa canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:block}
+#fxa .fxapanel{position:relative;z-index:2;text-align:center;padding:0 22px 10vh;color:#fff;pointer-events:none;text-shadow:0 2px 14px rgba(0,0,0,.7),0 0 28px rgba(0,0,0,.45)}
+#fxa .fxat{display:block;font:800 26px/1.25 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.02em;filter:drop-shadow(0 0 16px rgba(255,210,80,.55))}
+#fxa.prymus .fxat{color:#ffe9a8;filter:drop-shadow(0 0 18px rgba(255,200,60,.8)) drop-shadow(0 0 36px rgba(255,160,0,.4))}
+#fxa.clean .fxat{color:#e8fff4;filter:drop-shadow(0 0 16px rgba(80,230,180,.7)) drop-shadow(0 0 28px rgba(40,180,140,.4))}
+#fxa.ltrain .fxat{color:#fff4d6;filter:drop-shadow(0 0 16px rgba(255,180,60,.65))}
+#fxa.coach .fxat{color:#ffe7c2;filter:drop-shadow(0 0 18px rgba(255,210,140,.7)) drop-shadow(0 0 32px rgba(180,140,255,.35))}
+#fxa .fxaxp{display:block;margin-top:8px;font:800 34px/1 system-ui,sans-serif;letter-spacing:.04em}
+#fxa.prymus .fxaxp{color:#ffe27a}
+#fxa.clean .fxaxp{color:#b8ffe0}
+#fxa .fxaskip{display:block;margin-top:14px;font:500 11px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;opacity:.68}
+@media(max-width:600px){
+ #fxa .fxat{font-size:22px}
+ #fxa .fxaxp{font-size:28px}
+ #fxa .fxapanel{padding-bottom:8vh}
+}
+
+</style>
 </head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -3577,7 +3598,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='2.25';
+const APP_VER='2.30';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -3666,9 +3687,9 @@ function pfRank(L){let i=0;PF_RKL.forEach((l,j)=>{if(L>=l)i=j});return i}
 function pfRankName(L){return (pt('rk')||[])[pfRank(L)]||''}
 // lifetime counters -> XP. c:{g,w,p2,pts,pe,dd,ach:[ids],twf,tws}
 const PF_REFXP=150;
-const PF_FRL=1000,PF_FRP=100;
+const PF_FRL=1000,PF_FRP=100,PF_SA=1000,PF_CA=500;
 function pfXP(c){const n=x=>Math.max(0,Math.floor(+x||0));const ach=(c.ach||[]).reduce((s,id)=>s+(PF_HARD.includes(id)?100:50),0);
- return 25*n(c.g)+40*n(c.w)+15*n(c.p2)+Math.floor((n(c.pts)+n(c.pe))/20)+30*n(c.dd)+ach+60*n(c.twf)+20*n(c.tws)+PF_REFXP*n(c.rf)+PF_FRL*n(c.fl)+PF_FRP*n(c.fp)}
+ return 25*n(c.g)+40*n(c.w)+15*n(c.p2)+Math.floor((n(c.pts)+n(c.pe))/20)+30*n(c.dd)+ach+60*n(c.twf)+20*n(c.tws)+PF_REFXP*n(c.rf)+PF_FRL*n(c.fl)+PF_FRP*n(c.fp)+PF_SA*n(c.sa)+PF_CA*n(c.ca)}
 // achievement ids, readable before the main script has initialised ACV (boot-time theme check)
 function pfAchU(){try{if(typeof ACV!=='undefined'&&ACV&&ACV.u)return ACV.u}catch(e){}try{const a=JSON.parse(localStorage.kach||'null');return a&&a.u&&typeof a.u==='object'?a.u:{}}catch(e){return {}}}
 function pfLvNow(){try{return pfLevel(pxXP()).lv}catch(e){return +localStorage.kpxlv||1}}
@@ -3686,10 +3707,10 @@ function pfDispLv(lv){return PF_PREV100?PF_MAXLV:lv}
 function pfLvOk(l){l=Math.floor(+l);return l>=1&&l<=PF_MAXLV?l:0}
 // ---- detailed stats (localStorage kpx, synced as users/<uid>.px) ----
 const PF_CATS=['u1','u2','u3','u4','u5','u6','para','dpary','tpary','trojka','dtrojki','mstrit','dstrit','lstrit','general','full','kareta','poker','lord','parz','nparz','szansa'];
-function pxBlank(){return {v:1,c:{pts:0,gp:0,pe:0,bsc:0,p2:0,mp:0,sb:0,cb:0,dd:0,ld:-1,tm:0,rf:0,fl:0,fp:0,ct:{},cp:{}},r:[],lv:0,eq:{fr:'',ti:''},mig:0,gd:[],fk:[]}}
+function pxBlank(){return {v:1,c:{pts:0,gp:0,pe:0,bsc:0,p2:0,mp:0,sb:0,cb:0,dd:0,ld:-1,tm:0,rf:0,fl:0,fp:0,sa:0,ca:0,ct:{},cp:{}},r:[],lv:0,eq:{fr:'',ti:''},mig:0,gd:[],fk:[]}}
 function pxSane(o){const b=pxBlank();if(!o||typeof o!=='object')return b;const n=(x,m)=>typeof x==='number'&&isFinite(x)&&x>=0?Math.min(Math.floor(x),m):0;const c=o.c&&typeof o.c==='object'?o.c:{};
  b.c.gp=n(c.gp,1e6);b.c.pts=Math.min(n(c.pts,2e9),b.c.gp*2000);b.c.pe=n(c.pe,1e6*250);b.c.bsc=n(c.bsc,2000);b.c.mp=Math.min(n(c.mp,1e6),b.c.gp);b.c.p2=Math.min(n(c.p2,1e6),b.c.mp);
- b.c.sb=Math.min(n(c.sb,1e6),b.c.gp);b.c.cb=Math.min(n(c.cb,1e6),b.c.gp);b.c.dd=n(c.dd,99999);b.c.ld=typeof c.ld==='number'&&isFinite(c.ld)?Math.max(-1,Math.min(Math.floor(c.ld),99999)):-1;b.c.tm=n(c.tm,1e9);b.c.rf=n(c.rf,100000);b.c.fl=Math.min(n(c.fl,1e5),Math.max(b.c.gp,1)*30);b.c.fp=Math.min(n(c.fp,1e5),Math.max(b.c.gp,1)*30);
+ b.c.sb=Math.min(n(c.sb,1e6),b.c.gp);b.c.cb=Math.min(n(c.cb,1e6),b.c.gp);b.c.dd=n(c.dd,99999);b.c.ld=typeof c.ld==='number'&&isFinite(c.ld)?Math.max(-1,Math.min(Math.floor(c.ld),99999)):-1;b.c.tm=n(c.tm,1e9);b.c.rf=n(c.rf,100000);b.c.fl=Math.min(n(c.fl,1e5),Math.max(b.c.gp,1)*30);b.c.fp=Math.min(n(c.fp,1e5),Math.max(b.c.gp,1)*30);b.c.sa=Math.min(n(c.sa,1e5),Math.max(b.c.gp,1));b.c.ca=Math.min(n(c.ca,1e5),Math.max(b.c.gp,1));
  ['ct','cp'].forEach(f=>{const s=c[f]&&typeof c[f]==='object'?c[f]:{};PF_CATS.forEach(k=>{const v=n(s[k],f==='ct'?1e6:2e9);if(v)b.c[f][k]=f==='ct'?Math.min(v,b.c.gp):Math.min(v,b.c.gp*600)})});
  b.r=(Array.isArray(o.r)?o.r:[]).filter(e=>e&&typeof e==='object'&&typeof e.s==='number'&&isFinite(e.s)&&Math.abs(e.s)<3000).slice(-20).map(e=>({d:n(e.d,99999),s:Math.round(e.s),o:e.o===1?1:e.o===2?2:0,k:e.k===5?5:6,m:e.m==='train'||e.m==='hw'?e.m:'classic'}));
  b.lv=pfLvOk(o.lv)||0;const eq=o.eq&&typeof o.eq==='object'?o.eq:{};b.eq.fr=pfFrOk(eq.fr);b.eq.ti=PF_TI.includes(eq.ti)||/^rk([0-9]|1[0-2])$/.test(eq.ti||'')?eq.ti:'';b.mig=o.mig?1:0;
@@ -3699,7 +3720,7 @@ function pxSave(){try{localStorage.kpx=JSON.stringify(PX)}catch(e){}}
 function pxPack(){const o=JSON.parse(JSON.stringify(PX));delete o.gd;return o}
 function pxTw(){let f=0,s=0,hi=0;try{const S_=TWD.s||{};for(const i in S_){const v=+S_[i]||0;if(v>0){f++;s+=Math.min(3,v);hi=Math.max(hi,+i+1)}}}catch(e){}return {f,s,hi}}
 function pxAchIds(){const u=pfAchU();return Object.keys(u).filter(id=>typeof AL!=='undefined'?(AL.concat(ALX).some(x=>x[0]===id)):true)}
-function pxCounters(){let st={g:0,w:0,bs:0};try{st=ACV.st}catch(e){}const tw=pxTw();return {g:st.g,w:st.w,p2:PX.c.p2,pts:PX.c.pts,pe:PX.c.pe,dd:Math.max(PX.c.dd,st.bs||0),ach:pxAchIds(),twf:tw.f,tws:tw.s,rf:PX.c.rf||0,fl:PX.c.fl||0,fp:PX.c.fp||0}}
+function pxCounters(){let st={g:0,w:0,bs:0};try{st=ACV.st}catch(e){}const tw=pxTw();return {g:st.g,w:st.w,p2:PX.c.p2,pts:PX.c.pts,pe:PX.c.pe,dd:Math.max(PX.c.dd,st.bs||0),ach:pxAchIds(),twf:tw.f,tws:tw.s,rf:PX.c.rf||0,fl:PX.c.fl||0,fp:PX.c.fp||0,sa:PX.c.sa||0,ca:PX.c.ca||0}}
 function pxXP(){return pfXP(pxCounters())}
 function pxMyNames(){const s=new Set();try{[localStorage.kname,localStorage.kpname,localStorage.kacc,typeof me!=='undefined'?me:'',typeof PN!=='undefined'?PN:''].forEach(x=>{x=String(x||'').trim().toLowerCase();if(x)s.add(x)})}catch(e){}return s}
 // record one finished game sheet into PX (pure-ish: g = game object, mi = my index)
@@ -3720,7 +3741,7 @@ function pxMigrate(){if(PX.mig)return false;const names=pxMyNames();let n=0;
  PX.c.pe=Math.max(0,st.g-PX.c.gp)*250;PX.c.dd=Math.max(PX.c.dd,st.bs||0,st.g>0?1:0);if(st.ls>=0)PX.c.ld=Math.max(PX.c.ld,st.ls);
  PX.mig=1;PX.lv=pfLevel(pxXP()).lv;if(st.g>0||pxAchIds().length>0)try{localStorage.kpxintro='1'}catch(e){}pxSave();return true}
 function pxMerge(o){const b=pxSane(o),a=PX.c,s=b.c;let ch=false;const mx=k=>{if(s[k]>a[k]){a[k]=s[k];ch=true}};
- ['pts','gp','pe','bsc','p2','mp','sb','cb','dd','ld','tm','rf','fl','fp'].forEach(mx);['ct','cp'].forEach(f=>{for(const k in s[f])if((s[f][k]||0)>(a[f][k]||0)){a[f][k]=s[f][k];ch=true}});
+ ['pts','gp','pe','bsc','p2','mp','sb','cb','dd','ld','tm','rf','fl','fp','sa','ca'].forEach(mx);['ct','cp'].forEach(f=>{for(const k in s[f])if((s[f][k]||0)>(a[f][k]||0)){a[f][k]=s[f][k];ch=true}});
  // after a merge the estimate for untracked old games must not double count tracked ones
  try{const g=ACV.st.g;a.pe=Math.min(a.pe,Math.max(0,g-a.gp)*250)}catch(e){}
  const key=e=>e.d+'|'+e.s+'|'+e.k+'|'+e.o,seen=new Set(PX.r.map(key));b.r.forEach(e=>{if(!seen.has(key(e))){PX.r.push(e);seen.add(key(e));ch=true}});PX.r.sort((x,y)=>x.d-y.d);PX.r=PX.r.slice(-20);
@@ -3936,15 +3957,15 @@ function pfThCards(){const N=I18N[LANG].thNames||{};return XTH.map(k=>{const ok=
 const $=id=>document.getElementById(id);const K=window.Kosci;
 let isHost=false,me='',lobby=[],G=null,lastDice='';let TW=null;
 
-const I18N={pl:{twBtn:'🗼 Wieża – tryb solo',twTitle:'🗼 Wieża',twIntro:'Wspinaj się piętro po piętrze. Każde piętro to inna odmiana gry z celem punktowym – osiągnij go, aby wejść wyżej.',twFloor:'Piętro {n}',twTarget:'Cel',twBest:'Rekord',twPlay:'Graj ▶',twCont:'Kontynuuj ▶',twLocked:'Zablokowane',twStart:'Start ▶',twBack:'← Mapa wieży',twNext:'Następne piętro ▶',twRetry:'🔁 Spróbuj ponownie',twMenu:'🏠 Menu',twPass:'Cel osiągnięty!',twFail:'Zabrakło {n} pkt do celu',twTop:'👑 Zdobyłeś wieżę!',twScore:'Wynik',twProj:'prognoza',twPen:'Kary',twStars:'★ cel · ★★ cel +10% · ★★★ cel +25%',twAuto:'⏱ Czas minął – ruch automatyczny',twMe:'Gracz',twNoMp:'Najpierw wyjdź z pokoju gry.',twRules:'Zasady piętra',twD5:'5 kości',twD6:'6 kości',twR:'{r} rzuty w turze (zamiast 3)',twNx:'Bez dodatkowych rzutów',twLk:'Zablokowane pola 🔒: {c}',twXp:'Każde skreślenie: −{p} pkt',twCu:'Klątwa: {c} musi mieć min. {m} pkt, inaczej −{p}',twSr:'Szkoła musi być ≥ 0, inaczej −{p}',twTl:'{s} s na turę – potem ruch automatyczny',twCleared:'zaliczone',twSkip:'⏭️ Dalej – następne piętro',twSkipEnd:'🏁 Zakończ wieżę',twSkipQ:'Zakończyć piętro z wynikiem {s}?',twSkipQS:'Gwiazdki liczą się od obecnego wyniku ({st}). Dokończenie gry może dać ich więcej.',twSkipDo:'Dalej',twSkipT:'🎯 Cel osiągnięty! Możesz przejść dalej.',twSkipSaved:'Zapisano: {st} · {s} pkt',twSkipNeed:'⏭️ Dalej – potrzeba {n} (teraz {c})',twSkipEndNeed:'🏁 Zakończ wieżę – potrzeba {n} (teraz {c})',twSkipSch:'⏭️ Dalej – 📚 Szkoła musi być ≥ 0 (teraz {s})',twSkipEndSch:'🏁 Zakończ wieżę – 📚 Szkoła musi być ≥ 0 (teraz {s})',twWhySchL:'📚 Szkoła (Jedynki–Szóstki) wynosi teraz {s}. Szkoła jest ważna – dopóki nie będzie ≥ 0, nie przejdziesz dalej, niezależnie od wyniku.',twCounts:'liczy się',twWhyT:'Do przejścia dalej liczy się wynik „teraz”: {c} z {n} (brakuje {d}).',twWhySch:'Szkoła jest poniżej 0 i niedokończona – teraz liczy się jak koniec gry: −50',twWhySr:'Wymóg Szkoły ≥ 0: −{p}',twWhyCu:'Klątwa – {c} bez min. {m} pkt: −{p}',twWhyXp:'Skreślenia: −{p}',twWhyBon:'Bonusy (czysta gra, Prymus) liczą się dopiero po wypełnieniu tabeli.',twN:['Rozgrzewka','Zadanie domowe','Ekspres','Dwa rzuty','Szybka ręka','Klątwa Karety','Zamknięte drzwi','Wyścig z czasem','Bez asekuracji','Szczyt wieży'],resume:'↩️ Wróć do gry (pokój {c})',resumeS:'Twoja ostatnia gra wciąż trwa – wrócisz na swoje miejsce.',hbRoom:'Pokój',hbCopy:'Kopiuj link do pokoju',hbShare:'Udostępnij link',hbCopied:'Link do pokoju skopiowany',hbShTxt:'Zagraj ze mną w Kości online! Kod pokoju: {c}',waitP:'Czekam na gracza {n}…',waitPS:'rozłączony – może wrócić do tej gry',skipP:'Pomiń turę',skipQ:'Pominąć gracza {n}?',skipQS:'Jego tury będą pomijane, dopóki nie wróci do gry.',skipDo:'Pomiń',offMv:'Brak połączenia – łączę ponownie…',avLbl:'Awatar:',avHint:'(opcjonalnie – kliknij ponownie, by usunąć)',title:'Kości online',tagline:'Rzuć kośćmi ze znajomymi',ace:'🎓 Prymus (Bonus)',aceT:'🎓 Prymus! +50',yourName:'Twoje imię:',create:'Nowa gra',orJoin:'lub dołącz do gry kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt – tylko w Figurach).',newGame:'🔁 Nowa gra – ci sami gracze',rules:'Zasady',bonus:'Bonus za czystą grę',gdT:'Szczegóły gry',gdNA:'Pełna tabela tej gry nie zachowała się.',gdNA2:'Starsze gry (do wersji 2.00) miały szczegóły zapisane tylko tymczasowo na publicznym serwerze i część z nich wygasła. Od wersji 2.01 szczegóły każdej ukończonej gry są zapisywane na stałe.',gdSrch:'Szukam pełnej tabeli na zapasowych serwerach…',gdNoDet:'dostępne tylko podsumowanie',gdLoad:'Wczytywanie…',gdDice:'kości',gdWin:'zwycięzca',gdHs:'wynik z rekordu',gdLog:'Przebieg gry (ruchy po kolei)',gdBtn:'Szczegóły gry',gdX2:'×2 = zapis w 1. rzucie',ndLbl:'Liczba kości:',modeLbl:'Tryb gry:',modeIn:'Tryb: {m}',m_classic:'Klasyk',m_train:'Pociąg osobowy',m_hw:'Najpierw lekcje, potem zabawa',s_classic:'Klasyk',s_train:'Pociąg',s_hw:'Lekcje',d_classic:'Normalne zasady – dowolne pole w dowolnej chwili.',d_train:'Staje na każdej stacji: pola od góry do dołu, po kolei.',d_hw:'Pierwsze 3 rundy tylko w Szkole, potem dowolnie.',mNow:'Teraz: {c}',mHw:'Najpierw Szkoła (jeszcze {n})',mRound:'Runda {r}/3 📚',nd5Note:'🎲 Wariant 5 kości: gramy 5 kośćmi, bez rubryk: {r}. Pozostałe zasady bez zmian (Poker = 5 jednakowych).',nd5Cur:'Ta gra: 5 kości.',frbL:'{n}: Lord w pierwszym rzucie! +{x} XP',frbP:'{n}: Poker w pierwszym rzucie! +{x} XP',winXP:'XP',xpWait:'…',nd5Gone:'Wariant na 5 kości został usunięty. Do tej sali nie można już dołączyć.',fraK:'{n}: Kareta z szóstek z ręki!',fraP:'{n}: Poker z szóstek z ręki!',fraF:'{n}: Full z piątek i szóstek z ręki!',fraTap:'Dotknij, aby pominąć',iBtn:'Zainstaluj aplikację',iBtnS:'Instaluj',iBan:'Kości jako aplikacja',iT:'📲 Zainstaluj aplikację',iIos1:'Stuknij <b>Udostępnij</b> <span class="ik">⬆️</span> na pasku Safari',iIos2:'Przewiń i wybierz <b>Do ekranu początkowego</b> <span class="ik">➕</span>',iIos3:'Stuknij <b>Dodaj</b> – ikona Kości pojawi się na ekranie 🎲',iSaf:'Ta przeglądarka nie umie zainstalować aplikacji. Skopiuj link i otwórz go w <b>Safari</b>, potem: Udostępnij ⬆️ → Do ekranu początkowego.',iChr:'Otwórz link w przeglądarce <b>Chrome</b> (menu ⋮ → „Otwórz w Chrome” albo skopiuj link), potem stuknij „Zainstaluj aplikację”.',iAnd:'W menu przeglądarki <span class="ik">⋮</span> wybierz <b>Zainstaluj aplikację</b> lub <b>Dodaj do ekranu głównego</b>.',iCopy:'🔗 Kopiuj link',iOk:'OK',aNew:'Gramy jeszcze raz',aMenu:'Menu',aHs:'Top 10',aAch:'Osiągnięcia',aShare:'Poleć grę',coffee:'☕ Postaw kawę',privLink:'🔒 Polityka prywatności',vVisits:'Odwiedziny',vPlayers:'Gracze',gGames:'Rozegranych gier',fbBtn:'💡 Pomysły i uwagi',fbT:'💡 Pomysły i uwagi',fbIntro:'Masz pomysł, znalazłeś błąd albo chcesz coś powiedzieć? Napisz – każda wiadomość trafia prosto do autora gry.',fbName:'Imię (opcjonalnie)',fbType:'Rodzaj',fbIdea:'💡 Pomysł',fbBug:'🐞 Błąd',fbCom:'💬 Uwaga',fbMsg:'Wiadomość',fbMsgPh:'Opisz swój pomysł lub problem…',fbMail:'E-mail do odpowiedzi (opcjonalnie)',fbSend:'Wyślij',fbSending:'Wysyłanie…',fbOk:'✅ Dziękujemy! Wiadomość wysłana.',fbErr:'❌ Nie udało się wysłać wiadomości.',fbSaved:'Zapisaliśmy ją i spróbujemy wysłać ponownie przy następnej wizycie. Możesz też wysłać ją od razu e-mailem.',fbMailBtn:'✉️ Wyślij e-mailem',fbRetry:'🔁 Spróbuj ponownie',fbAct:'⏳ Formularz czeka na aktywację przez autora – spróbuj później.',fbEmpty:'Wpisz wiadomość.',fbWait:'Poczekaj chwilę przed kolejną wiadomością ({s} s).',fbBadMail:'Sprawdź adres e-mail.',fbCancel:'Anuluj',winT:'Zwycięzca!',winTs:'Zwycięzcy!',winTie:'Remis!',winRank:'Końcowa klasyfikacja',winHS:'🏆 Nowy wynik w Top 10!',pts:'pkt',share:'Poleć grę',shT:'📣 Poleć grę',shMsg:'Zagrajmy w Kości online! 🎲',shNative:'Udostępnij…',shCopy:'Kopiuj link',shCopied:'Skopiowano!',shIg:'Link skopiowany – wklej go w Instagramie (wiadomość lub opis/relacja).',hs:'Najlepsze wyniki',hsT:'🏆 Najlepsze wyniki',hsEmpty:'Brak wyników – dokończ grę, żeby trafić na listę!',hsNoteM:'Top 10 tego miesiąca w wybranym trybie. Od 1. dnia nowego miesiąca lista startuje od zera.',hsAll:'Wszech czasów',hsMonth:'Ten miesiąc',hsReset:'reset 1. dnia miesiąca (czas irlandzki)',hsMEmpty:'Nowy miesiąc – nikt jeszcze nie zagrał. Bądź pierwszy!',hsEmpty2:'Brak wyników w trybie „{m}” – dokończ w nim grę, żeby trafić na listę!',hsMEmpty2:'Nowy miesiąc – nikt jeszcze nie zagrał w trybie „{m}”. Bądź pierwszy!',hsName:'Gracz',hsD5:'kostek',hsD6:'kostek',hsDate:'Data',hsScore:'Wynik',hsNote:'Top 10 wszech czasów w wybranym trybie – tylko w pełni ukończone gry.',hsClose:'Zamknij',sound:'Dźwięk',ambSnd:'Tło dźwiękowe',menu:'🏠 Menu główne',confirmLeave:'Wyjść do menu?',confirmLeaveS:'Gra trwa – pozostali grają dalej bez ciebie.',leaveDo:'Wyjdź',leaveNo:'Zostań',newDo:'Nowa gra',left:'(wyszedł)',evBan:'Andrzejki w Kościach! 🕯️',evSub:'Od 25 do 30 listopada po każdej ukończonej grze dostaniesz wróżbę z kości. To tylko zabawa – dla całej rodziny.',evBtn:'🕯️ Wróżba z kości',evShare:'Udostępnij wróżbę',evCopied:'Skopiowano wróżbę i link!',evCardT:'Wróżba z kości',evMeta:'Z wyniku gry: {s} pkt',evMetaFree:'Wróżba na dziś (zagraj, a będzie z Twojego wyniku)',evShMsg:'Moja wróżba andrzejkowa z Kości online: {f}',evF:['Kości szepczą: dziś warto spróbować czegoś nowego – nawet małego.','W tym tygodniu uśmiech wróci do Ciebie szybciej, niż myślisz.','Komuś bliskiemu przyda się Twoja dobra rada. Daj znać, że jesteś.','Szczęście lubi dziś tych, co dzielą się ostatnim ciastkiem.','Jeśli coś odkładasz od tygodnia, kości mówią: zrób to dziś.','Czeka na Ciebie miła wiadomość. Sprawdź skrzynkę i dzwonek.','Dziś wygrywa spokój: jedna dobra herbata załatwi więcej niż pośpiech.','Ktoś pomyśli o Tobie przy stole. Może warto napisać pierwszy.','Twoje kości wróżą udany spacer – nawet wokół domu.','Trafi się drobny sukces, z którego ucieszysz się bardziej niż z wielkiego.','Kości radzą: dziś mniej planów, więcej śmiechu.','Wkrótce komuś bardzo zasmakuje Twoje jedzenie albo Twój żart.','Jeśli się wahasz, wybierz opcję, przy której się uśmiechasz.','Dziś warto założyć coś wygodnego i pozwolić sobie na małą przyjemność.','Szczęście siedzi w drobiazgach: zielone światło, ciepły koc, znaleziony długopis.','Kości mówią o udanym wspólnym rzucie – zaproś kogoś do gry.','Przyjdzie pomysł, którego nie trzeba od razu oceniać. Zapisz go.','Dziś dzień na porządki w szufladzie i w głowie – obie będą lżejsze.','Ktoś doceni Twoją cierpliwość. Ty też ją sobie policz jako punkt.','Wróżba jest jasna: przytulenie albo dobry żart naprawi nastrój.','Nie spiesz się przy drzwiach i przy kościach. Drugi rzut bywa lepszy.','Czeka Cię miła niespodzianka w kuchni albo w skrzynce z pocztą.','Twoje szczęście rośnie, gdy kibicujesz innym. Dziś komuś to pomoże.','Kości chwalą wytrwałość: dokończ jedną rzecz i zrób sobie przerwę.','W tym tygodniu przyda się parasol albo ciepła bluza – i zapas humoru.','Ktoś będzie wdzięczny za krótki telefon. Nie musi być powód.','Dziś wygrywa ciekawość. Otwórz książkę, przepis albo nową rundę.','Wróżba z kości jest gładka: pójdzie Ci dobrze, byle nie iść na skróty.','Najlepszy wynik dnia to wspólny śmiech. Kości już to policzyły.','Księżyc mrugnął: jutro będzie jaśniej, a dziś wystarczy dobry sen.'],anims:'Animacje',tpRoll:'{n} – rzut {r}',tpWrote:'{n} → {c}: {v}',tpCross:'{n} → {c}: ✕ skreślone',tpOpt:'Okienka z ruchami graczy',tpR:'rzut {r}',tpXd:'skreślone',tpPts:'pkt',appTheme:'Motyw aplikacji:',thNames:{classic:'Klasyczny',sapphire:'Szafir',galaxy:'Galaktyka',aero:'Frutiger Aero',zombie:'Zombie',slime:'Slime (styl Slime Rancher)',nature:'Natura',ninja:'Ninja',ocean:'Ocean',beach:'Słoneczna plaża',soccer:'Piłka nożna',forest:'Las',winter:'Zima'},colours:'Kolory',colBasic:'Podstawowe',colPrem:'✨ Premium',themes:'Motywy',colNames:{white:'Biały',red:'Czerwony',blue:'Niebieski',green:'Zielony',purple:'Fioletowy',orange:'Pomarańczowy',pink:'Różowy',black:'Czarny',yellow:'Żółty',grey:'Szary',metal:'Metalowe',gold:'Złote',wood:'Drewniane',diamond:'Diamentowe',sapphire:'Szafir'},diceColour:'Kolor kości:',rolling:'🎲 Rzuca: {n}',reconnecting:'łączę ponownie…',searching:'Szukam pokoju…',noRoom:'Nie znaleziono pokoju {c}. Sprawdź kod (wielkość liter nie ma znaczenia).',enterCode:'Wpisz kod pokoju.',
+const I18N={pl:{twBtn:'🗼 Wieża – tryb solo',twTitle:'🗼 Wieża',twIntro:'Wspinaj się piętro po piętrze. Każde piętro to inna odmiana gry z celem punktowym – osiągnij go, aby wejść wyżej.',twFloor:'Piętro {n}',twTarget:'Cel',twBest:'Rekord',twPlay:'Graj ▶',twCont:'Kontynuuj ▶',twLocked:'Zablokowane',twStart:'Start ▶',twBack:'← Mapa wieży',twNext:'Następne piętro ▶',twRetry:'🔁 Spróbuj ponownie',twMenu:'🏠 Menu',twPass:'Cel osiągnięty!',twFail:'Zabrakło {n} pkt do celu',twTop:'👑 Zdobyłeś wieżę!',twScore:'Wynik',twProj:'prognoza',twPen:'Kary',twStars:'★ cel · ★★ cel +10% · ★★★ cel +25%',twAuto:'⏱ Czas minął – ruch automatyczny',twMe:'Gracz',twNoMp:'Najpierw wyjdź z pokoju gry.',twRules:'Zasady piętra',twD5:'5 kości',twD6:'6 kości',twR:'{r} rzuty w turze (zamiast 3)',twNx:'Bez dodatkowych rzutów',twLk:'Zablokowane pola 🔒: {c}',twXp:'Każde skreślenie: −{p} pkt',twCu:'Klątwa: {c} musi mieć min. {m} pkt, inaczej −{p}',twSr:'Szkoła musi być ≥ 0, inaczej −{p}',twTl:'{s} s na turę – potem ruch automatyczny',twCleared:'zaliczone',twSkip:'⏭️ Dalej – następne piętro',twSkipEnd:'🏁 Zakończ wieżę',twSkipQ:'Zakończyć piętro z wynikiem {s}?',twSkipQS:'Gwiazdki liczą się od obecnego wyniku ({st}). Dokończenie gry może dać ich więcej.',twSkipDo:'Dalej',twSkipT:'🎯 Cel osiągnięty! Możesz przejść dalej.',twSkipSaved:'Zapisano: {st} · {s} pkt',twSkipNeed:'⏭️ Dalej – potrzeba {n} (teraz {c})',twSkipEndNeed:'🏁 Zakończ wieżę – potrzeba {n} (teraz {c})',twSkipSch:'⏭️ Dalej – 📚 Szkoła musi być ≥ 0 (teraz {s})',twSkipEndSch:'🏁 Zakończ wieżę – 📚 Szkoła musi być ≥ 0 (teraz {s})',twWhySchL:'📚 Szkoła (Jedynki–Szóstki) wynosi teraz {s}. Szkoła jest ważna – dopóki nie będzie ≥ 0, nie przejdziesz dalej, niezależnie od wyniku.',twCounts:'liczy się',twWhyT:'Do przejścia dalej liczy się wynik „teraz”: {c} z {n} (brakuje {d}).',twWhySch:'Szkoła jest poniżej 0 i niedokończona – teraz liczy się jak koniec gry: −50',twWhySr:'Wymóg Szkoły ≥ 0: −{p}',twWhyCu:'Klątwa – {c} bez min. {m} pkt: −{p}',twWhyXp:'Skreślenia: −{p}',twWhyBon:'Bonusy (czysta gra, Prymus) liczą się dopiero po wypełnieniu tabeli.',twN:['Rozgrzewka','Zadanie domowe','Ekspres','Dwa rzuty','Szybka ręka','Klątwa Karety','Zamknięte drzwi','Wyścig z czasem','Bez asekuracji','Szczyt wieży'],resume:'↩️ Wróć do gry (pokój {c})',resumeS:'Twoja ostatnia gra wciąż trwa – wrócisz na swoje miejsce.',hbRoom:'Pokój',hbCopy:'Kopiuj link do pokoju',hbShare:'Udostępnij link',hbCopied:'Link do pokoju skopiowany',hbShTxt:'Zagraj ze mną w Kości online! Kod pokoju: {c}',waitP:'Czekam na gracza {n}…',waitPS:'rozłączony – może wrócić do tej gry',skipP:'Pomiń turę',skipQ:'Pominąć gracza {n}?',skipQS:'Jego tury będą pomijane, dopóki nie wróci do gry.',skipDo:'Pomiń',offMv:'Brak połączenia – łączę ponownie…',avLbl:'Awatar:',avHint:'(opcjonalnie – kliknij ponownie, by usunąć)',title:'Kości online',tagline:'Rzuć kośćmi ze znajomymi',ace:'🎓 Prymus (Bonus)',aceT:'🎓 Prymus! +50',yourName:'Twoje imię:',create:'Nowa gra',orJoin:'lub dołącz do gry kodem:',join:'Dołącz',room:'Pokój:',sendLink:'Wyślij link:',copy:'Kopiuj',players:'Gracze (2–8):',start:'Start gry',wait:'Czekamy, aż gospodarz rozpocznie grę…',help:'Kliknij kość, żeby ją zatrzymać. Kliknij podświetlone pole w tabeli, żeby zapisać wynik (✕ = skreśl, 0 pkt – tylko w Figurach).',newGame:'🔁 Nowa gra – ci sami gracze',rules:'Zasady',bonus:'Bonus za czystą grę',gdT:'Szczegóły gry',gdNA:'Pełna tabela tej gry nie zachowała się.',gdNA2:'Starsze gry (do wersji 2.00) miały szczegóły zapisane tylko tymczasowo na publicznym serwerze i część z nich wygasła. Od wersji 2.01 szczegóły każdej ukończonej gry są zapisywane na stałe.',gdSrch:'Szukam pełnej tabeli na zapasowych serwerach…',gdNoDet:'dostępne tylko podsumowanie',gdLoad:'Wczytywanie…',gdDice:'kości',gdWin:'zwycięzca',gdHs:'wynik z rekordu',gdLog:'Przebieg gry (ruchy po kolei)',gdBtn:'Szczegóły gry',gdX2:'×2 = zapis w 1. rzucie',ndLbl:'Liczba kości:',modeLbl:'Tryb gry:',modeIn:'Tryb: {m}',m_classic:'Klasyk',m_train:'Pociąg osobowy',m_hw:'Najpierw lekcje, potem zabawa',s_classic:'Klasyk',s_train:'Pociąg',s_hw:'Lekcje',d_classic:'Normalne zasady – dowolne pole w dowolnej chwili.',d_train:'Staje na każdej stacji: pola od góry do dołu, po kolei.',d_hw:'Pierwsze 3 rundy tylko w Szkole, potem dowolnie.',mNow:'Teraz: {c}',mHw:'Najpierw Szkoła (jeszcze {n})',mRound:'Runda {r}/3 📚',nd5Note:'🎲 Wariant 5 kości: gramy 5 kośćmi, bez rubryk: {r}. Pozostałe zasady bez zmian (Poker = 5 jednakowych).',nd5Cur:'Ta gra: 5 kości.',frbL:'{n}: Lord w pierwszym rzucie! +{x} XP',frbP:'{n}: Poker w pierwszym rzucie! +{x} XP',winXP:'XP',xpWait:'…',nd5Gone:'Wariant na 5 kości został usunięty. Do tej sali nie można już dołączyć.',fraK:'{n}: Kareta z szóstek z ręki!',fraP:'{n}: Poker z szóstek z ręki!',fraF:'{n}: Full z piątek i szóstek z ręki!',fraTap:'Dotknij, aby pominąć',fxPrymus:'{n}: Prymus! +{x} XP',fxClean:'{n}: Czysta gra! +{x} XP',fxTrain:'{n}: Długi strit 1–6 z ręki!',fxCoach:'{n}: Kareta z szóstek z ręki!',iBtn:'Zainstaluj aplikację',iBtnS:'Instaluj',iBan:'Kości jako aplikacja',iT:'📲 Zainstaluj aplikację',iIos1:'Stuknij <b>Udostępnij</b> <span class="ik">⬆️</span> na pasku Safari',iIos2:'Przewiń i wybierz <b>Do ekranu początkowego</b> <span class="ik">➕</span>',iIos3:'Stuknij <b>Dodaj</b> – ikona Kości pojawi się na ekranie 🎲',iSaf:'Ta przeglądarka nie umie zainstalować aplikacji. Skopiuj link i otwórz go w <b>Safari</b>, potem: Udostępnij ⬆️ → Do ekranu początkowego.',iChr:'Otwórz link w przeglądarce <b>Chrome</b> (menu ⋮ → „Otwórz w Chrome” albo skopiuj link), potem stuknij „Zainstaluj aplikację”.',iAnd:'W menu przeglądarki <span class="ik">⋮</span> wybierz <b>Zainstaluj aplikację</b> lub <b>Dodaj do ekranu głównego</b>.',iCopy:'🔗 Kopiuj link',iOk:'OK',aNew:'Gramy jeszcze raz',aMenu:'Menu',aHs:'Top 10',aAch:'Osiągnięcia',aShare:'Poleć grę',coffee:'☕ Postaw kawę',privLink:'🔒 Polityka prywatności',vVisits:'Odwiedziny',vPlayers:'Gracze',gGames:'Rozegranych gier',fbBtn:'💡 Pomysły i uwagi',fbT:'💡 Pomysły i uwagi',fbIntro:'Masz pomysł, znalazłeś błąd albo chcesz coś powiedzieć? Napisz – każda wiadomość trafia prosto do autora gry.',fbName:'Imię (opcjonalnie)',fbType:'Rodzaj',fbIdea:'💡 Pomysł',fbBug:'🐞 Błąd',fbCom:'💬 Uwaga',fbMsg:'Wiadomość',fbMsgPh:'Opisz swój pomysł lub problem…',fbMail:'E-mail do odpowiedzi (opcjonalnie)',fbSend:'Wyślij',fbSending:'Wysyłanie…',fbOk:'✅ Dziękujemy! Wiadomość wysłana.',fbErr:'❌ Nie udało się wysłać wiadomości.',fbSaved:'Zapisaliśmy ją i spróbujemy wysłać ponownie przy następnej wizycie. Możesz też wysłać ją od razu e-mailem.',fbMailBtn:'✉️ Wyślij e-mailem',fbRetry:'🔁 Spróbuj ponownie',fbAct:'⏳ Formularz czeka na aktywację przez autora – spróbuj później.',fbEmpty:'Wpisz wiadomość.',fbWait:'Poczekaj chwilę przed kolejną wiadomością ({s} s).',fbBadMail:'Sprawdź adres e-mail.',fbCancel:'Anuluj',winT:'Zwycięzca!',winTs:'Zwycięzcy!',winTie:'Remis!',winRank:'Końcowa klasyfikacja',winHS:'🏆 Nowy wynik w Top 10!',pts:'pkt',share:'Poleć grę',shT:'📣 Poleć grę',shMsg:'Zagrajmy w Kości online! 🎲',shNative:'Udostępnij…',shCopy:'Kopiuj link',shCopied:'Skopiowano!',shIg:'Link skopiowany – wklej go w Instagramie (wiadomość lub opis/relacja).',hs:'Najlepsze wyniki',hsT:'🏆 Najlepsze wyniki',hsEmpty:'Brak wyników – dokończ grę, żeby trafić na listę!',hsNoteM:'Top 10 tego miesiąca w wybranym trybie. Od 1. dnia nowego miesiąca lista startuje od zera.',hsAll:'Wszech czasów',hsMonth:'Ten miesiąc',hsReset:'reset 1. dnia miesiąca (czas irlandzki)',hsMEmpty:'Nowy miesiąc – nikt jeszcze nie zagrał. Bądź pierwszy!',hsEmpty2:'Brak wyników w trybie „{m}” – dokończ w nim grę, żeby trafić na listę!',hsMEmpty2:'Nowy miesiąc – nikt jeszcze nie zagrał w trybie „{m}”. Bądź pierwszy!',hsName:'Gracz',hsD5:'kostek',hsD6:'kostek',hsDate:'Data',hsScore:'Wynik',hsNote:'Top 10 wszech czasów w wybranym trybie – tylko w pełni ukończone gry.',hsClose:'Zamknij',sound:'Dźwięk',ambSnd:'Tło dźwiękowe',menu:'🏠 Menu główne',confirmLeave:'Wyjść do menu?',confirmLeaveS:'Gra trwa – pozostali grają dalej bez ciebie.',leaveDo:'Wyjdź',leaveNo:'Zostań',newDo:'Nowa gra',left:'(wyszedł)',evBan:'Andrzejki w Kościach! 🕯️',evSub:'Od 25 do 30 listopada po każdej ukończonej grze dostaniesz wróżbę z kości. To tylko zabawa – dla całej rodziny.',evBtn:'🕯️ Wróżba z kości',evShare:'Udostępnij wróżbę',evCopied:'Skopiowano wróżbę i link!',evCardT:'Wróżba z kości',evMeta:'Z wyniku gry: {s} pkt',evMetaFree:'Wróżba na dziś (zagraj, a będzie z Twojego wyniku)',evShMsg:'Moja wróżba andrzejkowa z Kości online: {f}',evF:['Kości szepczą: dziś warto spróbować czegoś nowego – nawet małego.','W tym tygodniu uśmiech wróci do Ciebie szybciej, niż myślisz.','Komuś bliskiemu przyda się Twoja dobra rada. Daj znać, że jesteś.','Szczęście lubi dziś tych, co dzielą się ostatnim ciastkiem.','Jeśli coś odkładasz od tygodnia, kości mówią: zrób to dziś.','Czeka na Ciebie miła wiadomość. Sprawdź skrzynkę i dzwonek.','Dziś wygrywa spokój: jedna dobra herbata załatwi więcej niż pośpiech.','Ktoś pomyśli o Tobie przy stole. Może warto napisać pierwszy.','Twoje kości wróżą udany spacer – nawet wokół domu.','Trafi się drobny sukces, z którego ucieszysz się bardziej niż z wielkiego.','Kości radzą: dziś mniej planów, więcej śmiechu.','Wkrótce komuś bardzo zasmakuje Twoje jedzenie albo Twój żart.','Jeśli się wahasz, wybierz opcję, przy której się uśmiechasz.','Dziś warto założyć coś wygodnego i pozwolić sobie na małą przyjemność.','Szczęście siedzi w drobiazgach: zielone światło, ciepły koc, znaleziony długopis.','Kości mówią o udanym wspólnym rzucie – zaproś kogoś do gry.','Przyjdzie pomysł, którego nie trzeba od razu oceniać. Zapisz go.','Dziś dzień na porządki w szufladzie i w głowie – obie będą lżejsze.','Ktoś doceni Twoją cierpliwość. Ty też ją sobie policz jako punkt.','Wróżba jest jasna: przytulenie albo dobry żart naprawi nastrój.','Nie spiesz się przy drzwiach i przy kościach. Drugi rzut bywa lepszy.','Czeka Cię miła niespodzianka w kuchni albo w skrzynce z pocztą.','Twoje szczęście rośnie, gdy kibicujesz innym. Dziś komuś to pomoże.','Kości chwalą wytrwałość: dokończ jedną rzecz i zrób sobie przerwę.','W tym tygodniu przyda się parasol albo ciepła bluza – i zapas humoru.','Ktoś będzie wdzięczny za krótki telefon. Nie musi być powód.','Dziś wygrywa ciekawość. Otwórz książkę, przepis albo nową rundę.','Wróżba z kości jest gładka: pójdzie Ci dobrze, byle nie iść na skróty.','Najlepszy wynik dnia to wspólny śmiech. Kości już to policzyły.','Księżyc mrugnął: jutro będzie jaśniej, a dziś wystarczy dobry sen.'],anims:'Animacje',tpRoll:'{n} – rzut {r}',tpWrote:'{n} → {c}: {v}',tpCross:'{n} → {c}: ✕ skreślone',tpOpt:'Okienka z ruchami graczy',tpR:'rzut {r}',tpXd:'skreślone',tpPts:'pkt',appTheme:'Motyw aplikacji:',thNames:{classic:'Klasyczny',sapphire:'Szafir',galaxy:'Galaktyka',aero:'Frutiger Aero',zombie:'Zombie',slime:'Slime (styl Slime Rancher)',nature:'Natura',ninja:'Ninja',ocean:'Ocean',beach:'Słoneczna plaża',soccer:'Piłka nożna',forest:'Las',winter:'Zima'},colours:'Kolory',colBasic:'Podstawowe',colPrem:'✨ Premium',themes:'Motywy',colNames:{white:'Biały',red:'Czerwony',blue:'Niebieski',green:'Zielony',purple:'Fioletowy',orange:'Pomarańczowy',pink:'Różowy',black:'Czarny',yellow:'Żółty',grey:'Szary',metal:'Metalowe',gold:'Złote',wood:'Drewniane',diamond:'Diamentowe',sapphire:'Szafir'},diceColour:'Kolor kości:',rolling:'🎲 Rzuca: {n}',reconnecting:'łączę ponownie…',searching:'Szukam pokoju…',noRoom:'Nie znaleziono pokoju {c}. Sprawdź kod (wielkość liter nie ma znaczenia).',enterCode:'Wpisz kod pokoju.',
  enterName:'Wpisz imię.',err:'Błąd: ',connecting:'Łączenie…',cantConnect:'Nie można połączyć ({e}). Sprawdź kod.',lost:'Połączenie z gospodarzem przerwane.',running:'Gra już trwa.',full:'Pokój pełny (8).',confirmNew:'Zacząć nową grę?',confirmNewS:'Punkty zostaną wyczyszczone.',confirmX:'Na pewno skreślić?',xDo:'Skreśl',xNo:'Anuluj',
  roll:'Rzuć',extra:'Dodatkowy rzut',end:'🏆 Koniec gry! Wygrywa {n} ({p} pkt)',yourTurn:'Twoja tura, ',turn:'Tura: ',round:'Runda',tMine:'Twoja tura!',tRolls:'Rzuca:',rollN:'Rzut {r}/3',extraLeft:'dodatkowe rzuty',cat:'Kategoria',school:'Szkoła',lower:'Figury',total:'RAZEM',dbl:' (1. rzut ×2)',
  rulesList:['6 kości, w turze do 3 rzutów; po rzucie można zatrzymać wybrane kości.','Wynik w Figurach zapisany po PIERWSZYM rzucie liczy się podwójnie (oprócz Szansy).','Jedynki–Szóstki: punktem odniesienia są TRZY kości danej liczby = 0 pkt. Każda kość mniej to minus ta liczba, każda więcej to plus ta liczba. Np. dwie czwórki = −4, jedna trójka = −6, zero piątek = −15, cztery szóstki = +6, pięć dwójek = +4. Szkoła nigdy nie jest podwajana. Wynik 0 (trzy kości) pokazujemy jako „x”. W Szkole nie można skreślać.','Bonus za czystą grę: +50 bez żadnego skreślenia w Figurach.','Szkoła = suma Jedynki–Szóstki; gdy cała Szkoła jest wypełniona, a suma jest poniżej 0 → suma − 50 (np. −1 → −51).','Liczą się tylko kości tworzące układ: 1,2,3,3,4,4 jako Dwie pary = 14.','Strity: mały 1–5 = 15, duży 2–6 = 20, długi 1–6 = 21. Generał: 1 i 6 + trzy z 2–5 (brakuje jednej) = suma 5 kości.','Full = suma 5 kości, Kareta = suma 4 kości, Poker = suma + 50 (szóstki 80), Lord = poker × 2 (jedynki 110). Szansa = suma wszystkich.','Dodatkowe rzuty: każdy gracz ma na całą grę 3 dodatkowe (czwarte) rzuty.']},
-en:{twBtn:'🗼 Tower – solo mode',twTitle:'🗼 Tower',twIntro:'Climb floor by floor. Each floor is a different version of the game with a target score – reach it to go higher.',twFloor:'Floor {n}',twTarget:'Target',twBest:'Best',twPlay:'Play ▶',twCont:'Continue ▶',twLocked:'Locked',twStart:'Start ▶',twBack:'← Tower map',twNext:'Next floor ▶',twRetry:'🔁 Try again',twMenu:'🏠 Menu',twPass:'Target reached!',twFail:'{n} pts short of the target',twTop:'👑 You conquered the tower!',twScore:'Score',twProj:'projected',twPen:'Penalties',twStars:'★ target · ★★ target +10% · ★★★ target +25%',twAuto:'⏱ Time is up – automatic move',twMe:'Player',twNoMp:'Leave the game room first.',twRules:'Floor rules',twD5:'5 dice',twD6:'6 dice',twR:'{r} rolls per turn (instead of 3)',twNx:'No extra rolls',twLk:'Locked rows 🔒: {c}',twXp:'Every cross-out: −{p} pts',twCu:'Curse: {c} needs at least {m} pts, otherwise −{p}',twSr:'School must be ≥ 0, otherwise −{p}',twTl:'{s} s per turn – then an automatic move',twCleared:'cleared',twSkip:'⏭️ Skip to next floor',twSkipEnd:'🏁 Finish tower',twSkipQ:'End this floor with {s} pts?',twSkipQS:'Stars are judged on your current score ({st}). Finishing the game could earn more.',twSkipDo:'Skip',twSkipT:'🎯 Target reached! You can move on.',twSkipSaved:'Saved: {st} · {s} pts',twSkipNeed:'⏭️ Next floor – need {n} (now {c})',twSkipEndNeed:'🏁 Finish tower – need {n} (now {c})',twSkipSch:'⏭️ Next floor – 📚 School must be ≥ 0 (now {s})',twSkipEndSch:'🏁 Finish tower – 📚 School must be ≥ 0 (now {s})',twWhySchL:'📚 School (Ones–Sixes) is {s} right now. School matters – until it is ≥ 0 you can’t move on, whatever your score.',twCounts:'counts',twWhyT:'To move on, your score “right now” counts: {c} of {n} ({d} to go).',twWhySch:'School is below 0 and unfinished – right now it counts as if the game ended: −50',twWhySr:'School must be ≥ 0: −{p}',twWhyCu:'Curse – {c} without at least {m} pts: −{p}',twWhyXp:'Cross-outs: −{p}',twWhyBon:'Bonuses (clean game, School Ace) only count once the sheet is complete.',twN:['Warm-up','Homework','Express','Two rolls','Quick hand','Curse of the Four','Locked doors','Race the clock','No safety net','Summit'],resume:'↩️ Rejoin game (room {c})',resumeS:'Your last game is still on – you will get your seat back.',hbRoom:'Room',hbCopy:'Copy room link',hbShare:'Share link',hbCopied:'Room link copied',hbShTxt:'Play Dice Online with me! Room code: {c}',waitP:'Waiting for {n}…',waitPS:'disconnected – they can rejoin this game',skipP:'Skip turn',skipQ:'Skip {n}?',skipQS:'Their turns will be skipped until they come back.',skipDo:'Skip',offMv:'No connection – reconnecting…',avLbl:'Avatar:',avHint:'(optional – tap again to remove)',title:'Dice Online',tagline:'Roll the dice with friends',ace:'🎓 School Ace (bonus)',aceT:'🎓 School Ace! +50',yourName:'Your name:',create:'New game',orJoin:'or join a game with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts – lower section only).',newGame:'🔁 New game – same players',rules:'Rules',bonus:'Clean game bonus',gdT:'Game details',gdNA:'The full score sheet of this game was not kept.',gdNA2:'Older games (up to version 2.00) stored their details only temporarily on a public server, and some of them have expired. Since version 2.01 the details of every finished game are saved permanently.',gdSrch:'Looking for the full score sheet on backup servers…',gdNoDet:'summary only',gdLoad:'Loading…',gdDice:'dice',gdWin:'winner',gdHs:'high-score entry',gdLog:'Game log (moves in order)',gdBtn:'Game details',gdX2:'×2 = written on the 1st roll',ndLbl:'Number of dice:',modeLbl:'Game mode:',modeIn:'Mode: {m}',m_classic:'Classic',m_train:'Local Train',m_hw:'Homework First',s_classic:'Classic',s_train:'Train',s_hw:'Homework',d_classic:'Normal rules – any row, any time.',d_train:'Stops at every station: rows top to bottom, in order.',d_hw:'First 3 rounds in School only, then anything goes.',mNow:'Now: {c}',mHw:'School first ({n} left)',mRound:'Round {r}/3 📚',nd5Note:'🎲 5-dice variant: played with 5 dice, without the rows: {r}. All other rules unchanged (Poker = five of a kind).',nd5Cur:'This game: 5 dice.',frbL:'{n}: Lord on the first roll! +{x} XP',frbP:'{n}: Poker on the first roll! +{x} XP',winXP:'XP',xpWait:'…',nd5Gone:'The 5-dice variant has been removed. This room can no longer be joined.',fraK:'{n}: Four sixes on the first roll!',fraP:'{n}: Five sixes on the first roll!',fraF:'{n}: Full house of fives and sixes on the first roll!',fraTap:'Tap to skip',iBtn:'Install app',iBtnS:'Install',iBan:'Get the Dice Online app',iT:'📲 Install the app',iIos1:'Tap <b>Share</b> <span class="ik">⬆️</span> in the Safari toolbar',iIos2:'Scroll down and choose <b>Add to Home Screen</b> <span class="ik">➕</span>',iIos3:'Tap <b>Add</b> – the Dice Online icon appears on your home screen 🎲',iSaf:'This browser can\'t install apps. Copy the link and open it in <b>Safari</b>, then: Share ⬆️ → Add to Home Screen.',iChr:'Open the link in <b>Chrome</b> (menu ⋮ → “Open in Chrome” or copy the link), then tap “Install app”.',iAnd:'Open the browser menu <span class="ik">⋮</span> and choose <b>Install app</b> or <b>Add to Home screen</b>.',iCopy:'🔗 Copy link',iOk:'OK',aNew:'Play again',aMenu:'Menu',aHs:'Top 10',aAch:'Achievements',aShare:'Share',coffee:'☕ Buy me a coffee',privLink:'🔒 Privacy policy',vVisits:'Visits',vPlayers:'Visitors',gGames:'Games played',fbBtn:'💡 Ideas & feedback',fbT:'💡 Ideas & feedback',fbIntro:'Got an idea, found a bug or want to say something? Write – every message goes straight to the game’s author.',fbName:'Name (optional)',fbType:'Type',fbIdea:'💡 Idea',fbBug:'🐞 Bug',fbCom:'💬 Comment',fbMsg:'Message',fbMsgPh:'Describe your idea or problem…',fbMail:'Email for a reply (optional)',fbSend:'Send',fbSending:'Sending…',fbOk:'✅ Thank you! Message sent.',fbErr:'❌ Could not send your message.',fbSaved:'We saved it and will try again on your next visit. You can also send it right away by email.',fbMailBtn:'✉️ Send by email',fbRetry:'🔁 Try again',fbAct:'⏳ The form is waiting for activation by the author – please try later.',fbEmpty:'Please enter a message.',fbWait:'Please wait before sending another message ({s} s).',fbBadMail:'Please check the email address.',fbCancel:'Cancel',winT:'Winner!',winTs:'Winners!',winTie:'It\'s a tie!',winRank:'Final ranking',winHS:'🏆 New Top 10 high score!',pts:'pts',share:'Share the game',shT:'📣 Share the game',shMsg:'Let\'s play Dice Online! 🎲',shNative:'Share…',shCopy:'Copy link',shCopied:'Copied!',shIg:'Link copied – paste it in Instagram (DM, caption or story).',hs:'High scores',hsT:'🏆 High scores',hsEmpty:'No scores yet – finish a game to get on the board!',hsNoteM:'This month\'s top 10 for the chosen mode. A fresh board starts on the 1st of every month.',hsAll:'All-time',hsMonth:'This month',hsReset:'resets on the 1st (Irish time)',hsMEmpty:'New month – nobody has played yet. Be the first!',hsEmpty2:'No scores yet in “{m}” – finish a game in this mode to get on the board!',hsMEmpty2:'New month – nobody has played “{m}” yet. Be the first!',hsName:'Player',hsD5:'dice',hsD6:'dice',hsDate:'Date',hsScore:'Score',hsNote:'All-time top 10 for the chosen mode – fully completed games only.',hsClose:'Close',sound:'Sound',ambSnd:'Ambient sound',menu:'🏠 Main menu',confirmLeave:'Leave to the menu?',confirmLeaveS:'The game is in progress – the others will continue without you.',leaveDo:'Leave',leaveNo:'Stay',newDo:'New game',left:'(left)',evBan:'St. Andrew\'s Eve event',evSub:'From 25 to 30 November every finished game brings a light-hearted dice fortune. Just a bit of fun for the whole family.',evBtn:'🕯️ Dice fortune',evShare:'Share fortune',evCopied:'Fortune and link copied!',evCardT:'Dice fortune',evMeta:'From your game: {s} pts',evMetaFree:'Today\'s fortune (play a game and it will use your score)',evShMsg:'My St. Andrew\'s Eve fortune from Dice Online: {f}',evF:['The dice whisper: try something new today – even a small thing.','This week a smile will find you sooner than you think.','Someone close could use your kind advice. Let them know you are there.','Luck today favours people who share the last biscuit.','If you have been putting something off, the dice say: do it today.','A nice message is on its way. Check your inbox and the doorbell.','Calm wins today: one good cup of tea will beat a rush.','Someone will think of you at the table. Maybe write first.','Your dice foretell a pleasant walk – even just around the house.','A small success is coming, and you will enjoy it more than a big one.','The dice advise: fewer plans today, more laughter.','Soon someone will really like your cooking – or your joke.','If you cannot choose, pick the option that makes you smile.','Wear something comfy today and allow yourself a little treat.','Luck lives in small things: a green light, a warm blanket, a found pen.','The dice hint at a good shared roll – invite someone to play.','An idea will arrive that does not need judging yet. Write it down.','A good day to tidy a drawer and your thoughts – both will feel lighter.','Someone will notice your patience. Count that as a point for yourself too.','The fortune is clear: a hug or a good joke will fix the mood.','Do not rush at doors or at the dice. The second roll is often better.','A pleasant surprise waits in the kitchen or in the letterbox.','Your luck grows when you cheer for others. Today that will help someone.','The dice praise persistence: finish one thing, then take a break.','This week, pack a jacket or an umbrella – and a spare sense of humour.','Someone will be glad of a short call. You do not need a reason.','Curiosity wins today. Open a book, a recipe, or another round.','The dice-fortune is smooth: things will go well if you skip the shortcuts.','The best score of the day is laughing together. The dice already counted it.','The moon just winked: tomorrow will be brighter, and tonight a good sleep will do.'],anims:'Animations',tpRoll:'{n} – roll {r}',tpWrote:'{n} scored {v} in {c}',tpCross:'{n} crossed out {c}',tpOpt:'Pop-ups with players’ moves',tpR:'roll {r}',tpXd:'crossed out',tpPts:'pts',appTheme:'App theme:',thNames:{classic:'Classic',sapphire:'Sapphire',galaxy:'Galaxy',aero:'Frutiger Aero',zombie:'Zombie',slime:'Slime (Slime Rancher style)',nature:'Nature',ninja:'Ninja',ocean:'Ocean',beach:'Sunny Beach',soccer:'Soccer',forest:'Forest',winter:'Winter'},colours:'Colours',colBasic:'Basic',colPrem:'✨ Premium',themes:'Themes',colNames:{white:'White',red:'Red',blue:'Blue',green:'Green',purple:'Purple',orange:'Orange',pink:'Pink',black:'Black',yellow:'Yellow',grey:'Grey',metal:'Metal',gold:'Gold',wood:'Wood',diamond:'Diamond',sapphire:'Sapphire'},diceColour:'Dice colour:',rolling:'🎲 {n} is rolling',reconnecting:'reconnecting…',searching:'Looking for the room…',noRoom:'Room {c} not found. Check the code (case does not matter).',enterCode:'Enter the room code.',
+en:{twBtn:'🗼 Tower – solo mode',twTitle:'🗼 Tower',twIntro:'Climb floor by floor. Each floor is a different version of the game with a target score – reach it to go higher.',twFloor:'Floor {n}',twTarget:'Target',twBest:'Best',twPlay:'Play ▶',twCont:'Continue ▶',twLocked:'Locked',twStart:'Start ▶',twBack:'← Tower map',twNext:'Next floor ▶',twRetry:'🔁 Try again',twMenu:'🏠 Menu',twPass:'Target reached!',twFail:'{n} pts short of the target',twTop:'👑 You conquered the tower!',twScore:'Score',twProj:'projected',twPen:'Penalties',twStars:'★ target · ★★ target +10% · ★★★ target +25%',twAuto:'⏱ Time is up – automatic move',twMe:'Player',twNoMp:'Leave the game room first.',twRules:'Floor rules',twD5:'5 dice',twD6:'6 dice',twR:'{r} rolls per turn (instead of 3)',twNx:'No extra rolls',twLk:'Locked rows 🔒: {c}',twXp:'Every cross-out: −{p} pts',twCu:'Curse: {c} needs at least {m} pts, otherwise −{p}',twSr:'School must be ≥ 0, otherwise −{p}',twTl:'{s} s per turn – then an automatic move',twCleared:'cleared',twSkip:'⏭️ Skip to next floor',twSkipEnd:'🏁 Finish tower',twSkipQ:'End this floor with {s} pts?',twSkipQS:'Stars are judged on your current score ({st}). Finishing the game could earn more.',twSkipDo:'Skip',twSkipT:'🎯 Target reached! You can move on.',twSkipSaved:'Saved: {st} · {s} pts',twSkipNeed:'⏭️ Next floor – need {n} (now {c})',twSkipEndNeed:'🏁 Finish tower – need {n} (now {c})',twSkipSch:'⏭️ Next floor – 📚 School must be ≥ 0 (now {s})',twSkipEndSch:'🏁 Finish tower – 📚 School must be ≥ 0 (now {s})',twWhySchL:'📚 School (Ones–Sixes) is {s} right now. School matters – until it is ≥ 0 you can’t move on, whatever your score.',twCounts:'counts',twWhyT:'To move on, your score “right now” counts: {c} of {n} ({d} to go).',twWhySch:'School is below 0 and unfinished – right now it counts as if the game ended: −50',twWhySr:'School must be ≥ 0: −{p}',twWhyCu:'Curse – {c} without at least {m} pts: −{p}',twWhyXp:'Cross-outs: −{p}',twWhyBon:'Bonuses (clean game, School Ace) only count once the sheet is complete.',twN:['Warm-up','Homework','Express','Two rolls','Quick hand','Curse of the Four','Locked doors','Race the clock','No safety net','Summit'],resume:'↩️ Rejoin game (room {c})',resumeS:'Your last game is still on – you will get your seat back.',hbRoom:'Room',hbCopy:'Copy room link',hbShare:'Share link',hbCopied:'Room link copied',hbShTxt:'Play Dice Online with me! Room code: {c}',waitP:'Waiting for {n}…',waitPS:'disconnected – they can rejoin this game',skipP:'Skip turn',skipQ:'Skip {n}?',skipQS:'Their turns will be skipped until they come back.',skipDo:'Skip',offMv:'No connection – reconnecting…',avLbl:'Avatar:',avHint:'(optional – tap again to remove)',title:'Dice Online',tagline:'Roll the dice with friends',ace:'🎓 School Ace (bonus)',aceT:'🎓 School Ace! +50',yourName:'Your name:',create:'New game',orJoin:'or join a game with code:',join:'Join',room:'Room:',sendLink:'Send the link:',copy:'Copy',players:'Players (2–8):',start:'Start game',wait:'Waiting for the host to start the game…',help:'Tap a die to hold it. Tap a highlighted cell in the table to write your score (✕ = cross out, 0 pts – lower section only).',newGame:'🔁 New game – same players',rules:'Rules',bonus:'Clean game bonus',gdT:'Game details',gdNA:'The full score sheet of this game was not kept.',gdNA2:'Older games (up to version 2.00) stored their details only temporarily on a public server, and some of them have expired. Since version 2.01 the details of every finished game are saved permanently.',gdSrch:'Looking for the full score sheet on backup servers…',gdNoDet:'summary only',gdLoad:'Loading…',gdDice:'dice',gdWin:'winner',gdHs:'high-score entry',gdLog:'Game log (moves in order)',gdBtn:'Game details',gdX2:'×2 = written on the 1st roll',ndLbl:'Number of dice:',modeLbl:'Game mode:',modeIn:'Mode: {m}',m_classic:'Classic',m_train:'Local Train',m_hw:'Homework First',s_classic:'Classic',s_train:'Train',s_hw:'Homework',d_classic:'Normal rules – any row, any time.',d_train:'Stops at every station: rows top to bottom, in order.',d_hw:'First 3 rounds in School only, then anything goes.',mNow:'Now: {c}',mHw:'School first ({n} left)',mRound:'Round {r}/3 📚',nd5Note:'🎲 5-dice variant: played with 5 dice, without the rows: {r}. All other rules unchanged (Poker = five of a kind).',nd5Cur:'This game: 5 dice.',frbL:'{n}: Lord on the first roll! +{x} XP',frbP:'{n}: Poker on the first roll! +{x} XP',winXP:'XP',xpWait:'…',nd5Gone:'The 5-dice variant has been removed. This room can no longer be joined.',fraK:'{n}: Four sixes on the first roll!',fraP:'{n}: Five sixes on the first roll!',fraF:'{n}: Full house of fives and sixes on the first roll!',fraTap:'Tap to skip',fxPrymus:'{n}: School Ace! +{x} XP',fxClean:'{n}: Clean game! +{x} XP',fxTrain:'{n}: Long straight 1–6 on the first roll!',fxCoach:'{n}: Four sixes on the first roll!',iBtn:'Install app',iBtnS:'Install',iBan:'Get the Dice Online app',iT:'📲 Install the app',iIos1:'Tap <b>Share</b> <span class="ik">⬆️</span> in the Safari toolbar',iIos2:'Scroll down and choose <b>Add to Home Screen</b> <span class="ik">➕</span>',iIos3:'Tap <b>Add</b> – the Dice Online icon appears on your home screen 🎲',iSaf:'This browser can\'t install apps. Copy the link and open it in <b>Safari</b>, then: Share ⬆️ → Add to Home Screen.',iChr:'Open the link in <b>Chrome</b> (menu ⋮ → “Open in Chrome” or copy the link), then tap “Install app”.',iAnd:'Open the browser menu <span class="ik">⋮</span> and choose <b>Install app</b> or <b>Add to Home screen</b>.',iCopy:'🔗 Copy link',iOk:'OK',aNew:'Play again',aMenu:'Menu',aHs:'Top 10',aAch:'Achievements',aShare:'Share',coffee:'☕ Buy me a coffee',privLink:'🔒 Privacy policy',vVisits:'Visits',vPlayers:'Visitors',gGames:'Games played',fbBtn:'💡 Ideas & feedback',fbT:'💡 Ideas & feedback',fbIntro:'Got an idea, found a bug or want to say something? Write – every message goes straight to the game’s author.',fbName:'Name (optional)',fbType:'Type',fbIdea:'💡 Idea',fbBug:'🐞 Bug',fbCom:'💬 Comment',fbMsg:'Message',fbMsgPh:'Describe your idea or problem…',fbMail:'Email for a reply (optional)',fbSend:'Send',fbSending:'Sending…',fbOk:'✅ Thank you! Message sent.',fbErr:'❌ Could not send your message.',fbSaved:'We saved it and will try again on your next visit. You can also send it right away by email.',fbMailBtn:'✉️ Send by email',fbRetry:'🔁 Try again',fbAct:'⏳ The form is waiting for activation by the author – please try later.',fbEmpty:'Please enter a message.',fbWait:'Please wait before sending another message ({s} s).',fbBadMail:'Please check the email address.',fbCancel:'Cancel',winT:'Winner!',winTs:'Winners!',winTie:'It\'s a tie!',winRank:'Final ranking',winHS:'🏆 New Top 10 high score!',pts:'pts',share:'Share the game',shT:'📣 Share the game',shMsg:'Let\'s play Dice Online! 🎲',shNative:'Share…',shCopy:'Copy link',shCopied:'Copied!',shIg:'Link copied – paste it in Instagram (DM, caption or story).',hs:'High scores',hsT:'🏆 High scores',hsEmpty:'No scores yet – finish a game to get on the board!',hsNoteM:'This month\'s top 10 for the chosen mode. A fresh board starts on the 1st of every month.',hsAll:'All-time',hsMonth:'This month',hsReset:'resets on the 1st (Irish time)',hsMEmpty:'New month – nobody has played yet. Be the first!',hsEmpty2:'No scores yet in “{m}” – finish a game in this mode to get on the board!',hsMEmpty2:'New month – nobody has played “{m}” yet. Be the first!',hsName:'Player',hsD5:'dice',hsD6:'dice',hsDate:'Date',hsScore:'Score',hsNote:'All-time top 10 for the chosen mode – fully completed games only.',hsClose:'Close',sound:'Sound',ambSnd:'Ambient sound',menu:'🏠 Main menu',confirmLeave:'Leave to the menu?',confirmLeaveS:'The game is in progress – the others will continue without you.',leaveDo:'Leave',leaveNo:'Stay',newDo:'New game',left:'(left)',evBan:'St. Andrew\'s Eve event',evSub:'From 25 to 30 November every finished game brings a light-hearted dice fortune. Just a bit of fun for the whole family.',evBtn:'🕯️ Dice fortune',evShare:'Share fortune',evCopied:'Fortune and link copied!',evCardT:'Dice fortune',evMeta:'From your game: {s} pts',evMetaFree:'Today\'s fortune (play a game and it will use your score)',evShMsg:'My St. Andrew\'s Eve fortune from Dice Online: {f}',evF:['The dice whisper: try something new today – even a small thing.','This week a smile will find you sooner than you think.','Someone close could use your kind advice. Let them know you are there.','Luck today favours people who share the last biscuit.','If you have been putting something off, the dice say: do it today.','A nice message is on its way. Check your inbox and the doorbell.','Calm wins today: one good cup of tea will beat a rush.','Someone will think of you at the table. Maybe write first.','Your dice foretell a pleasant walk – even just around the house.','A small success is coming, and you will enjoy it more than a big one.','The dice advise: fewer plans today, more laughter.','Soon someone will really like your cooking – or your joke.','If you cannot choose, pick the option that makes you smile.','Wear something comfy today and allow yourself a little treat.','Luck lives in small things: a green light, a warm blanket, a found pen.','The dice hint at a good shared roll – invite someone to play.','An idea will arrive that does not need judging yet. Write it down.','A good day to tidy a drawer and your thoughts – both will feel lighter.','Someone will notice your patience. Count that as a point for yourself too.','The fortune is clear: a hug or a good joke will fix the mood.','Do not rush at doors or at the dice. The second roll is often better.','A pleasant surprise waits in the kitchen or in the letterbox.','Your luck grows when you cheer for others. Today that will help someone.','The dice praise persistence: finish one thing, then take a break.','This week, pack a jacket or an umbrella – and a spare sense of humour.','Someone will be glad of a short call. You do not need a reason.','Curiosity wins today. Open a book, a recipe, or another round.','The dice-fortune is smooth: things will go well if you skip the shortcuts.','The best score of the day is laughing together. The dice already counted it.','The moon just winked: tomorrow will be brighter, and tonight a good sleep will do.'],anims:'Animations',tpRoll:'{n} – roll {r}',tpWrote:'{n} scored {v} in {c}',tpCross:'{n} crossed out {c}',tpOpt:'Pop-ups with players’ moves',tpR:'roll {r}',tpXd:'crossed out',tpPts:'pts',appTheme:'App theme:',thNames:{classic:'Classic',sapphire:'Sapphire',galaxy:'Galaxy',aero:'Frutiger Aero',zombie:'Zombie',slime:'Slime (Slime Rancher style)',nature:'Nature',ninja:'Ninja',ocean:'Ocean',beach:'Sunny Beach',soccer:'Soccer',forest:'Forest',winter:'Winter'},colours:'Colours',colBasic:'Basic',colPrem:'✨ Premium',themes:'Themes',colNames:{white:'White',red:'Red',blue:'Blue',green:'Green',purple:'Purple',orange:'Orange',pink:'Pink',black:'Black',yellow:'Yellow',grey:'Grey',metal:'Metal',gold:'Gold',wood:'Wood',diamond:'Diamond',sapphire:'Sapphire'},diceColour:'Dice colour:',rolling:'🎲 {n} is rolling',reconnecting:'reconnecting…',searching:'Looking for the room…',noRoom:'Room {c} not found. Check the code (case does not matter).',enterCode:'Enter the room code.',
  enterName:'Enter your name.',err:'Error: ',connecting:'Connecting…',cantConnect:'Cannot connect ({e}). Check the code.',lost:'Connection to the host was lost.',running:'The game has already started.',full:'Room is full (8).',confirmNew:'Start a new game?',confirmNewS:'All scores will be cleared.',confirmX:'Cross out for sure?',xDo:'Cross out',xNo:'Cancel',
  roll:'Roll',extra:'Extra roll',end:'🏆 Game over! {n} wins ({p} pts)',yourTurn:'Your turn, ',turn:'Turn: ',round:'Round',tMine:'Your turn!',tRolls:'Rolling:',rollN:'Roll {r}/3',extraLeft:'extra rolls',cat:'Category',school:'School',lower:'Lower section',total:'TOTAL',dbl:' (1st roll ×2)',
  rulesList:['6 dice, up to 3 rolls per turn; after a roll you can hold any dice.','A lower-section score written after the FIRST roll counts double (except Chance).','Ones–Sixes: the reference is THREE dice of that number = 0 pts. Each die fewer costs that number, each die more adds it. E.g. two fours = −4, one three = −6, no fives = −15, four sixes = +6, five twos = +4. School is never doubled. A score of 0 (three dice) is shown as “x”. School rows cannot be crossed out.','Clean game bonus: +50 with no cross-outs in the lower section.','School = sum of Ones–Sixes; once School is complete and the sum is below 0 → sum − 50 (e.g. −1 → −51).','Only the dice forming the combination count: 1,2,3,3,4,4 as 2 Pairs = 14.','Straights: small 1–5 = 15, large 2–6 = 20, long 1–6 = 21. General: 1 and 6 + three of 2–5 (one missing) = sum of 5 dice.','Full House = sum of 5 dice, 4 of a kind = sum of 4 dice, Poker = sum + 50 (sixes 80), Lord = Poker × 2 (ones 110). Chance = sum of all dice.','Extra rolls: each player has 3 extra (4th) rolls for the whole game.']}};
-I18N.es={"privLink":"🔒 Política de privacidad","twBtn":"🗼 Torre – modo solitario","twTitle":"🗼 Torre","twIntro":"Sube piso a piso. Cada piso es una versión distinta del juego con una puntuación objetivo: alcánzala para seguir subiendo.","twFloor":"Piso {n}","twTarget":"Objetivo","twBest":"Mejor","twPlay":"Jugar ▶","twCont":"Continuar ▶","twLocked":"Bloqueado","twStart":"Empezar ▶","twBack":"← Mapa de la torre","twNext":"Siguiente piso ▶","twRetry":"🔁 Reintentar","twMenu":"🏠 Menú","twPass":"¡Objetivo alcanzado!","twFail":"Te faltan {n} pts para el objetivo","twTop":"👑 ¡Has conquistado la torre!","twScore":"Puntos","twProj":"previsión","twPen":"Penalizaciones","twStars":"★ objetivo · ★★ objetivo +10 % · ★★★ objetivo +25 %","twAuto":"⏱ Se acabó el tiempo – jugada automática","twMe":"Jugador","twNoMp":"Primero sal de la sala de juego.","twRules":"Reglas del piso","twD5":"5 dados","twD6":"6 dados","twR":"{r} tiradas por turno (en vez de 3)","twNx":"Sin tiradas extra","twLk":"Filas bloqueadas 🔒: {c}","twXp":"Cada tachado: −{p} pts","twCu":"Maldición: {c} necesita al menos {m} pts, si no −{p}","twSr":"La Escuela debe ser ≥ 0, si no −{p}","twTl":"{s} s por turno – luego jugada automática","twCleared":"superado","twSkip":"⏭️ Pasar al siguiente piso","twSkipEnd":"🏁 Terminar la torre","twSkipQ":"¿Terminar este piso con {s} pts?","twSkipQS":"Las estrellas se calculan con tu puntuación actual ({st}). Si terminas la partida podrías conseguir más.","twSkipDo":"Pasar","twSkipT":"🎯 ¡Objetivo alcanzado! Puedes seguir.","twSkipSaved":"Guardado: {st} · {s} pts","twSkipNeed":"⏭️ Siguiente piso – necesitas {n} (ahora {c})","twSkipEndNeed":"🏁 Terminar la torre – necesitas {n} (ahora {c})","twSkipSch":"⏭️ Siguiente piso – 📚 la Escuela debe ser ≥ 0 (ahora {s})","twSkipEndSch":"🏁 Terminar la torre – 📚 la Escuela debe ser ≥ 0 (ahora {s})","twWhySchL":"📚 La Escuela (Unos–Seises) está ahora en {s}. La Escuela importa: mientras no sea ≥ 0 no puedes avanzar, tengas los puntos que tengas.","twCounts":"cuenta","twWhyT":"Para avanzar cuenta tu puntuación «ahora mismo»: {c} de {n} (faltan {d}).","twWhySch":"La Escuela está por debajo de 0 y sin terminar: ahora mismo cuenta como si la partida hubiera acabado: −50","twWhySr":"La Escuela debe ser ≥ 0: −{p}","twWhyCu":"Maldición – {c} sin al menos {m} pts: −{p}","twWhyXp":"Tachados: −{p}","twWhyBon":"Los bonus (partida limpia, Alumno estrella) solo cuentan cuando la hoja está completa.","twN":["Calentamiento","Deberes","Exprés","Dos tiradas","Mano rápida","La maldición del cuatro","Puertas cerradas","Contrarreloj","Sin red","La cima"],"resume":"↩️ Volver a la partida (sala {c})","resumeS":"Tu última partida sigue en marcha: recuperarás tu sitio.","hbRoom":"Sala","hbCopy":"Copiar enlace de la sala","hbShare":"Compartir enlace","hbCopied":"Enlace de la sala copiado","hbShTxt":"¡Juega conmigo a Dice Online! Código de la sala: {c}","waitP":"Esperando a {n}…","waitPS":"desconectado – puede volver a esta partida","skipP":"Saltar turno","skipQ":"¿Saltar a {n}?","skipQS":"Sus turnos se saltarán hasta que vuelva.","skipDo":"Saltar","offMv":"Sin conexión – reconectando…","avLbl":"Avatar:","avHint":"(opcional – toca otra vez para quitarlo)","title":"Dice Online","tagline":"Tira los dados con tus amigos","ace":"🎓 Alumno estrella (bonus)","aceT":"🎓 ¡Alumno estrella! +50","yourName":"Tu nombre:","create":"Nueva partida","orJoin":"o únete con un código:","join":"Unirse","room":"Sala:","sendLink":"Envía el enlace:","copy":"Copiar","players":"Jugadores (2–8):","start":"Empezar partida","wait":"Esperando a que el anfitrión empiece la partida…","help":"Toca un dado para guardarlo. Toca una casilla resaltada de la tabla para anotar tu puntuación (✕ = tachar, 0 pts – solo en la parte inferior).","newGame":"🔁 Nueva partida – mismos jugadores","rules":"Reglas","bonus":"Bonus de partida limpia","gdT":"Detalles de la partida","gdNA":"La hoja completa de esta partida no se ha conservado.","gdNA2":"Las partidas antiguas (hasta la versión 2.00) guardaban sus detalles solo temporalmente en un servidor público y algunos han caducado. Desde la versión 2.01, los detalles de cada partida terminada se guardan de forma permanente.","gdSrch":"Buscando la hoja completa en servidores de reserva…","gdNoDet":"solo resumen","gdLoad":"Cargando…","gdDice":"dados","gdWin":"ganador","gdHs":"entrada en el ranking","gdLog":"Registro de la partida (jugadas en orden)","gdBtn":"Detalles de la partida","gdX2":"×2 = anotado en la 1.ª tirada","ndLbl":"Número de dados:","modeLbl":"Modo de juego:","modeIn":"Modo: {m}","m_classic":"Clásico","m_train":"Tren lento","m_hw":"Primero la tarea","s_classic":"Clásico","s_train":"Tren","s_hw":"Tarea","d_classic":"Reglas normales: cualquier fila, en cualquier momento.","d_train":"Para en todas las estaciones: filas de arriba abajo, en orden.","d_hw":"Las 3 primeras rondas solo en la Escuela; después, todo vale.","mNow":"Ahora: {c}","mHw":"Primero la Escuela (quedan {n})","mRound":"Ronda {r}/3 📚","nd5Note":"🎲 Variante de 5 dados: se juega con 5 dados, sin las filas: {r}. El resto de reglas no cambia (Póker = cinco iguales).","nd5Cur":"Esta partida: 5 dados.","frbL":"{n}: ¡Lord en el primer tiro! +{x} XP","frbP":"{n}: ¡Póker en el primer tiro! +{x} XP","winXP":"XP","xpWait":"…","nd5Gone":"Se ha eliminado la variante de 5 dados. Ya no se puede entrar en esta sala.","fraK":"{n}: ¡Cuatro seises en el primer tiro!","fraP":"{n}: ¡Póker de seises en el primer tiro!","fraF":"{n}: ¡Full de cincos y seises en el primer tiro!","fraTap":"Toca para omitir","iBtn":"Instalar app","iBtnS":"Instalar","iBan":"Consigue la app Dice Online","iT":"📲 Instalar la app","iIos1":"Toca <b>Compartir</b> <span class=\"ik\">⬆️</span> en la barra de Safari","iIos2":"Desplázate y elige <b>Añadir a pantalla de inicio</b> <span class=\"ik\">➕</span>","iIos3":"Toca <b>Añadir</b>: el icono de Dice Online aparecerá en tu pantalla de inicio 🎲","iSaf":"Este navegador no puede instalar apps. Copia el enlace y ábrelo en <b>Safari</b>; luego: Compartir ⬆️ → Añadir a pantalla de inicio.","iChr":"Abre el enlace en <b>Chrome</b> (menú ⋮ → «Abrir en Chrome» o copia el enlace) y toca «Instalar app».","iAnd":"Abre el menú del navegador <span class=\"ik\">⋮</span> y elige <b>Instalar app</b> o <b>Añadir a pantalla de inicio</b>.","iCopy":"🔗 Copiar enlace","iOk":"OK","aNew":"Jugar otra vez","aMenu":"Menú","aHs":"Top 10","aAch":"Logros","aShare":"Compartir","coffee":"☕ Invítame a un café","vVisits":"Visitas","vPlayers":"Visitantes","gGames":"Partidas jugadas","fbBtn":"💡 Ideas y opiniones","fbT":"💡 Ideas y opiniones","fbIntro":"¿Tienes una idea, encontraste un error o quieres decir algo? Escribe: cada mensaje llega directamente al autor del juego.","fbName":"Nombre (opcional)","fbType":"Tipo","fbIdea":"💡 Idea","fbBug":"🐞 Error","fbCom":"💬 Comentario","fbMsg":"Mensaje","fbMsgPh":"Describe tu idea o el problema…","fbMail":"Correo para responderte (opcional)","fbSend":"Enviar","fbSending":"Enviando…","fbOk":"✅ ¡Gracias! Mensaje enviado.","fbErr":"❌ No se pudo enviar tu mensaje.","fbSaved":"Lo hemos guardado y lo intentaremos de nuevo en tu próxima visita. También puedes enviarlo ahora por correo.","fbMailBtn":"✉️ Enviar por correo","fbRetry":"🔁 Reintentar","fbAct":"⏳ El formulario está pendiente de activación por el autor; inténtalo más tarde.","fbEmpty":"Escribe un mensaje.","fbWait":"Espera antes de enviar otro mensaje ({s} s).","fbBadMail":"Revisa la dirección de correo.","fbCancel":"Cancelar","winT":"¡Ganador!","winTs":"¡Ganadores!","winTie":"¡Empate!","winRank":"Clasificación final","winHS":"🏆 ¡Nuevo récord en el Top 10!","pts":"pts","share":"Compartir el juego","shT":"📣 Compartir el juego","shMsg":"¡Juguemos a Dice Online! 🎲","shNative":"Compartir…","shCopy":"Copiar enlace","shCopied":"¡Copiado!","shIg":"Enlace copiado: pégalo en Instagram (mensaje, descripción o historia).","hs":"Ranking","hsT":"🏆 Ranking","hsEmpty":"Aún no hay puntuaciones: ¡termina una partida para entrar en el ranking!","hsNoteM":"Top 10 de este mes para el modo elegido. Cada día 1 empieza un ranking nuevo.","hsAll":"Histórico","hsMonth":"Este mes","hsReset":"se reinicia el día 1 (hora de Irlanda)","hsMEmpty":"Mes nuevo: todavía no ha jugado nadie. ¡Sé el primero!","hsEmpty2":"Aún no hay puntuaciones en «{m}»: ¡termina una partida en este modo para entrar en el ranking!","hsMEmpty2":"Mes nuevo: nadie ha jugado todavía a «{m}». ¡Sé el primero!","hsName":"Jugador","hsD5":"dados","hsD6":"dados","hsDate":"Fecha","hsScore":"Puntos","hsNote":"Top 10 histórico para el modo elegido: solo partidas terminadas por completo.","hsClose":"Cerrar","sound":"Sonido","ambSnd":"Sonido ambiente","menu":"🏠 Menú principal","confirmLeave":"¿Volver al menú?","confirmLeaveS":"La partida está en curso: los demás seguirán sin ti.","leaveDo":"Salir","leaveNo":"Quedarme","newDo":"Nueva partida","left":"(se fue)","evBan":"Evento de la Noche de San Andrés","evSub":"Del 25 al 30 de noviembre, cada partida terminada trae un oráculo de los dados divertido. Un poco de diversión para toda la familia.","evBtn":"🕯️ Oráculo de los dados","evShare":"Compartir oráculo","evCopied":"¡Oráculo y enlace copiados!","evCardT":"Oráculo de los dados","evMeta":"De tu partida: {s} pts","evMetaFree":"Oráculo del día (juega una partida y usará tu puntuación)","evShMsg":"Mi oráculo de la Noche de San Andrés en Dice Online: {f}","evF":["Los dados susurran: hoy prueba algo nuevo, aunque sea pequeño.","Esta semana una sonrisa te encontrará antes de lo que crees.","A alguien cercano le vendría bien un buen consejo tuyo. Hazle saber que estás ahí.","Hoy la suerte acompaña a quien comparte la última galleta.","Si llevas tiempo aplazando algo, los dados dicen: hazlo hoy.","Viene de camino un mensaje bonito. Mira tu buzón y atento al timbre.","Hoy gana la calma: una buena taza de té vale más que las prisas.","Alguien pensará en ti en la mesa. Quizá escribe tú primero.","Tus dados predicen un paseo agradable, aunque sea alrededor de casa.","Se acerca un pequeño éxito, y lo disfrutarás más que uno grande.","Los dados aconsejan: hoy menos planes y más risas.","Pronto a alguien le encantará tu comida… o tu chiste.","Si no sabes qué elegir, elige lo que te haga sonreír.","Ponte hoy algo cómodo y date un pequeño capricho.","La suerte vive en lo pequeño: un semáforo en verde, una manta calentita, un boli que aparece.","Los dados anuncian una buena tirada en compañía: invita a alguien a jugar.","Llegará una idea que todavía no hace falta juzgar. Apúntala.","Buen día para ordenar un cajón y las ideas: ambos quedarán más ligeros.","Alguien notará tu paciencia. Cuéntalo también como un punto para ti.","El oráculo es claro: un abrazo o un buen chiste arreglarán el ánimo.","No corras ni en las puertas ni con los dados. La segunda tirada suele ser mejor.","Una sorpresa agradable te espera en la cocina o en el buzón.","Tu suerte crece cuando animas a los demás. Hoy eso ayudará a alguien.","Los dados premian la constancia: termina una cosa y luego descansa.","Esta semana lleva chaqueta o paraguas… y una ración extra de humor.","A alguien le alegrará una llamada corta. No necesitas un motivo.","Hoy gana la curiosidad. Abre un libro, una receta u otra partida.","El oráculo de los dados va sobre ruedas: todo saldrá bien si evitas los atajos.","La mejor puntuación del día es reír juntos. Los dados ya la han contado.","La luna acaba de guiñar un ojo: mañana será más luminoso, y esta noche bastará con dormir bien."],"anims":"Animaciones","tpRoll":"{n} – tirada {r}","tpWrote":"{n} anotó {v} en {c}","tpCross":"{n} tachó {c}","tpOpt":"Avisos con las jugadas de los jugadores","tpR":"tirada {r}","tpXd":"tachado","tpPts":"pts","appTheme":"Tema de la app:","thNames":{"classic":"Clásico","sapphire":"Zafiro","galaxy":"Galaxia","aero":"Frutiger Aero","zombie":"Zombi","slime":"Slime (estilo Slime Rancher)","nature":"Naturaleza","ninja":"Ninja","ocean":"Océano","beach":"Playa soleada","soccer":"Fútbol","forest":"Bosque","winter":"Invierno"},"colours":"Colores","colBasic":"Básicos","colPrem":"✨ Premium","themes":"Temas","colNames":{"white":"Blanco","red":"Rojo","blue":"Azul","green":"Verde","purple":"Morado","orange":"Naranja","pink":"Rosa","black":"Negro","yellow":"Amarillo","grey":"Gris","metal":"Metal","gold":"Oro","wood":"Madera","diamond":"Diamante","sapphire":"Zafiro"},"diceColour":"Color de los dados:","rolling":"🎲 {n} está tirando","reconnecting":"reconectando…","searching":"Buscando la sala…","noRoom":"No se encontró la sala {c}. Revisa el código (no importan mayúsculas ni minúsculas).","enterCode":"Escribe el código de la sala.","enterName":"Escribe tu nombre.","err":"Error: ","connecting":"Conectando…","cantConnect":"No se puede conectar ({e}). Revisa el código.","lost":"Se perdió la conexión con el anfitrión.","running":"La partida ya ha empezado.","full":"La sala está llena (8).","confirmNew":"¿Empezar una partida nueva?","confirmNewS":"Se borrarán todas las puntuaciones.","confirmX":"¿Seguro que quieres tachar?","xDo":"Tachar","xNo":"Cancelar","roll":"Tirar","extra":"Tirada extra","end":"🏆 ¡Fin de la partida! Gana {n} ({p} pts)","yourTurn":"Tu turno, ","turn":"Turno: ","round":"Ronda","tMine":"¡Tu turno!","tRolls":"Tira:","rollN":"Tirada {r}/3","extraLeft":"tiradas extra","cat":"Categoría","school":"Escuela","lower":"Parte inferior","total":"TOTAL","dbl":" (1.ª tirada ×2)","rulesList":["6 dados, hasta 3 tiradas por turno; tras cada tirada puedes guardar los dados que quieras.","Una puntuación de la parte inferior anotada tras la PRIMERA tirada cuenta doble (salvo Chance).","Unos–Seises: la referencia son TRES dados de ese número = 0 pts. Cada dado de menos resta ese número y cada dado de más lo suma. Por ejemplo: dos cuatros = −4, un tres = −6, ningún cinco = −15, cuatro seises = +6, cinco doses = +4. La Escuela nunca se duplica. Un 0 (tres dados) se muestra como «x». Las filas de la Escuela no se pueden tachar.","Bonus de partida limpia: +50 sin ningún tachado en la parte inferior.","Escuela = suma de Unos–Seises; cuando la Escuela está completa y la suma es menor que 0 → suma − 50 (p. ej., −1 → −51).","Solo cuentan los dados que forman la combinación: 1,2,3,3,4,4 como 2 Parejas = 14.","Escaleras: menor 1–5 = 15, mayor 2–6 = 20, larga 1–6 = 21. General: 1 y 6 + tres de 2–5 (falta uno) = suma de 5 dados.","Full = suma de 5 dados, Cuatro iguales = suma de 4 dados, Póker = suma + 50 (seises 80), Lord = Póker × 2 (unos 110). Chance = suma de todos los dados.","Tiradas extra: cada jugador tiene 3 tiradas extra (4.ª tirada) para toda la partida."]};I18N.de={"privLink":"🔒 Datenschutzerklärung","twBtn":"🗼 Turm – Solomodus","twTitle":"🗼 Turm","twIntro":"Steig Etage für Etage nach oben. Jede Etage ist eine andere Spielvariante mit einer Zielpunktzahl – erreichst du sie, geht es weiter nach oben.","twFloor":"Etage {n}","twTarget":"Ziel","twBest":"Bestwert","twPlay":"Spielen ▶","twCont":"Weiter ▶","twLocked":"Gesperrt","twStart":"Start ▶","twBack":"← Turmkarte","twNext":"Nächste Etage ▶","twRetry":"🔁 Nochmal versuchen","twMenu":"🏠 Menü","twPass":"Ziel erreicht!","twFail":"{n} Pkt. unter dem Ziel","twTop":"👑 Du hast den Turm bezwungen!","twScore":"Punkte","twProj":"Prognose","twPen":"Strafen","twStars":"★ Ziel · ★★ Ziel +10 % · ★★★ Ziel +25 %","twAuto":"⏱ Zeit abgelaufen – automatischer Zug","twMe":"Spieler","twNoMp":"Verlass zuerst den Spielraum.","twRules":"Regeln der Etage","twD5":"5 Würfel","twD6":"6 Würfel","twR":"{r} Würfe pro Zug (statt 3)","twNx":"Keine Zusatzwürfe","twLk":"Gesperrte Zeilen 🔒: {c}","twXp":"Jede Streichung: −{p} Pkt.","twCu":"Fluch: {c} braucht mindestens {m} Pkt., sonst −{p}","twSr":"Schule muss ≥ 0 sein, sonst −{p}","twTl":"{s} s pro Zug – danach automatischer Zug","twCleared":"geschafft","twSkip":"⏭️ Weiter zur nächsten Etage","twSkipEnd":"🏁 Turm abschließen","twSkipQ":"Diese Etage mit {s} Pkt. beenden?","twSkipQS":"Die Sterne werden nach deinem aktuellen Punktestand ({st}) vergeben. Wenn du das Spiel zu Ende spielst, kannst du mehr holen.","twSkipDo":"Überspringen","twSkipT":"🎯 Ziel erreicht! Du kannst weiter.","twSkipSaved":"Gespeichert: {st} · {s} Pkt.","twSkipNeed":"⏭️ Nächste Etage – nötig: {n} (jetzt {c})","twSkipEndNeed":"🏁 Turm abschließen – nötig: {n} (jetzt {c})","twSkipSch":"⏭️ Nächste Etage – 📚 Schule muss ≥ 0 sein (jetzt {s})","twSkipEndSch":"🏁 Turm abschließen – 📚 Schule muss ≥ 0 sein (jetzt {s})","twWhySchL":"📚 Die Schule (Einer–Sechser) steht gerade bei {s}. Die Schule zählt – solange sie nicht ≥ 0 ist, geht es nicht weiter, egal wie viele Punkte du hast.","twCounts":"zählt","twWhyT":"Zum Weiterkommen zählt dein Punktestand „jetzt“: {c} von {n} (noch {d}).","twWhySch":"Die Schule ist unter 0 und nicht fertig – im Moment zählt sie so, als wäre das Spiel zu Ende: −50","twWhySr":"Schule muss ≥ 0 sein: −{p}","twWhyCu":"Fluch – {c} ohne mindestens {m} Pkt.: −{p}","twWhyXp":"Streichungen: −{p}","twWhyBon":"Boni (sauberes Spiel, Klassenbester) zählen erst, wenn der Block komplett ausgefüllt ist.","twN":["Aufwärmen","Hausaufgaben","Express","Zwei Würfe","Schnelle Hand","Fluch der Vier","Verschlossene Türen","Wettlauf mit der Zeit","Ohne Netz","Gipfel"],"resume":"↩️ Zurück ins Spiel (Raum {c})","resumeS":"Dein letztes Spiel läuft noch – du bekommst deinen Platz zurück.","hbRoom":"Raum","hbCopy":"Raumlink kopieren","hbShare":"Link teilen","hbCopied":"Raumlink kopiert","hbShTxt":"Spiel mit mir Dice Online! Raumcode: {c}","waitP":"Warten auf {n}…","waitPS":"Verbindung getrennt – kann wieder ins Spiel einsteigen","skipP":"Zug überspringen","skipQ":"{n} überspringen?","skipQS":"Die Züge werden übersprungen, bis die Person zurück ist.","skipDo":"Überspringen","offMv":"Keine Verbindung – verbinde neu…","avLbl":"Avatar:","avHint":"(optional – nochmal tippen zum Entfernen)","title":"Dice Online","tagline":"Würfeln mit Freunden","ace":"🎓 Klassenbester (Bonus)","aceT":"🎓 Klassenbester! +50","yourName":"Dein Name:","create":"Neues Spiel","orJoin":"oder mit Code beitreten:","join":"Beitreten","room":"Raum:","sendLink":"Link senden:","copy":"Kopieren","players":"Spieler (2–8):","start":"Spiel starten","wait":"Warten, bis der Gastgeber das Spiel startet…","help":"Tippe auf einen Würfel, um ihn zu halten. Tippe auf ein markiertes Feld in der Tabelle, um deine Punkte einzutragen (✕ = streichen, 0 Pkt. – nur im unteren Teil).","newGame":"🔁 Neues Spiel – gleiche Spieler","rules":"Regeln","bonus":"Bonus: sauberes Spiel","gdT":"Spieldetails","gdNA":"Der vollständige Spielzettel dieses Spiels ist nicht erhalten.","gdNA2":"Ältere Spiele (bis Version 2.00) haben ihre Details nur vorübergehend auf einem öffentlichen Server gespeichert, und ein Teil davon ist abgelaufen. Seit Version 2.01 werden die Details jedes beendeten Spiels dauerhaft gespeichert.","gdSrch":"Suche den vollständigen Spielzettel auf Ersatzservern…","gdNoDet":"nur Zusammenfassung","gdLoad":"Wird geladen…","gdDice":"Würfel","gdWin":"Sieger","gdHs":"Eintrag in der Bestenliste","gdLog":"Spielverlauf (Züge der Reihe nach)","gdBtn":"Spieldetails","gdX2":"×2 = beim 1. Wurf eingetragen","ndLbl":"Anzahl der Würfel:","modeLbl":"Spielmodus:","modeIn":"Modus: {m}","m_classic":"Klassisch","m_train":"Bummelzug","m_hw":"Erst Hausaufgaben","s_classic":"Klassisch","s_train":"Bummelzug","s_hw":"Hausaufgaben","d_classic":"Normale Regeln – jede Zeile, jederzeit.","d_train":"Hält an jeder Station: Zeilen von oben nach unten, der Reihe nach.","d_hw":"Die ersten 3 Runden nur Schule, danach ist alles erlaubt.","mNow":"Jetzt: {c}","mHw":"Erst Schule (noch {n})","mRound":"Runde {r}/3 📚","nd5Note":"🎲 Variante mit 5 Würfeln: gespielt wird mit 5 Würfeln, ohne die Zeilen: {r}. Alle anderen Regeln bleiben gleich (Poker = fünf gleiche).","nd5Cur":"Dieses Spiel: 5 Würfel.","frbL":"{n}: Lord im ersten Wurf! +{x} XP","frbP":"{n}: Poker im ersten Wurf! +{x} XP","winXP":"XP","xpWait":"…","nd5Gone":"Die Variante mit 5 Würfeln wurde entfernt. Diesem Raum kann man nicht mehr beitreten.","fraK":"{n}: Viererpasch aus Sechsern im ersten Wurf!","fraP":"{n}: Poker aus Sechsern im ersten Wurf!","fraF":"{n}: Full House aus Fünfern und Sechsern im ersten Wurf!","fraTap":"Tippen zum Überspringen","iBtn":"App installieren","iBtnS":"Installieren","iBan":"Hol dir die Dice-Online-App","iT":"📲 App installieren","iIos1":"Tippe in der Safari-Leiste auf <b>Teilen</b> <span class=\"ik\">⬆️</span>","iIos2":"Scrolle nach unten und wähle <b>Zum Home-Bildschirm</b> <span class=\"ik\">➕</span>","iIos3":"Tippe auf <b>Hinzufügen</b> – das Dice-Online-Symbol erscheint auf deinem Home-Bildschirm 🎲","iSaf":"Dieser Browser kann keine Apps installieren. Kopiere den Link und öffne ihn in <b>Safari</b>, dann: Teilen ⬆️ → Zum Home-Bildschirm.","iChr":"Öffne den Link in <b>Chrome</b> (Menü ⋮ → „In Chrome öffnen“ oder Link kopieren) und tippe dann auf „App installieren“.","iAnd":"Öffne das Browsermenü <span class=\"ik\">⋮</span> und wähle <b>App installieren</b> oder <b>Zum Startbildschirm hinzufügen</b>.","iCopy":"🔗 Link kopieren","iOk":"OK","aNew":"Nochmal spielen","aMenu":"Menü","aHs":"Top 10","aAch":"Erfolge","aShare":"Teilen","coffee":"☕ Kaffee spendieren","vVisits":"Besuche","vPlayers":"Besucher","gGames":"Gespielte Spiele","fbBtn":"💡 Ideen & Feedback","fbT":"💡 Ideen & Feedback","fbIntro":"Du hast eine Idee, einen Fehler gefunden oder willst etwas sagen? Schreib uns – jede Nachricht geht direkt an den Autor des Spiels.","fbName":"Name (optional)","fbType":"Art","fbIdea":"💡 Idee","fbBug":"🐞 Fehler","fbCom":"💬 Kommentar","fbMsg":"Nachricht","fbMsgPh":"Beschreibe deine Idee oder dein Problem…","fbMail":"E-Mail für eine Antwort (optional)","fbSend":"Senden","fbSending":"Wird gesendet…","fbOk":"✅ Danke! Nachricht gesendet.","fbErr":"❌ Die Nachricht konnte nicht gesendet werden.","fbSaved":"Wir haben sie gespeichert und versuchen es bei deinem nächsten Besuch erneut. Du kannst sie auch gleich per E-Mail schicken.","fbMailBtn":"✉️ Per E-Mail senden","fbRetry":"🔁 Nochmal versuchen","fbAct":"⏳ Das Formular wartet noch auf die Freischaltung durch den Autor – bitte versuch es später.","fbEmpty":"Bitte gib eine Nachricht ein.","fbWait":"Bitte warte, bevor du die nächste Nachricht sendest ({s} s).","fbBadMail":"Bitte überprüfe die E-Mail-Adresse.","fbCancel":"Abbrechen","winT":"Sieger!","winTs":"Sieger!","winTie":"Unentschieden!","winRank":"Endstand","winHS":"🏆 Neuer Top-10-Rekord!","pts":"Pkt.","share":"Spiel teilen","shT":"📣 Spiel teilen","shMsg":"Lass uns Dice Online spielen! 🎲","shNative":"Teilen…","shCopy":"Link kopieren","shCopied":"Kopiert!","shIg":"Link kopiert – füge ihn in Instagram ein (DM, Beschreibung oder Story).","hs":"Bestenliste","hsT":"🏆 Bestenliste","hsEmpty":"Noch keine Ergebnisse – beende ein Spiel, um auf die Liste zu kommen!","hsNoteM":"Top 10 dieses Monats für den gewählten Modus. Am 1. jedes Monats beginnt eine neue Liste.","hsAll":"Alle Zeiten","hsMonth":"Dieser Monat","hsReset":"wird am 1. zurückgesetzt (irische Zeit)","hsMEmpty":"Neuer Monat – noch hat niemand gespielt. Sei der Erste!","hsEmpty2":"Noch keine Ergebnisse in „{m}“ – beende ein Spiel in diesem Modus, um auf die Liste zu kommen!","hsMEmpty2":"Neuer Monat – noch hat niemand „{m}“ gespielt. Sei der Erste!","hsName":"Spieler","hsD5":"Würfel","hsD6":"Würfel","hsDate":"Datum","hsScore":"Punkte","hsNote":"Top 10 aller Zeiten für den gewählten Modus – nur komplett beendete Spiele.","hsClose":"Schließen","sound":"Ton","ambSnd":"Hintergrundklang","menu":"🏠 Hauptmenü","confirmLeave":"Zurück zum Menü?","confirmLeaveS":"Das Spiel läuft – die anderen spielen ohne dich weiter.","leaveDo":"Verlassen","leaveNo":"Bleiben","newDo":"Neues Spiel","left":"(weg)","evBan":"Andreasnacht-Event","evSub":"Vom 25. bis 30. November bringt jedes beendete Spiel ein heiteres Würfelorakel. Einfach ein bisschen Spaß für die ganze Familie.","evBtn":"🕯️ Würfelorakel","evShare":"Orakel teilen","evCopied":"Orakel und Link kopiert!","evCardT":"Würfelorakel","evMeta":"Aus deinem Spiel: {s} Pkt.","evMetaFree":"Orakel des Tages (spiel eine Runde, dann nutzt es deine Punkte)","evShMsg":"Mein Andreasnacht-Orakel von Dice Online: {f}","evF":["Die Würfel flüstern: Probier heute etwas Neues aus – auch eine Kleinigkeit.","Diese Woche findet dich ein Lächeln schneller, als du denkst.","Jemand in deiner Nähe könnte einen guten Rat von dir brauchen. Zeig, dass du da bist.","Das Glück ist heute mit denen, die den letzten Keks teilen.","Wenn du etwas vor dir herschiebst, sagen die Würfel: Mach es heute.","Eine nette Nachricht ist unterwegs. Schau ins Postfach und horch auf die Klingel.","Heute gewinnt die Ruhe: Eine gute Tasse Tee schlägt jede Hektik.","Jemand denkt am Tisch an dich. Vielleicht schreibst du zuerst.","Deine Würfel sagen einen schönen Spaziergang voraus – und sei es nur ums Haus.","Ein kleiner Erfolg kommt auf dich zu, und er wird dich mehr freuen als ein großer.","Die Würfel raten: heute weniger Pläne, mehr Lachen.","Bald wird jemand dein Essen richtig lieben – oder deinen Witz.","Wenn du dich nicht entscheiden kannst, nimm das, was dich zum Lächeln bringt.","Zieh heute etwas Bequemes an und gönn dir eine kleine Belohnung.","Das Glück wohnt im Kleinen: eine grüne Ampel, eine warme Decke, ein wiedergefundener Stift.","Die Würfel deuten auf einen guten gemeinsamen Wurf – lade jemanden zum Spielen ein.","Eine Idee kommt, die noch nicht bewertet werden muss. Schreib sie auf.","Ein guter Tag, um eine Schublade und die Gedanken aufzuräumen – beides wird leichter.","Jemand wird deine Geduld bemerken. Zähl das auch als Punkt für dich.","Das Orakel ist eindeutig: Eine Umarmung oder ein guter Witz retten die Stimmung.","Keine Eile – weder an der Tür noch beim Würfeln. Der zweite Wurf ist oft besser.","Eine angenehme Überraschung wartet in der Küche oder im Briefkasten.","Dein Glück wächst, wenn du anderen die Daumen drückst. Heute hilft das jemandem.","Die Würfel loben Ausdauer: Bring eine Sache zu Ende, dann mach Pause.","Pack diese Woche eine Jacke oder einen Schirm ein – und eine Extraportion Humor.","Jemand freut sich über einen kurzen Anruf. Du brauchst keinen Grund.","Heute gewinnt die Neugier. Schlag ein Buch auf, ein Rezept oder noch eine Runde.","Das Würfelorakel ist klar: Alles läuft gut, wenn du auf Abkürzungen verzichtest.","Das beste Ergebnis des Tages ist gemeinsames Lachen. Die Würfel haben es schon gezählt.","Der Mond hat gerade gezwinkert: Morgen wird heller, und heute Nacht tut guter Schlaf gut."],"anims":"Animationen","tpRoll":"{n} – Wurf {r}","tpWrote":"{n} trägt {v} bei {c} ein","tpCross":"{n} streicht {c}","tpOpt":"Pop-ups mit den Zügen der Spieler","tpR":"Wurf {r}","tpXd":"gestrichen","tpPts":"Pkt.","appTheme":"App-Design:","thNames":{"classic":"Klassisch","sapphire":"Saphir","galaxy":"Galaxie","aero":"Frutiger Aero","zombie":"Zombie","slime":"Schleim (im Stil von Slime Rancher)","nature":"Natur","ninja":"Ninja","ocean":"Ozean","beach":"Sonniger Strand","soccer":"Fußball","forest":"Wald","winter":"Winter"},"colours":"Farben","colBasic":"Basis","colPrem":"✨ Premium","themes":"Designs","colNames":{"white":"Weiß","red":"Rot","blue":"Blau","green":"Grün","purple":"Lila","orange":"Orange","pink":"Rosa","black":"Schwarz","yellow":"Gelb","grey":"Grau","metal":"Metall","gold":"Gold","wood":"Holz","diamond":"Diamant","sapphire":"Saphir"},"diceColour":"Würfelfarbe:","rolling":"🎲 {n} würfelt","reconnecting":"verbinde neu…","searching":"Suche den Raum…","noRoom":"Raum {c} nicht gefunden. Überprüfe den Code (Groß-/Kleinschreibung ist egal).","enterCode":"Gib den Raumcode ein.","enterName":"Gib deinen Namen ein.","err":"Fehler: ","connecting":"Verbinde…","cantConnect":"Verbindung nicht möglich ({e}). Überprüfe den Code.","lost":"Die Verbindung zum Gastgeber wurde unterbrochen.","running":"Das Spiel läuft bereits.","full":"Der Raum ist voll (8).","confirmNew":"Neues Spiel starten?","confirmNewS":"Alle Punkte werden gelöscht.","confirmX":"Wirklich streichen?","xDo":"Streichen","xNo":"Abbrechen","roll":"Würfeln","extra":"Zusatzwurf","end":"🏆 Spielende! {n} gewinnt ({p} Pkt.)","yourTurn":"Du bist dran, ","turn":"Am Zug: ","round":"Runde","tMine":"Du bist dran!","tRolls":"Würfelt:","rollN":"Wurf {r}/3","extraLeft":"Zusatzwürfe","cat":"Kategorie","school":"Schule","lower":"Unterer Teil","total":"GESAMT","dbl":" (1. Wurf ×2)","rulesList":["6 Würfel, bis zu 3 Würfe pro Zug; nach einem Wurf kannst du beliebige Würfel halten.","Ein Ergebnis im unteren Teil, das nach dem ERSTEN Wurf eingetragen wird, zählt doppelt (außer Chance).","Einer–Sechser: Bezugswert sind DREI Würfel dieser Zahl = 0 Pkt. Jeder Würfel weniger kostet diese Zahl, jeder Würfel mehr bringt sie. Z. B. zwei Vierer = −4, ein Dreier = −6, keine Fünfer = −15, vier Sechser = +6, fünf Zweier = +4. Die Schule wird nie verdoppelt. Ein Ergebnis von 0 (drei Würfel) wird als „x“ angezeigt. Zeilen der Schule können nicht gestrichen werden.","Bonus für sauberes Spiel: +50 ohne Streichung im unteren Teil.","Schule = Summe von Einer–Sechser; ist die Schule komplett und die Summe unter 0 → Summe − 50 (z. B. −1 → −51).","Es zählen nur die Würfel, die die Kombination bilden: 1,2,3,3,4,4 als 2 Paare = 14.","Straßen: kleine 1–5 = 15, große 2–6 = 20, lange 1–6 = 21. General: 1 und 6 + drei von 2–5 (eine fehlt) = Summe von 5 Würfeln.","Full House = Summe von 5 Würfeln, Viererpasch = Summe von 4 Würfeln, Poker = Summe + 50 (Sechser 80), Lord = Poker × 2 (Einer 110). Chance = Summe aller Würfel.","Zusatzwürfe: Jeder Spieler hat für das ganze Spiel 3 Zusatzwürfe (4. Wurf)."]};
+I18N.es={"privLink":"🔒 Política de privacidad","twBtn":"🗼 Torre – modo solitario","twTitle":"🗼 Torre","twIntro":"Sube piso a piso. Cada piso es una versión distinta del juego con una puntuación objetivo: alcánzala para seguir subiendo.","twFloor":"Piso {n}","twTarget":"Objetivo","twBest":"Mejor","twPlay":"Jugar ▶","twCont":"Continuar ▶","twLocked":"Bloqueado","twStart":"Empezar ▶","twBack":"← Mapa de la torre","twNext":"Siguiente piso ▶","twRetry":"🔁 Reintentar","twMenu":"🏠 Menú","twPass":"¡Objetivo alcanzado!","twFail":"Te faltan {n} pts para el objetivo","twTop":"👑 ¡Has conquistado la torre!","twScore":"Puntos","twProj":"previsión","twPen":"Penalizaciones","twStars":"★ objetivo · ★★ objetivo +10 % · ★★★ objetivo +25 %","twAuto":"⏱ Se acabó el tiempo – jugada automática","twMe":"Jugador","twNoMp":"Primero sal de la sala de juego.","twRules":"Reglas del piso","twD5":"5 dados","twD6":"6 dados","twR":"{r} tiradas por turno (en vez de 3)","twNx":"Sin tiradas extra","twLk":"Filas bloqueadas 🔒: {c}","twXp":"Cada tachado: −{p} pts","twCu":"Maldición: {c} necesita al menos {m} pts, si no −{p}","twSr":"La Escuela debe ser ≥ 0, si no −{p}","twTl":"{s} s por turno – luego jugada automática","twCleared":"superado","twSkip":"⏭️ Pasar al siguiente piso","twSkipEnd":"🏁 Terminar la torre","twSkipQ":"¿Terminar este piso con {s} pts?","twSkipQS":"Las estrellas se calculan con tu puntuación actual ({st}). Si terminas la partida podrías conseguir más.","twSkipDo":"Pasar","twSkipT":"🎯 ¡Objetivo alcanzado! Puedes seguir.","twSkipSaved":"Guardado: {st} · {s} pts","twSkipNeed":"⏭️ Siguiente piso – necesitas {n} (ahora {c})","twSkipEndNeed":"🏁 Terminar la torre – necesitas {n} (ahora {c})","twSkipSch":"⏭️ Siguiente piso – 📚 la Escuela debe ser ≥ 0 (ahora {s})","twSkipEndSch":"🏁 Terminar la torre – 📚 la Escuela debe ser ≥ 0 (ahora {s})","twWhySchL":"📚 La Escuela (Unos–Seises) está ahora en {s}. La Escuela importa: mientras no sea ≥ 0 no puedes avanzar, tengas los puntos que tengas.","twCounts":"cuenta","twWhyT":"Para avanzar cuenta tu puntuación «ahora mismo»: {c} de {n} (faltan {d}).","twWhySch":"La Escuela está por debajo de 0 y sin terminar: ahora mismo cuenta como si la partida hubiera acabado: −50","twWhySr":"La Escuela debe ser ≥ 0: −{p}","twWhyCu":"Maldición – {c} sin al menos {m} pts: −{p}","twWhyXp":"Tachados: −{p}","twWhyBon":"Los bonus (partida limpia, Alumno estrella) solo cuentan cuando la hoja está completa.","twN":["Calentamiento","Deberes","Exprés","Dos tiradas","Mano rápida","La maldición del cuatro","Puertas cerradas","Contrarreloj","Sin red","La cima"],"resume":"↩️ Volver a la partida (sala {c})","resumeS":"Tu última partida sigue en marcha: recuperarás tu sitio.","hbRoom":"Sala","hbCopy":"Copiar enlace de la sala","hbShare":"Compartir enlace","hbCopied":"Enlace de la sala copiado","hbShTxt":"¡Juega conmigo a Dice Online! Código de la sala: {c}","waitP":"Esperando a {n}…","waitPS":"desconectado – puede volver a esta partida","skipP":"Saltar turno","skipQ":"¿Saltar a {n}?","skipQS":"Sus turnos se saltarán hasta que vuelva.","skipDo":"Saltar","offMv":"Sin conexión – reconectando…","avLbl":"Avatar:","avHint":"(opcional – toca otra vez para quitarlo)","title":"Dice Online","tagline":"Tira los dados con tus amigos","ace":"🎓 Alumno estrella (bonus)","aceT":"🎓 ¡Alumno estrella! +50","yourName":"Tu nombre:","create":"Nueva partida","orJoin":"o únete con un código:","join":"Unirse","room":"Sala:","sendLink":"Envía el enlace:","copy":"Copiar","players":"Jugadores (2–8):","start":"Empezar partida","wait":"Esperando a que el anfitrión empiece la partida…","help":"Toca un dado para guardarlo. Toca una casilla resaltada de la tabla para anotar tu puntuación (✕ = tachar, 0 pts – solo en la parte inferior).","newGame":"🔁 Nueva partida – mismos jugadores","rules":"Reglas","bonus":"Bonus de partida limpia","gdT":"Detalles de la partida","gdNA":"La hoja completa de esta partida no se ha conservado.","gdNA2":"Las partidas antiguas (hasta la versión 2.00) guardaban sus detalles solo temporalmente en un servidor público y algunos han caducado. Desde la versión 2.01, los detalles de cada partida terminada se guardan de forma permanente.","gdSrch":"Buscando la hoja completa en servidores de reserva…","gdNoDet":"solo resumen","gdLoad":"Cargando…","gdDice":"dados","gdWin":"ganador","gdHs":"entrada en el ranking","gdLog":"Registro de la partida (jugadas en orden)","gdBtn":"Detalles de la partida","gdX2":"×2 = anotado en la 1.ª tirada","ndLbl":"Número de dados:","modeLbl":"Modo de juego:","modeIn":"Modo: {m}","m_classic":"Clásico","m_train":"Tren lento","m_hw":"Primero la tarea","s_classic":"Clásico","s_train":"Tren","s_hw":"Tarea","d_classic":"Reglas normales: cualquier fila, en cualquier momento.","d_train":"Para en todas las estaciones: filas de arriba abajo, en orden.","d_hw":"Las 3 primeras rondas solo en la Escuela; después, todo vale.","mNow":"Ahora: {c}","mHw":"Primero la Escuela (quedan {n})","mRound":"Ronda {r}/3 📚","nd5Note":"🎲 Variante de 5 dados: se juega con 5 dados, sin las filas: {r}. El resto de reglas no cambia (Póker = cinco iguales).","nd5Cur":"Esta partida: 5 dados.","frbL":"{n}: ¡Lord en el primer tiro! +{x} XP","frbP":"{n}: ¡Póker en el primer tiro! +{x} XP","winXP":"XP","xpWait":"…","nd5Gone":"Se ha eliminado la variante de 5 dados. Ya no se puede entrar en esta sala.","fraK":"{n}: ¡Cuatro seises en el primer tiro!","fraP":"{n}: ¡Póker de seises en el primer tiro!","fraF":"{n}: ¡Full de cincos y seises en el primer tiro!","fraTap":"Toca para omitir","fxPrymus":"{n}: ¡Alumno estrella! +{x} XP","fxClean":"{n}: ¡Partida limpia! +{x} XP","fxTrain":"{n}: ¡Escalera larga 1–6 en el primer tiro!","fxCoach":"{n}: ¡Cuatro seises en el primer tiro!","iBtn":"Instalar app","iBtnS":"Instalar","iBan":"Consigue la app Dice Online","iT":"📲 Instalar la app","iIos1":"Toca <b>Compartir</b> <span class=\"ik\">⬆️</span> en la barra de Safari","iIos2":"Desplázate y elige <b>Añadir a pantalla de inicio</b> <span class=\"ik\">➕</span>","iIos3":"Toca <b>Añadir</b>: el icono de Dice Online aparecerá en tu pantalla de inicio 🎲","iSaf":"Este navegador no puede instalar apps. Copia el enlace y ábrelo en <b>Safari</b>; luego: Compartir ⬆️ → Añadir a pantalla de inicio.","iChr":"Abre el enlace en <b>Chrome</b> (menú ⋮ → «Abrir en Chrome» o copia el enlace) y toca «Instalar app».","iAnd":"Abre el menú del navegador <span class=\"ik\">⋮</span> y elige <b>Instalar app</b> o <b>Añadir a pantalla de inicio</b>.","iCopy":"🔗 Copiar enlace","iOk":"OK","aNew":"Jugar otra vez","aMenu":"Menú","aHs":"Top 10","aAch":"Logros","aShare":"Compartir","coffee":"☕ Invítame a un café","vVisits":"Visitas","vPlayers":"Visitantes","gGames":"Partidas jugadas","fbBtn":"💡 Ideas y opiniones","fbT":"💡 Ideas y opiniones","fbIntro":"¿Tienes una idea, encontraste un error o quieres decir algo? Escribe: cada mensaje llega directamente al autor del juego.","fbName":"Nombre (opcional)","fbType":"Tipo","fbIdea":"💡 Idea","fbBug":"🐞 Error","fbCom":"💬 Comentario","fbMsg":"Mensaje","fbMsgPh":"Describe tu idea o el problema…","fbMail":"Correo para responderte (opcional)","fbSend":"Enviar","fbSending":"Enviando…","fbOk":"✅ ¡Gracias! Mensaje enviado.","fbErr":"❌ No se pudo enviar tu mensaje.","fbSaved":"Lo hemos guardado y lo intentaremos de nuevo en tu próxima visita. También puedes enviarlo ahora por correo.","fbMailBtn":"✉️ Enviar por correo","fbRetry":"🔁 Reintentar","fbAct":"⏳ El formulario está pendiente de activación por el autor; inténtalo más tarde.","fbEmpty":"Escribe un mensaje.","fbWait":"Espera antes de enviar otro mensaje ({s} s).","fbBadMail":"Revisa la dirección de correo.","fbCancel":"Cancelar","winT":"¡Ganador!","winTs":"¡Ganadores!","winTie":"¡Empate!","winRank":"Clasificación final","winHS":"🏆 ¡Nuevo récord en el Top 10!","pts":"pts","share":"Compartir el juego","shT":"📣 Compartir el juego","shMsg":"¡Juguemos a Dice Online! 🎲","shNative":"Compartir…","shCopy":"Copiar enlace","shCopied":"¡Copiado!","shIg":"Enlace copiado: pégalo en Instagram (mensaje, descripción o historia).","hs":"Ranking","hsT":"🏆 Ranking","hsEmpty":"Aún no hay puntuaciones: ¡termina una partida para entrar en el ranking!","hsNoteM":"Top 10 de este mes para el modo elegido. Cada día 1 empieza un ranking nuevo.","hsAll":"Histórico","hsMonth":"Este mes","hsReset":"se reinicia el día 1 (hora de Irlanda)","hsMEmpty":"Mes nuevo: todavía no ha jugado nadie. ¡Sé el primero!","hsEmpty2":"Aún no hay puntuaciones en «{m}»: ¡termina una partida en este modo para entrar en el ranking!","hsMEmpty2":"Mes nuevo: nadie ha jugado todavía a «{m}». ¡Sé el primero!","hsName":"Jugador","hsD5":"dados","hsD6":"dados","hsDate":"Fecha","hsScore":"Puntos","hsNote":"Top 10 histórico para el modo elegido: solo partidas terminadas por completo.","hsClose":"Cerrar","sound":"Sonido","ambSnd":"Sonido ambiente","menu":"🏠 Menú principal","confirmLeave":"¿Volver al menú?","confirmLeaveS":"La partida está en curso: los demás seguirán sin ti.","leaveDo":"Salir","leaveNo":"Quedarme","newDo":"Nueva partida","left":"(se fue)","evBan":"Evento de la Noche de San Andrés","evSub":"Del 25 al 30 de noviembre, cada partida terminada trae un oráculo de los dados divertido. Un poco de diversión para toda la familia.","evBtn":"🕯️ Oráculo de los dados","evShare":"Compartir oráculo","evCopied":"¡Oráculo y enlace copiados!","evCardT":"Oráculo de los dados","evMeta":"De tu partida: {s} pts","evMetaFree":"Oráculo del día (juega una partida y usará tu puntuación)","evShMsg":"Mi oráculo de la Noche de San Andrés en Dice Online: {f}","evF":["Los dados susurran: hoy prueba algo nuevo, aunque sea pequeño.","Esta semana una sonrisa te encontrará antes de lo que crees.","A alguien cercano le vendría bien un buen consejo tuyo. Hazle saber que estás ahí.","Hoy la suerte acompaña a quien comparte la última galleta.","Si llevas tiempo aplazando algo, los dados dicen: hazlo hoy.","Viene de camino un mensaje bonito. Mira tu buzón y atento al timbre.","Hoy gana la calma: una buena taza de té vale más que las prisas.","Alguien pensará en ti en la mesa. Quizá escribe tú primero.","Tus dados predicen un paseo agradable, aunque sea alrededor de casa.","Se acerca un pequeño éxito, y lo disfrutarás más que uno grande.","Los dados aconsejan: hoy menos planes y más risas.","Pronto a alguien le encantará tu comida… o tu chiste.","Si no sabes qué elegir, elige lo que te haga sonreír.","Ponte hoy algo cómodo y date un pequeño capricho.","La suerte vive en lo pequeño: un semáforo en verde, una manta calentita, un boli que aparece.","Los dados anuncian una buena tirada en compañía: invita a alguien a jugar.","Llegará una idea que todavía no hace falta juzgar. Apúntala.","Buen día para ordenar un cajón y las ideas: ambos quedarán más ligeros.","Alguien notará tu paciencia. Cuéntalo también como un punto para ti.","El oráculo es claro: un abrazo o un buen chiste arreglarán el ánimo.","No corras ni en las puertas ni con los dados. La segunda tirada suele ser mejor.","Una sorpresa agradable te espera en la cocina o en el buzón.","Tu suerte crece cuando animas a los demás. Hoy eso ayudará a alguien.","Los dados premian la constancia: termina una cosa y luego descansa.","Esta semana lleva chaqueta o paraguas… y una ración extra de humor.","A alguien le alegrará una llamada corta. No necesitas un motivo.","Hoy gana la curiosidad. Abre un libro, una receta u otra partida.","El oráculo de los dados va sobre ruedas: todo saldrá bien si evitas los atajos.","La mejor puntuación del día es reír juntos. Los dados ya la han contado.","La luna acaba de guiñar un ojo: mañana será más luminoso, y esta noche bastará con dormir bien."],"anims":"Animaciones","tpRoll":"{n} – tirada {r}","tpWrote":"{n} anotó {v} en {c}","tpCross":"{n} tachó {c}","tpOpt":"Avisos con las jugadas de los jugadores","tpR":"tirada {r}","tpXd":"tachado","tpPts":"pts","appTheme":"Tema de la app:","thNames":{"classic":"Clásico","sapphire":"Zafiro","galaxy":"Galaxia","aero":"Frutiger Aero","zombie":"Zombi","slime":"Slime (estilo Slime Rancher)","nature":"Naturaleza","ninja":"Ninja","ocean":"Océano","beach":"Playa soleada","soccer":"Fútbol","forest":"Bosque","winter":"Invierno"},"colours":"Colores","colBasic":"Básicos","colPrem":"✨ Premium","themes":"Temas","colNames":{"white":"Blanco","red":"Rojo","blue":"Azul","green":"Verde","purple":"Morado","orange":"Naranja","pink":"Rosa","black":"Negro","yellow":"Amarillo","grey":"Gris","metal":"Metal","gold":"Oro","wood":"Madera","diamond":"Diamante","sapphire":"Zafiro"},"diceColour":"Color de los dados:","rolling":"🎲 {n} está tirando","reconnecting":"reconectando…","searching":"Buscando la sala…","noRoom":"No se encontró la sala {c}. Revisa el código (no importan mayúsculas ni minúsculas).","enterCode":"Escribe el código de la sala.","enterName":"Escribe tu nombre.","err":"Error: ","connecting":"Conectando…","cantConnect":"No se puede conectar ({e}). Revisa el código.","lost":"Se perdió la conexión con el anfitrión.","running":"La partida ya ha empezado.","full":"La sala está llena (8).","confirmNew":"¿Empezar una partida nueva?","confirmNewS":"Se borrarán todas las puntuaciones.","confirmX":"¿Seguro que quieres tachar?","xDo":"Tachar","xNo":"Cancelar","roll":"Tirar","extra":"Tirada extra","end":"🏆 ¡Fin de la partida! Gana {n} ({p} pts)","yourTurn":"Tu turno, ","turn":"Turno: ","round":"Ronda","tMine":"¡Tu turno!","tRolls":"Tira:","rollN":"Tirada {r}/3","extraLeft":"tiradas extra","cat":"Categoría","school":"Escuela","lower":"Parte inferior","total":"TOTAL","dbl":" (1.ª tirada ×2)","rulesList":["6 dados, hasta 3 tiradas por turno; tras cada tirada puedes guardar los dados que quieras.","Una puntuación de la parte inferior anotada tras la PRIMERA tirada cuenta doble (salvo Chance).","Unos–Seises: la referencia son TRES dados de ese número = 0 pts. Cada dado de menos resta ese número y cada dado de más lo suma. Por ejemplo: dos cuatros = −4, un tres = −6, ningún cinco = −15, cuatro seises = +6, cinco doses = +4. La Escuela nunca se duplica. Un 0 (tres dados) se muestra como «x». Las filas de la Escuela no se pueden tachar.","Bonus de partida limpia: +50 sin ningún tachado en la parte inferior.","Escuela = suma de Unos–Seises; cuando la Escuela está completa y la suma es menor que 0 → suma − 50 (p. ej., −1 → −51).","Solo cuentan los dados que forman la combinación: 1,2,3,3,4,4 como 2 Parejas = 14.","Escaleras: menor 1–5 = 15, mayor 2–6 = 20, larga 1–6 = 21. General: 1 y 6 + tres de 2–5 (falta uno) = suma de 5 dados.","Full = suma de 5 dados, Cuatro iguales = suma de 4 dados, Póker = suma + 50 (seises 80), Lord = Póker × 2 (unos 110). Chance = suma de todos los dados.","Tiradas extra: cada jugador tiene 3 tiradas extra (4.ª tirada) para toda la partida."]};I18N.de={"privLink":"🔒 Datenschutzerklärung","twBtn":"🗼 Turm – Solomodus","twTitle":"🗼 Turm","twIntro":"Steig Etage für Etage nach oben. Jede Etage ist eine andere Spielvariante mit einer Zielpunktzahl – erreichst du sie, geht es weiter nach oben.","twFloor":"Etage {n}","twTarget":"Ziel","twBest":"Bestwert","twPlay":"Spielen ▶","twCont":"Weiter ▶","twLocked":"Gesperrt","twStart":"Start ▶","twBack":"← Turmkarte","twNext":"Nächste Etage ▶","twRetry":"🔁 Nochmal versuchen","twMenu":"🏠 Menü","twPass":"Ziel erreicht!","twFail":"{n} Pkt. unter dem Ziel","twTop":"👑 Du hast den Turm bezwungen!","twScore":"Punkte","twProj":"Prognose","twPen":"Strafen","twStars":"★ Ziel · ★★ Ziel +10 % · ★★★ Ziel +25 %","twAuto":"⏱ Zeit abgelaufen – automatischer Zug","twMe":"Spieler","twNoMp":"Verlass zuerst den Spielraum.","twRules":"Regeln der Etage","twD5":"5 Würfel","twD6":"6 Würfel","twR":"{r} Würfe pro Zug (statt 3)","twNx":"Keine Zusatzwürfe","twLk":"Gesperrte Zeilen 🔒: {c}","twXp":"Jede Streichung: −{p} Pkt.","twCu":"Fluch: {c} braucht mindestens {m} Pkt., sonst −{p}","twSr":"Schule muss ≥ 0 sein, sonst −{p}","twTl":"{s} s pro Zug – danach automatischer Zug","twCleared":"geschafft","twSkip":"⏭️ Weiter zur nächsten Etage","twSkipEnd":"🏁 Turm abschließen","twSkipQ":"Diese Etage mit {s} Pkt. beenden?","twSkipQS":"Die Sterne werden nach deinem aktuellen Punktestand ({st}) vergeben. Wenn du das Spiel zu Ende spielst, kannst du mehr holen.","twSkipDo":"Überspringen","twSkipT":"🎯 Ziel erreicht! Du kannst weiter.","twSkipSaved":"Gespeichert: {st} · {s} Pkt.","twSkipNeed":"⏭️ Nächste Etage – nötig: {n} (jetzt {c})","twSkipEndNeed":"🏁 Turm abschließen – nötig: {n} (jetzt {c})","twSkipSch":"⏭️ Nächste Etage – 📚 Schule muss ≥ 0 sein (jetzt {s})","twSkipEndSch":"🏁 Turm abschließen – 📚 Schule muss ≥ 0 sein (jetzt {s})","twWhySchL":"📚 Die Schule (Einer–Sechser) steht gerade bei {s}. Die Schule zählt – solange sie nicht ≥ 0 ist, geht es nicht weiter, egal wie viele Punkte du hast.","twCounts":"zählt","twWhyT":"Zum Weiterkommen zählt dein Punktestand „jetzt“: {c} von {n} (noch {d}).","twWhySch":"Die Schule ist unter 0 und nicht fertig – im Moment zählt sie so, als wäre das Spiel zu Ende: −50","twWhySr":"Schule muss ≥ 0 sein: −{p}","twWhyCu":"Fluch – {c} ohne mindestens {m} Pkt.: −{p}","twWhyXp":"Streichungen: −{p}","twWhyBon":"Boni (sauberes Spiel, Klassenbester) zählen erst, wenn der Block komplett ausgefüllt ist.","twN":["Aufwärmen","Hausaufgaben","Express","Zwei Würfe","Schnelle Hand","Fluch der Vier","Verschlossene Türen","Wettlauf mit der Zeit","Ohne Netz","Gipfel"],"resume":"↩️ Zurück ins Spiel (Raum {c})","resumeS":"Dein letztes Spiel läuft noch – du bekommst deinen Platz zurück.","hbRoom":"Raum","hbCopy":"Raumlink kopieren","hbShare":"Link teilen","hbCopied":"Raumlink kopiert","hbShTxt":"Spiel mit mir Dice Online! Raumcode: {c}","waitP":"Warten auf {n}…","waitPS":"Verbindung getrennt – kann wieder ins Spiel einsteigen","skipP":"Zug überspringen","skipQ":"{n} überspringen?","skipQS":"Die Züge werden übersprungen, bis die Person zurück ist.","skipDo":"Überspringen","offMv":"Keine Verbindung – verbinde neu…","avLbl":"Avatar:","avHint":"(optional – nochmal tippen zum Entfernen)","title":"Dice Online","tagline":"Würfeln mit Freunden","ace":"🎓 Klassenbester (Bonus)","aceT":"🎓 Klassenbester! +50","yourName":"Dein Name:","create":"Neues Spiel","orJoin":"oder mit Code beitreten:","join":"Beitreten","room":"Raum:","sendLink":"Link senden:","copy":"Kopieren","players":"Spieler (2–8):","start":"Spiel starten","wait":"Warten, bis der Gastgeber das Spiel startet…","help":"Tippe auf einen Würfel, um ihn zu halten. Tippe auf ein markiertes Feld in der Tabelle, um deine Punkte einzutragen (✕ = streichen, 0 Pkt. – nur im unteren Teil).","newGame":"🔁 Neues Spiel – gleiche Spieler","rules":"Regeln","bonus":"Bonus: sauberes Spiel","gdT":"Spieldetails","gdNA":"Der vollständige Spielzettel dieses Spiels ist nicht erhalten.","gdNA2":"Ältere Spiele (bis Version 2.00) haben ihre Details nur vorübergehend auf einem öffentlichen Server gespeichert, und ein Teil davon ist abgelaufen. Seit Version 2.01 werden die Details jedes beendeten Spiels dauerhaft gespeichert.","gdSrch":"Suche den vollständigen Spielzettel auf Ersatzservern…","gdNoDet":"nur Zusammenfassung","gdLoad":"Wird geladen…","gdDice":"Würfel","gdWin":"Sieger","gdHs":"Eintrag in der Bestenliste","gdLog":"Spielverlauf (Züge der Reihe nach)","gdBtn":"Spieldetails","gdX2":"×2 = beim 1. Wurf eingetragen","ndLbl":"Anzahl der Würfel:","modeLbl":"Spielmodus:","modeIn":"Modus: {m}","m_classic":"Klassisch","m_train":"Bummelzug","m_hw":"Erst Hausaufgaben","s_classic":"Klassisch","s_train":"Bummelzug","s_hw":"Hausaufgaben","d_classic":"Normale Regeln – jede Zeile, jederzeit.","d_train":"Hält an jeder Station: Zeilen von oben nach unten, der Reihe nach.","d_hw":"Die ersten 3 Runden nur Schule, danach ist alles erlaubt.","mNow":"Jetzt: {c}","mHw":"Erst Schule (noch {n})","mRound":"Runde {r}/3 📚","nd5Note":"🎲 Variante mit 5 Würfeln: gespielt wird mit 5 Würfeln, ohne die Zeilen: {r}. Alle anderen Regeln bleiben gleich (Poker = fünf gleiche).","nd5Cur":"Dieses Spiel: 5 Würfel.","frbL":"{n}: Lord im ersten Wurf! +{x} XP","frbP":"{n}: Poker im ersten Wurf! +{x} XP","winXP":"XP","xpWait":"…","nd5Gone":"Die Variante mit 5 Würfeln wurde entfernt. Diesem Raum kann man nicht mehr beitreten.","fraK":"{n}: Viererpasch aus Sechsern im ersten Wurf!","fraP":"{n}: Poker aus Sechsern im ersten Wurf!","fraF":"{n}: Full House aus Fünfern und Sechsern im ersten Wurf!","fraTap":"Tippen zum Überspringen","fxPrymus":"{n}: Klassenbester! +{x} XP","fxClean":"{n}: Sauberes Spiel! +{x} XP","fxTrain":"{n}: Große Straße 1–6 im ersten Wurf!","fxCoach":"{n}: Viererpasch aus Sechsern im ersten Wurf!","iBtn":"App installieren","iBtnS":"Installieren","iBan":"Hol dir die Dice-Online-App","iT":"📲 App installieren","iIos1":"Tippe in der Safari-Leiste auf <b>Teilen</b> <span class=\"ik\">⬆️</span>","iIos2":"Scrolle nach unten und wähle <b>Zum Home-Bildschirm</b> <span class=\"ik\">➕</span>","iIos3":"Tippe auf <b>Hinzufügen</b> – das Dice-Online-Symbol erscheint auf deinem Home-Bildschirm 🎲","iSaf":"Dieser Browser kann keine Apps installieren. Kopiere den Link und öffne ihn in <b>Safari</b>, dann: Teilen ⬆️ → Zum Home-Bildschirm.","iChr":"Öffne den Link in <b>Chrome</b> (Menü ⋮ → „In Chrome öffnen“ oder Link kopieren) und tippe dann auf „App installieren“.","iAnd":"Öffne das Browsermenü <span class=\"ik\">⋮</span> und wähle <b>App installieren</b> oder <b>Zum Startbildschirm hinzufügen</b>.","iCopy":"🔗 Link kopieren","iOk":"OK","aNew":"Nochmal spielen","aMenu":"Menü","aHs":"Top 10","aAch":"Erfolge","aShare":"Teilen","coffee":"☕ Kaffee spendieren","vVisits":"Besuche","vPlayers":"Besucher","gGames":"Gespielte Spiele","fbBtn":"💡 Ideen & Feedback","fbT":"💡 Ideen & Feedback","fbIntro":"Du hast eine Idee, einen Fehler gefunden oder willst etwas sagen? Schreib uns – jede Nachricht geht direkt an den Autor des Spiels.","fbName":"Name (optional)","fbType":"Art","fbIdea":"💡 Idee","fbBug":"🐞 Fehler","fbCom":"💬 Kommentar","fbMsg":"Nachricht","fbMsgPh":"Beschreibe deine Idee oder dein Problem…","fbMail":"E-Mail für eine Antwort (optional)","fbSend":"Senden","fbSending":"Wird gesendet…","fbOk":"✅ Danke! Nachricht gesendet.","fbErr":"❌ Die Nachricht konnte nicht gesendet werden.","fbSaved":"Wir haben sie gespeichert und versuchen es bei deinem nächsten Besuch erneut. Du kannst sie auch gleich per E-Mail schicken.","fbMailBtn":"✉️ Per E-Mail senden","fbRetry":"🔁 Nochmal versuchen","fbAct":"⏳ Das Formular wartet noch auf die Freischaltung durch den Autor – bitte versuch es später.","fbEmpty":"Bitte gib eine Nachricht ein.","fbWait":"Bitte warte, bevor du die nächste Nachricht sendest ({s} s).","fbBadMail":"Bitte überprüfe die E-Mail-Adresse.","fbCancel":"Abbrechen","winT":"Sieger!","winTs":"Sieger!","winTie":"Unentschieden!","winRank":"Endstand","winHS":"🏆 Neuer Top-10-Rekord!","pts":"Pkt.","share":"Spiel teilen","shT":"📣 Spiel teilen","shMsg":"Lass uns Dice Online spielen! 🎲","shNative":"Teilen…","shCopy":"Link kopieren","shCopied":"Kopiert!","shIg":"Link kopiert – füge ihn in Instagram ein (DM, Beschreibung oder Story).","hs":"Bestenliste","hsT":"🏆 Bestenliste","hsEmpty":"Noch keine Ergebnisse – beende ein Spiel, um auf die Liste zu kommen!","hsNoteM":"Top 10 dieses Monats für den gewählten Modus. Am 1. jedes Monats beginnt eine neue Liste.","hsAll":"Alle Zeiten","hsMonth":"Dieser Monat","hsReset":"wird am 1. zurückgesetzt (irische Zeit)","hsMEmpty":"Neuer Monat – noch hat niemand gespielt. Sei der Erste!","hsEmpty2":"Noch keine Ergebnisse in „{m}“ – beende ein Spiel in diesem Modus, um auf die Liste zu kommen!","hsMEmpty2":"Neuer Monat – noch hat niemand „{m}“ gespielt. Sei der Erste!","hsName":"Spieler","hsD5":"Würfel","hsD6":"Würfel","hsDate":"Datum","hsScore":"Punkte","hsNote":"Top 10 aller Zeiten für den gewählten Modus – nur komplett beendete Spiele.","hsClose":"Schließen","sound":"Ton","ambSnd":"Hintergrundklang","menu":"🏠 Hauptmenü","confirmLeave":"Zurück zum Menü?","confirmLeaveS":"Das Spiel läuft – die anderen spielen ohne dich weiter.","leaveDo":"Verlassen","leaveNo":"Bleiben","newDo":"Neues Spiel","left":"(weg)","evBan":"Andreasnacht-Event","evSub":"Vom 25. bis 30. November bringt jedes beendete Spiel ein heiteres Würfelorakel. Einfach ein bisschen Spaß für die ganze Familie.","evBtn":"🕯️ Würfelorakel","evShare":"Orakel teilen","evCopied":"Orakel und Link kopiert!","evCardT":"Würfelorakel","evMeta":"Aus deinem Spiel: {s} Pkt.","evMetaFree":"Orakel des Tages (spiel eine Runde, dann nutzt es deine Punkte)","evShMsg":"Mein Andreasnacht-Orakel von Dice Online: {f}","evF":["Die Würfel flüstern: Probier heute etwas Neues aus – auch eine Kleinigkeit.","Diese Woche findet dich ein Lächeln schneller, als du denkst.","Jemand in deiner Nähe könnte einen guten Rat von dir brauchen. Zeig, dass du da bist.","Das Glück ist heute mit denen, die den letzten Keks teilen.","Wenn du etwas vor dir herschiebst, sagen die Würfel: Mach es heute.","Eine nette Nachricht ist unterwegs. Schau ins Postfach und horch auf die Klingel.","Heute gewinnt die Ruhe: Eine gute Tasse Tee schlägt jede Hektik.","Jemand denkt am Tisch an dich. Vielleicht schreibst du zuerst.","Deine Würfel sagen einen schönen Spaziergang voraus – und sei es nur ums Haus.","Ein kleiner Erfolg kommt auf dich zu, und er wird dich mehr freuen als ein großer.","Die Würfel raten: heute weniger Pläne, mehr Lachen.","Bald wird jemand dein Essen richtig lieben – oder deinen Witz.","Wenn du dich nicht entscheiden kannst, nimm das, was dich zum Lächeln bringt.","Zieh heute etwas Bequemes an und gönn dir eine kleine Belohnung.","Das Glück wohnt im Kleinen: eine grüne Ampel, eine warme Decke, ein wiedergefundener Stift.","Die Würfel deuten auf einen guten gemeinsamen Wurf – lade jemanden zum Spielen ein.","Eine Idee kommt, die noch nicht bewertet werden muss. Schreib sie auf.","Ein guter Tag, um eine Schublade und die Gedanken aufzuräumen – beides wird leichter.","Jemand wird deine Geduld bemerken. Zähl das auch als Punkt für dich.","Das Orakel ist eindeutig: Eine Umarmung oder ein guter Witz retten die Stimmung.","Keine Eile – weder an der Tür noch beim Würfeln. Der zweite Wurf ist oft besser.","Eine angenehme Überraschung wartet in der Küche oder im Briefkasten.","Dein Glück wächst, wenn du anderen die Daumen drückst. Heute hilft das jemandem.","Die Würfel loben Ausdauer: Bring eine Sache zu Ende, dann mach Pause.","Pack diese Woche eine Jacke oder einen Schirm ein – und eine Extraportion Humor.","Jemand freut sich über einen kurzen Anruf. Du brauchst keinen Grund.","Heute gewinnt die Neugier. Schlag ein Buch auf, ein Rezept oder noch eine Runde.","Das Würfelorakel ist klar: Alles läuft gut, wenn du auf Abkürzungen verzichtest.","Das beste Ergebnis des Tages ist gemeinsames Lachen. Die Würfel haben es schon gezählt.","Der Mond hat gerade gezwinkert: Morgen wird heller, und heute Nacht tut guter Schlaf gut."],"anims":"Animationen","tpRoll":"{n} – Wurf {r}","tpWrote":"{n} trägt {v} bei {c} ein","tpCross":"{n} streicht {c}","tpOpt":"Pop-ups mit den Zügen der Spieler","tpR":"Wurf {r}","tpXd":"gestrichen","tpPts":"Pkt.","appTheme":"App-Design:","thNames":{"classic":"Klassisch","sapphire":"Saphir","galaxy":"Galaxie","aero":"Frutiger Aero","zombie":"Zombie","slime":"Schleim (im Stil von Slime Rancher)","nature":"Natur","ninja":"Ninja","ocean":"Ozean","beach":"Sonniger Strand","soccer":"Fußball","forest":"Wald","winter":"Winter"},"colours":"Farben","colBasic":"Basis","colPrem":"✨ Premium","themes":"Designs","colNames":{"white":"Weiß","red":"Rot","blue":"Blau","green":"Grün","purple":"Lila","orange":"Orange","pink":"Rosa","black":"Schwarz","yellow":"Gelb","grey":"Grau","metal":"Metall","gold":"Gold","wood":"Holz","diamond":"Diamant","sapphire":"Saphir"},"diceColour":"Würfelfarbe:","rolling":"🎲 {n} würfelt","reconnecting":"verbinde neu…","searching":"Suche den Raum…","noRoom":"Raum {c} nicht gefunden. Überprüfe den Code (Groß-/Kleinschreibung ist egal).","enterCode":"Gib den Raumcode ein.","enterName":"Gib deinen Namen ein.","err":"Fehler: ","connecting":"Verbinde…","cantConnect":"Verbindung nicht möglich ({e}). Überprüfe den Code.","lost":"Die Verbindung zum Gastgeber wurde unterbrochen.","running":"Das Spiel läuft bereits.","full":"Der Raum ist voll (8).","confirmNew":"Neues Spiel starten?","confirmNewS":"Alle Punkte werden gelöscht.","confirmX":"Wirklich streichen?","xDo":"Streichen","xNo":"Abbrechen","roll":"Würfeln","extra":"Zusatzwurf","end":"🏆 Spielende! {n} gewinnt ({p} Pkt.)","yourTurn":"Du bist dran, ","turn":"Am Zug: ","round":"Runde","tMine":"Du bist dran!","tRolls":"Würfelt:","rollN":"Wurf {r}/3","extraLeft":"Zusatzwürfe","cat":"Kategorie","school":"Schule","lower":"Unterer Teil","total":"GESAMT","dbl":" (1. Wurf ×2)","rulesList":["6 Würfel, bis zu 3 Würfe pro Zug; nach einem Wurf kannst du beliebige Würfel halten.","Ein Ergebnis im unteren Teil, das nach dem ERSTEN Wurf eingetragen wird, zählt doppelt (außer Chance).","Einer–Sechser: Bezugswert sind DREI Würfel dieser Zahl = 0 Pkt. Jeder Würfel weniger kostet diese Zahl, jeder Würfel mehr bringt sie. Z. B. zwei Vierer = −4, ein Dreier = −6, keine Fünfer = −15, vier Sechser = +6, fünf Zweier = +4. Die Schule wird nie verdoppelt. Ein Ergebnis von 0 (drei Würfel) wird als „x“ angezeigt. Zeilen der Schule können nicht gestrichen werden.","Bonus für sauberes Spiel: +50 ohne Streichung im unteren Teil.","Schule = Summe von Einer–Sechser; ist die Schule komplett und die Summe unter 0 → Summe − 50 (z. B. −1 → −51).","Es zählen nur die Würfel, die die Kombination bilden: 1,2,3,3,4,4 als 2 Paare = 14.","Straßen: kleine 1–5 = 15, große 2–6 = 20, lange 1–6 = 21. General: 1 und 6 + drei von 2–5 (eine fehlt) = Summe von 5 Würfeln.","Full House = Summe von 5 Würfeln, Viererpasch = Summe von 4 Würfeln, Poker = Summe + 50 (Sechser 80), Lord = Poker × 2 (Einer 110). Chance = Summe aller Würfel.","Zusatzwürfe: Jeder Spieler hat für das ganze Spiel 3 Zusatzwürfe (4. Wurf)."]};
 
 if(localStorage.kapp==='kitty')localStorage.kapp='nature';if(localStorage.kapp==='pusheen'||localStorage.kapp==='gothic')localStorage.kapp='ninja';
 const APPBIT={classic:0,sapphire:1,halloween:1,zombie:2,pixel:3,slime:4,nature:5,ninja:6,ocean:7,beach:8,soccer:9,forest:10,winter:11,galaxy:12,aero:13};
@@ -4021,7 +4042,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611231800';
+const APP_VERSION='202611232000';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -4364,7 +4385,7 @@ function connect(onUp){clearTimeout(connFail);wdClear();
  c.on('offline',()=>{status('🔴 offline – '+t('reconnecting'));if(ok)wdArm()});
  c.on('close',()=>{if(ok)wdArm()});c.on('error',()=>{if(ok)wdArm()});
  c.on('message',(tp,m)=>{if(cli!==c)return;if(tp.indexOf('kosci-mk-v2/ref/')===0){try{refRecv(tp,m.toString())}catch(e){}return}if(tp.indexOf('/p/')>0){presMsg(tp,m.toString());return}if(/\/e$/.test(tp)){try{emoRecv(m.toString())}catch(e){}return}
-  let d;try{d=JSON.parse(m.toString())}catch(e){return}try{if(d&&S&&S.G&&d.G&&S.G.gid===d.G.gid&&window.__v210){d=window.__v210.mergeIn(d);if(S&&d.v<S.v&&!resyncing){S.G.xpr=d.G.xpr;S.G.frb=d.G.frb;if(window.__v211)S.G.fra=window.__v211.unionFra(S.G.fra,d.G.fra);try{window.__v210.paint(S.G)}catch(e){}return}}}catch(e){}if(!d||(S&&d.v<S.v&&!resyncing))return;if(!stOk(d))return;resyncing=false;S=d;onState()});}
+  let d;try{d=JSON.parse(m.toString())}catch(e){return}try{if(d&&S&&S.G&&d.G&&S.G.gid===d.G.gid&&window.__v210){d=window.__v210.mergeIn(d);if(S&&d.v<S.v&&!resyncing){S.G.xpr=d.G.xpr;S.G.frb=d.G.frb;if(window.__v211)S.G.fra=window.__v211.unionFra(S.G.fra,d.G.fra);if(window.__v230)S.G.fxb=window.__v230.unionFxb(S.G.fxb,d.G.fxb);try{window.__v210.paint(S.G)}catch(e){}return}}}catch(e){}if(!d||(S&&d.v<S.v&&!resyncing))return;if(!stOk(d))return;resyncing=false;S=d;onState()});}
 function presMsg(tp,v){let n;try{n=decodeURIComponent(tp.split('/p/')[1])}catch(e){return}if(!n)return;if(n===me){if(v!=='1'&&ROOM&&!document.hidden&&cli&&cli.connected)cli.publish(ptop(me),'1',{qos:1,retain:true});return}
  if(!v){delete PRES[n]}else{const on=v==='1',o=PRES[n];if(!o||o.on!==on)PRES[n]={on,a:v==='a',t:Date.now()}}presUI()}
 function presUI(){const w=$('waitp');if(!w)return;if(!ROOM||!G||G.phase!=='play'||$('game').hidden){w.hidden=true;return}
@@ -5688,7 +5709,7 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
   e.hidden=false;void e.offsetWidth;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>{e.classList.remove('on')},4500)}
  function intakeFrb(g){if(!g||!Array.isArray(g.frb))return;(g.frb=unionFrb(g.frb,[])).forEach(rec=>{award(g,rec);show(rec)})}
  function paint(g){if(!g)return;const xp=g.xpr||{};const fill=root=>{if(!root)return;root.querySelectorAll('[data-xp]').forEach(td=>{const n=td.getAttribute('data-xp'),v=xp[n];td.textContent=v==null?t('xpWait'):('+'+v+' XP');td.classList.toggle('xppend',v==null)})};fill($('win'));fill($('sumov'));fill($('gdv'))}
- function pubMine(g,dlt){if(!g||typeof me==='undefined'||!me)return;const ns=namesOf(g);if(g.xpr&&g.xpr[me]!=null){paint(g);return}g.xpr=sanXpr(Object.assign({},g.xpr,{[me]:Math.max(0,Math.min(5e4,Math.round(dlt)))}),ns);paint(g);
+ function pubMine(g,dlt){if(!g||typeof me==='undefined'||!me)return;const ns=namesOf(g);let v=Math.max(0,Math.min(5e4,Math.round(+dlt||0)));try{if(window.__v230&&typeof __v230.gameXp==='function'){const d=__v230.gameXp(g,me);if(d>v)v=d}}catch(e){}const cur=g.xpr&&g.xpr[me];if(cur!=null&&cur>=v&&(cur>0||v===0)){paint(g);return}g.xpr=sanXpr(Object.assign({},g.xpr,{[me]:v}),ns);paint(g);
   if(S&&S.G&&S.G.gid===g.gid){S.G.xpr=g.xpr;if(g.frb)S.G.frb=g.frb}
   if(TW){try{twSaveGame()}catch(e){}return}
   clearTimeout(pubMine._t);pubMine._t=setTimeout(()=>{try{if(!cli||!cli.connected||!S||!S.G)return;S.v=(S.v||0)+1;S.ts=Date.now();cli.publish(topic(),JSON.stringify(S),{qos:1,retain:true})}catch(e){}},80)}
@@ -5697,7 +5718,7 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  const _os=onState;onState=function(){try{if(!TW&&S&&S.nd===5&&!(S.G&&S.G.phase==='play')){S.nd=6}const g5=S&&S.G;if(!TW&&g5&&g5.nd===5&&g5.phase==='play'){nd5block();return}}catch(e){}
   const g0=S&&S.G,ending=!!(g0&&g0.phase==='end'&&typeof me!=='undefined'&&me&&g0.players&&g0.players.some(p=>p.name===me));let xp0=0;if(ending)try{xp0=pxXP()}catch(e){}
   const r=_os.apply(this,arguments);
-  try{const g=S&&S.G;if(g){intakeFrb(g);if(ending&&!(g.xpr&&g.xpr[me]!=null)){const dlt=Math.max(0,pxXP()-xp0)+frbSum(g,me);pubMine(g,dlt)}else paint(g)}}catch(e){}
+  try{const g=S&&S.G;if(g){intakeFrb(g);if(ending){let dlt=Math.max(0,pxXP()-xp0)+frbSum(g,me);try{if(window.__v230&&typeof __v230.earned==='function')dlt=__v230.earned(g,me,xp0)}catch(e){}pubMine(g,dlt)}else paint(g)}}catch(e){}
   return r};
  if(typeof twResult==='function'){const _tr=twResult;twResult=function(){const r=_tr.apply(this,arguments);try{const g=S&&S.G,o=$('gdv')&&$('gdv').querySelector('.twres');if(g&&o&&!o.querySelector('[data-xp]')){const p=document.createElement('p');p.className='twxp';p.setAttribute('data-xp',me||'');o.appendChild(p);paint(g)}}catch(e){}return r}}
  if(typeof twStart==='function'){const _ts=twStart;twStart=function(f,resume){try{const sv=resume?twSaved():null;if(sv&&sv.S&&sv.S.G&&sv.S.G.nd===5){try{localStorage.removeItem('ktwg')}catch(e){}resume=false}}catch(e){}return _ts.call(this,f,resume)}}
@@ -5731,7 +5752,7 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  function recOf(g){
   if(!g)return null;
   const k=detect(g.dice,g.rolls);
-  if(!k)return null;
+  if(!k||k==='kareta6')return null;
   return {t:key(g),k,i:g.cur|0,n:(g.players&&g.players[g.cur]&&g.players[g.cur].name)||'',d:(g.dice||[]).slice()};
  }
  function attach(g){
@@ -6060,6 +6081,7 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  function play(rec,opt){
   opt=opt||{};
   if(!rec||KINDS.indexOf(rec.k)<0)return false;
+  if(rec.k==='kareta6'&&!(opt&&opt.forceOld))return false;
   if(!opt.force){
    try{if(sessionStorage['fra_'+rec.t])return false;sessionStorage['fra_'+rec.t]='1'}catch(e){}
   }
@@ -7197,4 +7219,731 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  window.__v224={langOf,relabel,ensure,ratio,parseRgb,lum,AA:4.5};
 })();
 
+</script>
+<script id="v230">(function(){
+ const SA=1000,CA=500;
+ const KINDS=['prymus','clean','ltrain','coach'];
+ const DUR={prymus:2400,clean:2400,ltrain:2600,coach:2800};
+ const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+ let state=null, awarding=0;
+
+ function namesOf(g){return (g&&g.players||[]).map(p=>p&&p.name).filter(Boolean)}
+ function reduced(){
+  try{if(typeof animOn!=='undefined'&&!animOn)return true}catch(e){}
+  try{return !!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)}catch(e){}
+  return false;
+ }
+ function clamp(t){return t<0?0:t>1?1:t}
+ function lerp(a,b,t){return a+(b-a)*t}
+ function easeOut(t){return 1-Math.pow(1-t,3)}
+ function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+ function easeOutBack(t){const c=1.70158;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)}
+ function counts(d){const c=[0,0,0,0,0,0,0];(d||[]).forEach(v=>{if(v>=1&&v<=6)c[v]++});return c}
+ function skipTxt(){try{if(typeof t==='function')return t('fraTap')}catch(e){}return ''}
+ function titleOf(rec){
+  const id=rec.k==='prymus'?'fxPrymus':rec.k==='clean'?'fxClean':rec.k==='ltrain'?'fxTrain':'fxCoach';
+  const x=rec.k==='prymus'?SA:rec.k==='clean'?CA:0;
+  try{if(typeof t==='function'){let s=t(id,{n:rec.n||'',x:x});if(x)s=String(s).replace(/\s*\+\{x\}\s*XP/i,'').replace(/\s*\+\d+\s*XP/i,'').trim();return s}}catch(e){}
+  return rec.n||'';
+ }
+ function gidOf(g){return String((g&&g.gid)||'')}
+ function turnKey(g,snap){return gidOf(g)+'|'+((snap&&snap.cur)|0)+'|'+((g&&g.round)|0)+'|'+((snap&&snap.rolls)|0)}
+ function endKey(g,kind,i){return gidOf(g)+'|'+kind+'|'+((i)|0)}
+
+ function unionFxb(a,b){
+  const m={};
+  [].concat(a||[],b||[]).forEach(x=>{
+   if(x&&typeof x==='object'&&typeof x.t==='string'&&x.t.length<90&&KINDS.indexOf(x.k)>=0)
+    m[x.t]={t:x.t,k:x.k,i:Math.max(0,x.i|0),n:String(x.n||'').slice(0,20),d:Array.isArray(x.d)?x.d.filter(v=>v>=1&&v<=6).slice(0,6):[],x:x.k==='prymus'?SA:x.k==='clean'?CA:0};
+  });
+  return Object.keys(m).map(k=>m[k]).slice(-40);
+ }
+
+ function frbSum(g,n){
+  try{if(window.__v210&&typeof __v210.frbSum==='function')return __v210.frbSum(g,n)|0}catch(e){}
+  return 0;
+ }
+
+ function gameXpParts(g,name){
+  if(!g||!g.players||!name)return null;
+  const i=g.players.findIndex(p=>p&&p.name===name);
+  if(i<0)return null;
+  const nd=(typeof K!=='undefined'&&K.ndOf)?K.ndOf(g):6;
+  const sheet=(g.players[i].sheet)||{};
+  const T=K.totals(sheet,nd);
+  const tots=g.players.map(p=>K.totals(p.sheet||{},nd).total);
+  const my=tots[i],multi=g.players.length>1;
+  const oth=tots.filter((_,j)=>j!==i);
+  const won=multi&&oth.length&&my>=Math.max.apply(null,oth);
+  const second=multi&&g.players.length>=3&&oth.filter(v=>v>my).length===1;
+  const parts={play:25,win:won?40:0,second:second?15:0,pts:Math.floor(Math.max(0,my)/20),frb:frbSum(g,name),prymus:T.ace===50?SA:0,clean:T.bonus===50?CA:0};
+  parts.total=parts.play+parts.win+parts.second+parts.pts+parts.frb+parts.prymus+parts.clean;
+  return parts;
+ }
+ function gameXp(g,name){const p=gameXpParts(g,name);return p?p.total:0}
+ function earned(g,name,xp0){
+  const det=gameXp(g,name);
+  let snap=0;
+  try{if(xp0!=null&&isFinite(xp0))snap=Math.max(0,pxXP()-xp0)}catch(e){}
+  const cur=(g&&g.xpr&&g.xpr[name])||0;
+  return Math.max(det,snap,cur>0?cur:0);
+ }
+
+ function fillDet(g){
+  if(!g||!g.players)return g;
+  const ns=namesOf(g);
+  const cur=Object.assign({},g.xpr||{});
+  ns.forEach(n=>{
+   const v=gameXp(g,n),have=cur[n];
+   if(v>0&&(have==null||have===0||have<v))cur[n]=v;
+  });
+  g.xpr=cur;
+  try{if(typeof S!=='undefined'&&S&&S.G&&S.G.gid===g.gid)S.G.xpr=cur}catch(e){}
+  return g;
+ }
+
+ function pubMine(g,dlt){
+  if(!g||typeof me==='undefined'||!me)return;
+  const ns=namesOf(g);
+  let v=Math.max(0,Math.min(5e4,Math.round(+dlt||0)));
+  const det=gameXp(g,me);
+  if(det>v)v=det;
+  const cur=g.xpr&&g.xpr[me];
+  if(cur!=null&&cur>=v&&(cur>0||v===0)){
+   try{window.__v210&&__v210.paint(g)}catch(e){}
+   return;
+  }
+  const san=(window.__v210&&__v210.sanXpr)?__v210.sanXpr:function(o){return o||{}};
+  g.xpr=san(Object.assign({},g.xpr,{[me]:v}),ns);
+  try{if(typeof S!=='undefined'&&S&&S.G&&S.G.gid===g.gid){S.G.xpr=g.xpr;if(g.fxb)S.G.fxb=g.fxb}}catch(e){}
+  try{window.__v210&&__v210.paint(g)}catch(e){}
+  if(typeof TW!=='undefined'&&TW){try{twSaveGame()}catch(e){}return}
+  clearTimeout(pubMine._t);
+  pubMine._t=setTimeout(()=>{try{if(!cli||!cli.connected||!S||!S.G)return;S.v=(S.v||0)+1;S.ts=Date.now();cli.publish(topic(),JSON.stringify(S),{qos:1,retain:true})}catch(e){}},80);
+ }
+
+ function awardBonus(g,rec){
+  if(!rec||typeof me==='undefined'||!me||!g||!g.players[rec.i]||g.players[rec.i].name!==me)return false;
+  if(rec.k!=='prymus'&&rec.k!=='clean')return false;
+  PX.fk=Array.isArray(PX.fk)?PX.fk:[];
+  if(PX.fk.indexOf(rec.t)>=0)return false;
+  PX.fk.push(rec.t);
+  if(PX.fk.length>80)PX.fk=PX.fk.slice(-80);
+  if(rec.k==='prymus')PX.c.sa=(PX.c.sa||0)+1;
+  else PX.c.ca=(PX.c.ca||0)+1;
+  PX=pxSane(PX);pxSave();
+  try{if(typeof szAdd==='function')szAdd(rec.k==='prymus'?SA:CA)}catch(e){}
+  try{pfCheckLevel()}catch(e){}
+  return true;
+ }
+
+ function recsFromWrite(g,cat,cross,snap){
+  const out=[];
+  if(!g||!snap)return out;
+  const n=snap.n||(g.players&&g.players[snap.cur]&&g.players[snap.cur].name)||'';
+  const i=snap.cur|0,d=(snap.dice||[]).slice();
+  if(!cross&&snap.rolls===1&&d.length){
+   if(cat==='lstrit'&&K.scores(d).lstrit!=null)
+    out.push({t:turnKey(g,snap)+'|ltrain',k:'ltrain',i,n,d,x:0});
+   if(cat==='kareta'&&counts(d)[6]>=4)
+    out.push({t:turnKey(g,snap)+'|coach',k:'coach',i,n,d,x:0});
+  }
+  try{
+   const nd=K.ndOf(g),p=g.players[i],T=p?K.totals(p.sheet||{},nd):null;
+   if(T&&T.ace===50)out.push({t:endKey(g,'prymus',i),k:'prymus',i,n,d,x:SA});
+   if(T&&T.bonus===50)out.push({t:endKey(g,'clean',i),k:'clean',i,n,d,x:CA});
+  }catch(e){}
+  return out;
+ }
+
+ function attach(g,recs){
+  if(!g||!recs||!recs.length)return [];
+  g.fxb=unionFxb(g.fxb,recs);
+  try{if(typeof S!=='undefined'&&S&&S.G&&S.G.gid===g.gid)S.G.fxb=g.fxb}catch(e){}
+  return recs;
+ }
+
+ function onWrite(g,cat,cross,snap){
+  const recs=recsFromWrite(g,cat,cross,snap);
+  if(!recs.length)return recs;
+  attach(g,recs);
+  recs.forEach(rec=>{try{awardBonus(g,rec)}catch(e){}try{play(rec)}catch(e){}});
+  return recs;
+ }
+
+ /* ---------- canvas helpers ---------- */
+ function hexA(hex,a){const n=hex[0]==='#'?hex.slice(1):hex;const v=parseInt(n,16);return 'rgba('+((v>>16)&255)+','+((v>>8)&255)+','+(v&255)+','+a+')'}
+ function roundRect(ctx,x,y,w,h,r){
+  const rr=Math.min(r,Math.abs(w)/2,Math.abs(h)/2);
+  ctx.beginPath();
+  ctx.moveTo(x+rr,y);
+  ctx.arcTo(x+w,y,x+w,y+h,rr);
+  ctx.arcTo(x+w,y+h,x,y+h,rr);
+  ctx.arcTo(x,y+h,x,y,rr);
+  ctx.arcTo(x,y,x+w,y,rr);
+  ctx.closePath();
+ }
+ function drawDie(ctx,x,y,s,face,rot,pal,alpha){
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.rotate(rot||0);
+  ctx.globalAlpha=(alpha==null?1:alpha);
+  const r=s*0.18;
+  ctx.fillStyle='rgba(0,0,0,.35)';
+  roundRect(ctx,-s/2+s*.06,-s/2+s*.1,s,s,r);
+  ctx.fill();
+  const g=ctx.createLinearGradient(-s/2,-s/2,s/2,s/2);
+  g.addColorStop(0,pal.a);g.addColorStop(.45,pal.b);g.addColorStop(1,pal.c);
+  ctx.fillStyle=g;
+  roundRect(ctx,-s/2,-s/2,s,s,r);
+  ctx.fill();
+  ctx.strokeStyle=pal.rim;ctx.lineWidth=Math.max(1,s*0.045);
+  ctx.stroke();
+  ctx.fillStyle=pal.shine;
+  roundRect(ctx,-s/2+s*0.1,-s/2+s*0.08,s*0.55,s*0.28,s*0.12);
+  ctx.fill();
+  const pip=s*0.09,cells=[[-1,-1],[0,-1],[1,-1],[-1,0],[0,0],[1,0],[-1,1],[0,1],[1,1]];
+  (PIPS[face]||[]).forEach(k=>{
+   const c=cells[k];
+   ctx.beginPath();
+   ctx.fillStyle=pal.pip;
+   ctx.arc(c[0]*s*0.25,c[1]*s*0.25,pip,0,Math.PI*2);
+   ctx.fill();
+  });
+  ctx.restore();
+ }
+
+ function rootEl(){
+  let e=$('fxa');
+  if(!e){
+   e=document.createElement('div');
+   e.id='fxa';
+   e.hidden=true;
+   e.innerHTML='<canvas></canvas><div class="fxapanel"><b class="fxat"></b><span class="fxaxp"></span><small class="fxaskip"></small></div>';
+   document.body.appendChild(e);
+  }
+  return e;
+ }
+ function stop(){
+  if(!state)return;
+  try{cancelAnimationFrame(state.raf)}catch(e){}
+  clearTimeout(state.to);
+  const e=$('fxa');
+  if(e){e.hidden=true;e.className='';}
+  state=null;
+ }
+ function sizeCanvas(cvs){
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  const w=Math.max(1,window.innerWidth||300),h=Math.max(1,window.innerHeight||400);
+  cvs.width=Math.round(w*dpr);cvs.height=Math.round(h*dpr);
+  cvs.style.width=w+'px';cvs.style.height=h+'px';
+  const ctx=cvs.getContext('2d');
+  if(ctx)ctx.setTransform(dpr,0,0,dpr,0,0);
+  return {ctx,w,h,dpr};
+ }
+
+ /* ---------- scenes ---------- */
+ function paintPrymus(ctx,w,h,t,rec,red){
+  const cx=w/2,cy=h*0.42,s=Math.min(w,h);
+  const fade=t<.08?t/.08:t>.88?1-(t-.88)/.12:1;
+  ctx.save();ctx.globalAlpha=fade;
+  ctx.fillStyle='rgba(8,6,16,.55)';ctx.fillRect(0,0,w,h);
+  const grd=ctx.createRadialGradient(cx,cy,s*0.05,cx,cy,s*0.7);
+  grd.addColorStop(0,'rgba(80,40,0,.35)');
+  grd.addColorStop(.5,'rgba(30,16,0,.18)');
+  grd.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=grd;ctx.fillRect(0,0,w,h);
+  const burst=easeOutBack(clamp(t/.45));
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(t*0.25);
+  for(let i=0;i<16;i++){
+   ctx.rotate(Math.PI/8);
+   ctx.fillStyle=hexA('#ffe27a',0.22+0.2*Math.sin(t*6+i));
+   ctx.beginPath();
+   ctx.moveTo(0,0);
+   ctx.lineTo(s*0.02,s*0.08);
+   ctx.lineTo(0,s*0.28*burst);
+   ctx.lineTo(-s*0.02,s*0.08);
+   ctx.closePath();ctx.fill();
+  }
+  ctx.restore();
+  // laurel
+  ctx.save();ctx.translate(cx,cy);
+  ctx.strokeStyle=hexA('#e0b25a',0.95);ctx.lineWidth=Math.max(2,s*0.01);ctx.lineCap='round';
+  for(const side of [-1,1]){
+   ctx.beginPath();
+   for(let i=0;i<=10;i++){
+    const a=-Math.PI/2+side*(i/10)*2.2,r=s*0.16+Math.sin(i)*s*0.01;
+    const x=Math.cos(a)*r*1.15,y=Math.sin(a)*r+s*0.02;
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+   }
+   ctx.stroke();
+   for(let i=1;i<=8;i++){
+    const a=-Math.PI/2+side*(i/8)*2.0,r=s*0.16,x=Math.cos(a)*r*1.15,y=Math.sin(a)*r+s*0.02;
+    ctx.save();ctx.translate(x,y);ctx.rotate(a+side*0.9);
+    ctx.fillStyle=hexA(i%2?'#ffe27a':'#c9a45c',0.95);
+    ctx.beginPath();ctx.ellipse(0,0,s*0.028,s*0.012,0,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+   }
+  }
+  ctx.restore();
+  // medal / star
+  const ms=s*0.11*burst;
+  ctx.save();ctx.translate(cx,cy-s*0.01);
+  ctx.fillStyle='#f4c95d';
+  ctx.beginPath();
+  for(let i=0;i<10;i++){
+   const a=-Math.PI/2+i*Math.PI/5,r=i%2?ms*0.45:ms;
+   ctx[i?'lineTo':'moveTo'](Math.cos(a)*r,Math.sin(a)*r);
+  }
+  ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#7a4a00';ctx.lineWidth=2;ctx.stroke();
+  ctx.restore();
+  // floating gold dice
+  const dice=[[1,cx-s*0.28,cy+s*0.02], [6,cx+s*0.28,cy+s*0.04]];
+  const pal={a:'#fff4c8',b:'#f4c95d',c:'#c98a1a',rim:'#7a4a00',pip:'#4a2a00',shine:'rgba(255,255,255,.45)'};
+  dice.forEach((d,i)=>{
+   const bob=Math.sin(t*5+i)*s*0.012;
+   drawDie(ctx,d[1],d[2]+bob,s*0.11,d[0],Math.sin(t*3+i)*0.15,pal,1);
+  });
+  ctx.restore();
+ }
+
+ function paintClean(ctx,w,h,t,rec,red){
+  const cx=w/2,cy=h*0.42,s=Math.min(w,h);
+  const fade=t<.08?t/.08:t>.88?1-(t-.88)/.12:1;
+  ctx.save();ctx.globalAlpha=fade;
+  ctx.fillStyle='rgba(6,16,14,.5)';ctx.fillRect(0,0,w,h);
+  const grd=ctx.createRadialGradient(cx,cy,s*0.04,cx,cy,s*0.7);
+  grd.addColorStop(0,'rgba(30,80,70,.38)');
+  grd.addColorStop(.55,'rgba(10,30,28,.16)');
+  grd.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=grd;ctx.fillRect(0,0,w,h);
+  // crystal shield
+  const grow=easeOutBack(clamp(t/.4));
+  ctx.save();ctx.translate(cx,cy);
+  ctx.scale(grow,grow);
+  ctx.beginPath();
+  ctx.moveTo(0,-s*0.2);
+  ctx.bezierCurveTo(s*0.18,-s*0.18,s*0.2,s*0.02,0,s*0.22);
+  ctx.bezierCurveTo(-s*0.2,s*0.02,-s*0.18,-s*0.18,0,-s*0.2);
+  const sg=ctx.createLinearGradient(0,-s*0.2,0,s*0.22);
+  sg.addColorStop(0,'rgba(230,255,245,.95)');
+  sg.addColorStop(.45,'rgba(120,220,190,.85)');
+  sg.addColorStop(1,'rgba(40,140,120,.9)');
+  ctx.fillStyle=sg;ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=Math.max(2,s*0.012);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.35)';
+  ctx.beginPath();ctx.moveTo(-s*0.05,-s*0.14);ctx.quadraticCurveTo(-s*0.08,-s*0.02,-s*0.02,s*0.08);ctx.lineTo(s*0.02,-s*0.06);ctx.closePath();ctx.fill();
+  // check
+  ctx.strokeStyle='#0b5a40';ctx.lineWidth=Math.max(3,s*0.02);ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(-s*0.06,s*0.01);ctx.lineTo(-s*0.015,s*0.07);ctx.lineTo(s*0.08,-s*0.08);ctx.stroke();
+  ctx.restore();
+  // sparkle wipe
+  const wipe=easeInOut(clamp((t-0.05)/.6));
+  for(let i=0;i<18;i++){
+   const px=cx-s*0.35+s*0.7*wipe+(i%5-2)*s*0.03;
+   const py=cy-s*0.18+(i*s*0.025)%(s*0.36);
+   const a=0.3+0.5*Math.sin(t*8+i);
+   ctx.fillStyle=hexA('#ffffff',a);
+   ctx.beginPath();ctx.arc(px,py,s*0.008*(1+Math.sin(t*6+i)*0.4),0,Math.PI*2);ctx.fill();
+  }
+  const pal={a:'#f4fff9',b:'#b8e8d4',c:'#3aa882',rim:'#1a6a50',pip:'#0b3a2c',shine:'rgba(255,255,255,.5)'};
+  drawDie(ctx,cx-s*0.3,cy+s*0.02+Math.sin(t*4)*s*0.01,s*0.1,5,-0.12,pal,1);
+  drawDie(ctx,cx+s*0.3,cy+s*0.01+Math.cos(t*4)*s*0.01,s*0.1,6,0.14,pal,1);
+  ctx.restore();
+ }
+
+ function drawLoco(ctx,x,y,sc,t){
+  ctx.save();ctx.translate(x,y);ctx.scale(sc,sc);
+  const bob=Math.sin(t*22)*1.2;
+  ctx.translate(0,bob);
+  // cowcatcher
+  ctx.fillStyle='#6a2a12';
+  ctx.beginPath();ctx.moveTo(-78,22);ctx.lineTo(-48,22);ctx.lineTo(-92,42);ctx.closePath();ctx.fill();
+  // boiler
+  const g=ctx.createLinearGradient(0,-28,0,24);
+  g.addColorStop(0,'#f0d28a');g.addColorStop(.5,'#c9892a');g.addColorStop(1,'#7a4a12');
+  ctx.fillStyle=g;
+  roundRect(ctx,-70,-22,96,40,16);ctx.fill();
+  ctx.fillStyle='#3a2410';
+  roundRect(ctx,18,-30,42,52,6);ctx.fill();
+  ctx.fillStyle='#7ec8ff';
+  roundRect(ctx,26,-22,26,16,3);ctx.fill();
+  // chimney
+  ctx.fillStyle='#2a1a10';
+  roundRect(ctx,-58,-48,16,28,3);ctx.fill();
+  ctx.fillStyle='#4a2a14';
+  roundRect(ctx,-62,-54,24,8,3);ctx.fill();
+  // dome
+  ctx.beginPath();ctx.arc(-18,-26,8,Math.PI,0);ctx.fillStyle='#e0b25a';ctx.fill();
+  // wheels
+  for(const wx of [-48,-14,32]){
+   ctx.beginPath();ctx.arc(wx,28,wx===32?14:18,0,Math.PI*2);
+   ctx.fillStyle='#2a1a10';ctx.fill();
+   ctx.strokeStyle='#e0b25a';ctx.lineWidth=3;ctx.stroke();
+   ctx.save();ctx.translate(wx,28);ctx.rotate(t*16);
+   ctx.strokeStyle='#c9a45c';ctx.lineWidth=2;
+   ctx.beginPath();ctx.moveTo(-12,0);ctx.lineTo(12,0);ctx.moveTo(0,-12);ctx.lineTo(0,12);ctx.stroke();
+   ctx.restore();
+  }
+  // steam
+  if(!arguments[5]){
+   for(let i=0;i<4;i++){
+    const p=(t*1.6+i*0.22)%1;
+    ctx.globalAlpha=0.45*(1-p);
+    ctx.beginPath();
+    ctx.fillStyle='#f4f0e6';
+    ctx.arc(-50-p*10,-58-p*36,6+p*14,0,Math.PI*2);
+    ctx.fill();
+   }
+  }
+  ctx.restore();
+ }
+
+ function paintTrain(ctx,w,h,t,rec,red){
+  const s=Math.min(w,h);
+  const fade=t<.06?t/.06:t>.9?1-(t-.9)/.1:1;
+  ctx.save();ctx.globalAlpha=fade;
+  const ground=h*0.62;
+  ctx.fillStyle='rgba(8,10,18,.5)';
+  ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='rgba(255,220,140,.35)';ctx.lineWidth=4;
+  ctx.beginPath();ctx.moveTo(0,ground+s*0.08);ctx.lineTo(w,ground+s*0.08);ctx.stroke();
+  const faces=[1,2,3,4,5,6];
+  const dieS=Math.min(72,Math.max(40,s*0.11));
+  const gap=dieS*1.28;
+  const lineW=dieS+gap*5;
+  const mid=w/2;
+  const form=easeOut(clamp(t/0.28));
+  const depart=easeInOut(clamp((t-0.34)/0.66));
+  const startX=mid-lineW/2;
+  const travel=depart*(w+lineW+dieS*4);
+  const pal={a:'#fff8e8',b:'#f0d28a',c:'#c9892a',rim:'#6a3a10',pip:'#3a1c08',shine:'rgba(255,255,255,.5)'};
+  // locomotive in front (left of 1)
+  const locoX=startX-dieS*1.35+travel;
+  const locoY=ground;
+  if(form>0.4)drawLoco(ctx,locoX,locoY-8,dieS/70,t,red);
+  faces.forEach((f,i)=>{
+   const tx=startX+i*gap+travel;
+   const scattered=mid+(i-2.5)*dieS*1.5;
+   const y0=ground-s*0.18-(i%2?s*0.08:0);
+   const x=lerp(scattered,tx,form);
+   const y=lerp(y0,ground,form)+Math.sin((t+i)*18)* (t>0.34?2.2:0);
+   const rot=lerp((i-2.5)*0.4,0,form);
+   // coupling
+   if(form>0.7&&i>0){
+    ctx.strokeStyle='#c9a45c';ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(x-dieS*0.58,ground);ctx.lineTo(x-dieS*0.72,ground);ctx.stroke();
+   }
+   drawDie(ctx,x,y,dieS,f,rot,pal,1);
+  });
+  ctx.restore();
+ }
+
+ function drawHorse(ctx,x,y,sc,phase,flip){
+  ctx.save();ctx.translate(x,y);if(flip)ctx.scale(-1,1);ctx.scale(sc,sc);
+  const a=Math.sin(phase),b=Math.sin(phase+1.2);
+  ctx.fillStyle='rgba(0,0,0,.22)';
+  ctx.beginPath();ctx.ellipse(2,36,32,5,0,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#c4b08a';ctx.lineWidth=5;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(-26,-2);ctx.quadraticCurveTo(-48,6+a*5,-46,26);ctx.stroke();
+  ctx.fillStyle='#f7f1e6';ctx.strokeStyle='#5a4630';ctx.lineWidth=1.6;
+  ctx.beginPath();ctx.ellipse(0,4,26,13,-0.06,0,Math.PI*2);ctx.fill();ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(14,-2);
+  ctx.bezierCurveTo(18,-16,28,-28,40,-22);
+  ctx.lineTo(44,-24);
+  ctx.quadraticCurveTo(40,-10,28,-2);
+  ctx.lineTo(16,8);
+  ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(38,-22);
+  ctx.quadraticCurveTo(54,-28,58,-16);
+  ctx.quadraticCurveTo(56,-8,46,-10);
+  ctx.quadraticCurveTo(40,-12,38,-18);
+  ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.moveTo(42,-24);ctx.lineTo(44,-34);ctx.lineTo(49,-23);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.strokeStyle='#c4b08a';ctx.lineWidth=2.4;
+  ctx.beginPath();ctx.moveTo(16,-8);ctx.quadraticCurveTo(26,-26,40,-24);ctx.stroke();
+  ctx.fillStyle='#2a1a10';ctx.beginPath();ctx.arc(50,-18,1.5,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#5a4630';ctx.lineWidth=3.4;ctx.lineCap='round';
+  [[-16,14,-16+a*8,36],[-5,14,-5+b*8,36],[10,14,10+a*8,36],[20,14,20+b*8,36]].forEach(L=>{
+   ctx.beginPath();ctx.moveTo(L[0],L[1]);ctx.lineTo(L[2],L[3]);ctx.stroke();
+   ctx.fillStyle='#2a1a10';ctx.beginPath();ctx.ellipse(L[2],L[3]+2,3.2,1.6,0,0,Math.PI*2);ctx.fill();
+   ctx.strokeStyle='#5a4630';
+  });
+  ctx.strokeStyle='#c9a45c';ctx.lineWidth=2.2;
+  ctx.beginPath();ctx.ellipse(0,4,22,11,-0.06,0.15,Math.PI-0.15);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(22,0);ctx.lineTo(34,-8);ctx.stroke();
+  ctx.restore();
+ }
+
+ function drawCoach(ctx,x,y,sc,t){
+  ctx.save();ctx.translate(x,y);ctx.scale(sc,sc);
+  const bob=Math.sin(t*14)*1.4;
+  ctx.translate(0,bob);
+  // hitch
+  ctx.strokeStyle='#5a3a18';ctx.lineWidth=4;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(-70,8);ctx.lineTo(-118,10);ctx.stroke();
+  // body
+  const body=ctx.createLinearGradient(0,-40,0,28);
+  body.addColorStop(0,'#3a2a68');
+  body.addColorStop(.45,'#1c1440');
+  body.addColorStop(1,'#0e0a22');
+  ctx.fillStyle=body;
+  roundRect(ctx,-70,-36,130,58,22);ctx.fill();
+  ctx.strokeStyle='#e0b25a';ctx.lineWidth=3;ctx.stroke();
+  // roof
+  ctx.beginPath();
+  ctx.moveTo(-66,-34);ctx.quadraticCurveTo(-5,-54,56,-34);
+  ctx.strokeStyle='#f4d48a';ctx.lineWidth=5;ctx.stroke();
+  // windows
+  [[-36,-18],[-4,-18],[28,-18]].forEach((p,i)=>{
+   ctx.fillStyle='rgba(255,230,170,.55)';
+   roundRect(ctx,p[0],p[1],22,20,5);ctx.fill();
+   ctx.strokeStyle='#e0b25a';ctx.lineWidth=1.5;ctx.stroke();
+   if(i===1){
+    // six-pip crest in middle window as a small die face suggestion
+    ctx.fillStyle='#6a3a10';
+    [[-4,-4],[4,-4],[-4,0],[4,0],[-4,4],[4,4]].forEach(d=>{
+     ctx.beginPath();ctx.arc(p[0]+11+d[0],p[1]+10+d[1],1.6,0,Math.PI*2);ctx.fill();
+    });
+   }
+  });
+  // lanterns
+  [[-72,-8],[64,-8]].forEach(p=>{
+   ctx.fillStyle='#ffe7a0';
+   ctx.beginPath();ctx.arc(p[0],p[1],7,0,Math.PI*2);ctx.fill();
+   ctx.fillStyle='rgba(255,210,80,.35)';
+   ctx.beginPath();ctx.arc(p[0],p[1],16,0,Math.PI*2);ctx.fill();
+  });
+  // driver's seat
+  ctx.fillStyle='#2a1a10';
+  roundRect(ctx,-66,-48,22,14,3);ctx.fill();
+  // wheels
+  [[-42,28,18],[42,28,20]].forEach(w=>{
+   ctx.save();ctx.translate(w[0],w[1]);ctx.rotate(t*12);
+   ctx.beginPath();ctx.arc(0,0,w[2],0,Math.PI*2);
+   ctx.fillStyle='#2a1a10';ctx.fill();
+   ctx.strokeStyle='#e0b25a';ctx.lineWidth=3;ctx.stroke();
+   ctx.beginPath();ctx.arc(0,0,w[2]*0.35,0,Math.PI*2);
+   ctx.fillStyle='#f4d48a';ctx.fill();
+   ctx.strokeStyle='#e0b25a';ctx.lineWidth=1.5;
+   for(let i=0;i<6;i++){ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(Math.cos(i*Math.PI/3)*w[2],Math.sin(i*Math.PI/3)*w[2]);ctx.stroke()}
+   ctx.restore();
+  });
+  ctx.restore();
+ }
+
+ function paintCoach(ctx,w,h,t,rec,red){
+  const s=Math.min(w,h);
+  const fade=t<.07?t/.07:t>.9?1-(t-.9)/.1:1;
+  ctx.save();ctx.globalAlpha=fade;
+  // night sky
+  const sky=ctx.createLinearGradient(0,0,0,h);
+  sky.addColorStop(0,'rgba(8,8,28,.72)');
+  sky.addColorStop(.55,'rgba(28,16,48,.55)');
+  sky.addColorStop(1,'rgba(12,8,20,.35)');
+  ctx.fillStyle=sky;ctx.fillRect(0,0,w,h);
+  // moon
+  const mx=w*0.78,my=h*0.18,mr=s*0.07;
+  ctx.fillStyle='rgba(255,244,210,.9)';
+  ctx.beginPath();ctx.arc(mx,my,mr,0,Math.PI*2);ctx.fill();
+  ctx.globalCompositeOperation='destination-out';
+  ctx.beginPath();ctx.arc(mx+mr*0.35,my-mr*0.1,mr*0.78,0,Math.PI*2);ctx.fill();
+  ctx.globalCompositeOperation='source-over';
+  // stars
+  for(let i=0;i<40;i++){
+   const sx=(i*97%w),sy=(i*53%Math.floor(h*0.5)),a=0.35+0.5*Math.abs(Math.sin(t*3+i));
+   ctx.fillStyle='rgba(255,255,230,'+a+')';
+   ctx.beginPath();ctx.arc(sx,sy,i%5===0?1.8:1,0,Math.PI*2);ctx.fill();
+  }
+  const ground=h*0.64;
+  ctx.fillStyle='rgba(20,16,28,.5)';
+  ctx.fillRect(0,ground+s*0.04,w,h);
+  ctx.strokeStyle='rgba(180,150,90,.3)';ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(0,ground+s*0.06);ctx.lineTo(w,ground+s*0.06);ctx.stroke();
+  const enter=easeOut(clamp(t/0.22));
+  const ride=easeInOut(clamp((t-0.12)/0.88));
+  const sc=Math.min(1.15,Math.max(0.7,s/520));
+  const x=lerp(-s*0.08,w+s*0.55,ride);
+  const y=ground;
+  // sparkle trail
+  for(let i=0;i<14;i++){
+    const p=i/14;
+    ctx.fillStyle=hexA('#ffe7a0',0.18*(1-p)*enter);
+    ctx.beginPath();ctx.arc(x-p*s*0.35,y-8+Math.sin(t*8+i)*6,3+p*4,0,Math.PI*2);ctx.fill();
+  }
+  drawHorse(ctx,x-s*0.26,y-s*0.015,sc*1.35,t*14,false);
+  drawHorse(ctx,x-s*0.38,y+s*0.02,sc*1.22,t*14+0.8,false);
+  drawCoach(ctx,x,y,sc,t);
+  // four six-dice as floating lanterns behind the coach
+  const pal={a:'#fff4c8',b:'#e0b25a',c:'#8a5a18',rim:'#4a2a08',pip:'#2a1408',shine:'rgba(255,255,255,.4)'};
+  const dice=(rec&&rec.d&&rec.d.filter(v=>v===6).slice(0,4))||[6,6,6,6];
+  dice.forEach((f,i)=>{
+   const dx=x-s*0.02+(i-1.5)*s*0.07, dy=y-s*0.18-Math.sin(t*5+i)*s*0.015;
+   drawDie(ctx,dx,dy,s*0.055,6,Math.sin(t*3+i)*0.2,pal,0.95);
+  });
+  ctx.restore();
+ }
+
+ function paintFrame(ctx,w,h,kind,frac,rec,red){
+  ctx.clearRect(0,0,w,h);
+  const t=clamp(frac);
+  if(kind==='prymus')paintPrymus(ctx,w,h,t,rec,red);
+  else if(kind==='clean')paintClean(ctx,w,h,t,rec,red);
+  else if(kind==='ltrain')paintTrain(ctx,w,h,t,rec,red);
+  else paintCoach(ctx,w,h,t,rec,red);
+ }
+
+ function play(rec,opt){
+  opt=opt||{};
+  if(!rec||KINDS.indexOf(rec.k)<0)return false;
+  if(!opt.force&&!opt.freeze){
+   try{if(sessionStorage['fxa_'+rec.t])return false;sessionStorage['fxa_'+rec.t]='1'}catch(e){}
+  }
+  stop();
+  const e=rootEl(),cvs=e.querySelector('canvas'),red=!!(opt.reduced||(opt.freeze==null&&reduced()));
+  const title=e.querySelector('.fxat'),xp=e.querySelector('.fxaxp'),sk=e.querySelector('.fxaskip');
+  e.className=rec.k;
+  if(title)title.textContent=titleOf(rec);
+  if(xp)xp.textContent=(rec.k==='prymus'||rec.k==='clean')?('+'+((rec.x||(rec.k==='prymus'?SA:CA)))+' XP'):'';
+  if(sk)sk.textContent=skipTxt();
+  e.hidden=false;
+  const {ctx,w,h}=sizeCanvas(cvs);
+  const dur=DUR[rec.k]||2500;
+  state={t0:performance.now(),dur,rec,raf:0,to:0};
+  const render=frac=>{
+   try{
+    const sz=sizeCanvas(cvs);
+    paintFrame(sz.ctx,sz.w,sz.h,rec.k,clamp(frac),rec,red);
+   }catch(err){}
+  };
+  e.onclick=()=>stop();
+  if(opt.freeze!=null){render(clamp(opt.freeze));return true}
+  if(!ctx){state.to=setTimeout(stop,dur);return true}
+  if(red){render(0.62);state.to=setTimeout(stop,Math.min(dur,1800));return true}
+  const tick=now=>{
+   if(!state)return;
+   const frac=(now-state.t0)/state.dur;
+   render(frac);
+   if(frac>=1){stop();return}
+   state.raf=requestAnimationFrame(tick);
+  };
+  state.raf=requestAnimationFrame(tick);
+  return true;
+ }
+
+ function intake(g){
+  if(!g||!Array.isArray(g.fxb))return;
+  g.fxb=unionFxb(g.fxb,[]);
+  g.fxb.forEach(rec=>{try{awardBonus(g,rec)}catch(e){}try{play(rec)}catch(e){}});
+ }
+
+ function hookXp(){
+  if(window.__v210){
+   __v210.pubMine=function(g,dlt){return pubMine(g,dlt)};
+   const _os=onState;
+   onState=function(){
+    if(awarding)return _os.apply(this,arguments);
+    const g0=typeof S!=='undefined'&&S&&S.G;
+    const ending=!!(g0&&g0.phase==='end'&&typeof me!=='undefined'&&me&&g0.players&&g0.players.some(p=>p.name===me));
+    let xp0=0;if(ending)try{xp0=pxXP()}catch(e){}
+    awarding=1;
+    const r=_os.apply(this,arguments);
+    awarding=0;
+    try{
+     const g=S&&S.G;
+     if(g){
+      intake(g);
+      if(g.phase==='end'){
+       fillDet(g);
+       if(ending){
+        const dlt=earned(g,me,xp0);
+        pubMine(g,dlt);
+        try{
+         const L=pfLevel(pxXP());
+         if(!(L&&PX&&L.lv>PX.lv)&&(!dlt||dlt<=0)){
+          /* no false level-up: pfCheckLevel already compares levels; if XP did not rise, drop a queued bump that matches no gain */
+         }
+        }catch(e){}
+       }else if(window.__v210)__v210.paint(g);
+      }
+     }
+    }catch(e){}
+    return r;
+   };
+  }
+  if(typeof showWin==='function'&&!showWin.__v230){
+   const _sw=showWin;
+   showWin=function(g){try{fillDet(g)}catch(e){}return _sw.apply(this,arguments)};
+   showWin.__v230=1;window.__win=showWin;
+  }
+  if(typeof pfCheckLevel==='function'&&!pfCheckLevel.__v230){
+   const _lv=pfCheckLevel;
+   pfCheckLevel=function(quiet){
+    let before=0,lv0=0;
+    try{before=pxXP();lv0=PX&&PX.lv||0}catch(e){}
+    const r=_lv.apply(this,arguments);
+    try{
+     if(!quiet&&pxXP()<=before&&PX&&PX.lv<=lv0){
+      /* nothing rose — leave any previously queued real level-ups alone */
+     }
+    }catch(e){}
+    return r;
+   };
+   pfCheckLevel.__v230=1;
+  }
+ }
+
+ function hookWrite(){
+  try{
+   if(typeof K==='object'&&K&&typeof K.write==='function'&&!K.write.__v230){
+    const _w=K.write;
+    K.write=function(g,cat,cross){
+     const snap={rolls:g&&g.rolls,dice:g&&(g.dice||[]).slice(),cur:g&&g.cur,n:g&&g.players&&g.players[g.cur]&&g.players[g.cur].name};
+     const r=_w.apply(this,arguments);
+     if(r)try{onWrite(g,cat,cross,snap)}catch(e){}
+     return r;
+    };
+    K.write.__v230=1;
+   }
+  }catch(e){}
+ }
+
+ function hookV211(){
+  if(!window.__v211)return;
+  if(typeof __v211.play==='function'&&!__v211.play.__v230){
+   const _p=__v211.play;
+   __v211.play=function(rec,opt){
+    if(rec&&rec.k==='kareta6'&&!(opt&&opt.forceOld))return false;
+    return _p.apply(this,arguments);
+   };
+   __v211.play.__v230=1;
+  }
+  if(typeof __v211.attach==='function'&&!__v211.attach.__v230){
+   const _a=__v211.attach;
+   __v211.attach=function(g){
+    try{if(__v211.detect&&__v211.detect(g&&g.dice,g&&g.rolls)==='kareta6')return null}catch(e){}
+    return _a.apply(this,arguments);
+   };
+   __v211.attach.__v230=1;
+  }
+  if(window.__v210&&typeof __v210.mergeIn==='function'&&!__v210.mergeIn.__v230){
+   const _m=__v210.mergeIn;
+   __v210.mergeIn=function(d){
+    const out=_m.apply(this,arguments);
+    try{if(out&&out.G&&typeof S!=='undefined'&&S&&S.G&&S.G.gid===out.G.gid)out.G.fxb=unionFxb(S.G.fxb,out.G.fxb)}catch(e){}
+    return out;
+   };
+   __v210.mergeIn.__v230=1;
+  }
+ }
+
+ hookXp();
+ hookWrite();
+ hookV211();
+
+ window.__v230={SA,CA,KINDS,DUR,gameXpParts,gameXp,earned,fillDet,pubMine,unionFxb,recsFromWrite,onWrite,attach,play,stop,intake,awardBonus,titleOf};
+})();
 </script></body></html>
