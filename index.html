@@ -3319,6 +3319,127 @@ body.gbar-on #game{padding-top:8px;box-sizing:border-box}
 body.gbar-on #instban{border-radius:14px}
 
 </style>
+<style id="v224css">
+/* 2.24: Settings/avatar fit + AA contrast on highlighted score cells */
+/* v224-aa-opt */
+
+/* Long labels (Einstellungen) must fit the top-bar and in-game pills at 360px */
+#setbtn, #gbar .gbtn{
+  white-space:normal;
+  line-height:1.15;
+  text-align:center;
+  min-width:0;
+}
+#setbtn span[data-t], #gbar .gbtn span[data-t]{
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+.tbrow #setbtn{flex:0 1 auto;max-width:calc(100% - 4px)}
+@media (max-width:400px){
+  #setbtn{font-size:12.5px;padding:6px 10px;gap:4px}
+  #gbar .gbtn{font-size:12.5px;padding:6px 10px;max-width:48%}
+}
+
+/* Avatar names wrap on two lines instead of "Aether Kni…" */
+.avt span{
+  white-space:normal!important;
+  overflow:hidden;
+  text-overflow:unset;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+  line-height:1.15;
+  font-size:9px;
+  text-align:center;
+  max-width:100%;
+  overflow-wrap:break-word;
+  word-break:normal;
+  hyphens:auto;
+}
+
+/* Highlighted / writable / preview cells: readable numbers, glow kept.
+   .opt-gold used to force color:#5a3d00!important, which lost to dark theme
+   backgrounds (Royal 1.11:1). Override color with higher specificity. */
+#tab .opt,
+#tab .opt.opt-gold,
+#tab td.hintc .opt,
+#tab td.choose .opt,
+#tab td.choose .opt.opt-gold,
+#tab .opt:focus,
+#tab .opt:focus-visible{
+  color:#1a2744!important; /* 13.94:1 on classic #fff8e0 */
+}
+
+/* Keep the gold glow on poker/lord in light themes (beats #tab td.choose .opt). */
+#tab td.choose .opt.opt-gold,
+#tab .opt.opt-gold{
+  box-shadow:0 0 10px 3px #ffd23fcc,inset 0 0 0 2px #e8c24acc;
+}
+
+/* Dark themes: light ink, keep each theme's glow (and opt-gold pulse). */
+body.th-sapphire #tab .opt,
+body.th-sapphire #tab .opt.opt-gold,
+body.th-sapphire #tab td.hintc .opt,
+body.th-sapphire #tab td.choose .opt{
+  color:#eaf8ff!important; /* 10.57:1 on #133a68 */
+  box-shadow:inset 0 0 0 2px #14d4ff,0 0 10px #14d4ff66;
+}
+body.th-galaxy #tab .opt,
+body.th-galaxy #tab .opt.opt-gold,
+body.th-galaxy #tab td.hintc .opt,
+body.th-galaxy #tab td.choose .opt{
+  color:#f7eaff!important; /* 11.00:1 on #521368 */
+  box-shadow:inset 0 0 0 2px #e07bff,0 0 12px #c46bff88;
+}
+body.th-neon #tab .opt,
+body.th-neon #tab .opt.opt-gold,
+body.th-neon #tab td.hintc .opt,
+body.th-neon #tab td.choose .opt{
+  color:#ffeaf6!important; /* 12.74:1 on #3b135e */
+  box-shadow:inset 0 0 0 2px #ff14bc,0 0 10px #ff14bc66;
+}
+body.th-aurora #tab .opt,
+body.th-aurora #tab .opt.opt-gold,
+body.th-aurora #tab td.hintc .opt,
+body.th-aurora #tab td.choose .opt{
+  color:#eafffa!important; /* 10.95:1 on #193b62 */
+  box-shadow:inset 0 0 0 2px #14ffa5,0 0 10px #14ffa566;
+}
+body.th-royal #tab .opt,
+body.th-royal #tab .opt.opt-gold,
+body.th-royal #tab td.hintc .opt,
+body.th-royal #tab td.choose .opt{
+  color:#fef9eb!important; /* 10.59:1 on #443a2b */
+  box-shadow:inset 0 0 0 2px #f1b622,0 0 12px #f1b62288;
+}
+body.th-sakura #tab .opt,
+body.th-sakura #tab .opt.opt-gold,
+body.th-sakura #tab td.hintc .opt,
+body.th-sakura #tab td.choose .opt{
+  color:#fdf2f6!important; /* 11.01:1 on #4d2853 */
+  box-shadow:inset 0 0 0 2px #e04385,0 0 10px #e0438566;
+}
+/* Ninja keeps burgundy on cream (11.78:1 on #f4ead2) */
+body.th-ninja #tab .opt,
+body.th-ninja #tab .opt.opt-gold,
+body.th-ninja #tab td.hintc .opt,
+body.th-ninja #tab td.choose .opt{
+  color:#5a0a16!important;
+}
+
+/* Pulse (gl) still animates box-shadow; do not freeze it with !important. */
+body:not(.noanim) #tab .opt.opt-gold{
+  animation:gl 1.2s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion:reduce){
+  body:not(.noanim) #tab .opt.opt-gold{animation:none}
+}
+
+</style>
 </head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -3456,7 +3577,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='2.23';
+const APP_VER='2.24';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -3900,7 +4021,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611222100';
+const APP_VERSION='202611231200';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -6144,7 +6265,7 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
  };
  function instI18n(){try{const pack=typeof I18N!=='undefined'?I18N:window.I18N;if(!pack)return;['pl','en','de','es'].forEach(L=>{pack[L]=pack[L]||{};Object.keys(I[L]).forEach(k=>{pack[L][k]=I[L][k]})})}catch(e){}}
  instI18n();
- function tx(k){try{const L=window.LANG||'pl';return (I18N[L]&&I18N[L][k])||(I[L]&&I[L][k])||I.en[k]||k}catch(e){return (I.en[k]||k)}}
+ function tx(k){try{const L=(typeof LANG==='string'&&LANG)||window.LANG||'pl';return (I18N[L]&&I18N[L][k])||(I[L]&&I[L][k])||I.en[k]||k}catch(e){return (I.en[k]||k)}}
 
  window.ambVol=function(){try{const v=parseFloat((typeof LS==='function'?LS('kambvol'):localStorage.kambvol));return isFinite(v)?Math.min(1,Math.max(0,v)):0.5}catch(e){return .5}};
 
@@ -6986,6 +7107,88 @@ $('twbtn').onclick=twOpen;try{twAch()}catch(e){}
   spawnMeteor:(opts)=>spawnMeteor(bgW||window.innerWidth||412,bgH||window.innerHeight||860,opts),
   galaxyAudio:()=>({rp:RP.galaxy,keys:Object.keys(SETS.galaxy||{})})
  };
+})();
+
+</script>
+<script id="v224">
+(function(){
+ /* 2.24: relabel safety + AA contrast helper for preview score cells */
+ function langOf(){
+  try{if(typeof LANG==='string'&&LANG)return LANG}catch(e){}
+  try{const k=localStorage.klang;if(k)return k}catch(e){}
+  return 'pl';
+ }
+ function relabel(){
+  try{if(window.__v220&&typeof __v220.labelPanel==='function')__v220.labelPanel()}catch(e){}
+  try{if(window.__v220&&typeof __v220.fillSetTh==='function')__v220.fillSetTh()}catch(e){}
+ }
+
+ function lin(c){c=c/255;return c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4)}
+ function lum(c){return 0.2126*lin(c.r)+0.7152*lin(c.g)+0.0722*lin(c.b)}
+ function parseRgb(s){
+  if(!s||s==='transparent')return null;
+  const m=String(s).match(/rgba?\(([^)]+)\)/);
+  if(!m){
+   if(/^#([0-9a-f]{6})$/i.test(s)){const h=s.slice(1);return {r:parseInt(h.slice(0,2),16),g:parseInt(h.slice(2,4),16),b:parseInt(h.slice(4,6),16),a:1}}
+   if(/^#([0-9a-f]{3})$/i.test(s)){const h=s.slice(1);return {r:parseInt(h[0]+h[0],16),g:parseInt(h[1]+h[1],16),b:parseInt(h[2]+h[2],16),a:1}}
+   return null;
+  }
+  const p=m[1].split(',').map(x=>parseFloat(x.trim()));
+  if(p.length<3||p.some(n=>!isFinite(n)))return null;
+  const a=p.length>3?p[3]:1;
+  if(a<=0.01)return null;
+  return {r:p[0],g:p[1],b:p[2],a};
+ }
+ function ratio(a,b){
+  const A=typeof a==='string'?parseRgb(a):a,B=typeof b==='string'?parseRgb(b):b;
+  if(!A||!B)return 0;
+  const L1=lum(A),L2=lum(B);
+  return (Math.max(L1,L2)+0.05)/(Math.min(L1,L2)+0.05);
+ }
+ function bgOf(el){
+  let n=el;
+  while(n&&n.nodeType===1){
+   const c=parseRgb(getComputedStyle(n).backgroundColor);
+   if(c&&c.a>=0.6)return c;
+   if(n===document.body)break;
+   n=n.parentElement;
+  }
+  return parseRgb('#fff8e0');
+ }
+ function ensure(root){
+  const scope=root&&root.querySelectorAll?root:document;
+  scope.querySelectorAll('#tab .opt, #tab td.opt').forEach(el=>{
+   try{
+    const cs=getComputedStyle(el);
+    const fg=parseRgb(cs.color), bg=bgOf(el);
+    if(!fg||!bg)return;
+    if(ratio(fg,bg)<4.5){
+     el.style.setProperty('color', lum(bg)<0.45?'#fff8ee':'#1a1408','important');
+    }
+   }catch(e){}
+  });
+  return true;
+ }
+
+ try{
+  if(typeof render==='function'&&!render.__v224){
+   const _r=render;
+   render=function(){const out=_r.apply(this,arguments);try{ensure()}catch(e){}return out};
+   render.__v224=1;
+  }
+ }catch(e){}
+
+ try{
+  if(typeof applyLang2==='function'&&!applyLang2.__v224){
+   const _al=applyLang2;
+   applyLang2=function(){const out=_al.apply(this,arguments);try{relabel()}catch(e){}return out};
+   applyLang2.__v224=1;
+  }
+ }catch(e){}
+
+ try{relabel();ensure()}catch(e){}
+
+ window.__v224={langOf,relabel,ensure,ratio,parseRgb,lum,AA:4.5};
 })();
 
 </script></body></html>
