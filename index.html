@@ -3659,6 +3659,133 @@ body:not(#z) #szov .szx{z-index:5;background:rgba(0,0,0,.3);top:14px;right:14px}
 #rov .hsmodes .hmn{hyphens:manual;-webkit-hyphens:manual;overflow-wrap:break-word}
 @media(max-width:420px){#rov .hsmodes .hstab{padding-left:2px!important;padding-right:2px!important}#rov .hsmodes .hmn{font-size:10.5px}}
 </style>
+<style id="v250css">
+/* ---- 2.50 Rewolwerowy Pojedynek / High Noon Shootout – stage 1 placeholder skin (stage 2 restyles the same hooks) ---- */
+#game.dl-skin{--dl-accent:#d9a441;--dl-accent2:#8a5a10;--dl-blood:#c62828;--dl-storm:#6a1b9a;--dl-steel:#4a4f57}
+.dlbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:8px;margin:8px 0 6px}
+.dlp{position:relative;display:flex;flex-direction:column;gap:6px;min-width:0;padding:8px 10px;border-radius:14px;background:rgba(127,127,127,.14);border:1.5px solid rgba(127,127,127,.3);transition:box-shadow .25s,border-color .25s}
+.dlp.cur{border-color:#d9a441;box-shadow:0 0 0 2px rgba(217,164,65,.55),0 4px 14px rgba(0,0,0,.18)}
+.dlp.full{border-color:#ffb300}
+.dlpm{display:flex;flex-direction:column;gap:3px;min-width:0}
+.dlpn{font-weight:800;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dlpv{font-size:11.5px;line-height:1.2;opacity:.92;white-space:normal;overflow-wrap:anywhere}.dlpv.used{opacity:.5;text-decoration:line-through}
+.dlmwb{display:inline-block;align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.04em;padding:1px 7px;border-radius:999px;background:#f2c14e;color:#3b2a06}
+.dlpd{display:flex;align-items:center;gap:8px;position:relative}
+.dlpd .dldrum{width:46px;height:46px;flex:none}
+.dlpc{font-size:22px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}.dlpc small{font-size:13px;font-weight:700;opacity:.7;margin-left:1px}
+.dlvs{align-self:center;font-weight:900;font-size:13px;letter-spacing:.06em;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(127,127,127,.22)}
+.dlst{grid-column:1/-1;text-align:center;font-size:13px;font-weight:700;padding:4px 8px;border-radius:10px;background:rgba(217,164,65,.18)}
+.dlst[hidden]{display:none}
+/* avatar inside the plate header */
+.dlp .dlpm{order:1}.dlp .dlpd{order:2}
+.dlp .dlpa{display:block;position:absolute;top:7px;right:8px}
+.dlp .dlpa .avp,.dlp .dlpa .avq{width:30px;height:30px;font-size:22px;line-height:30px}
+.dlp .dlpm{padding-right:34px}
+/* drum */
+.dldrum .dlcyl{fill:var(--dl-steel,#4a4f57);stroke:#24272c;stroke-width:1.2}
+.dldrum .dlnot{fill:rgba(0,0,0,.28)}
+.dldrum .dlch{fill:#16181c;stroke:#2c3036;stroke-width:1}
+.dldrum .dlch.on{fill:#d9a441;stroke:#7a4f0c;stroke-width:1}
+.dldrum .dlcap{fill:#f7dc92}
+.dldrum .dlhub{fill:#8b929c;stroke:#24272c;stroke-width:.8}
+.dldrum .dlrot{transform-origin:20px 20px;transform:rotate(var(--rot,0deg));transition:transform .55s cubic-bezier(.3,1.4,.5,1)}
+.dldrum.full{filter:drop-shadow(0 0 5px rgba(255,179,0,.85))}
+.dldrum.mini{width:16px;height:16px;vertical-align:-3px}
+.dlpd.dlload .dldrum{animation:dlspin .7s ease-out}
+@keyframes dlspin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.dlgain{position:absolute;left:30px;top:-6px;font-weight:900;font-size:16px;color:#ffb300;text-shadow:0 1px 2px rgba(0,0,0,.5);animation:dlgain 1.4s ease-out forwards;pointer-events:none}
+@keyframes dlgain{0%{opacity:0;transform:translateY(6px) scale(.8)}20%{opacity:1;transform:translateY(0) scale(1.15)}100%{opacity:0;transform:translateY(-22px) scale(1)}}
+.dlth{display:inline-flex;align-items:center;gap:2px;font-size:12px;font-weight:800;white-space:nowrap;padding:1px 6px;border-radius:999px;background:rgba(127,127,127,.18);vertical-align:middle}
+.dlth.full{background:rgba(255,179,0,.3)}.dlth i{font-style:normal;font-size:11px}
+/* targets */
+#tab td.dltg{position:relative;cursor:pointer;background:rgba(217,164,65,.14)!important;box-shadow:inset 0 0 0 2px rgba(217,164,65,.75);border-radius:6px}
+#tab td.dltg.dlno{cursor:not-allowed;background:transparent!important;box-shadow:inset 0 0 0 1px rgba(127,127,127,.3);opacity:.45}
+#tab td.dltg.dlst{box-shadow:inset 0 0 0 2px rgba(155,81,224,.85);background:rgba(155,81,224,.14)!important}
+#tab td.dltg.dlsel{box-shadow:inset 0 0 0 3px var(--dl-blood,#c62828);background-color:rgba(198,40,40,.16)!important}
+#tab td.dltg.dlsel::after,#tab td.dlaimed::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Ccircle cx='13' cy='13' r='9' fill='none' stroke='%23d32f2f' stroke-width='2'/%3E%3Cpath d='M13 0v8M13 18v8M0 13h8M18 13h8' stroke='%23d32f2f' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='1.6' fill='%23d32f2f'/%3E%3C/svg%3E") center/contain no-repeat}
+#tab td.dlaimed{position:relative;box-shadow:inset 0 0 0 3px var(--dl-blood,#c62828);animation:dlpulse 1s ease-in-out infinite}
+@keyframes dlpulse{50%{box-shadow:inset 0 0 0 3px rgba(198,40,40,.35)}}
+.dlcost{position:absolute;top:2px;right:2px;min-width:16px;height:16px;padding:0 3px;border-radius:8px;background:var(--dl-blood,#c62828);color:#fff;font:800 11px/16px system-ui,sans-serif;font-style:normal;text-align:center;pointer-events:none}
+#tab td.dltg.dlno .dlcost{background:#777}
+/* dead cells */
+#tab td.dlhole,#tab td.dlgrave{text-align:center}
+.dlmk{display:inline-flex;align-items:center;justify-content:center;gap:4px;vertical-align:middle}
+.dlho i{display:inline-block;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 48% 46%,#050505 0 30%,#2a2a2a 38%,#7b7b7b 47%,rgba(120,120,120,.35) 58%,transparent 70%);position:relative}
+.dlho i::before,.dlho i::after{content:'';position:absolute;left:50%;top:50%;width:22px;height:1.2px;margin:-.6px 0 0 -11px;background:linear-gradient(90deg,transparent,rgba(60,60,60,.7) 30%,transparent 45%,transparent 55%,rgba(60,60,60,.7) 70%,transparent);transform:rotate(28deg)}
+.dlho i::after{transform:rotate(-52deg);width:18px;margin-left:-9px}
+.dlho small{font-size:12px;font-weight:800;color:var(--neg,#d32f2f)}
+.dlgr i{display:inline-block;width:15px;height:19px;border-radius:8px 8px 2px 2px;background:linear-gradient(#a3a6ab,#74777d);box-shadow:0 2px 0 -0.5px #6b4f2a;position:relative}
+.dlgr i::before{content:'';position:absolute;left:6.5px;top:3px;width:2px;height:11px;background:#f2f2f2;border-radius:1px}
+.dlgr i::after{content:'';position:absolute;left:3.5px;top:6px;width:8px;height:2px;background:#f2f2f2;border-radius:1px}
+#tab td.dlflash{animation:dlflash 1.2s ease-out}
+#tab td.dlflash.dl-vest{animation-name:dlflashv}
+@keyframes dlflash{0%{background:rgba(255,200,80,.95)}30%{background:rgba(198,40,40,.6)}100%{background:transparent}}
+@keyframes dlflashv{0%{background:rgba(120,200,255,.9)}100%{background:transparent}}
+/* bottom sheets */
+.dlsheet{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);width:min(560px,calc(100% - 16px));box-sizing:border-box;z-index:9000;border-radius:18px;padding:12px 14px 12px;box-shadow:0 10px 40px rgba(0,0,0,.45),0 0 0 1.5px rgba(217,164,65,.6);animation:dlup .25s ease-out}
+.dlsheet[hidden]{display:none}
+@keyframes dlup{from{transform:translate(-50%,24px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+body.dl-sheet #game{padding-bottom:240px}
+.dlsh{display:flex;align-items:center;gap:10px}.dlshd .dldrum{width:40px;height:40px}.dlsht{display:flex;flex-direction:column;line-height:1.25}.dlsht b{font-size:17px}.dlsht small{font-size:12px;opacity:.85}
+.dlshp{margin:6px 0 8px;font-size:13px;line-height:1.35;opacity:.95}
+.dlselr{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:10px;background:rgba(198,40,40,.14);font-size:14px;margin-bottom:8px}.dlselr .dlk{margin-left:auto;font-weight:800;white-space:nowrap}
+.dlselr.pick{background:rgba(127,127,127,.14);justify-content:center;font-weight:700;opacity:.9}
+.dlx{color:var(--dl-blood,#c62828);font-size:20px;line-height:1;font-weight:900}.dlx.big{font-size:28px}
+.dlbtns{display:flex;flex-wrap:wrap;gap:8px}.dlbtns button{flex:1 1 auto;min-height:44px;margin:0;font-weight:800}
+button.dlfire{background:var(--dl-blood,#c62828)!important;color:#fff!important;border-color:#8e1b14!important}
+button.dlfire.storm{background:var(--dl-storm,#6a1b9a)!important;border-color:#4a126c!important}
+button.dlvy{background:#2e7d32!important;color:#fff!important;border-color:#1b5e20!important}
+.dlaim.storm{box-shadow:0 10px 40px rgba(0,0,0,.45),0 0 0 2px rgba(155,81,224,.8)}
+.dlvest{box-shadow:0 10px 40px rgba(0,0,0,.5),0 0 0 2px rgba(198,40,40,.85)}
+.dlvh{display:flex;align-items:center;gap:10px;font-size:16px;line-height:1.3}
+.dltime{height:6px;border-radius:3px;background:rgba(127,127,127,.3);overflow:hidden;margin:0 0 10px}.dltime i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#e53935,#ffb300);transition:width .25s linear}
+/* shot effect */
+#dlfx{position:fixed;left:50%;top:32%;transform:translate(-50%,-50%) scale(.9);z-index:9500;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 26px 14px;border-radius:20px;background:rgba(10,10,12,.78);color:#fff;text-align:center;opacity:0;transition:opacity .25s,transform .25s;max-width:86vw}
+#dlfx.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#dlfx.anim.on{animation:dlpop .45s cubic-bezier(.2,1.6,.4,1)}
+@keyframes dlpop{0%{transform:translate(-50%,-50%) scale(.4)}100%{transform:translate(-50%,-50%) scale(1)}}
+#dlfx .dlfxi{font-size:40px;line-height:1}#dlfx .dlfxt{font:900 30px/1.1 system-ui,sans-serif;letter-spacing:.05em}#dlfx .dlfxs{font-size:14px;opacity:.9}
+#dlfx.hit .dlfxt{color:#ffcc80}#dlfx.vest .dlfxt{color:#9fdcff}#dlfx.storm .dlfxt{color:#e9b8ff}
+#dlfx[hidden]{display:none}
+/* lobby: Most Wanted placard */
+.dllob{margin:10px 0 2px}.dllob[hidden]{display:none}
+.dlmwp{text-align:center;padding:10px 12px 12px;border-radius:12px;background:linear-gradient(#f8ecca,#eedaa6);color:#3b2a14;border:2px solid #b08a4a;box-shadow:0 2px 8px rgba(0,0,0,.18);font-family:Georgia,'Times New Roman',serif}
+.dlmwt{font-weight:900;font-size:20px;letter-spacing:.14em}.dlmws{font-size:12px;opacity:.8;margin-top:1px;font-family:system-ui,sans-serif}
+.dlmwa{margin:8px auto 4px;width:64px;height:64px;border:3px solid #5a3b17;border-radius:6px;background:#e9d3a0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.dlmwa .avW,.dlmwa .avq{width:58px;height:58px;font-size:40px;line-height:58px}
+.dlmwnm{font-weight:900;font-size:17px;text-transform:uppercase;letter-spacing:.04em}.dlmwnm small{text-transform:none;font-weight:400}.dlmww{font-size:13px;font-family:system-ui,sans-serif;margin-top:2px}
+.dlmwn{margin:6px 0 0;font-size:13px;font-family:system-ui,sans-serif;line-height:1.35}
+.dlneed{margin:8px 2px 0;font-size:13px;font-weight:700;line-height:1.35;color:#b3261e}.dlneed.ok{color:#2e7d32}
+#go:disabled{opacity:.55;cursor:not-allowed}
+/* end poster */
+.dlpost{position:relative;width:min(240px,78%);margin:4px auto 10px;padding:16px 12px 12px;box-sizing:border-box;background:linear-gradient(170deg,#fbf0d2,#ecd49c 70%,#e2c27f);color:#3a2410;border:3px solid #a87a3a;border-radius:4px;box-shadow:0 8px 22px rgba(0,0,0,.35),inset 0 0 26px rgba(120,80,20,.28);transform:rotate(-1.5deg);font-family:Georgia,'Times New Roman',serif;text-align:center}
+.dlpost.anim{animation:dlpin .7s cubic-bezier(.2,1.3,.4,1)}
+@keyframes dlpin{0%{transform:translateY(-40px) rotate(-8deg);opacity:0}100%{transform:rotate(-1.5deg);opacity:1}}
+.dlnail{position:absolute;top:6px;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#d9d9d9,#555 70%);box-shadow:0 1px 2px rgba(0,0,0,.5)}.dlnail.l{left:8px}.dlnail.r{right:8px}
+.dlpt{font-weight:900;font-size:30px;line-height:1;letter-spacing:.04em}
+.dlpf{width:104px;height:104px;margin:10px auto 8px;border:4px solid #5a3b17;background:#e8d19b;display:flex;align-items:center;justify-content:center;overflow:hidden;filter:sepia(.35)}
+.dlpf .avW,.dlpf .avq{width:96px;height:96px;font-size:64px;line-height:96px}
+.dlpnm{font-weight:900;font-size:21px;text-transform:uppercase;letter-spacing:.05em;word-break:break-word}
+.dlpd2{margin-top:6px;padding:4px 0;border-top:2px solid #5a3b17;border-bottom:2px solid #5a3b17;font-weight:900;font-size:15px;letter-spacing:.22em}
+.dlpost.tie{transform:none;background:rgba(127,127,127,.15);color:inherit;border:0;box-shadow:none;font-family:inherit;font-weight:700}
+.dlpxp,.dlpmw{margin:2px 0 6px;text-align:center;font-weight:800}.dlpmw{color:#b8860b}
+#win.dlwin .wdice{display:none}
+/* Top 10 duel tab */
+.dlhs .dlmwp.big{margin:4px 0 8px}
+.dlsher .dlbadge{width:30px;height:30px;vertical-align:middle;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+.dlhst tr.dlmw td{background:rgba(242,193,78,.25)}
+.dlmwl{font-weight:800;color:#8a5a10;white-space:nowrap}
+.dlhst tr.dlme td{font-weight:800}
+/* rules cost table */
+.dlcosts{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:14px}.dlcosts caption{font-weight:800;text-align:left;padding:4px 2px}
+.dlcosts td{padding:6px 8px;border-top:1px solid rgba(127,127,127,.3);vertical-align:middle}.dlcosts .dlcn{white-space:nowrap;width:1%}
+.dllog{font-weight:600}
+#turn .tmode.m-duel{background:rgba(217,164,65,.3)}
+@media(max-width:380px){.dlpn{font-size:14px}.dlpd .dldrum{width:40px;height:40px}.dlpc{font-size:19px}.dlvs{width:28px;height:28px;font-size:11px}}
+@media (prefers-reduced-motion:reduce){.dldrum .dlrot{transition:none}.dlsheet{animation:none}}
+.dlx{display:inline-flex;align-items:center}.dlx svg{display:block}
+.dlmwp,.dlmwp div,.dlmwp p,.dlmwp b,.dlmwp small{color:#3b2a14!important;text-shadow:none!important;-webkit-text-fill-color:#3b2a14}
+</style>
 </head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -3754,8 +3881,36 @@ function totals(sheet,nd){
 // ---- game state machine (authoritative on host) ----
 const MAX_EXTRA=3;
 // ---- game modes: classic | train (rows strictly top to bottom) | hw (first 3 rounds only in School) ----
-const MODES=['classic','train','hw','call','pig'],HW_N=3,PIG_MAX=99;
-function modeOf(g){return g&&(g.mode==='train'||g.mode==='hw'||g.mode==='call'||g.mode==='pig')?g.mode:'classic'}
+const MODES=['classic','train','hw','call','pig','duel'],HW_N=3,PIG_MAX=99;
+// ---- 2.50: Rewolwerowy Pojedynek / High Noon Shootout (1v1 duel: bullets, shots, vest, Bullet Storm) ----
+const DUEL_MAX=6,DUEL_VEST_MS=8000,DUEL_COST={u1:1,u2:1,u3:1,u4:2,u5:2,u6:2,para:1,szansa:2,dpary:2,trojka:2,parz:2,nparz:2,mstrit:2,tpary:3,dtrojki:3,dstrit:3,general:3,kareta:4,full:4,lstrit:4,poker:5,lord:6};
+function dlCost(cat){return DUEL_COST[cat]||99}
+function dlOpp(g,i){return g&&g.players&&g.players.length===2&&(i===0||i===1)?1-i:-1}
+// bullets for a write: only a real score (not a cross-out) on the 1st roll ("z ręki") loads the drum
+function dlGain(cat,v,f1){if(!f1||v==='x'||v===null||v===undefined)return 0;if(cat==='lord')return DUEL_MAX;if(cat==='poker')return 3;return 1}
+// cells the current shooter may hit: normal shot = empty, not dead, affordable; Bullet Storm = any live cell that is not crossed out
+function dlTargets(g,storm){const s=g&&g.sh?g.sh.s:g?g.cur:-1,o=dlOpp(g,s);if(o<0)return [];const P=g.players[s],Q=g.players[o];if(!P||!Q||Q.left)return [];const dead=Q.dead||{},b=P.bul|0;
+ if(storm&&b<DUEL_MAX)return [];
+ return catsFor(ndOf(g)).map(c=>c[0]).filter(k=>!dead[k]&&(storm?Q.sheet[k]!=='x':!(k in Q.sheet)&&dlCost(k)<=b))}
+function canShoot(g){if(modeOf(g)!=='duel'||g.phase!=='play')return false;const P=g.players[g.cur];if(!P||(P.bul|0)<=0)return false;return dlTargets(g,false).length>0||dlTargets(g,true).length>0}
+function dlEv(g,e){g.dlN=(g.dlN|0)+1;e.n=g.dlN;e.sn=g.players[e.s]?g.players[e.s].name:'';e.on=g.players[e.o]?g.players[e.o].name:'';(g.dle=g.dle||[]).unshift(e);g.dle=g.dle.slice(0,10)}
+// hit: lower cell = 0, School cell = minus one die of that face; Bullet Storm: 0 (a crossed cell stays crossed)
+function dlKill(g,o,cat,kind){const Q=g.players[o];Q.dead=Q.dead||{};const prev=Q.sheet[cat];
+ if(kind==='h')Q.sheet[cat]=UPPER.includes(cat)?-(+cat[1]):0;else Q.sheet[cat]=prev==='x'?'x':0;Q.dead[cat]=kind;return Q.sheet[cat]}
+function dlDone(g){delete g.sh;g.rolls=0;g.held=g.held.map(()=>false);advance(g);return true}
+function dlAfterWrite(g,cat,v,f1){const P=g.players[g.cur],add=dlGain(cat,v,f1);if(add){const b0=P.bul|0;P.bul=Math.min(DUEL_MAX,b0+add);g.dg={n:(g.dgN=(g.dgN|0)+1),i:g.cur,a:P.bul-b0,w:add,c:cat}}
+ if(canShoot(g)){g.sh={s:g.cur,st:'aim'};return true}return false}
+function shoot(g,cat,storm){const sh=g.sh;if(!sh||sh.st!=='aim'||g.phase!=='play')return false;const s=sh.s,o=dlOpp(g,s);if(o<0)return false;const P=g.players[s],Q=g.players[o];
+ if(!dlTargets(g,!!storm).includes(cat))return false;
+ if(storm){P.bul=0;const v=dlKill(g,o,cat,'g');dlEv(g,{s,o,c:cat,r:'storm',b:DUEL_MAX,v});return dlDone(g)}
+ const c=dlCost(cat);P.bul=(P.bul|0)-c;
+ if((Q.vest|0)>0){g.sh={s,st:'vest',c:cat,b:c,id:(g.dlN|0)+1};return true}
+ const v=dlKill(g,o,cat,'h');dlEv(g,{s,o,c:cat,r:'hit',b:c,v});return dlDone(g)}
+function vest(g,use){const sh=g.sh;if(!sh||sh.st!=='vest')return false;const s=sh.s,o=dlOpp(g,s);if(o<0)return false;const Q=g.players[o];
+ if(use&&(Q.vest|0)>0){Q.vest=0;dlEv(g,{s,o,c:sh.c,r:'vest',b:sh.b})}else{const v=dlKill(g,o,sh.c,'h');dlEv(g,{s,o,c:sh.c,r:'hit',b:sh.b,v})}return dlDone(g)}
+function holster(g){if(!g.sh||g.sh.st!=='aim')return false;return dlDone(g)}
+
+function modeOf(g){return g&&(g.mode==='train'||g.mode==='hw'||g.mode==='call'||g.mode==='pig'||g.mode==='duel')?g.mode:'classic'}
 function nextCat(nd,sheet){const c=catsFor(nd).find(([k])=>!(k in sheet));return c?c[0]:null}
 function hwLeft(sheet){return Math.max(0,HW_N-Object.keys(sheet).length)}
 // pure rule check: may `cat` be written/crossed on `sheet` in this mode?
@@ -3767,8 +3922,9 @@ function movesOk(g){const m=modeOf(g);if(m==='classic'||!Array.isArray(g.mv))ret
 function maxR(g){return g&&g.tw&&g.tw.r>0?g.tw.r:3}
 function newGame(names,nd,mode,tw){nd=nd===5?5:6;const g={gid:Date.now().toString(36)+Math.random().toString(36).slice(2,7),nd,mode:MODES.includes(mode)?mode:'classic',phase:'play',players:names.map(n=>({name:n,sheet:{},extraUsed:0})),cur:0,dice:Array(nd).fill(0),held:Array(nd).fill(false),rolls:0,round:1,log:[]};
  if(tw&&typeof tw==='object'){g.tw=JSON.parse(JSON.stringify(tw));const lk=(g.tw.lk||[]).filter(k=>catsFor(nd).some(c=>c[0]===k)&&!UPPER.includes(k));g.tw.lk=lk;g.players.forEach(p=>lk.forEach(k=>{p.sheet[k]=0}))}
+ if(g.mode==='duel')g.players.forEach(p=>{p.bul=0;p.vest=1;p.dead={}});
  return g}
-function canRoll(g){const p=g.players[g.cur],m=maxR(g);return g.phase==='play'&&(modeOf(g)!=='call'||!!g.ann)&&(g.rolls<m||(g.rolls>=m&&(modeOf(g)==='pig'?(p.bank|0)>0:!(g.tw&&g.tw.nx)&&p.extraUsed<MAX_EXTRA)));}
+function canRoll(g){const p=g.players[g.cur],m=maxR(g);return g.phase==='play'&&!g.sh&&(modeOf(g)!=='call'||!!g.ann)&&(g.rolls<m||(g.rolls>=m&&(modeOf(g)==='pig'?(p.bank|0)>0:!(g.tw&&g.tw.nx)&&p.extraUsed<MAX_EXTRA)));}
 function roll(g,rnd){
  if(!canRoll(g))return false;const p=g.players[g.cur];
  if(g.rolls>=maxR(g)){if(modeOf(g)==='pig')p.bank=Math.max(0,(p.bank|0)-1);else p.extraUsed++;}
@@ -3778,16 +3934,16 @@ function toggleHold(g,i){if(g.rolls>0)g.held[i]=!g.held[i];}
 // Call & Roll: announce the row before the first roll of the turn (may change until the first roll)
 function announce(g,cat){if(modeOf(g)!=='call'||g.phase!=='play'||g.rolls>0)return false;const p=g.players[g.cur];if(!p||cat in p.sheet||!catsFor(ndOf(g)).some(c=>c[0]===cat))return false;g.ann=cat;return true}
 function write(g,cat,cross){
- const p=g.players[g.cur];if(g.rolls===0||cat in p.sheet||(g.tw&&Array.isArray(g.tw.lk)&&g.tw.lk.includes(cat))||!catsFor(ndOf(g)).some(c=>c[0]===cat)||!allowed(modeOf(g),ndOf(g),p.sheet,cat,g.ann)||(modeOf(g)==='call'&&g.ann!==cat))return false;
+ const p=g.players[g.cur];if(g.sh||g.rolls===0||cat in p.sheet||(g.tw&&Array.isArray(g.tw.lk)&&g.tw.lk.includes(cat))||!catsFor(ndOf(g)).some(c=>c[0]===cat)||!allowed(modeOf(g),ndOf(g),p.sheet,cat,g.ann)||(modeOf(g)==='call'&&g.ann!==cat))return false;
  let v;if(cross&&UPPER.includes(cat))return false;if(cross)v='x';else{v=finalScore(cat,g.dice,g.rolls===1);if(v===null)return false;}
- p.sheet[cat]=v;if(modeOf(g)==='pig'){const u=Math.max(0,maxR(g)-g.rolls);p.bank=Math.min(PIG_MAX,(p.bank|0)+u)}g.log.unshift({n:p.name,c:cat,v:v,d:!cross&&dbl(cat,g.rolls===1)});g.log=g.log.slice(0,8);(g.mv=g.mv||[]).push([g.cur,cat,v,!cross&&dbl(cat,g.rolls===1)?1:0]);if(g.mv.length>200)g.mv=g.mv.slice(-200);
- g.rolls=0;g.held=g.held.map(()=>false);advance(g);return true;}
+ p.sheet[cat]=v;const f1=g.rolls===1;if(modeOf(g)==='pig'){const u=Math.max(0,maxR(g)-g.rolls);p.bank=Math.min(PIG_MAX,(p.bank|0)+u)}g.log.unshift({n:p.name,c:cat,v:v,d:!cross&&dbl(cat,g.rolls===1)});g.log=g.log.slice(0,8);(g.mv=g.mv||[]).push([g.cur,cat,v,!cross&&dbl(cat,g.rolls===1)?1:0]);if(g.mv.length>200)g.mv=g.mv.slice(-200);
+ g.rolls=0;g.held=g.held.map(()=>false);if(modeOf(g)==='duel'&&dlAfterWrite(g,cat,v,f1))return true;advance(g);return true;}
 function done(q,nd){return catsFor(nd).every(([k])=>k in q.sheet)}
 function advance(g){delete g.ann;const nd=ndOf(g),act=g.players.filter(q=>!q.left&&!done(q,nd));if(!act.length){g.phase='end';return}
  do{g.cur=(g.cur+1)%g.players.length;if(g.cur===0)g.round++}while(g.players[g.cur].left||done(g.players[g.cur],nd));}
-function leave(g,name){const i=g.players.findIndex(q=>q.name===name);if(i<0)return;g.players[i].left=true;if(g.phase==='play'&&g.cur===i){g.rolls=0;g.held=g.held.map(()=>false);advance(g)}else if(g.players.every(q=>q.left||done(q,ndOf(g))))g.phase='end';}
+function leave(g,name){const i=g.players.findIndex(q=>q.name===name);if(i<0)return;if(g.sh){if(g.sh.s===i)delete g.sh;else if(g.sh.st==='vest')vest(g,false)}g.players[i].left=true;if(g.phase==='play'&&g.cur===i){g.rolls=0;g.held=g.held.map(()=>false);advance(g)}else if(g.players.every(q=>q.left||done(q,ndOf(g))))g.phase='end';}
 const CAT_EN={u1:'Ones (1)',u2:'Twos (2)',u3:'Threes (3)',u4:'Fours (4)',u5:'Fives (5)',u6:'Sixes (6)',para:'1 Pair',dpary:'2 Pairs',tpary:'3 Pairs',trojka:'3 of a kind',dtrojki:'2 x 3 of a kind',mstrit:'Small Straight 1-5',dstrit:'Large Straight 2-6',lstrit:'Long Straight 1-6',general:'General',full:'Full House',kareta:'4 of a kind',poker:'Poker (5 of a kind)',lord:'Lord (6 of a kind)',parz:'Even',nparz:'Odd',szansa:'Chance'};
-const api={announce,MODES,HW_N,modeOf,nextCat,hwLeft,allowed,movesOk,NEWC,legacy,REMOVED,catsFor,ndOf,done,leave,dbl,CAT_EN,CATS,UPPER,scores,finalScore,totals,newGame,canRoll,roll,toggleHold,write,MAX_EXTRA,maxR};
+const api={DUEL_MAX,DUEL_VEST_MS,DUEL_COST,dlCost,dlOpp,dlGain,dlTargets,canShoot,shoot,vest,holster,announce,MODES,HW_N,modeOf,nextCat,hwLeft,allowed,movesOk,NEWC,legacy,REMOVED,catsFor,ndOf,done,leave,dbl,CAT_EN,CATS,UPPER,scores,finalScore,totals,newGame,canRoll,roll,toggleHold,write,MAX_EXTRA,maxR};
 if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 })(this);
 </script>
@@ -3922,9 +4078,9 @@ function pfRank(L){let i=0;PF_RKL.forEach((l,j)=>{if(L>=l)i=j});return i}
 function pfRankName(L){return (pt('rk')||[])[pfRank(L)]||''}
 // lifetime counters -> XP. c:{g,w,p2,pts,pe,dd,ach:[ids],twf,tws}
 const PF_REFXP=150;
-const PF_FRL=1000,PF_FRP=100,PF_SA=1000,PF_CA=500;
+const PF_FRL=1000,PF_FRP=100,PF_SA=1000,PF_CA=500,PF_DW=150;
 function pfXP(c){const n=x=>Math.max(0,Math.floor(+x||0));const ach=(c.ach||[]).reduce((s,id)=>s+(PF_HARD.includes(id)?100:50),0);
- return 25*n(c.g)+40*n(c.w)+15*n(c.p2)+Math.floor((n(c.pts)+n(c.pe))/20)+30*n(c.dd)+ach+60*n(c.twf)+20*n(c.tws)+PF_REFXP*n(c.rf)+PF_FRL*n(c.fl)+PF_FRP*n(c.fp)+PF_SA*n(c.sa)+PF_CA*n(c.ca)}
+ return 25*n(c.g)+40*n(c.w)+15*n(c.p2)+Math.floor((n(c.pts)+n(c.pe))/20)+30*n(c.dd)+ach+60*n(c.twf)+20*n(c.tws)+PF_REFXP*n(c.rf)+PF_FRL*n(c.fl)+PF_FRP*n(c.fp)+PF_SA*n(c.sa)+PF_CA*n(c.ca)+PF_DW*n(c.dw)}
 // achievement ids, readable before the main script has initialised ACV (boot-time theme check)
 function pfAchU(){try{if(typeof ACV!=='undefined'&&ACV&&ACV.u)return ACV.u}catch(e){}try{const a=JSON.parse(localStorage.kach||'null');return a&&a.u&&typeof a.u==='object'?a.u:{}}catch(e){return {}}}
 function pfLvNow(){try{return pfLevel(pxXP()).lv}catch(e){return +localStorage.kpxlv||1}}
@@ -3942,12 +4098,12 @@ function pfDispLv(lv){return PF_PREV100?PF_MAXLV:lv}
 function pfLvOk(l){l=Math.floor(+l);return l>=1&&l<=PF_MAXLV?l:0}
 // ---- detailed stats (localStorage kpx, synced as users/<uid>.px) ----
 const PF_CATS=['u1','u2','u3','u4','u5','u6','para','dpary','tpary','trojka','dtrojki','mstrit','dstrit','lstrit','general','full','kareta','poker','lord','parz','nparz','szansa'];
-function pxBlank(){return {v:1,c:{pts:0,gp:0,pe:0,bsc:0,p2:0,mp:0,sb:0,cb:0,dd:0,ld:-1,tm:0,rf:0,fl:0,fp:0,sa:0,ca:0,ct:{},cp:{}},r:[],lv:0,eq:{fr:'',ti:''},mig:0,gd:[],fk:[]}}
+function pxBlank(){return {v:1,c:{pts:0,gp:0,pe:0,bsc:0,p2:0,mp:0,sb:0,cb:0,dd:0,ld:-1,tm:0,rf:0,fl:0,fp:0,sa:0,ca:0,dw:0,ct:{},cp:{}},r:[],lv:0,eq:{fr:'',ti:''},mig:0,gd:[],fk:[]}}
 function pxSane(o){const b=pxBlank();if(!o||typeof o!=='object')return b;const n=(x,m)=>typeof x==='number'&&isFinite(x)&&x>=0?Math.min(Math.floor(x),m):0;const c=o.c&&typeof o.c==='object'?o.c:{};
  b.c.gp=n(c.gp,1e6);b.c.pts=Math.min(n(c.pts,2e9),b.c.gp*2000);b.c.pe=n(c.pe,1e6*250);b.c.bsc=n(c.bsc,2000);b.c.mp=Math.min(n(c.mp,1e6),b.c.gp);b.c.p2=Math.min(n(c.p2,1e6),b.c.mp);
- b.c.sb=Math.min(n(c.sb,1e6),b.c.gp);b.c.cb=Math.min(n(c.cb,1e6),b.c.gp);b.c.dd=n(c.dd,99999);b.c.ld=typeof c.ld==='number'&&isFinite(c.ld)?Math.max(-1,Math.min(Math.floor(c.ld),99999)):-1;b.c.tm=n(c.tm,1e9);b.c.rf=n(c.rf,100000);b.c.fl=Math.min(n(c.fl,1e5),Math.max(b.c.gp,1)*30);b.c.fp=Math.min(n(c.fp,1e5),Math.max(b.c.gp,1)*30);b.c.sa=Math.min(n(c.sa,1e5),Math.max(b.c.gp,1));b.c.ca=Math.min(n(c.ca,1e5),Math.max(b.c.gp,1));
+ b.c.sb=Math.min(n(c.sb,1e6),b.c.gp);b.c.cb=Math.min(n(c.cb,1e6),b.c.gp);b.c.dd=n(c.dd,99999);b.c.ld=typeof c.ld==='number'&&isFinite(c.ld)?Math.max(-1,Math.min(Math.floor(c.ld),99999)):-1;b.c.tm=n(c.tm,1e9);b.c.rf=n(c.rf,100000);b.c.fl=Math.min(n(c.fl,1e5),Math.max(b.c.gp,1)*30);b.c.fp=Math.min(n(c.fp,1e5),Math.max(b.c.gp,1)*30);b.c.sa=Math.min(n(c.sa,1e5),Math.max(b.c.gp,1));b.c.ca=Math.min(n(c.ca,1e5),Math.max(b.c.gp,1));b.c.dw=Math.min(n(c.dw,1e5),Math.max(b.c.gp,1));
  ['ct','cp'].forEach(f=>{const s=c[f]&&typeof c[f]==='object'?c[f]:{};PF_CATS.forEach(k=>{const v=n(s[k],f==='ct'?1e6:2e9);if(v)b.c[f][k]=f==='ct'?Math.min(v,b.c.gp):Math.min(v,b.c.gp*600)})});
- b.r=(Array.isArray(o.r)?o.r:[]).filter(e=>e&&typeof e==='object'&&typeof e.s==='number'&&isFinite(e.s)&&Math.abs(e.s)<3000).slice(-20).map(e=>({d:n(e.d,99999),s:Math.round(e.s),o:e.o===1?1:e.o===2?2:0,k:e.k===5?5:6,m:e.m==='train'||e.m==='hw'||e.m==='call'||e.m==='pig'?e.m:'classic'}));
+ b.r=(Array.isArray(o.r)?o.r:[]).filter(e=>e&&typeof e==='object'&&typeof e.s==='number'&&isFinite(e.s)&&Math.abs(e.s)<3000).slice(-20).map(e=>({d:n(e.d,99999),s:Math.round(e.s),o:e.o===1?1:e.o===2?2:0,k:e.k===5?5:6,m:e.m==='train'||e.m==='hw'||e.m==='call'||e.m==='pig'||e.m==='duel'?e.m:'classic'}));
  b.lv=pfLvOk(o.lv)||0;const eq=o.eq&&typeof o.eq==='object'?o.eq:{};b.eq.fr=pfFrOk(eq.fr);b.eq.ti=PF_TI.includes(eq.ti)||/^rk([0-9]|1[0-2])$/.test(eq.ti||'')?eq.ti:'';b.mig=o.mig?1:0;
  b.gd=(Array.isArray(o.gd)?o.gd:[]).filter(x=>typeof x==='string'&&x.length<70).slice(-40);b.fk=(Array.isArray(o.fk)?o.fk:[]).filter(x=>typeof x==='string'&&x.length<80).slice(-80);return b}
 let PX=(()=>{try{return pxSane(JSON.parse(localStorage.kpx||'null'))}catch(e){return pxBlank()}})();
@@ -3955,7 +4111,7 @@ function pxSave(){try{localStorage.kpx=JSON.stringify(PX)}catch(e){}}
 function pxPack(){const o=JSON.parse(JSON.stringify(PX));delete o.gd;return o}
 function pxTw(){let f=0,s=0,hi=0;try{const S_=TWD.s||{};for(const i in S_){const v=+S_[i]||0;if(v>0){f++;s+=Math.min(3,v);hi=Math.max(hi,+i+1)}}}catch(e){}return {f,s,hi}}
 function pxAchIds(){const u=pfAchU();return Object.keys(u).filter(id=>typeof AL!=='undefined'?(AL.concat(ALX).some(x=>x[0]===id)):true)}
-function pxCounters(){let st={g:0,w:0,bs:0};try{st=ACV.st}catch(e){}const tw=pxTw();return {g:st.g,w:st.w,p2:PX.c.p2,pts:PX.c.pts,pe:PX.c.pe,dd:Math.max(PX.c.dd,st.bs||0),ach:pxAchIds(),twf:tw.f,tws:tw.s,rf:PX.c.rf||0,fl:PX.c.fl||0,fp:PX.c.fp||0,sa:PX.c.sa||0,ca:PX.c.ca||0}}
+function pxCounters(){let st={g:0,w:0,bs:0};try{st=ACV.st}catch(e){}const tw=pxTw();return {g:st.g,w:st.w,p2:PX.c.p2,pts:PX.c.pts,pe:PX.c.pe,dd:Math.max(PX.c.dd,st.bs||0),ach:pxAchIds(),twf:tw.f,tws:tw.s,rf:PX.c.rf||0,fl:PX.c.fl||0,fp:PX.c.fp||0,sa:PX.c.sa||0,ca:PX.c.ca||0,dw:PX.c.dw||0}}
 function pxXP(){return pfXP(pxCounters())}
 function pxMyNames(){const s=new Set();try{[localStorage.kname,localStorage.kpname,localStorage.kacc,typeof me!=='undefined'?me:'',typeof PN!=='undefined'?PN:''].forEach(x=>{x=String(x||'').trim().toLowerCase();if(x)s.add(x)})}catch(e){}return s}
 // record one finished game sheet into PX (pure-ish: g = game object, mi = my index)
@@ -3976,7 +4132,7 @@ function pxMigrate(){if(PX.mig)return false;const names=pxMyNames();let n=0;
  PX.c.pe=Math.max(0,st.g-PX.c.gp)*250;PX.c.dd=Math.max(PX.c.dd,st.bs||0,st.g>0?1:0);if(st.ls>=0)PX.c.ld=Math.max(PX.c.ld,st.ls);
  PX.mig=1;PX.lv=pfLevel(pxXP()).lv;if(st.g>0||pxAchIds().length>0)try{localStorage.kpxintro='1'}catch(e){}pxSave();return true}
 function pxMerge(o){const b=pxSane(o),a=PX.c,s=b.c;let ch=false;const mx=k=>{if(s[k]>a[k]){a[k]=s[k];ch=true}};
- ['pts','gp','pe','bsc','p2','mp','sb','cb','dd','ld','tm','rf','fl','fp','sa','ca'].forEach(mx);['ct','cp'].forEach(f=>{for(const k in s[f])if((s[f][k]||0)>(a[f][k]||0)){a[f][k]=s[f][k];ch=true}});
+ ['pts','gp','pe','bsc','p2','mp','sb','cb','dd','ld','tm','rf','fl','fp','sa','ca','dw'].forEach(mx);['ct','cp'].forEach(f=>{for(const k in s[f])if((s[f][k]||0)>(a[f][k]||0)){a[f][k]=s[f][k];ch=true}});
  // after a merge the estimate for untracked old games must not double count tracked ones
  try{const g=ACV.st.g;a.pe=Math.min(a.pe,Math.max(0,g-a.gp)*250)}catch(e){}
  const key=e=>e.d+'|'+e.s+'|'+e.k+'|'+e.o,seen=new Set(PX.r.map(key));b.r.forEach(e=>{if(!seen.has(key(e))){PX.r.push(e);seen.add(key(e));ch=true}});PX.r.sort((x,y)=>x.d-y.d);PX.r=PX.r.slice(-20);
@@ -4760,7 +4916,7 @@ function rulesHTML(){const r=RT[LANG],ic=['🎯','🎲','✖️2','🏫','🃏',
  h+=sec(9,'<ul>'+r.ach.map(x=>'<li>'+x+'</li>').join('')+'</ul>');
  h+=sec(10,'<ul>'+r.hs.map(x=>'<li>'+x+'</li>').join('')+'</ul>');
  h+=sec(11,'<ol class="steps">'+r.online.map(x=>'<li>'+x+'</li>').join('')+'</ol>');
- h+=sec(12,'<ul>'+r.acc.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.tower)h+=sec(13,'<ul>'+r.tower.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.xp)h+=sec(14,'<ul>'+r.xp.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.sz)h+=sec(15,'<ul>'+r.sz.map(x=>'<li>'+x+'</li>').join('')+'</ul>');
+ h+=sec(12,'<ul>'+r.acc.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.tower)h+=sec(13,'<ul>'+r.tower.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.xp)h+=sec(14,'<ul>'+r.xp.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.sz)h+=sec(15,'<ul>'+r.sz.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.duel&&r.sec[16])h+=sec(16,'<ul>'+r.duel.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+(window.dlRulesCosts?dlRulesCosts():''));
  h+='<p class="privl"><a href="privacy.html" target="_blank" rel="noopener">'+t('privLink')+'</a></p>';return h+'</div>'}
 function openRules(){const o=$('rov');o.innerHTML=rulesHTML();o.hidden=false;document.body.style.overflow='hidden';$('rclose').onclick=closeRules;o.querySelectorAll('nav a').forEach(a=>a.onclick=e=>{e.preventDefault();o.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'})})}
 function closeRules(){$('rov').hidden=true;document.body.style.overflow=''}
@@ -5000,7 +5156,7 @@ function gdAvail(B,ov){const loc=gsLoadAll(),need=[];
   c.on('message',h);c.subscribe(tps,{qos:1});
   setTimeout(()=>{try{c.removeListener('message',h);c.unsubscribe(tps)}catch(e){}rel(rest.map(r=>r[0]));rest.forEach(([id,f])=>{const o=got[GS_T+id];
    if(o){gsStore(o);GDA[id]={st:'full'};gdMark(id,true);gsFsSave(o,true)}else if(!GDA[id]){GDA[id]={st:f==='sum'?'sum':f==='none'?'none':'?'};if(f==='sum'||f==='none')gdMark(id,false)}});try{if(typeof hsPrune==='function')hsPrune()}catch(e){}},3500)})}
-function hsSubmit(g){if(!g||g.phase!=='end')return;if(K.ndOf(g)===5)return;if(!g.players.length||g.players.some(p=>p.left||!K.done(p,K.ndOf(g))))return;
+function hsSubmit(g){if(!g||g.phase!=='end')return;if(K.modeOf(g)==='duel'){try{if(window.dlHsSubmit)dlHsSubmit(g)}catch(e){}return}if(K.ndOf(g)===5)return;if(!g.players.length||g.players.some(p=>p.left||!K.done(p,K.ndOf(g))))return;
  const gid=g.gid||(ROOM+'-'+g.players.map(p=>p.name).join(','));if(hsDone[gid])return;hsDone[gid]=1;const d=hsNow();
  const ccm=(S&&S.cc)||{},add=g.players.map(p=>{const e={g:gid,n:hsClean(p.name),s:K.totals(p.sheet,K.ndOf(g)).total,d,k:K.ndOf(g)},cc=hsCC(ccm[p.name]),md=hsMd(g.mode),av=avOk(((S&&S.av)||{})[p.name]),pf=pfOf(p.name);if(cc)e.cc=cc;if(md)e.md=md;if(av)e.av=av;if(pf.u)e.u=pf.u;if(pf.l)e.lv=pf.l;return e});
  hsMonthCheck();try{wsWeekCheck();wsAdd(add)}catch(e){}HS=hsMerge(HS,add);MS=hsMerge(MS.filter(e=>hsMk(e.d)===MK),add.filter(e=>hsMk(e.d)===MK));if(!hsGot||!GOTM[5]||!GOTM[6])hsPending.push(...add);hsSave();hsPublish();
@@ -5382,7 +5538,7 @@ function openShare(){const o=$('rov');delete o.dataset.hs;const m=t('shMsg'),txt
 $('shbtn').onclick=openShare;hsConnect(0);
 function onState(){if(!ROOM)return;clearTimeout(joinTimer);G=S.G;lobby=S.lobby;try{if(G){localStorage.klastnd=K.ndOf(G);localStorage.klastmode=K.modeOf(G)}if(G&&G.phase==='end'){try{if(typeof gsRecord==='function')gsRecord(G)}catch(e){}if(TW)twEnd();else{hsSubmit(G);showWin(G)}}}catch(e){console.warn(e)}try{achScan(G)}catch(e){console.warn(e)}
  const inGame=G&&G.players.some(p=>p.name===me);
- if(!lobby.includes(me)&&!inGame){if(G){const x=sessGet();if(x&&x.r===ROOM)sessClear();$('msg').textContent=t('running');return}if(lobby.length>=8){$('msg').textContent=t('full');return}
+ if(!lobby.includes(me)&&!inGame){if(G){const x=sessGet();if(x&&x.r===ROOM)sessClear();$('msg').textContent=t('running');return}if(lobby.length>=8||(S.mode==='duel'&&lobby.length>=2)){$('msg').textContent=t(lobby.length<8?'dlFull':'full');return}
    lobby.push(me);S.col=S.col||{};S.col[me]=myCol;if(myCC){S.cc=S.cc||{};S.cc[me]=myCC}if(MYAV){S.av=S.av||{};S.av[me]=MYAV}publish();return}
  const mp=G&&G.players.find(p=>p.name===me);if(mp&&mp.left){delete mp.left;publish();return}
  if(!S.col||S.col[me]!==myCol||(myCC&&(!S.cc||S.cc[me]!==myCC))||(MYAV&&(!S.av||S.av[me]!==MYAV))){S.col=S.col||{};S.col[me]=myCol;if(myCC){S.cc=S.cc||{};S.cc[me]=myCC}if(MYAV){S.av=S.av||{};S.av[me]=MYAV}publish();return}
@@ -5394,7 +5550,7 @@ function showLobby(c){$('start').hidden=true;$('game').hidden=true;$('lobby').hi
  $('link').value=location.origin+location.pathname+'?pokoj='+c;$('hostctl').hidden=!isHost;$('wait').hidden=isHost;renderLobby()}
 $('copy').onclick=()=>{$('link').select();navigator.clipboard&&navigator.clipboard.writeText($('link').value)};
 function renderLobby(){$('plist').innerHTML=lobby.map(n=>dot(n)+pfNameHTML(n)).join(', ');if(S&&S.nd===5&&!S.G&&S.host===me){S.nd=6;publish();return}if(S)S.nd=6;
- const md=K.MODES.includes(S&&S.mode)?S.mode:'classic',MI={classic:'🎲',train:'🚂',hw:'📚',call:'📣',pig:'🐷'};
+ const md=K.MODES.includes(S&&S.mode)?S.mode:'classic',MI={classic:'🎲',train:'🚂',hw:'📚',call:'📣',pig:'🐷',duel:'🤠'};
  $('msel').className=isHost?'':'ro';$('modebox').classList.toggle('ro',!isHost);
  $('msel').innerHTML=isHost?K.MODES.map(m=>'<button type="button" role="radio" aria-checked="'+(m===md)+'" class="mc'+(m===md?' on':' alt')+'" data-m="'+m+'"><span class="mi">'+MI[m]+'</span><span class="mt"><b>'+t('m_'+m)+'</b><small>'+t('d_'+m)+'</small></span></button>').join(''):'<div class="mro"><span class="mi">'+MI[md]+'</span><span class="mt"><b>'+t('modeIn',{m:t('m_'+md)})+'</b><small>'+t('d_'+md)+'</small></span></div>';
  $('msel').querySelectorAll('.mc').forEach(b=>b.onclick=()=>{if(!S||S.host!==me||S.G)return;S.mode=b.dataset.m;localStorage.kmode=S.mode;publish()})}
@@ -5434,7 +5590,7 @@ function scoreAnim(G){const L0=G.log[0],key=(G.mv?G.mv.length:0)+'|'+(L0&&typeof
  scKey=key;if(!SCA)return;const el=(Date.now()-SCA.t0)/1000;if(el>1.6||G.rolls>0||SCA.dk!==G.dice.join()||!animOn){SCA=null;return}
  const ds=$('dice').querySelectorAll('.die');SCA.gr.forEach(g=>g.i.forEach(i=>{const d=ds[i];if(!d)return;d.classList.add('sc','sc-'+g.a);d.style.setProperty('--sd',(g.g*.16-el).toFixed(2)+'s');if(g.a==='spark'&&!d.querySelector('.spk'))d.insertAdjacentHTML('beforeend','<b class="spk">✨</b>')}))}
 function previewDice(cat,on){const ds=$('dice').querySelectorAll('.die');ds.forEach(d=>d.classList.remove('cnt'));if(!on||!G||G.rolls===0)return;countDice(cat,G.dice).forEach(g=>g.i.forEach(i=>ds[i]&&ds[i].classList.add('cnt')))}
-const MI_={classic:'🎲',train:'🚂',hw:'📚',call:'📣',pig:'🐷'},HW_N_=()=>K.HW_N;
+const MI_={classic:'🎲',train:'🚂',hw:'📚',call:'📣',pig:'🐷',duel:'🤠'},HW_N_=()=>K.HW_N;
 function render(){const MD=K.modeOf(G);$('lobby').hidden=true;$('start').hidden=true;$('game').hidden=false;$('ng').hidden=!isHost||!!TW;
  const P=G.players[G.cur],my=P.name===me&&G.phase==='play';
  const key=G.dice.join()+G.rolls+G.cur,first=lastDice==='',anim=key!==lastDice&&G.rolls>0;lastDice=key;
@@ -7702,8 +7858,8 @@ window.__v241={pigUI,pigChip};
   const oth=tots.filter((_,j)=>j!==i);
   const won=multi&&oth.length&&my>=Math.max.apply(null,oth);
   const second=multi&&g.players.length>=3&&oth.filter(v=>v>my).length===1;
-  const parts={play:25,win:won?40:0,second:second?15:0,pts:Math.floor(Math.max(0,my)/20),frb:frbSum(g,name),prymus:T.ace===50?SA:0,clean:T.bonus===50?CA:0};
-  parts.total=parts.play+parts.win+parts.second+parts.pts+parts.frb+parts.prymus+parts.clean;
+  const parts={play:25,win:won?40:0,second:second?15:0,pts:Math.floor(Math.max(0,my)/20),frb:frbSum(g,name),prymus:T.ace===50?SA:0,clean:T.bonus===50?CA:0,duel:(K.modeOf(g)==='duel'&&g.players.length===2&&g.players.every(p=>!p.left)&&oth.length&&my>Math.max.apply(null,oth))?150:0};
+  parts.total=parts.play+parts.win+parts.second+parts.pts+parts.frb+parts.prymus+parts.clean+parts.duel;
   return parts;
  }
  function gameXp(g,name){const p=gameXpParts(g,name);return p?p.total:0}
@@ -9288,4 +9444,275 @@ body:not(.noanim) .dc-aurora .sh{display:block!important}
  };
 })();
 
+</script>
+<script id="v250">
+/* ===== 2.50 – Rewolwerowy Pojedynek / High Noon Shootout (1v1) – stage 1: mechanics + clean placeholder visuals =====
+   Skin hooks for stage 2 (Wild West art): body.duel-on, #game.dl-skin, #dlbar/.dlp/.dldrum, #dlaim, #dlvest, #dlfx[data-k], .dlhole/.dlgrave cells,
+   .dlpost (end poster), .dlmwp (Most Wanted placard). Sounds go through dlSnd(name) – names in DL_SND; WAV assets 'dl_<name>' override the synth. */
+(function(){
+const DL={
+ pl:{m_duel:'Rewolwerowy Pojedynek',s_duel:'Pojedynek',d_duel:'Tylko 1 na 1. Zapis z ręki ładuje bębenek – strzelaj w pola rywala, kamizelka raz na grę, przy 6/6 Grad kul.',dlFull:'Ten pojedynek ma już komplet (2 graczy).',dlNeed2:'Pojedynek wymaga dokładnie 2 graczy.',
+  storm:'Grad kul',drum:'Bębenek',drumTip:'Naboje w bębenku: {n}/6',vestOn:'Kamizelka gotowa',vestOff:'Kamizelka zużyta',
+  aimH:'Twój strzał',aimP:'Dotknij puste pole rywala – liczba przy polu to koszt w kulach. Możesz też schować naboje na później.',aimStormP:'Grad kul: wybierz dowolne pole rywala, także zapisane. Kamizelka nie chroni. Zużywa cały bębenek.',
+  bStorm:'🌪️ Grad kul',bNormal:'↩ Zwykły strzał',bHolster:'Schowaj naboje',bFire:'🔫 Strzelaj',bFireStorm:'🌪️ Odpal Grad kul',bCancel:'Zmień cel',target:'Cel: {c}',pick:'Wybierz cel w kolumnie rywala',
+  waitVest:'{n} decyduje: kamizelka czy nie…',aimingOpp:'{n} celuje…',vestQ:'{n} celuje w Twoje pole: {c}!',vestS:'Użyć kamizelki? Masz ją tylko raz na grę – kula odbije się rykoszetem.',vestYes:'🦺 Kamizelka!',vestNo:'Nie, przyjmuję strzał',
+  fxHit:'TRAFIONY!',fxVest:'RYKOSZET!',fxStorm:'GRAD KUL!',fxS:'{a} → {b}: {c}',fxVestS:'Kamizelka zatrzymała kulę: {c}',
+  logHit:'🔫 {a} → {b}: {c} – trafienie ({k})',logVest:'🦺 {a} → {b}: {c} – rykoszet od kamizelki ({k})',logStorm:'🌪️ {a} → {b}: {c} – Grad kul',
+  full:'Bębenek pełny – możesz odpalić Grad kul!',
+  mwT:'MOST WANTED',mwSeason:'Sezon: {m}',mwWins:'Wygrane pojedynki: {n}',mwNone:'W tym sezonie nikt jeszcze nie wygrał pojedynku. Zostań pierwszym Most Wanted!',mwFace:'⭐ Grasz z Most Wanted!',mwFaceS:'{n} ma najwięcej wygranych pojedynków w tym sezonie ({w}).',mwYou:'⭐ Jesteś Most Wanted – broń tytułu!',mwBadge:'Most Wanted',
+  need2:'Pojedynek to gra tylko 1 na 1 – w poczekalni muszą być dokładnie 2 osoby (teraz: {n}).',ready2:'Komplet: 2 rewolwerowców. Można zaczynać!',
+  doa:'DEAD OR ALIVE',draw:'🤝 Remis – nikt nie trafia na list gończy.',xpWin:'🤠 Wygrany pojedynek: +150 XP',newMW:'⭐ Jesteś teraz Most Wanted sezonu!',
+  hsDesc:'ranking według liczby wygranych pojedynków',hsWins:'Wygrane',hsEmpty:'Nikt jeszcze nie wygrał pojedynku w tym okresie. Zagraj i zgarnij pierwsze miejsce!',hsNoteA:'Liczą się wygrane pojedynki ukończone w 100% (remis to nie wygrana).',hsNoteM:'Ranking sezonu. Lider nosi tytuł Most Wanted – przy remisie tytuł zostaje u obecnego posiadacza.',hsNoteW:'Wygrane pojedynki w tym tygodniu.',
+  cellHole:'Pole zestrzelone',cellGrave:'Pole zniszczone Gradem kul',costTip:'Koszt strzału: {k}',rulesCost:'Koszt strzału (kule)',
+  b1:'kula',b2:'kule',b5:'kul'},
+ en:{m_duel:'High Noon Shootout',s_duel:'Shootout',d_duel:'1 vs 1 only. Scoring on the first roll loads your six-shooter – shoot your rival’s cells, one vest per game, Bullet Storm at 6/6.',dlFull:'This shootout is already full (2 players).',dlNeed2:'A shootout needs exactly 2 players.',
+  storm:'Bullet Storm',drum:'Cylinder',drumTip:'Bullets in the cylinder: {n}/6',vestOn:'Vest ready',vestOff:'Vest used',
+  aimH:'Your shot',aimP:'Tap an empty cell of your rival – the number is the cost in bullets. Or keep your bullets for later.',aimStormP:'Bullet Storm: pick ANY rival cell, even a filled one. The vest does not help. Uses the whole cylinder.',
+  bStorm:'🌪️ Bullet Storm',bNormal:'↩ Normal shot',bHolster:'Keep bullets',bFire:'🔫 Fire',bFireStorm:'🌪️ Unleash Bullet Storm',bCancel:'Change target',target:'Target: {c}',pick:'Pick a target in your rival’s column',
+  waitVest:'{n} is deciding: vest or not…',aimingOpp:'{n} is taking aim…',vestQ:'{n} is aiming at your cell: {c}!',vestS:'Use your vest? You only have it once per game – the bullet will ricochet.',vestYes:'🦺 Vest!',vestNo:'No, take the hit',
+  fxHit:'HIT!',fxVest:'RICOCHET!',fxStorm:'BULLET STORM!',fxS:'{a} → {b}: {c}',fxVestS:'The vest stopped the bullet: {c}',
+  logHit:'🔫 {a} → {b}: {c} – hit ({k})',logVest:'🦺 {a} → {b}: {c} – ricochet off the vest ({k})',logStorm:'🌪️ {a} → {b}: {c} – Bullet Storm',
+  full:'Cylinder full – Bullet Storm is ready!',
+  mwT:'MOST WANTED',mwSeason:'Season: {m}',mwWins:'Shootouts won: {n}',mwNone:'Nobody has won a shootout this season yet. Become the first Most Wanted!',mwFace:'⭐ You’re facing the Most Wanted!',mwFaceS:'{n} has the most shootout wins this season ({w}).',mwYou:'⭐ You are the Most Wanted – defend your title!',mwBadge:'Most Wanted',
+  need2:'A shootout is strictly 1 vs 1 – the lobby needs exactly 2 players (now: {n}).',ready2:'Two gunslingers ready. Let’s go!',
+  doa:'DEAD OR ALIVE',draw:'🤝 Draw – nobody makes the wanted poster.',xpWin:'🤠 Shootout won: +150 XP',newMW:'⭐ You are now this season’s Most Wanted!',
+  hsDesc:'ranked by shootouts won',hsWins:'Wins',hsEmpty:'Nobody has won a shootout in this period yet. Play one and take first place!',hsNoteA:'Only shootouts finished 100% count (a draw is not a win).',hsNoteM:'Season ranking. The leader holds the Most Wanted title – on a tie the current holder keeps it.',hsNoteW:'Shootouts won this week.',
+  cellHole:'Cell shot down',cellGrave:'Cell destroyed by Bullet Storm',costTip:'Shot cost: {k}',rulesCost:'Shot cost (bullets)',
+  b1:'bullet',b2:'bullets',b5:'bullets'},
+ de:{m_duel:'Duell um High Noon',s_duel:'Duell',d_duel:'Nur 1 gegen 1. Wer im 1. Wurf einträgt, lädt die Trommel – schieß auf Felder des Gegners, eine Weste pro Spiel, Kugelhagel bei 6/6.',dlFull:'Dieses Duell ist schon voll (2 Spieler).',dlNeed2:'Ein Duell braucht genau 2 Spieler.',
+  storm:'Kugelhagel',drum:'Trommel',drumTip:'Kugeln in der Trommel: {n}/6',vestOn:'Weste bereit',vestOff:'Weste verbraucht',
+  aimH:'Dein Schuss',aimP:'Tippe auf ein leeres Feld des Gegners – die Zahl sind die Kosten in Kugeln. Oder heb deine Kugeln auf.',aimStormP:'Kugelhagel: wähle IRGENDEIN Feld des Gegners, auch ein ausgefülltes. Die Weste schützt nicht. Verbraucht die ganze Trommel.',
+  bStorm:'🌪️ Kugelhagel',bNormal:'↩ Normaler Schuss',bHolster:'Kugeln behalten',bFire:'🔫 Feuer',bFireStorm:'🌪️ Kugelhagel auslösen',bCancel:'Ziel ändern',target:'Ziel: {c}',pick:'Wähle ein Ziel in der Spalte des Gegners',
+  waitVest:'{n} überlegt: Weste oder nicht…',aimingOpp:'{n} zielt…',vestQ:'{n} zielt auf dein Feld: {c}!',vestS:'Weste benutzen? Du hast sie nur einmal pro Spiel – die Kugel prallt ab.',vestYes:'🦺 Weste!',vestNo:'Nein, Treffer nehmen',
+  fxHit:'TREFFER!',fxVest:'QUERSCHLÄGER!',fxStorm:'KUGELHAGEL!',fxS:'{a} → {b}: {c}',fxVestS:'Die Weste hat die Kugel gestoppt: {c}',
+  logHit:'🔫 {a} → {b}: {c} – Treffer ({k})',logVest:'🦺 {a} → {b}: {c} – Querschläger an der Weste ({k})',logStorm:'🌪️ {a} → {b}: {c} – Kugelhagel',
+  full:'Trommel voll – Kugelhagel bereit!',
+  mwT:'MOST WANTED',mwSeason:'Saison: {m}',mwWins:'Gewonnene Duelle: {n}',mwNone:'In dieser Saison hat noch niemand ein Duell gewonnen. Werde der erste Most Wanted!',mwFace:'⭐ Du spielst gegen den Most Wanted!',mwFaceS:'{n} hat in dieser Saison die meisten Duellsiege ({w}).',mwYou:'⭐ Du bist Most Wanted – verteidige deinen Titel!',mwBadge:'Most Wanted',
+  need2:'Ein Duell ist nur 1 gegen 1 – im Warteraum müssen genau 2 Spieler sein (jetzt: {n}).',ready2:'Zwei Revolverhelden bereit. Los geht’s!',
+  doa:'DEAD OR ALIVE',draw:'🤝 Unentschieden – niemand kommt auf den Steckbrief.',xpWin:'🤠 Duell gewonnen: +150 XP',newMW:'⭐ Du bist jetzt Most Wanted der Saison!',
+  hsDesc:'Rangliste nach gewonnenen Duellen',hsWins:'Siege',hsEmpty:'In diesem Zeitraum hat noch niemand ein Duell gewonnen. Spiel eins und hol dir Platz 1!',hsNoteA:'Es zählen nur vollständig beendete Duelle (Unentschieden ist kein Sieg).',hsNoteM:'Saison-Rangliste. Der Spitzenreiter trägt den Titel Most Wanted – bei Gleichstand behält ihn der bisherige Träger.',hsNoteW:'Gewonnene Duelle in dieser Woche.',
+  cellHole:'Feld abgeschossen',cellGrave:'Feld durch Kugelhagel zerstört',costTip:'Schusskosten: {k}',rulesCost:'Schusskosten (Kugeln)',
+  b1:'Kugel',b2:'Kugeln',b5:'Kugeln'},
+ es:{m_duel:'Duelo al Mediodía',s_duel:'Duelo',d_duel:'Solo 1 contra 1. Anotar en la 1.ª tirada carga el tambor: dispara a las casillas del rival, un chaleco por partida y Lluvia de balas con 6/6.',dlFull:'Este duelo ya está completo (2 jugadores).',dlNeed2:'Un duelo necesita exactamente 2 jugadores.',
+  storm:'Lluvia de balas',drum:'Tambor',drumTip:'Balas en el tambor: {n}/6',vestOn:'Chaleco listo',vestOff:'Chaleco usado',
+  aimH:'Tu disparo',aimP:'Toca una casilla vacía del rival: el número es el coste en balas. O guarda tus balas para más tarde.',aimStormP:'Lluvia de balas: elige CUALQUIER casilla del rival, incluso una ya anotada. El chaleco no protege. Gasta todo el tambor.',
+  bStorm:'🌪️ Lluvia de balas',bNormal:'↩ Disparo normal',bHolster:'Guardar balas',bFire:'🔫 Disparar',bFireStorm:'🌪️ Desatar la Lluvia de balas',bCancel:'Cambiar objetivo',target:'Objetivo: {c}',pick:'Elige un objetivo en la columna del rival',
+  waitVest:'{n} decide: ¿chaleco o no?…',aimingOpp:'{n} está apuntando…',vestQ:'¡{n} apunta a tu casilla: {c}!',vestS:'¿Usar el chaleco? Solo lo tienes una vez por partida: la bala rebotará.',vestYes:'🦺 ¡Chaleco!',vestNo:'No, recibo el disparo',
+  fxHit:'¡IMPACTO!',fxVest:'¡REBOTE!',fxStorm:'¡LLUVIA DE BALAS!',fxS:'{a} → {b}: {c}',fxVestS:'El chaleco detuvo la bala: {c}',
+  logHit:'🔫 {a} → {b}: {c} – impacto ({k})',logVest:'🦺 {a} → {b}: {c} – rebote en el chaleco ({k})',logStorm:'🌪️ {a} → {b}: {c} – Lluvia de balas',
+  full:'Tambor lleno: ¡Lluvia de balas lista!',
+  mwT:'MOST WANTED',mwSeason:'Temporada: {m}',mwWins:'Duelos ganados: {n}',mwNone:'Nadie ha ganado un duelo esta temporada. ¡Sé el primer Most Wanted!',mwFace:'⭐ ¡Juegas contra el Most Wanted!',mwFaceS:'{n} tiene más duelos ganados esta temporada ({w}).',mwYou:'⭐ Eres el Most Wanted: ¡defiende tu título!',mwBadge:'Most Wanted',
+  need2:'El duelo es solo 1 contra 1: en la sala tiene que haber exactamente 2 jugadores (ahora: {n}).',ready2:'Dos pistoleros listos. ¡A jugar!',
+  doa:'DEAD OR ALIVE',draw:'🤝 Empate: nadie acaba en el cartel de Se Busca.',xpWin:'🤠 Duelo ganado: +150 XP',newMW:'⭐ ¡Ahora eres el Most Wanted de la temporada!',
+  hsDesc:'clasificación por duelos ganados',hsWins:'Victorias',hsEmpty:'Nadie ha ganado un duelo en este periodo. ¡Juega uno y llévate el primer puesto!',hsNoteA:'Solo cuentan los duelos terminados al 100 % (un empate no es victoria).',hsNoteM:'Clasificación de la temporada. El líder lleva el título Most Wanted; en caso de empate lo conserva quien ya lo tenía.',hsNoteW:'Duelos ganados esta semana.',
+  cellHole:'Casilla abatida',cellGrave:'Casilla destruida por la Lluvia de balas',costTip:'Coste del disparo: {k}',rulesCost:'Coste del disparo (balas)',
+  b1:'bala',b2:'balas',b5:'balas'}};
+['pl','en','de','es'].forEach(l=>{if(I18N[l])['m_duel','s_duel','d_duel','dlFull','dlNeed2'].forEach(k=>{I18N[l][k]=DL[l][k]})});
+function dt(k,o){let s=(DL[LANG]||DL.en)[k];if(s===undefined)s=DL.en[k]||'';if(o)for(const x in o)s=s.split('{'+x+'}').join(o[x]);return s}
+function bTxt(n){const L=DL[LANG]||DL.en;if(LANG==='pl'){const w=n===1?L.b1:(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?L.b2:L.b5;return n+' '+w}return n+' '+(n===1?L.b1:L.b2)}
+const isDuel=g=>!!(g&&K.modeOf(g)==='duel');
+const anim=()=>{try{if(typeof animOn!=='undefined'&&!animOn)return false}catch(e){}try{return !(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)}catch(e){return true}};
+
+/* ---------- sound hooks (stage 1: small synthesized placeholders; stage 2: WAV 'dl_<name>' in the theme set) ---------- */
+const DL_SND={
+ start(){bell(523,0,1.6,.32);bell(392,.55,1.8,.28)},
+ load(){noise(0,.035,.9,4200);tone(1900,0,.03,'square',.08);tone(900,.045,.05,'triangle',.18)},
+ full(){for(let i=0;i<6;i++){noise(i*.055,.025,.7,3800+i*120)}tone(1400,.36,.08,'triangle',.2)},
+ aim(){tone(2200,0,.04,'square',.06);tone(1500,.05,.05,'square',.05)},
+ shot(){noise(0,.42,1.7,900);tone(150,0,.28,'sine',.55,45);noise(.2,.6,.35,520);noise(.45,.6,.18,420)},
+ hit(){noise(0,.09,1,1600);tone(220,0,.12,'triangle',.25,90)},
+ ricochet(){noise(0,.05,.9,3200);sweep(3600,900,.02,.5,'sine',.22)},
+ vest(){tone(95,0,.22,'sine',.5,55);noise(0,.08,.7,480)},
+ storm(){for(let i=0;i<6;i++){noise(i*.12,.3,1.4,850+i*40);tone(150,i*.12,.18,'sine',.4,50)}noise(.8,.9,.3,500)},
+ grave(){bell(196,0,1.6,.3)},
+ holster(){noise(0,.06,.6,2600);tone(600,.05,.06,'triangle',.12)},
+ poster(){noise(0,.05,1.2,700);noise(.22,.05,1.2,700);tone(110,0,.08,'sine',.3)},
+ mw(){bell(659,0,1.2,.25);bell(880,.2,1.4,.22)}};
+function dlSnd(n){try{if(!sndOn)return;const key=sset()+':dl_'+n;if(WAV[key]){play('dl_'+n);return}const a=ac();if(!a||!DL_SND[n])return;const go=()=>{A=a;D=a._m;try{DL_SND[n]()}catch(e){}};if(a.state==='running')go();else a.resume().then(go).catch(()=>{})}catch(e){}}
+
+/* ---------- drum (6 chambers) ---------- */
+function drumSVG(n,cls){n=Math.max(0,Math.min(6,n|0));let c='';for(let i=0;i<6;i++){const a=(-90+i*60)*Math.PI/180,x=(20+Math.cos(a)*11).toFixed(2),y=(20+Math.sin(a)*11).toFixed(2),on=i<n;
+  c+='<circle class="dlch'+(on?' on':'')+'" cx="'+x+'" cy="'+y+'" r="4.6"/>'+(on?'<circle class="dlcap" cx="'+x+'" cy="'+y+'" r="2"/>':'')}
+ return '<svg class="dldrum'+(cls?' '+cls:'')+(n===6?' full':'')+'" viewBox="0 0 40 40" aria-hidden="true" style="--rot:'+(n*60)+'deg"><g class="dlrot"><circle class="dlcyl" cx="20" cy="20" r="18.2"/>'+[0,1,2,3,4,5].map(i=>{const a=(-60+i*60)*Math.PI/180;return '<circle class="dlnot" cx="'+(20+Math.cos(a)*18.2).toFixed(2)+'" cy="'+(20+Math.sin(a)*18.2).toFixed(2)+'" r="2.6"/>'}).join('')+c+'<circle class="dlhub" cx="20" cy="20" r="3.2"/></g></svg>'}
+
+/* ---------- Most Wanted boards (retained MQTT, one message per device: kosci-online/duel/v1/{a|m/<YYYY-MM>|w/<monday>}/<device>) ---------- */
+const DLT='kosci-online/duel/v1/',KOK=/^[A-Za-z0-9_-]{3,24}$/;const BD={};let att=null,subd={};
+const LS=(k,v)=>{try{if(v===undefined)return localStorage[k];if(v===null)localStorage.removeItem(k);else localStorage[k]=v}catch(e){}};
+const now=()=>{try{return hsNow()}catch(e){return Date.now()}};
+const curM=()=>{try{return hsMk(now())}catch(e){return new Date().toISOString().slice(0,7)}};
+const curW=()=>{try{return hsWk(now())}catch(e){return ''}};
+function dev(){try{const r=refId();if(r&&KOK.test(r))return r}catch(e){}let d=LS('kdldev');if(!d||!KOK.test(d)){d='d'+Math.random().toString(36).slice(2,12);LS('kdldev',d)}return d}
+function myLogin(){try{return pfLoginOk((typeof ACL!=='undefined'&&typeof accReady!=='undefined'&&accReady&&ACL)||'')||''}catch(e){return ''}}
+function scopes(){return {a:'a',m:'m/'+curM(),w:'w/'+curW()}}
+function myW(){let o;try{o=JSON.parse(LS('kdlw')||'null')}catch(e){}if(!o||typeof o!=='object')o={};const n=x=>Math.max(0,Math.min(1e5,Math.floor(+x||0)));
+ const m=curM(),w=curW();const r={a:{w:n(o.a&&o.a.w),t:+(o.a&&o.a.t)||0},m:o.m&&o.m.k===m?{k:m,w:n(o.m.w),t:+o.m.t||0}:{k:m,w:0,t:0},wk:o.wk&&o.wk.k===w?{k:w,w:n(o.wk.w),t:+o.wk.t||0}:{k:w,w:0,t:0},g:Array.isArray(o.g)?o.g.filter(x=>typeof x==='string').slice(-100):[]};return r}
+function myName(){try{return (typeof me!=='undefined'&&me)||LS('kname')||''}catch(e){return ''}}
+function myEntry(w,t){const e={n:hsClean(myName()),w,t};const u=myLogin();if(u)e.u=u;try{const a=avOk(MYAV);if(a)e.av=a}catch(e2){}try{const c=hsCC(myCC);if(c)e.cc=c}catch(e2){}try{const l=pfLvNow();if(l)e.l=l}catch(e2){}return e}
+function san(e){if(!e||typeof e!=='object')return null;const w=Math.floor(+e.w);if(!(w>=0&&w<=1e5))return null;const o={n:hsClean(e.n),w,t:+e.t||0};try{const u=pfLoginOk(e.u);if(u)o.u=u}catch(x){}try{const a=avOk(e.av);if(a)o.av=a}catch(x){}try{const c=hsCC(e.cc);if(c)o.cc=c}catch(x){}try{const l=pfLvOk(e.l);if(l)o.l=l}catch(x){}return o}
+function localMine(){const o=myW(),sc=scopes();const put=(s,v)=>{BD[s]=BD[s]||{};if(v.w>0)BD[s][dev()]=myEntry(v.w,v.t);else delete BD[s][dev()]};put(sc.a,o.a);put(sc.m,o.m);put(sc.w,o.wk)}
+function board(s){localMine();const g={};Object.entries(BD[s]||{}).forEach(([k,e])=>{const id=e.u?'u:'+e.u.toLowerCase():'d:'+k;const o=g[id];if(!o)g[id]=Object.assign({id,ks:[k]},e);else{o.w+=e.w;o.ks.push(k);if(e.t>o.t){o.t=e.t;o.n=e.n;if(e.av)o.av=e.av;if(e.l)o.l=e.l;if(e.cc)o.cc=e.cc}}});
+ const d=dev();return Object.values(g).filter(e=>e.w>0).sort((a,b)=>b.w-a.w||a.t-b.t).map((e,i)=>Object.assign(e,{r:i+1,me:e.ks.includes(d)}))}
+// Most Wanted = most wins this season; on a tie the one who reached that number first (= the current holder) keeps the title
+function holder(){return board(scopes().m)[0]||null}
+function isHolderName(h,n){if(!h||!n)return false;let u='';try{u=pfOf(n).u||''}catch(e){}if(h.u&&u)return h.u.toLowerCase()===String(u).toLowerCase();if(h.me&&n===myName())return true;return hsClean(n)===h.n}
+function onMsg(tp,m){if(typeof tp!=='string'||tp.indexOf(DLT)!==0)return;const rest=tp.slice(DLT.length).split('/');let s,k;if(rest[0]==='a'&&rest.length===2){s='a';k=rest[1]}else if((rest[0]==='m'||rest[0]==='w')&&rest.length===3){s=rest[0]+'/'+rest[1];k=rest[2]}else return;
+ if(!KOK.test(k||''))return;const raw=m==null?'':m.toString();BD[s]=BD[s]||{};if(!raw){delete BD[s][k];return refresh()}let e;try{e=san(JSON.parse(raw))}catch(x){return}if(!e)return;if(k===dev())return refresh();BD[s][k]=e;refresh()}
+let rfT=0;function refresh(){clearTimeout(rfT);rfT=setTimeout(()=>{try{const o=$('rov');if(o&&!o.hidden&&o.dataset.hs&&HSM==='duel')openHS()}catch(e){}try{if(S&&!S.G&&S.mode==='duel'&&!$('lobby').hidden)lobUI()}catch(e){}try{if(G&&isDuel(G))barUI()}catch(e){}},120)}
+function subAll(){try{if(!hsCli||!hsCli.connected)return;const sc=scopes();Object.values(sc).forEach(s=>{const tp=DLT+s+'/+';if(!subd[tp]){subd[tp]=1;hsCli.subscribe(tp,{qos:1})}});
+  Object.keys(subd).forEach(tp=>{if(!Object.values(sc).some(s=>DLT+s+'/+'===tp)){try{hsCli.unsubscribe(tp)}catch(e){}delete subd[tp]}})}catch(e){}}
+let PEND=true;function pub(){if(!PEND)return;try{if(!hsCli||!hsCli.connected)return;const o=myW(),sc=scopes(),d=dev();
+  [[sc.a,o.a],[sc.m,o.m],[sc.w,o.wk]].forEach(([s,v])=>{if(v.w>0)hsCli.publish(DLT+s+'/'+d,JSON.stringify(myEntry(v.w,v.t)),{qos:1,retain:true})});PEND=false}catch(e){}}
+function attach(){try{if(typeof hsCli==='undefined'||!hsCli||hsCli===att)return;att=hsCli;subd={};const c=hsCli;c.on('message',onMsg);c.on('connect',()=>{subd={};subAll();pub()});if(c.connected){subAll();pub()}}catch(e){}}
+setInterval(()=>{attach();subAll()},2000);setTimeout(attach,300);
+function addWin(gid){const o=myW();if(o.g.includes(gid))return false;const t=now();o.g.push(gid);o.a.w++;o.a.t=t;o.m.w++;o.m.t=t;o.wk.w++;o.wk.t=t;LS('kdlw',JSON.stringify(o));PEND=true;pub();return true}
+
+/* ---------- game end: duel win (XP + boards) ---------- */
+function result(g){if(!isDuel(g)||g.phase!=='end'||g.players.length!==2||g.players.some(p=>p.left||!K.done(p,K.ndOf(g))))return null;const T=g.players.map(p=>K.totals(p.sheet,K.ndOf(g)).total);if(T[0]===T[1])return {tie:true,T};const w=T[0]>T[1]?0:1;return {w,n:g.players[w].name,T}}
+// boards first (before the end card is drawn, so the poster can say "you are now Most Wanted")
+function recordEnd(g){const r=result(g);if(!r||r.tie||r.n!==myName())return false;const gid=String(g.gid||'');if(!gid)return false;const was=holder();const fresh=addWin(gid);
+ if(fresh){const h=holder();if(h&&h.me&&!(was&&was.me)){try{sessionStorage['kdlmw_'+gid]='1'}catch(e){}}}return true}
+// +150 XP: lifetime counter PX.c.dw (XP is derived from counters); added after the game itself is counted (dw <= games played)
+function xpAward(g,tries){const r=result(g);if(!r||r.tie||r.n!==myName())return;const gid=String(g.gid||'');if(!gid)return;
+ try{PX.fk=Array.isArray(PX.fk)?PX.fk:[];const k='dw|'+gid;if(PX.fk.indexOf(k)>=0)return;if((PX.c.gp|0)<(PX.c.dw|0)+1){if((tries|0)<8)setTimeout(()=>xpAward(g,(tries|0)+1),700);return}
+  PX.fk.push(k);if(PX.fk.length>80)PX.fk=PX.fk.slice(-80);PX.c.dw=(PX.c.dw||0)+1;PX=pxSane(PX);pxSave();try{pfCheckLevel()}catch(e){}try{if(typeof accDirty==='function')accDirty()}catch(e){}}catch(e){}}
+window.dlHsSubmit=function(g){const gid=g.gid||(ROOM+'-'+g.players.map(p=>p.name).join(','));if(hsDone[gid])return;hsDone[gid]=1;try{gameLog(g,gid,hsNow())}catch(e){}};
+
+/* ---------- lobby ---------- */
+function mwPlacard(big){const h=holder();let m='';try{m=hsMonthName(curM())}catch(e){m=curM()}
+ if(!h)return '<div class="dlmwp none'+(big?' big':'')+'"><div class="dlmwt">⭐ '+dt('mwT')+'</div><div class="dlmws">'+esc(dt('mwSeason',{m}))+'</div><p class="dlmwn">'+esc(dt('mwNone'))+'</p></div>';
+ return '<div class="dlmwp'+(big?' big':'')+'"><div class="dlmwt">⭐ '+dt('mwT')+'</div><div class="dlmws">'+esc(dt('mwSeason',{m}))+'</div><div class="dlmwa">'+(h.av?avHTML(h.av,'avW'):'<span class="avq">🤠</span>')+'</div><div class="dlmwnm">'+(h.cc?flagHTML(h.cc):'')+esc(h.n)+(h.me?' <small>('+esc((typeof SZ_T!=='undefined'&&SZ_T[LANG]&&SZ_T[LANG].you)||'')+')</small>':'')+'</div><div class="dlmww">'+esc(dt('mwWins',{n:h.w}))+'</div></div>'}
+function lobUI(){let box=$('dllob');const on=!!(S&&!S.G&&S.mode==='duel');const go=$('go');
+ if(!on){if(box)box.hidden=true;if(go&&go.dataset.dl){go.disabled=false;delete go.dataset.dl;go.removeAttribute('title')}return}
+ if(!box){box=document.createElement('div');box.id='dllob';box.className='dllob';$('modebox').after(box)}
+ const n=(S.lobby||[]).length,ok=n===2;box.innerHTML=mwPlacard(false)+'<p class="dlneed'+(ok?' ok':'')+'">🤠 '+esc(ok?dt('ready2'):dt('need2',{n}))+'</p>';box.hidden=false;
+ if(go){go.disabled=!ok;go.dataset.dl='1';if(!ok)go.title=dt('need2',{n});else go.removeAttribute('title')}}
+{const _rl=renderLobby;renderLobby=function(){const r=_rl.apply(this,arguments);try{lobUI()}catch(e){}return r}}
+
+/* ---------- in-game UI ---------- */
+let SEEN={},lastEv={gid:'',n:-1},lastDg={gid:'',n:-1},AIM={key:'',cat:'',storm:false},mwShown='',startShown='',vestAns='';
+function meIdx(){return G?G.players.findIndex(p=>p.name===me):-1}
+function sheetCell(i,cat){const tab=$('tab');if(!tab)return null;const rows=[...tab.querySelectorAll('tr')].filter(r=>r.classList.contains('up')||r.classList.contains('lo'));const cats=K.catsFor(K.ndOf(G)).map(c=>c[0]);if(rows.length!==cats.length)return null;
+ const mi=G.players.findIndex(p=>p.name===me&&!p.left),n=G.players.length,ord=G.players.map((_,j)=>mi>0?(mi+j)%n:j),col=ord.indexOf(i),ri=cats.indexOf(cat);if(col<0||ri<0)return null;return rows[ri].children[col+1]||null}
+const DLXH='<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><path d="M12 1v5M12 18v5M1 12h5M18 12h5"/></svg>';
+function plate(i){const p=G.players[i];if(!p)return '';const b=p.bul|0,h=holder(),mw=isHolderName(h,p.name);const cur=G.phase==='play'&&(G.sh?G.sh.s===i:G.cur===i);
+ return '<div class="dlp'+(p.name===me?' me':'')+(cur?' cur':'')+(b===6?' full':'')+'" data-i="'+i+'"><div class="dlpa">'+(avOf(p.name)?avHTML(avOf(p.name),'avp'):'<span class="avq">🤠</span>')+'</div><div class="dlpm"><div class="dlpn">'+esc(p.name)+'</div>'+(mw?'<div class="dlmwb">⭐ '+esc(dt('mwBadge'))+'</div>':'')+'<div class="dlpv'+(p.vest?'':' used')+'" title="'+esc(p.vest?dt('vestOn'):dt('vestOff'))+'"><span aria-hidden="true">🦺</span> '+esc(p.vest?dt('vestOn'):dt('vestOff'))+'</div></div><div class="dlpd" title="'+esc(dt('drumTip',{n:b}))+'" role="img" aria-label="'+esc(dt('drumTip',{n:b}))+'">'+drumSVG(b)+'<b class="dlpc">'+b+'<small>/6</small></b></div></div>'}
+function barUI(){if(!G||!isDuel(G))return;let bar=$('dlbar');if(!bar){bar=document.createElement('div');bar.id='dlbar';bar.className='dlbar';$('turn').after(bar)}
+ const mi=meIdx(),a=mi>=0?mi:0,b=a===0?1:0;bar.innerHTML=plate(a)+'<div class="dlvs" aria-hidden="true">VS</div>'+plate(b)+'<div class="dlst" id="dlst"></div>';bar.hidden=false;
+ const st=$('dlst');if(G.phase==='play'&&G.sh){const s=G.players[G.sh.s];if(s&&s.name!==me)st.textContent=G.sh.st==='vest'?dt('waitVest',{n:G.players[K.dlOpp(G,G.sh.s)].name}):dt('aimingOpp',{n:s.name});else st.textContent=G.sh.st==='vest'?dt('waitVest',{n:G.players[K.dlOpp(G,G.sh.s)].name}):'';st.hidden=!st.textContent}else st.hidden=true}
+function cellsUI(){const tab=$('tab');if(!tab)return;G.players.forEach((p,i)=>{const d=p.dead||{};for(const k in d){const td=sheetCell(i,k);if(!td)continue;const up=K.UPPER.includes(k),v=p.sheet[k];td.classList.add(d[k]==='g'?'dlgrave':'dlhole');td.classList.remove('xcell','zero','neg','pos');td.title=d[k]==='g'?dt('cellGrave'):dt('cellHole');
+  td.innerHTML=d[k]==='g'?'<span class="dlmk dlgr" aria-label="'+esc(dt('cellGrave'))+'"><i></i></span>':'<span class="dlmk dlho" aria-label="'+esc(dt('cellHole'))+'"><i></i>'+(up&&typeof v==='number'&&v<0?'<small>−'+(-v)+'</small>':'')+'</span>'}});
+ // header chips
+ const ths=[...tab.querySelectorAll('tr:first-child th')].slice(1);const mi=G.players.findIndex(p=>p.name===me&&!p.left),n=G.players.length,ord=G.players.map((_,j)=>mi>0?(mi+j)%n:j);
+ ths.forEach((th,j)=>{const p=G.players[ord[j]];if(!p||th.querySelector('.dlth'))return;th.insertAdjacentHTML('beforeend',' <span class="dlth'+((p.bul|0)===6?' full':'')+'" title="'+esc(dt('drumTip',{n:p.bul|0}))+'">'+drumSVG(p.bul|0,'mini')+'<b>'+(p.bul|0)+'</b>'+(p.vest?'<i aria-hidden="true">🦺</i>':'')+'</span>')})}
+function logUI(){const L=(G.dle||[]).slice(0,4);const el=$('log');if(!el||!L.length)return;const h=L.map(e=>{const c=esc(catName(e.c)),o={a:esc(e.sn),b:esc(e.on),c,k:esc(bTxt(e.b|0))};return '<span class="dllog">'+(e.r==='vest'?dt('logVest',o):e.r==='storm'?dt('logStorm',o):dt('logHit',o))+'</span>'}).join('<br>');
+ el.innerHTML=h+(el.innerHTML?'<br>'+el.innerHTML:'');el.hidden=false}
+function sheetEl(id){let e=$(id);if(!e){e=document.createElement('div');e.id=id;e.setAttribute('role','region');e.setAttribute('aria-live','polite');document.body.appendChild(e)}return e}
+function hide(id){const e=$(id);if(e&&!e.hidden){e.hidden=true;e.innerHTML=''}document.body.classList.toggle('dl-sheet',!!(($('dlaim')&&!$('dlaim').hidden)||($('dlvest')&&!$('dlvest').hidden)))}
+function aimUI(){const g=G,sh=g&&g.sh,mi=meIdx();const mine=!!(sh&&sh.st==='aim'&&g.players[sh.s]&&g.players[sh.s].name===me&&g.phase==='play');
+ if(!mine){AIM.key='';hide('dlaim');return}
+ const key=g.gid+'|'+(g.dlN|0)+'|'+(g.mv?g.mv.length:0);if(AIM.key!==key){AIM={key,cat:'',storm:false}}
+ const P=g.players[sh.s],o=K.dlOpp(g,sh.s),b=P.bul|0,canStorm=b>=6&&K.dlTargets(g,true).length>0,norm=K.dlTargets(g,false);if(AIM.storm&&!canStorm)AIM.storm=false;if(!AIM.storm&&!norm.length&&canStorm)AIM.storm=true;
+ const T=AIM.storm?K.dlTargets(g,true):norm;if(AIM.cat&&!T.includes(AIM.cat))AIM.cat='';
+ // targets in the rival's column
+ K.catsFor(K.ndOf(g)).forEach(([k])=>{const td=sheetCell(o,k);if(!td)return;const Q=g.players[o];if(Q.dead&&Q.dead[k])return;const ok=T.includes(k),empty=!(k in Q.sheet);if(!ok&&!(empty&&!AIM.storm))return;
+  td.classList.add('dltg');if(!ok)td.classList.add('dlno');if(AIM.storm)td.classList.add('dlst');if(k===AIM.cat)td.classList.add('dlsel');
+  if(!AIM.storm)td.insertAdjacentHTML('beforeend','<i class="dlcost" title="'+esc(dt('costTip',{k:bTxt(K.dlCost(k))}))+'">'+K.dlCost(k)+'</i>');
+  if(ok){td.setAttribute('role','button');td.tabIndex=0;td.onclick=()=>{AIM.cat=k;dlSnd('aim');render()};td.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();td.onclick()}}}});
+ const el=sheetEl('dlaim');el.className='dlsheet dlaim'+(AIM.storm?' storm':'');try{tpTheme(el)}catch(e){}
+ const tc=AIM.cat?catName(AIM.cat):'',cost=AIM.cat?(AIM.storm?6:K.dlCost(AIM.cat)):0;
+ el.innerHTML='<div class="dlsh"><span class="dlshd">'+drumSVG(b)+'</span><div class="dlsht"><b>🔫 '+esc(AIM.storm?dt('storm'):dt('aimH'))+'</b><small>'+esc(dt('drumTip',{n:b}))+'</small></div></div><p class="dlshp">'+esc(AIM.storm?dt('aimStormP'):dt('aimP'))+'</p>'+
+  (AIM.cat?'<div class="dlselr"><span class="dlx" aria-hidden="true">'+DLXH+'</span><b>'+esc(dt('target',{c:tc}))+'</b><span class="dlk">'+esc(bTxt(cost))+'</span></div>':'<div class="dlselr pick">'+esc(dt('pick'))+'</div>')+
+  '<div class="dlbtns">'+(AIM.cat?'<button type="button" class="dlfire'+(AIM.storm?' storm':'')+'" id="dlfire">'+esc(AIM.storm?dt('bFireStorm'):dt('bFire'))+'</button>':'')+(canStorm&&norm.length?'<button type="button" class="alt dlstb" id="dlstb">'+esc(AIM.storm?dt('bNormal'):dt('bStorm'))+'</button>':'')+'<button type="button" class="alt" id="dlhol">'+esc(dt('bHolster'))+'</button></div>';
+ el.hidden=false;document.body.classList.add('dl-sheet');
+ const f=$('dlfire');if(f)f.onclick=()=>{const c=AIM.cat,s=AIM.storm;AIM.cat='';send({a:'dlshoot',cat:c,storm:s})};
+ const sb=$('dlstb');if(sb)sb.onclick=()=>{AIM.storm=!AIM.storm;AIM.cat='';render()};$('dlhol').onclick=()=>send({a:'dlhol'})}
+function vestUI(){const g=G,sh=g&&g.sh;const def=sh&&sh.st==='vest'?g.players[K.dlOpp(g,sh.s)]:null;
+ // aimed cell marker for everybody
+ if(sh&&sh.st==='vest'){const td=sheetCell(K.dlOpp(g,sh.s),sh.c);if(td)td.classList.add('dlaimed')}
+ if(!(def&&def.name===me&&g.phase==='play'&&(def.vest|0)>0)){hide('dlvest');return}
+ const key=g.gid+'|'+sh.id;if(!SEEN[key])SEEN[key]=Date.now();const left=Math.max(0,K.DUEL_VEST_MS-(Date.now()-SEEN[key]));
+ const el=sheetEl('dlvest');el.className='dlsheet dlvest';try{tpTheme(el)}catch(e){}
+ if(el.dataset.k!==key){el.dataset.k=key;el.innerHTML='<div class="dlvh"><span class="dlx big" aria-hidden="true">'+DLXH+'</span><b>'+esc(dt('vestQ',{n:g.players[sh.s].name,c:catName(sh.c)}))+'</b></div><p class="dlshp">'+esc(dt('vestS'))+'</p><div class="dltime"><i id="dlvt"></i></div><div class="dlbtns"><button type="button" class="dlvy" id="dlvy">'+esc(dt('vestYes'))+'</button><button type="button" class="alt" id="dlvn">'+esc(dt('vestNo'))+'</button></div>';
+  $('dlvy').onclick=()=>{vestAns=key;send({a:'dlvest',use:true})};$('dlvn').onclick=()=>{vestAns=key;send({a:'dlvest',use:false})};dlSnd('aim');
+  try{const td=sheetCell(K.dlOpp(g,sh.s),sh.c);if(td&&td.scrollIntoView)td.scrollIntoView({block:'center',behavior:anim()?'smooth':'auto'})}catch(e){}}
+ const bar=$('dlvt');if(bar)bar.style.width=(left/K.DUEL_VEST_MS*100).toFixed(1)+'%';el.hidden=false;document.body.classList.add('dl-sheet')}
+function fxShow(k,title,sub){let o=$('dlfx');if(!o){o=document.createElement('div');o.id='dlfx';o.setAttribute('role','status');o.setAttribute('aria-live','assertive');document.body.appendChild(o)}
+ o.dataset.k=k;o.className='dlfx '+k+(anim()?' anim':'');o.innerHTML='<div class="dlfxi">'+(k==='vest'?'🛡️':k==='storm'?'🌪️':'💥')+'</div><b class="dlfxt">'+esc(title)+'</b><span class="dlfxs">'+esc(sub)+'</span>';o.hidden=false;void o.offsetWidth;o.classList.add('on');clearTimeout(o._t);o._t=setTimeout(()=>{o.classList.remove('on');setTimeout(()=>{o.hidden=true},300)},anim()?1900:1400)}
+function evUI(){const e=(G.dle||[])[0];if(lastEv.gid!==G.gid){lastEv={gid:G.gid,n:e?e.n:0};return}if(!e||e.n<=lastEv.n)return;lastEv.n=e.n;
+ const o={a:e.sn,b:e.on,c:catName(e.c)};if(e.r==='vest'){fxShow('vest',dt('fxVest'),dt('fxVestS',o));dlSnd('shot');setTimeout(()=>dlSnd('ricochet'),120);setTimeout(()=>dlSnd('vest'),200)}
+ else if(e.r==='storm'){fxShow('storm',dt('fxStorm'),dt('fxS',o));dlSnd('storm');setTimeout(()=>dlSnd('grave'),900)}else{fxShow('hit',dt('fxHit'),dt('fxS',o));dlSnd('shot');setTimeout(()=>dlSnd('hit'),100)}
+ const oi=G.players.findIndex(p=>p.name===e.on),td=oi>=0?sheetCell(oi,e.c):null;if(td&&anim()){td.classList.add('dlflash','dl-'+e.r);setTimeout(()=>{try{td.classList.remove('dlflash')}catch(x){}},1300)}}
+function dgUI(){const d=G.dg;if(lastDg.gid!==G.gid){lastDg={gid:G.gid,n:d?d.n:0};return}if(!d||d.n<=lastDg.n)return;lastDg.n=d.n;const p=G.players[d.i];if(!p)return;
+ const pl=document.querySelector('#dlbar .dlp[data-i="'+d.i+'"] .dlpd');if(pl&&anim()){pl.classList.remove('dlload');void pl.offsetWidth;pl.classList.add('dlload');if(d.a>0){const f=document.createElement('span');f.className='dlgain';f.textContent='+'+d.a;pl.appendChild(f);setTimeout(()=>{try{f.remove()}catch(e){}},1500)}}
+ if((p.bul|0)===6){dlSnd('full');if(p.name===me)try{toast('🌪️ '+dt('full'))}catch(e){}}else if(d.a>0)dlSnd('load')}
+function startUI(){if(startShown===G.gid)return;startShown=G.gid;const fresh=!(G.mv&&G.mv.length)&&G.rolls===0;if(fresh)dlSnd('start');
+ const h=holder(),mi=meIdx();if(mi<0||!h)return;const opp=G.players[mi===0?1:0];if(!opp)return;let html='';
+ if(isHolderName(h,opp.name))html='<div class="tpb dlmwn"><div class="tp1"><b class="tpn">'+esc(dt('mwFace'))+'</b></div><div class="tp2">'+esc(dt('mwFaceS',{n:opp.name,w:h.w}))+'</div></div>';
+ else if(isHolderName(h,me))html='<div class="tpb dlmwn"><div class="tp1"><b class="tpn">'+esc(dt('mwYou'))+'</b></div></div>';
+ if(html&&mwShown!==G.gid){mwShown=G.gid;setTimeout(()=>{try{tpShow(html);dlSnd('mw')}catch(e){}},fresh?900:200)}}
+function dlUI(){try{const on=!!(G&&isDuel(G)&&!$('game').hidden&&!TW);document.body.classList.toggle('duel-on',on);$('game').classList.toggle('dl-skin',on);
+ if(!on){const b=$('dlbar');if(b)b.hidden=true;hide('dlaim');hide('dlvest');return}
+ barUI();cellsUI();logUI();aimUI();vestUI();evUI();dgUI();startUI()}catch(e){console.warn('duel ui',e)}}
+{const _r=render;render=function(){const r=_r.apply(this,arguments);dlUI();return r}}
+// vest countdown + timeouts: defender auto-answers "no" after 8 s; the shooter resolves after 11 s if the defender is gone
+setInterval(()=>{try{if(!G||!isDuel(G)||G.phase!=='play'||!G.sh||G.sh.st!=='vest'||TW){if(!(G&&isDuel(G)&&G.sh))hide('dlvest');return}
+ const key=G.gid+'|'+G.sh.id;if(!SEEN[key])SEEN[key]=Date.now();const el=Date.now()-SEEN[key],def=G.players[K.dlOpp(G,G.sh.s)],sh=G.players[G.sh.s];
+ if(def&&def.name===me){const b=$('dlvt');if(b)b.style.width=(Math.max(0,K.DUEL_VEST_MS-el)/K.DUEL_VEST_MS*100).toFixed(1)+'%';if(el>=K.DUEL_VEST_MS&&vestAns!==key){vestAns=key;send({a:'dlvest',use:false})}}
+ else if(sh&&sh.name===me&&el>=K.DUEL_VEST_MS+3000&&vestAns!==key){vestAns=key;send({a:'dlvto'})}}catch(e){}},250);
+
+/* ---------- actions (same shared-state protocol as every move: mutate S.G, publish) ---------- */
+{const _s=send;send=function(d){if(!d||typeof d.a!=='string'||d.a.indexOf('dl')!==0)return _s.apply(this,arguments);
+ if(!S||!G||!isDuel(G)||!G.sh)return;if(!TW&&(!cli||!cli.connected)){toast(t('offMv'));resync(true);return}
+ const sh=G.sh,shooter=G.players[sh.s],def=G.players[K.dlOpp(G,sh.s)];let ok=false;
+ if(d.a==='dlshoot'&&shooter&&shooter.name===me)ok=K.shoot(G,d.cat,!!d.storm);
+ else if(d.a==='dlhol'&&shooter&&shooter.name===me){ok=K.holster(G);if(ok)dlSnd('holster')}
+ else if(d.a==='dlvest'&&def&&def.name===me)ok=K.vest(G,!!d.use);
+ else if(d.a==='dlvto'&&shooter&&shooter.name===me&&sh.st==='vest')ok=K.vest(G,false);
+ if(!ok)return;S.G=G;publish()}}
+
+/* ---------- lobby rules: max 2 players, start only with exactly 2 ---------- */
+{const g0=$('go'),_go=g0.onclick;g0.onclick=function(){if(S&&S.host===me&&!S.G&&S.mode==='duel'&&(S.lobby||[]).length!==2){toast(t('dlNeed2'));return}return _go.apply(this,arguments)}}
+{const _os=onState;onState=function(){try{const g=S&&S.G;if(g&&isDuel(g)&&g.phase==='end')recordEnd(g)}catch(e){}const r=_os.apply(this,arguments);try{if(G&&isDuel(G)&&G.phase==='end')xpAward(G,0)}catch(e){}try{if(S&&!S.G)lobUI()}catch(e){}try{if(S&&!S.G&&S.mode==='duel'&&!(S.lobby||[]).includes(me)&&(S.lobby||[]).length>=2)setTimeout(()=>{try{if(S&&!S.G&&!(S.lobby||[]).includes(me))$('msg').textContent=t('dlFull')}catch(e){}},80)}catch(e){}return r}}
+
+/* ---------- end screen: placeholder MOST WANTED poster ---------- */
+{const _sw=showWin;showWin=function(g){const o=$('win'),was=o&&!o.hidden;const r=_sw.apply(this,arguments);try{if(isDuel(g)&&o&&!o.hidden&&!was&&!o.querySelector('.dlpost'))poster(g,o)}catch(e){console.warn(e)}return r};window.__win=showWin}
+function poster(g,o){const c=o.querySelector('.wcard');if(!c)return;o.classList.add('dlwin');const R=result(g);const dice=c.querySelector('.wdice');let h;
+ if(!R||R.tie)h='<div class="dlpost tie"><p>'+esc(dt('draw'))+'</p></div>';
+ else{const n=R.n,av=avOf(n);h='<div class="dlpost'+(anim()?' anim':'')+'" role="img" aria-label="'+esc(dt('mwT')+' – '+n+' – '+dt('doa'))+'"><i class="dlnail l"></i><i class="dlnail r"></i><div class="dlpt">'+dt('mwT')+'</div><div class="dlpf">'+(av?avHTML(av,'avW'):'<span class="avq">🤠</span>')+'</div><div class="dlpnm">'+esc(n)+'</div><div class="dlpd2">'+dt('doa')+'</div></div>'+
+  (n===me?'<p class="dlpxp">'+esc(dt('xpWin'))+'</p>':'')+(n===me&&(()=>{try{return sessionStorage['kdlmw_'+g.gid]==='1'}catch(e){return false}})()?'<p class="dlpmw">'+esc(dt('newMW'))+'</p>':'')}
+ if(dice)dice.insertAdjacentHTML('afterend',h);else c.insertAdjacentHTML('afterbegin',h);if(dice)dice.hidden=true;setTimeout(()=>dlSnd('poster'),350)}
+
+/* ---------- Top 10: 🤠 tab in the same screen, ranked by wins ---------- */
+{const _o=openHS;openHS=function(){try{if(!HSM)HSM=G?K.modeOf(G):(K.MODES.includes(localStorage.klastmode)?localStorage.klastmode:'classic');if(HSM==='duel')return hsDuel()}catch(e){console.warn(e)}
+ const r=_o.apply(this,arguments);try{const t0=document.querySelector('#rov .hsmodes');if(t0&&!t0.querySelector('[data-m="duel"]')){t0.insertAdjacentHTML('beforeend',tabBtn('duel',false));t0.querySelector('[data-m="duel"]').onclick=()=>{HSM='duel';openHS()}}}catch(e){}return r}}
+function tabBtn(m,on){return '<button role="tab" data-m="'+m+'" class="hstab hsm'+(on?' on':'')+'" aria-selected="'+on+'"><span class="hmi">'+MI_[m]+'</span><span class="hmn">'+esc(t('s_'+m))+'</span></button>'}
+function hsDuel(){fltHide();const o=$('rov');o.dataset.hs=1;HSTAB=6;try{hsMonthCheck()}catch(e){}try{wsWeekCheck()}catch(e){}const sc=scopes(),SC=HSSC==='m'?'m':HSSC==='w'?'w':'all',B=board(SC==='m'?sc.m:SC==='w'?sc.w:sc.a).slice(0,10);
+ const md=[hsCup('#ffcf33','#a87800'),hsCup('#d9dde3','#7d8590'),hsCup('#d98b4a','#8a4f1d')],star='<span class="dlstar" title="'+esc(dt('mwBadge'))+'">⭐</span>';
+ let h='<div class="rhead"><b>'+t('hsT')+'</b><button id="rclose">'+t('hsClose')+' ✕</button></div><div class="rbody hsb dlhs"><div class="hstabs hsmodes" role="tablist" aria-label="'+t('modeLbl')+'">'+HS_MODES.concat(['duel']).map(m=>tabBtn(m,m==='duel')).join('')+'</div><p class="hsmdesc"><b>'+MI_.duel+' '+esc(t('m_duel'))+'</b> – '+esc(dt('hsDesc'))+'</p>'
+  +'<div class="hstabs hsscope" role="tablist">'+[['all','hsAll'],['m','hsMonth'],['w','hsWeek']].map(([c,l])=>'<button role="tab" data-s="'+c+'" class="hstab hsc'+(c===SC?' on':'')+'" aria-selected="'+(c===SC)+'">'+(c==='all'?'🏆 ':c==='w'?'🗓️ ':'📅 ')+t(l)+'</button>').join('')+'</div>'
+  +(SC==='w'?wsHead():SC==='m'?'<p class="hsmon">📅 <b>'+hsMonthName(MK)+'</b> · '+t('hsReset')+'</p>':'')+(SC==='m'?mwPlacard(true):'')+'<p class="note">'+esc(SC==='w'?dt('hsNoteW'):SC==='m'?dt('hsNoteM'):dt('hsNoteA'))+'</p>';
+ if(!B.length)h+='<div class="hsempty"><div class="hei">🤠</div><p>'+esc(dt('hsEmpty'))+'</p></div>';
+ else h+='<table class="hst dlhst"><thead><tr><th>#</th><th>'+t('hsName')+'</th><th>'+esc(dt('hsWins'))+'</th></tr></thead><tbody>'+B.map((e,i)=>'<tr class="r'+(i+1)+(e.me?' dlme':'')+(SC==='m'&&i===0?' dlmw':'')+'"><td>'+(SC==='m'&&i===0?'<span class="dlsher" title="'+esc(dt('mwBadge'))+'" aria-label="'+esc(dt('mwBadge'))+'">'+sheriff()+'</span>':(md[i]||i+1))+'</td><td><span class="hsn">'+flagHTML(e.cc,true)+avHTML(e.av,'avh')+'<span class="hsnn">'+esc(e.n)+(e.l?pfChip(e.l):'')+'</span>'+(SC==='m'&&i===0?' <small class="dlmwl">'+star+' '+esc(dt('mwBadge'))+'</small>':'')+'</span></td><td><b>'+e.w+'</b></td></tr>').join('')+'</tbody></table>';
+ o.innerHTML=h+'<p class="small hsst">'+(hsGot?'🟢 online':'🟠 offline – local')+'</p></div>';o.hidden=false;document.body.style.overflow='hidden';
+ o.querySelectorAll('.hstab[data-s]').forEach(b=>b.onclick=()=>{HSSC=b.dataset.s;openHS()});o.querySelectorAll('.hstab[data-m]').forEach(b=>b.onclick=()=>{HSM=b.dataset.m;openHS()});
+ $('rclose').onclick=()=>{delete o.dataset.hs;HSTAB=0;HSSC='all';HSM='';closeRules()}}
+function sheriff(){return '<svg class="dlbadge" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2l4.6 9.3 10.3-1.5-5.8 8.6 5.8 8.6-10.3-1.5L20 34.8l-4.6-9.3-10.3 1.5 5.8-8.6-5.8-8.6 10.3 1.5z" fill="#f2c14e" stroke="#8a5a10" stroke-width="1.6" stroke-linejoin="round"/><circle cx="20" cy="18.4" r="6.2" fill="#ffe08a" stroke="#8a5a10" stroke-width="1.3"/><path d="M20 14.6l1.2 2.5 2.7.3-2 1.8.6 2.7-2.5-1.4-2.5 1.4.6-2.7-2-1.8 2.7-.3z" fill="#8a5a10"/></svg>'}
+
+/* ---------- rules: own section + mode line + Top 10 line ---------- */
+const RD={
+ pl:{sec:'Rewolwerowy Pojedynek',mode:'<b>🤠 Rewolwerowy Pojedynek</b> – tylko 1 na 1: zapis z ręki ładuje bębenek, a naboje wydajesz na strzały w pola rywala. Szczegóły w rozdziale „Rewolwerowy Pojedynek”.',hs:'<b>🤠 Pojedynek</b> ma własną kartę: ranking według liczby <b>wygranych</b> (wszech czasów, miesiąc, tydzień). Lider miesiąca nosi tytuł <b>Most Wanted</b> i odznakę szeryfa.',
+  list:['<b>Tylko 1 na 1</b> – dwóch graczy, 6 kości, zwykła tabela i 3 rzuty dodatkowe na grę. Skarbonka jest wyłączona.','<b>Naboje:</b> zapis (nie skreślenie) po 1. rzucie, czyli „z ręki”, daje <b>1 nabój</b>. Poker z ręki daje <b>3 naboje</b>, a Lord z ręki od razu <b>ładuje cały bębenek</b>.','<b>Bębenek</b> ma 6 komór i widać go przy awatarach obu graczy. Naboje ponad 6 przepadają.','<b>Strzał:</b> po swoim zapisie możesz wydać naboje na strzał w <b>jedno puste pole</b> rywala (koszt w tabeli poniżej) albo schować je na później. Trafione pole dostaje dziurę po kuli i rywal nie może go już użyć: w Figurach liczy się 0, w Szkole minus jedna kość, np. Trójki = −3.','<b>🦺 Kamizelka:</b> każdy ma ją raz na grę. Gdy rywal wyceluje, obrońca widzi cel i ma 8 sekund na decyzję. Kamizelka odbija kulę rykoszetem (pole zostaje puste), a strzelający i tak traci naboje.','<b>🌪️ Grad kul</b> – tylko przy pełnym bębenku (6/6). Wykreśla <b>dowolne</b> pole rywala, także już zapisane, a kamizelka nie chroni. Na polu zostaje mały grób z krzyżem i liczy się 0. Zużywa cały bębenek – ładujesz od nowa. Możesz go użyć wiele razy w grze.','Wygrywa wyższy wynik RAZEM. Zwycięzca dostaje <b>+150 XP</b> i plakat <b>MOST WANTED</b>. Remis nie jest wygraną pojedynku. Zestrzelone pole nie odbiera premii za grę bez skreśleń.','<b>⭐ Most Wanted sezonu:</b> tytuł nosi gracz z największą liczbą wygranych pojedynków w bieżącym miesiącu (czas irlandzki). Przy remisie tytuł zostaje u obecnego posiadacza.']},
+ en:{sec:'High Noon Shootout',mode:'<b>🤠 High Noon Shootout</b> – 1 vs 1 only: scoring on the first roll loads your cylinder and you spend bullets on shots at your rival’s cells. Details in the “High Noon Shootout” chapter.',hs:'<b>🤠 Shootout</b> has its own tab ranked by <b>wins</b> (all-time, month, week). The leader of the month holds the <b>Most Wanted</b> title and a sheriff’s badge.',
+  list:['<b>1 vs 1 only</b> – two players, 6 dice, the normal score sheet and 3 extra rolls per game. The Piggy Bank is off.','<b>Bullets:</b> a score (not a cross-out) after the 1st roll – “off the hand” – gives <b>1 bullet</b>. Poker off the hand gives <b>3 bullets</b>, Lord off the hand <b>fills the whole cylinder</b>.','The <b>cylinder</b> has 6 chambers and is shown next to both players’ avatars. Bullets beyond 6 are lost.','<b>Shooting:</b> after your score you may spend bullets on a shot at <b>one empty cell</b> of your rival (costs in the table below) or keep them for later. The hit cell gets a bullet hole and your rival can never use it: 0 in the lower section, minus one die in the School, e.g. Threes = −3.','<b>🦺 Vest:</b> everyone has one per game. When the rival takes aim, the defender sees the target and has 8 seconds to decide. The vest makes the bullet ricochet (the cell stays empty), and the shooter still loses the bullets.','<b>🌪️ Bullet Storm</b> – only with a full cylinder (6/6). It crosses out <b>any</b> cell of your rival, even a filled one, and the vest does not help. A small grave with a cross stays on the cell and it counts 0. It uses the whole cylinder – reload from zero. You can use it many times per game.','The higher TOTAL wins. The winner gets <b>+150 XP</b> and a <b>MOST WANTED</b> poster. A draw is not a shootout win. A shot-down cell does not cost you the clean-game bonus.','<b>⭐ Most Wanted of the season:</b> the title goes to the player with the most shootout wins in the current month (Irish time). On a tie the current holder keeps it.']},
+ de:{sec:'Duell um High Noon',mode:'<b>🤠 Duell um High Noon</b> – nur 1 gegen 1: Eintragen im 1. Wurf lädt die Trommel, und mit den Kugeln schießt du auf Felder des Gegners. Details im Kapitel „Duell um High Noon“.',hs:'<b>🤠 Duell</b> hat eine eigene Karte mit Rangliste nach <b>Siegen</b> (Ewig, Monat, Woche). Der Spitzenreiter des Monats trägt den Titel <b>Most Wanted</b> und einen Sheriffstern.',
+  list:['<b>Nur 1 gegen 1</b> – zwei Spieler, 6 Würfel, der normale Block und 3 Zusatzwürfe pro Spiel. Das Sparschwein ist aus.','<b>Kugeln:</b> ein Eintrag (keine Streichung) nach dem 1. Wurf – „aus der Hand“ – bringt <b>1 Kugel</b>. Poker aus der Hand bringt <b>3 Kugeln</b>, Lord aus der Hand <b>füllt die ganze Trommel</b>.','Die <b>Trommel</b> hat 6 Kammern und ist neben den Avataren beider Spieler zu sehen. Kugeln über 6 verfallen.','<b>Schießen:</b> nach deinem Eintrag kannst du Kugeln für einen Schuss auf <b>ein leeres Feld</b> des Gegners ausgeben (Kosten in der Tabelle unten) oder sie aufheben. Das getroffene Feld bekommt ein Einschussloch und ist für den Gegner verloren: 0 im unteren Teil, in der Schule minus ein Würfel, z. B. Dreier = −3.','<b>🦺 Weste:</b> jeder hat sie einmal pro Spiel. Wenn der Gegner zielt, sieht der Verteidiger das Ziel und hat 8 Sekunden Zeit. Die Weste lässt die Kugel abprallen (das Feld bleibt leer), der Schütze verliert die Kugeln trotzdem.','<b>🌪️ Kugelhagel</b> – nur mit voller Trommel (6/6). Er streicht <b>irgendein</b> Feld des Gegners, auch ein ausgefülltes; die Weste schützt nicht. Auf dem Feld bleibt ein kleines Grab mit Kreuz, es zählt 0. Verbraucht die ganze Trommel – neu laden. Mehrmals pro Spiel möglich.','Die höhere GESAMT-Summe gewinnt. Der Sieger erhält <b>+150 XP</b> und einen <b>MOST WANTED</b>-Steckbrief. Unentschieden ist kein Duellsieg. Ein abgeschossenes Feld kostet nicht den Bonus für ein Spiel ohne Streichung.','<b>⭐ Most Wanted der Saison:</b> den Titel trägt, wer im laufenden Monat (irische Zeit) die meisten Duelle gewonnen hat. Bei Gleichstand behält ihn der bisherige Träger.']},
+ es:{sec:'Duelo al Mediodía',mode:'<b>🤠 Duelo al Mediodía</b> – solo 1 contra 1: anotar en la 1.ª tirada carga el tambor y gastas las balas en disparos a las casillas del rival. Detalles en el capítulo «Duelo al Mediodía».',hs:'<b>🤠 Duelo</b> tiene su propia pestaña con la clasificación por <b>victorias</b> (histórica, mes, semana). El líder del mes lleva el título <b>Most Wanted</b> y una estrella de sheriff.',
+  list:['<b>Solo 1 contra 1</b>: dos jugadores, 6 dados, la hoja normal y 3 tiradas extra por partida. La Hucha está desactivada.','<b>Balas:</b> anotar (no tachar) tras la 1.ª tirada, «de mano», da <b>1 bala</b>. Un Póker de mano da <b>3 balas</b> y un Lord de mano <b>llena todo el tambor</b>.','El <b>tambor</b> tiene 6 recámaras y se ve junto al avatar de los dos jugadores. Las balas por encima de 6 se pierden.','<b>Disparar:</b> después de anotar puedes gastar balas en un disparo a <b>una casilla vacía</b> del rival (coste en la tabla de abajo) o guardarlas. La casilla alcanzada queda con un agujero de bala y el rival ya no puede usarla: 0 en la parte inferior y, en la Escuela, menos un dado, p. ej. Treses = −3.','<b>🦺 Chaleco:</b> cada jugador lo tiene una vez por partida. Cuando el rival apunta, el defensor ve el objetivo y tiene 8 segundos para decidir. El chaleco hace rebotar la bala (la casilla sigue vacía) y el tirador pierde igualmente las balas.','<b>🌪️ Lluvia de balas</b>: solo con el tambor lleno (6/6). Tacha <b>cualquier</b> casilla del rival, incluso una ya anotada, y el chaleco no protege. En la casilla queda una pequeña tumba con cruz y cuenta 0. Gasta todo el tambor: vuelves a cargar desde cero. Puedes usarla varias veces por partida.','Gana el TOTAL más alto. El ganador recibe <b>+150 XP</b> y un cartel de <b>MOST WANTED</b>. Un empate no es una victoria de duelo. Una casilla abatida no te quita el bonus de partida sin tachados.','<b>⭐ Most Wanted de la temporada:</b> lleva el título quien tenga más duelos ganados en el mes actual (hora de Irlanda). En caso de empate lo conserva quien ya lo tenía.']}};
+try{['pl','en','de','es'].forEach(l=>{const r=RT[l],x=RD[l];if(!r||!x)return;if(Array.isArray(r.sec)&&r.sec.length===16)r.sec.push(x.sec);r.duel=x.list.slice();
+ if(Array.isArray(r.modes)&&!r.modes.some(m=>m.indexOf('🤠')>=0)){const hi=r.modes.findIndex(m=>m.indexOf('<b>')!==0);if(hi>=0)r.modes.splice(hi,0,x.mode);else r.modes.push(x.mode)}
+ if(Array.isArray(r.hs)&&!r.hs.some(m=>m.indexOf('🤠')>=0))r.hs.push(x.hs)})}catch(e){}
+window.dlRulesCosts=function(){const by={};Object.entries(K.DUEL_COST).forEach(([k,v])=>{(by[v]=by[v]||[]).push(k)});const ord=K.catsFor(6).map(c=>c[0]);
+ return '<table class="dlcosts"><caption>'+esc(dt('rulesCost'))+'</caption><tbody>'+Object.keys(by).map(Number).sort((a,b)=>a-b).map(v=>'<tr><td class="dlcn"><b>'+v+'</b> '+drumSVG(v,'mini')+'</td><td>'+by[v].sort((a,b)=>ord.indexOf(a)-ord.indexOf(b)).map(k=>esc(catName(k))).join(', ')+'</td></tr>').join('')+'</tbody></table>'};
+window.__v250={DL,dt,bTxt,drumSVG,board,holder,isHolderName,addWin,myW,result,recordEnd,xpAward,onMsg,scopes,dev,dlSnd,DL_SND,dlUI,sheetCell,hsDuel,mwPlacard,AIM:()=>AIM,setAim:(c,s)=>{AIM.cat=c;AIM.storm=!!s},BD,subAll,pub,DLT};
+})();
 </script></body></html>
