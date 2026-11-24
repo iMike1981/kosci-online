@@ -3634,6 +3634,31 @@ body:not(#z) #szov .szx{z-index:5;background:rgba(0,0,0,.3);top:14px;right:14px}
 .avf.fr-z3m12{background:conic-gradient(#a8102a,#ffd9b5,#ffcb47,#c7803f,#380912,#ffcb47,#ffd9b5,#a8102a);--fg:#ffcb47cc;animation:none}
 .avf.fr-z3m12::before{content:"🎄"}
 </style>
+<style id="v241css">
+/* 2.41 Skarbonka / Piggy Bank */
+.pigc{display:inline-flex;align-items:center;gap:2px;position:relative;vertical-align:middle;margin-left:4px;padding:1px 6px 1px 4px;border-radius:999px;background:linear-gradient(180deg,#ffd6e6,#ffa9c8);color:#6b1238;font:800 11.5px/1.35 system-ui,sans-serif;box-shadow:inset 0 -1px 0 #0001,0 1px 2px #0002;white-space:nowrap}
+.pigc b{font-weight:900;min-width:.7em;text-align:center}
+.pigc.z{filter:saturate(.35);opacity:.75}
+#pigchip{display:inline-flex;align-items:center;gap:5px;position:relative;vertical-align:middle;margin:2px 0 2px 8px;padding:3px 11px 3px 7px;border-radius:999px;background:linear-gradient(135deg,#ffc2d9,#ff8fb8);color:#5a0d2f;font:700 13px/1.3 system-ui,sans-serif;box-shadow:0 2px 6px #ff5c9a40,inset 0 1px 0 #fff8;white-space:nowrap}
+#pigchip .pgi{font-size:16px;line-height:1}
+#pigchip b{font-size:15px;font-weight:900;min-width:.8em;text-align:center}
+#pigchip.z{background:linear-gradient(135deg,#f3dbe5,#e6bccd);box-shadow:none;color:#7a4a5e}
+#pigchip.go{animation:pigGlow 1.6s ease-in-out infinite}
+.pgup{animation:pigUp .7s cubic-bezier(.3,1.6,.5,1)}
+.pgdn{animation:pigDn .55s ease-out}
+.pgup .pgi,.pgup>span[aria-hidden]{display:inline-block;animation:pigWig .7s ease-in-out}
+.pgd{position:absolute;left:50%;top:-6px;transform:translate(-50%,0);font:900 12px/1 system-ui,sans-serif;pointer-events:none;padding:2px 5px;border-radius:999px;background:#fff;box-shadow:0 2px 6px #0004;animation:pigFloat 1.35s ease-out forwards;z-index:3}
+.pgd.up{color:#1f8a3b}.pgd.dn{color:#d6336c}
+@keyframes pigUp{0%{transform:scale(1)}40%{transform:scale(1.28)}100%{transform:scale(1)}}
+@keyframes pigDn{0%{transform:scale(1)}35%{transform:scale(.86)}100%{transform:scale(1)}}
+@keyframes pigWig{0%,100%{transform:rotate(0)}25%{transform:rotate(-14deg)}60%{transform:rotate(10deg)}}
+@keyframes pigFloat{0%{opacity:0;transform:translate(-50%,4px)}15%{opacity:1}100%{opacity:0;transform:translate(-50%,-22px)}}
+@keyframes pigGlow{0%,100%{box-shadow:0 2px 6px #ff5c9a40,0 0 0 0 #ff5c9a66}50%{box-shadow:0 2px 6px #ff5c9a40,0 0 0 5px #ff5c9a00}}
+@media (prefers-reduced-motion:reduce){.pgup,.pgdn,#pigchip.go,.pgup .pgi{animation:none}.pgd{animation-duration:.01s}}
+#rov .hsmodes{grid-template-columns:repeat(5,1fr)}
+#rov .hsmodes .hmn{hyphens:manual;-webkit-hyphens:manual;overflow-wrap:break-word}
+@media(max-width:420px){#rov .hsmodes .hstab{padding-left:2px!important;padding-right:2px!important}#rov .hsmodes .hmn{font-size:10.5px}}
+</style>
 </head><body><svg id="avsprite" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="av-cat" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ffb347"/><path d="M7 9l2 9h5zM25 9l-2 9h-5z" fill="#fff"/><path d="M8.6 11.5l1.2 5h2.6zM23.4 11.5l-1.2 5h-2.6z" fill="#ff8fa3"/><ellipse cx="16" cy="19" rx="9" ry="7.5" fill="#fff"/><ellipse cx="12.4" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><ellipse cx="19.6" cy="18" rx="1.3" ry="1.9" fill="#2b2d42"/><path d="M14.8 21h2.4L16 22.4z" fill="#ff6b8b"/><path d="M5 20.5l5 .6M5.5 23l4.6-.8M27 20.5l-5 .6M26.5 23l-4.6-.8" stroke="#8a5a2b" stroke-width=".8" stroke-linecap="round"/></symbol>
 <symbol id="av-dog" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#8ecae6"/><ellipse cx="16" cy="17" rx="8" ry="8.5" fill="#d9a066"/><path d="M8.5 10.5c-3 0-4 6-2.5 9 1 2 3 1 3.5-1z" fill="#7a4a24"/><path d="M23.5 10.5c3 0 4 6 2.5 9-1 2-3 1-3.5-1z" fill="#7a4a24"/><ellipse cx="16" cy="21.5" rx="4.6" ry="3.6" fill="#f6e3c8"/><circle cx="12.6" cy="16" r="1.4" fill="#2b2d42"/><circle cx="19.4" cy="16" r="1.4" fill="#2b2d42"/><ellipse cx="16" cy="19.8" rx="1.9" ry="1.3" fill="#2b2d42"/><path d="M16 21v1.6M14.4 22.8q1.6 1 3.2 0" stroke="#2b2d42" stroke-width=".8" fill="none" stroke-linecap="round"/></symbol>
@@ -3729,8 +3754,8 @@ function totals(sheet,nd){
 // ---- game state machine (authoritative on host) ----
 const MAX_EXTRA=3;
 // ---- game modes: classic | train (rows strictly top to bottom) | hw (first 3 rounds only in School) ----
-const MODES=['classic','train','hw','call'],HW_N=3;
-function modeOf(g){return g&&(g.mode==='train'||g.mode==='hw'||g.mode==='call')?g.mode:'classic'}
+const MODES=['classic','train','hw','call','pig'],HW_N=3,PIG_MAX=99;
+function modeOf(g){return g&&(g.mode==='train'||g.mode==='hw'||g.mode==='call'||g.mode==='pig')?g.mode:'classic'}
 function nextCat(nd,sheet){const c=catsFor(nd).find(([k])=>!(k in sheet));return c?c[0]:null}
 function hwLeft(sheet){return Math.max(0,HW_N-Object.keys(sheet).length)}
 // pure rule check: may `cat` be written/crossed on `sheet` in this mode?
@@ -3743,10 +3768,10 @@ function maxR(g){return g&&g.tw&&g.tw.r>0?g.tw.r:3}
 function newGame(names,nd,mode,tw){nd=nd===5?5:6;const g={gid:Date.now().toString(36)+Math.random().toString(36).slice(2,7),nd,mode:MODES.includes(mode)?mode:'classic',phase:'play',players:names.map(n=>({name:n,sheet:{},extraUsed:0})),cur:0,dice:Array(nd).fill(0),held:Array(nd).fill(false),rolls:0,round:1,log:[]};
  if(tw&&typeof tw==='object'){g.tw=JSON.parse(JSON.stringify(tw));const lk=(g.tw.lk||[]).filter(k=>catsFor(nd).some(c=>c[0]===k)&&!UPPER.includes(k));g.tw.lk=lk;g.players.forEach(p=>lk.forEach(k=>{p.sheet[k]=0}))}
  return g}
-function canRoll(g){const p=g.players[g.cur],m=maxR(g);return g.phase==='play'&&(modeOf(g)!=='call'||!!g.ann)&&(g.rolls<m||(g.rolls>=m&&!(g.tw&&g.tw.nx)&&p.extraUsed<MAX_EXTRA));}
+function canRoll(g){const p=g.players[g.cur],m=maxR(g);return g.phase==='play'&&(modeOf(g)!=='call'||!!g.ann)&&(g.rolls<m||(g.rolls>=m&&(modeOf(g)==='pig'?(p.bank|0)>0:!(g.tw&&g.tw.nx)&&p.extraUsed<MAX_EXTRA)));}
 function roll(g,rnd){
  if(!canRoll(g))return false;const p=g.players[g.cur];
- if(g.rolls>=maxR(g))p.extraUsed++;
+ if(g.rolls>=maxR(g)){if(modeOf(g)==='pig')p.bank=Math.max(0,(p.bank|0)-1);else p.extraUsed++;}
  if(g.rolls===0)g.held=g.dice.map(()=>false);
  g.dice=g.dice.map((v,i)=>g.held[i]&&g.rolls>0?v:1+Math.floor(rnd()*6));g.rolls++;return true;}
 function toggleHold(g,i){if(g.rolls>0)g.held[i]=!g.held[i];}
@@ -3755,7 +3780,7 @@ function announce(g,cat){if(modeOf(g)!=='call'||g.phase!=='play'||g.rolls>0)retu
 function write(g,cat,cross){
  const p=g.players[g.cur];if(g.rolls===0||cat in p.sheet||(g.tw&&Array.isArray(g.tw.lk)&&g.tw.lk.includes(cat))||!catsFor(ndOf(g)).some(c=>c[0]===cat)||!allowed(modeOf(g),ndOf(g),p.sheet,cat,g.ann)||(modeOf(g)==='call'&&g.ann!==cat))return false;
  let v;if(cross&&UPPER.includes(cat))return false;if(cross)v='x';else{v=finalScore(cat,g.dice,g.rolls===1);if(v===null)return false;}
- p.sheet[cat]=v;g.log.unshift({n:p.name,c:cat,v:v,d:!cross&&dbl(cat,g.rolls===1)});g.log=g.log.slice(0,8);(g.mv=g.mv||[]).push([g.cur,cat,v,!cross&&dbl(cat,g.rolls===1)?1:0]);if(g.mv.length>200)g.mv=g.mv.slice(-200);
+ p.sheet[cat]=v;if(modeOf(g)==='pig'){const u=Math.max(0,maxR(g)-g.rolls);p.bank=Math.min(PIG_MAX,(p.bank|0)+u)}g.log.unshift({n:p.name,c:cat,v:v,d:!cross&&dbl(cat,g.rolls===1)});g.log=g.log.slice(0,8);(g.mv=g.mv||[]).push([g.cur,cat,v,!cross&&dbl(cat,g.rolls===1)?1:0]);if(g.mv.length>200)g.mv=g.mv.slice(-200);
  g.rolls=0;g.held=g.held.map(()=>false);advance(g);return true;}
 function done(q,nd){return catsFor(nd).every(([k])=>k in q.sheet)}
 function advance(g){delete g.ann;const nd=ndOf(g),act=g.players.filter(q=>!q.left&&!done(q,nd));if(!act.length){g.phase='end';return}
@@ -3773,7 +3798,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='2.40';
+const APP_VER='2.41';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -3922,7 +3947,7 @@ function pxSane(o){const b=pxBlank();if(!o||typeof o!=='object')return b;const n
  b.c.gp=n(c.gp,1e6);b.c.pts=Math.min(n(c.pts,2e9),b.c.gp*2000);b.c.pe=n(c.pe,1e6*250);b.c.bsc=n(c.bsc,2000);b.c.mp=Math.min(n(c.mp,1e6),b.c.gp);b.c.p2=Math.min(n(c.p2,1e6),b.c.mp);
  b.c.sb=Math.min(n(c.sb,1e6),b.c.gp);b.c.cb=Math.min(n(c.cb,1e6),b.c.gp);b.c.dd=n(c.dd,99999);b.c.ld=typeof c.ld==='number'&&isFinite(c.ld)?Math.max(-1,Math.min(Math.floor(c.ld),99999)):-1;b.c.tm=n(c.tm,1e9);b.c.rf=n(c.rf,100000);b.c.fl=Math.min(n(c.fl,1e5),Math.max(b.c.gp,1)*30);b.c.fp=Math.min(n(c.fp,1e5),Math.max(b.c.gp,1)*30);b.c.sa=Math.min(n(c.sa,1e5),Math.max(b.c.gp,1));b.c.ca=Math.min(n(c.ca,1e5),Math.max(b.c.gp,1));
  ['ct','cp'].forEach(f=>{const s=c[f]&&typeof c[f]==='object'?c[f]:{};PF_CATS.forEach(k=>{const v=n(s[k],f==='ct'?1e6:2e9);if(v)b.c[f][k]=f==='ct'?Math.min(v,b.c.gp):Math.min(v,b.c.gp*600)})});
- b.r=(Array.isArray(o.r)?o.r:[]).filter(e=>e&&typeof e==='object'&&typeof e.s==='number'&&isFinite(e.s)&&Math.abs(e.s)<3000).slice(-20).map(e=>({d:n(e.d,99999),s:Math.round(e.s),o:e.o===1?1:e.o===2?2:0,k:e.k===5?5:6,m:e.m==='train'||e.m==='hw'||e.m==='call'?e.m:'classic'}));
+ b.r=(Array.isArray(o.r)?o.r:[]).filter(e=>e&&typeof e==='object'&&typeof e.s==='number'&&isFinite(e.s)&&Math.abs(e.s)<3000).slice(-20).map(e=>({d:n(e.d,99999),s:Math.round(e.s),o:e.o===1?1:e.o===2?2:0,k:e.k===5?5:6,m:e.m==='train'||e.m==='hw'||e.m==='call'||e.m==='pig'?e.m:'classic'}));
  b.lv=pfLvOk(o.lv)||0;const eq=o.eq&&typeof o.eq==='object'?o.eq:{};b.eq.fr=pfFrOk(eq.fr);b.eq.ti=PF_TI.includes(eq.ti)||/^rk([0-9]|1[0-2])$/.test(eq.ti||'')?eq.ti:'';b.mig=o.mig?1:0;
  b.gd=(Array.isArray(o.gd)?o.gd:[]).filter(x=>typeof x==='string'&&x.length<70).slice(-40);b.fk=(Array.isArray(o.fk)?o.fk:[]).filter(x=>typeof x==='string'&&x.length<80).slice(-80);return b}
 let PX=(()=>{try{return pxSane(JSON.parse(localStorage.kpx||'null'))}catch(e){return pxBlank()}})();
@@ -4184,6 +4209,12 @@ try{const A={pl:{m_call:'Słowo się rzekło',s_call:'Słowo',d_call:'Przed rzut
  es:{m_call:'Lo dicho, dicho',s_call:'Lo dicho',d_call:'Antes de tirar anuncias una fila, y tienes que anotarla.',annPick:'Anuncia tu jugada: toca una fila de la hoja.',annMine:'Tu anuncio: {c}',annChg:'Puedes cambiarlo hasta el primer tiro.',annGo:'Lo dicho, dicho: {c}. Anota en esta fila.',annOther:'{n} anuncia: {c}',annWait:'{n} está eligiendo su anuncio…',annFirst:'📣 Primero anuncia',annLk:'Lo dicho, dicho: solo puedes anotar en {c}',annTip:'Anunciar: {c}',hsWeek:'Esta semana',hsNoteW:'Top 10 de esta semana para el modo elegido. La semana va de lunes a domingo: el domingo a medianoche la lista empieza de cero.',hsWEmpty2:'Semana nueva: nadie ha jugado todavía a «{m}». ¡Sé el primero!',hsWReset:'nueva semana en {t}'}};
  for(const l in A)if(I18N[l])Object.assign(I18N[l],A[l])}catch(e){}
 
+try{const A={pl:{m_pig:'Skarbonka',s_pig:'Skarbonka',d_pig:'Start bez dodatkowych rzutów – niewykorzystane rzuty odkładasz na później.',pigName:'Skarbonka',pigRoll:'🐷 Rzut ze Skarbonki',pigTip:'Rzuty w Skarbonce: {n}'},
+ en:{m_pig:'Piggy Bank',s_pig:'Piggy Bank',d_pig:'No extra rolls to start – save your unused rolls for later.',pigName:'Piggy Bank',pigRoll:'🐷 Roll from the bank',pigTip:'Rolls in the Piggy Bank: {n}'},
+ de:{m_pig:'Sparschwein',s_pig:'Sparschwein',d_pig:'Ohne Zusatzwürfe starten – ungenutzte Würfe sparst du für später.',pigName:'Sparschwein',pigRoll:'🐷 Wurf aus dem Sparschwein',pigTip:'Würfe im Sparschwein: {n}'},
+ es:{m_pig:'La Hucha',s_pig:'Hucha',d_pig:'Sin tiradas extra al empezar: guarda las que no uses para más tarde.',pigName:'Hucha',pigRoll:'🐷 Tirada de la hucha',pigTip:'Tiradas en la hucha: {n}'}};
+ ['pl','en','de','es'].forEach(l=>{if(I18N[l])Object.assign(I18N[l],A[l])})}catch(e){}
+
 if(localStorage.kapp==='kitty')localStorage.kapp='nature';if(localStorage.kapp==='pusheen'||localStorage.kapp==='gothic')localStorage.kapp='ninja';
 const APPBIT={classic:0,sapphire:1,halloween:1,zombie:2,pixel:3,slime:4,nature:5,ninja:6,ocean:7,beach:8,soccer:9,forest:10,winter:11,galaxy:12,aero:13};
 const APPTH=['classic','sapphire','galaxy','aero','zombie','slime','nature','ninja','ocean','beach','winter'];
@@ -4259,7 +4290,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611241000';
+const APP_VERSION='202611241120';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -4729,7 +4760,7 @@ function rulesHTML(){const r=RT[LANG],ic=['🎯','🎲','✖️2','🏫','🃏',
  h+=sec(9,'<ul>'+r.ach.map(x=>'<li>'+x+'</li>').join('')+'</ul>');
  h+=sec(10,'<ul>'+r.hs.map(x=>'<li>'+x+'</li>').join('')+'</ul>');
  h+=sec(11,'<ol class="steps">'+r.online.map(x=>'<li>'+x+'</li>').join('')+'</ol>');
- h+=sec(12,'<ul>'+r.acc.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.tower)h+=sec(13,'<ul>'+r.tower.map(x=>'<li>'+x+'</li>').join('')+'</ul>');
+ h+=sec(12,'<ul>'+r.acc.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.tower)h+=sec(13,'<ul>'+r.tower.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.xp)h+=sec(14,'<ul>'+r.xp.map(x=>'<li>'+x+'</li>').join('')+'</ul>');if(r.sz)h+=sec(15,'<ul>'+r.sz.map(x=>'<li>'+x+'</li>').join('')+'</ul>');
  h+='<p class="privl"><a href="privacy.html" target="_blank" rel="noopener">'+t('privLink')+'</a></p>';return h+'</div>'}
 function openRules(){const o=$('rov');o.innerHTML=rulesHTML();o.hidden=false;document.body.style.overflow='hidden';$('rclose').onclick=closeRules;o.querySelectorAll('nav a').forEach(a=>a.onclick=e=>{e.preventDefault();o.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'})})}
 function closeRules(){$('rov').hidden=true;document.body.style.overflow=''}
@@ -4743,7 +4774,7 @@ let hsNow=()=>Date.now();const HS_MZ='Europe/Dublin';
 function hsMk(ms){try{const p=new Intl.DateTimeFormat('en-CA',{timeZone:HS_MZ,year:'numeric',month:'2-digit'}).formatToParts(new Date(ms)),g=x=>p.find(q=>q.type===x).value;return g('year')+'-'+g('month')}catch(e){const d=new Date(ms);return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')}}
 function hsMT(mk,k){return 'kosci-online/highscores/v3/'+mk+'/d'+k}
 /* ---- v4: separate retained boards per game mode (classic / train / hw); v2 + v3 topics are read-only legacy (migrated by entry.md) ---- */
-const HS_MODES=['classic','train','hw','call'],HS4='kosci-online/highscores/v4',HS3='kosci-online/highscores/v3',HS_BS=HS_MODES.flatMap(m=>[5,6].map(k=>[m,k]));
+const HS_MODES=['classic','train','hw','call','pig'],HS4='kosci-online/highscores/v4',HS3='kosci-online/highscores/v3',HS_BS=HS_MODES.flatMap(m=>[5,6].map(k=>[m,k]));
 /* 2.36: live profiles on Top 10 / lists + hide (and drop) unviewable high-score games */
 const HS_POOL=30,HS_SHOW=10;
 function hsGid(g){return String(g||'').replace(/[^A-Za-z0-9_-]/g,'_').slice(0,60)}
@@ -4800,7 +4831,7 @@ window.__v237={hsHistMks,hsHistTopics,gsPendAdd,gsPendLoad,gsPendFlush,gsComplet
 
 function hsT4(m,k){return HS4+'/all/'+m+'/d'+k}
 function hsMT4(mk,m,k){return HS4+'/'+mk+'/'+m+'/d'+k}
-function hsM(e){return e&&(e.md==='train'||e.md==='hw'||e.md==='call')?e.md:'classic'}
+function hsM(e){return e&&(e.md==='train'||e.md==='hw'||e.md==='call'||e.md==='pig')?e.md:'classic'}
 function hsMTs(mk){return [hsMT(mk,5),hsMT(mk,6)].concat(HS_BS.map(([m,k])=>hsMT4(mk,m,k)))}
 
 /* ---- country flag (only the 2-letter ISO code is stored; never the IP) ---- */
@@ -4851,7 +4882,7 @@ window.__v240w={hsWk,wsBoard,wsAdd,wsEnd,wsLeft,hsWT4,wsWeekCheck,get WK(){retur
 function hsMonthName(mk){const [y,m]=mk.split('-').map(Number);try{const n=new Date(Date.UTC(y,m-1,15)).toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{month:'long',year:'numeric',timeZone:'UTC'});return n.charAt(0).toUpperCase()+n.slice(1)}catch(e){return mk}}
 function hsClean(n){return String(n||'').replace(/[<>&"'`\u0000-\u001f]/g,'').trim().slice(0,20)||'?'}
 function hsValid(e){return e&&typeof e.g==='string'&&e.g.length<40&&typeof e.s==='number'&&isFinite(e.s)&&Math.abs(e.s)<5000&&typeof e.d==='number'}
-function hsMd(m){return m==='train'||m==='hw'||m==='call'?m:undefined}
+function hsMd(m){return m==='train'||m==='hw'||m==='call'||m==='pig'?m:undefined}
 function hsMerge(a,b){const m={};[...a,...b].filter(hsValid).filter(e=>!(typeof hsDropSet!=='undefined'&&hsDropSet.has(hsGid(e.g)))).forEach(e=>{const cc=hsCC(e.cc),md=hsMd(e.md),av=avOk(e.av),hu=pfLoginOk(e.u),hl=pfLvOk(e.lv);e={g:e.g.slice(0,40),n:hsClean(e.n),s:Math.round(e.s),d:e.d,k:e.k===5?5:6};if(cc)e.cc=cc;if(md)e.md=md;if(av)e.av=av;if(hu)e.u=hu;if(hl)e.lv=hl;const key=e.g+'|'+e.n,o=m[key];if(!o||e.s>o.s||(e.s===o.s&&(e.d<o.d||(e.d===o.d&&e.k<o.k)))){if(o&&o.cc&&!e.cc)e.cc=o.cc;if(o&&o.md&&!e.md)e.md=o.md;if(o&&o.av&&!e.av)e.av=o.av;if(o&&o.u&&!e.u)e.u=o.u;if(o&&o.lv&&!e.lv)e.lv=o.lv;m[key]=e}else{if(!o.cc&&e.cc)o.cc=e.cc;if(!o.md&&e.md)o.md=e.md;if(!o.av&&e.av)o.av=e.av;if(!o.u&&e.u)o.u=e.u;if(!o.lv&&e.lv)o.lv=e.lv}});
  const all=Object.values(m).sort((x,y)=>y.s-x.s||x.d-y.d);return HS_BS.flatMap(([m,k])=>all.filter(e=>e.k===k&&hsM(e)===m&&!(typeof hsDropSet!=='undefined'&&hsDropSet.has(hsGid(e.g)))).slice(0,typeof HS_POOL==='number'?HS_POOL:30))}
 function hsBoard(k,m){m=m||'classic';return HS.filter(e=>e.k===k&&hsM(e)===m)}
@@ -5363,7 +5394,7 @@ function showLobby(c){$('start').hidden=true;$('game').hidden=true;$('lobby').hi
  $('link').value=location.origin+location.pathname+'?pokoj='+c;$('hostctl').hidden=!isHost;$('wait').hidden=isHost;renderLobby()}
 $('copy').onclick=()=>{$('link').select();navigator.clipboard&&navigator.clipboard.writeText($('link').value)};
 function renderLobby(){$('plist').innerHTML=lobby.map(n=>dot(n)+pfNameHTML(n)).join(', ');if(S&&S.nd===5&&!S.G&&S.host===me){S.nd=6;publish();return}if(S)S.nd=6;
- const md=K.MODES.includes(S&&S.mode)?S.mode:'classic',MI={classic:'🎲',train:'🚂',hw:'📚',call:'📣'};
+ const md=K.MODES.includes(S&&S.mode)?S.mode:'classic',MI={classic:'🎲',train:'🚂',hw:'📚',call:'📣',pig:'🐷'};
  $('msel').className=isHost?'':'ro';$('modebox').classList.toggle('ro',!isHost);
  $('msel').innerHTML=isHost?K.MODES.map(m=>'<button type="button" role="radio" aria-checked="'+(m===md)+'" class="mc'+(m===md?' on':' alt')+'" data-m="'+m+'"><span class="mi">'+MI[m]+'</span><span class="mt"><b>'+t('m_'+m)+'</b><small>'+t('d_'+m)+'</small></span></button>').join(''):'<div class="mro"><span class="mi">'+MI[md]+'</span><span class="mt"><b>'+t('modeIn',{m:t('m_'+md)})+'</b><small>'+t('d_'+md)+'</small></span></div>';
  $('msel').querySelectorAll('.mc').forEach(b=>b.onclick=()=>{if(!S||S.host!==me||S.G)return;S.mode=b.dataset.m;localStorage.kmode=S.mode;publish()})}
@@ -5403,7 +5434,7 @@ function scoreAnim(G){const L0=G.log[0],key=(G.mv?G.mv.length:0)+'|'+(L0&&typeof
  scKey=key;if(!SCA)return;const el=(Date.now()-SCA.t0)/1000;if(el>1.6||G.rolls>0||SCA.dk!==G.dice.join()||!animOn){SCA=null;return}
  const ds=$('dice').querySelectorAll('.die');SCA.gr.forEach(g=>g.i.forEach(i=>{const d=ds[i];if(!d)return;d.classList.add('sc','sc-'+g.a);d.style.setProperty('--sd',(g.g*.16-el).toFixed(2)+'s');if(g.a==='spark'&&!d.querySelector('.spk'))d.insertAdjacentHTML('beforeend','<b class="spk">✨</b>')}))}
 function previewDice(cat,on){const ds=$('dice').querySelectorAll('.die');ds.forEach(d=>d.classList.remove('cnt'));if(!on||!G||G.rolls===0)return;countDice(cat,G.dice).forEach(g=>g.i.forEach(i=>ds[i]&&ds[i].classList.add('cnt')))}
-const MI_={classic:'🎲',train:'🚂',hw:'📚',call:'📣'},HW_N_=()=>K.HW_N;
+const MI_={classic:'🎲',train:'🚂',hw:'📚',call:'📣',pig:'🐷'},HW_N_=()=>K.HW_N;
 function render(){const MD=K.modeOf(G);$('lobby').hidden=true;$('start').hidden=true;$('game').hidden=false;$('ng').hidden=!isHost||!!TW;
  const P=G.players[G.cur],my=P.name===me&&G.phase==='play';
  const key=G.dice.join()+G.rolls+G.cur,first=lastDice==='',anim=key!==lastDice&&G.rolls>0;lastDice=key;
@@ -5413,10 +5444,10 @@ function render(){const MD=K.modeOf(G);$('lobby').hidden=true;$('start').hidden=
  $('dice').innerHTML=G.dice.map((v,i)=>dieHTML(colOf(P.name),v,'alive'+(G.held[i]?' held':'')+(anim&&!G.held[i]?' roll':'')+(excSet.has(i)?' excited':'')+(sad?' sad':''),i)).join('');document.querySelectorAll('#dice .die.held').forEach(d=>{const b=document.createElement('span');b.className='hbadge';b.setAttribute('aria-hidden','true');b.textContent='🔒';d.appendChild(b)});applyLook();sounds(G,anim&&!first,sc);try{turnPop(G,anim&&!first,first)}catch(e){}
  $('dice').querySelectorAll('.die').forEach((d,i)=>d.onclick=()=>{if(my)send({a:'hold',i})});scoreAnim(G);
  const extra=G.rolls>=3;$('rollb').disabled=!(my&&K.canRoll(G));$('rollb').textContent=extra?t('extra'):t('roll');
- $('rinfo').textContent=t('rollN',{r:G.rolls}).replace('/3','/'+K.maxR(G))+(G.rolls===1?' (×2!)':'')+' • '+t('extraLeft')+': '+(G.tw&&G.tw.nx?'–':(K.MAX_EXTRA-P.extraUsed)+'/'+K.MAX_EXTRA);
+ $('rinfo').textContent=t('rollN',{r:G.rolls}).replace('/3','/'+K.maxR(G))+(G.rolls===1?' (×2!)':'')+(MD==='pig'?'':' • '+t('extraLeft')+': '+(G.tw&&G.tw.nx?'–':(K.MAX_EXTRA-P.extraUsed)+'/'+K.MAX_EXTRA));
  const T=G.players.map(p=>K.totals(p.sheet,K.ndOf(G))),best=Math.max(...T.map(t=>t.total));
  const mi=G.players.findIndex(p=>p.name===me&&!p.left),n=G.players.length,ord=G.players.map((_,j)=>mi>0?(mi+j)%n:j),TO=ord.map(i=>Object.assign({},T[i],{mc:i===mi?'me ':''}));
- let h='<tr><th>'+t('cat')+'</th>'+ord.map(i=>{const p=G.players[i];return '<th class="'+(i===mi?'me ':'')+(i===G.cur&&G.phase==='play'?'cur':'')+'">'+dot(p.name)+pfNameHTML(p.name)+(p.left?' <span class="small">'+t('left')+'</span>':'')+'</th>'}).join('')+'</tr>';
+ let h='<tr><th>'+t('cat')+'</th>'+ord.map(i=>{const p=G.players[i];return '<th class="'+(i===mi?'me ':'')+(i===G.cur&&G.phase==='play'?'cur':'')+'">'+dot(p.name)+pfNameHTML(p.name)+(MD==='pig'?pigChip(p):'')+(p.left?' <span class="small">'+t('left')+'</span>':'')+'</th>'}).join('')+'</tr>';
  const nxr=(MD==='train'&&G.phase==='play')?K.nextCat(K.ndOf(G),P.sheet):(MD==='call'&&G.phase==='play'&&G.ann)?G.ann:null;
  K.catsFor(K.ndOf(G)).forEach(([k,l],ci)=>{h+='<tr class="'+(ci<6?'up':'lo')+(k===nxr?' nxrow':'')+'"><td'+(k===nxr?' class="nxt"':'')+'>'+(k===nxr?'<span class="nxa">▶</span>':'')+catName(k)+'</td>';ord.forEach(i=>{const p=G.players[i],mc=(i===mi?'me ':'')+(k===nxr&&i===G.cur&&!(k in p.sheet)?'nxc ':'');
    if(G.tw&&Array.isArray(G.tw.lk)&&G.tw.lk.includes(k))h+='<td class="'+mc+'tlk" title="'+esc(t('twLocked'))+'">🔒</td>';
@@ -5584,6 +5615,85 @@ try{const RM={pl:'<b>📣 Słowo się rzekło</b> – przed pierwszym rzutem w t
   es:'La pestaña <b>Esta semana</b> muestra las mejores partidas desde el lunes; se reinicia el domingo a medianoche (hora de Irlanda). 📣 Lo dicho, dicho tiene sus propias listas.'};
  ['pl','en','de','es'].forEach(l=>{const r=RT[l];if(!r)return;if(Array.isArray(r.modes)&&!r.modes.some(x=>x.includes('📣')))r.modes.splice(Math.max(0,r.modes.length-1),0,RM[l]);if(Array.isArray(r.hs)&&!r.hs.some(x=>x.includes('📣')))r.hs.push(RW[l])})}catch(e){}
 window.__v240={annUI,annBar};
+/* 2.41: "Skarbonka" / Piggy Bank – no extra rolls at the start; unused rolls of a turn are saved in the pool and can be spent later like extra rolls */
+const PIGP={};let PIGG='';
+function pigChip(p){const n=(p&&p.bank)|0;return ' <span class="pigc'+(n?'':' z')+'" data-n="'+esc(p.name)+'" title="'+esc(t('pigTip',{n}))+'"><span aria-hidden="true">🐷</span><b>'+n+'</b></span>'}
+function pigPop(el,d){if(!el||!d)return;el.classList.remove('pgup','pgdn');void el.offsetWidth;el.classList.add(d>0?'pgup':'pgdn');
+ if(typeof animOn!=='undefined'&&!animOn)return;const f=document.createElement('span');f.className='pgd '+(d>0?'up':'dn');f.setAttribute('aria-hidden','true');f.textContent=(d>0?'+':'−')+Math.abs(d);el.appendChild(f);setTimeout(()=>{try{f.remove()}catch(e){}},1400)}
+function pigUI(){try{let c=$('pigchip');const on=!!(G&&K.modeOf(G)==='pig'&&!TW);
+ if(!on){if(c)c.hidden=true;return}
+ if(!c){c=document.createElement('span');c.id='pigchip';c.setAttribute('role','status');c.setAttribute('aria-live','polite');$('rinfo').after(c)}
+ if(G.gid!==PIGG){PIGG=G.gid;for(const k in PIGP)delete PIGP[k]}
+ const P=G.players[G.cur],n=(P&&P.bank)|0;c.hidden=G.phase!=='play';c.classList.toggle('z',!n);c.classList.toggle('go',n>0&&G.rolls>=K.maxR(G)&&P.name===me);
+ c.innerHTML='<span class="pgi" aria-hidden="true">🐷</span><span class="pgl">'+esc(t('pigName'))+'</span><b>'+n+'</b>';c.title=t('pigTip',{n});
+ const tab=$('tab'),chips=tab?[...tab.querySelectorAll('.pigc')]:[];
+ G.players.forEach(p=>{const v=(p.bank)|0,o=PIGP[p.name];PIGP[p.name]=v;if(o===undefined||o===v)return;const d=v-o;pigPop(chips.find(e=>e.dataset.n===p.name),d);if(p===P)pigPop(c,d)});
+ if(G.rolls>=K.maxR(G)&&G.phase==='play'){const b=$('rollb');if(b)b.textContent=t('pigRoll')}
+}catch(e){}}
+{const _r=render;render=function(){const r=_r.apply(this,arguments);pigUI();return r}}
+/* 2.41: rules audit – 6 dice only, all 5 modes, Top 10 with All-time/Month/Week, XP & levels, seasons */
+try{const RX={
+ pl:{sec:['Poziomy i XP','Sezony'],
+  t3:'Po 3. rzucie możesz użyć <b>rzutu dodatkowego</b>. Każdy gracz ma ich <b>3 na całą grę</b> (w trybie 🐷 Skarbonka zbierasz je sam – patrz Tryby gry).',
+  b3:'Bonus wlicza się do RAZEM, zwycięzcy i rekordów; nigdy nie jest podwajany.',
+  e0:'Gra kończy się, gdy wszyscy wypełnią wszystkie <b>22 pola</b>.',
+  pig:'<b>🐷 Skarbonka</b> – zaczynasz <b>bez rzutów dodatkowych</b>. Każda tura ma zwykłe 3 rzuty, a te, których nie wykorzystasz, wpadają do Twojej Skarbonki: zapis po 1. rzucie = <b>+2</b>, po 2. rzucie = <b>+1</b>. W kolejnych turach po 3. rzucie wydajesz rzuty ze Skarbonki jak rzuty dodatkowe – ile chcesz, dopóki starczy. Zasada ×2 za Figurę w 1. rzucie działa normalnie. Stan Skarbonki każdego gracza (🐷) widzą wszyscy na żywo.',
+  host:'Tryb wybiera gospodarz w poczekalni; wszyscy widzą go przy numerze rundy. Bonusy (Prymus, czysta gra) działają tak samo w każdym trybie, a każdy tryb ma własną kartę w oknie <b>🏆 Najlepsze wyniki</b>.',
+  hs:['Okno <b>🏆 Najlepsze wyniki</b> ma kartę dla każdego trybu: 🎲 Klasyk, 🚂 Pociąg, 📚 Lekcje, 📣 Słowo się rzekło i 🐷 Skarbonka. Domyślnie widzisz tryb ostatniej gry.','W każdym trybie są trzy zakładki: <b>Wszech czasów</b>, <b>Ten miesiąc</b> (od 1. dnia miesiąca) i <b>Ten tydzień</b> (od poniedziałku, reset w niedzielę o północy). Czas irlandzki.','Liczą się tylko gry <b>ukończone w 100%</b> – wszystkie pola wypełnione, nikt nie wyszedł. Wynik = RAZEM (z bonusami); gry z Wieży się nie liczą.','Tablice są wspólne dla wszystkich graczy. 📋 przy wyniku otwiera pełną tabelę tamtej gry. Osiągnięcia „Top 10” i „Numer 1 miesiąca” liczą się w tablicy trybu, w którym grałeś.'],
+  acc0:'<b>Awatar:</b> pod polem imienia (i w oknie 👤 Konto) wybierz jeden z <b>12 awatarów</b>. Pozostali gracze widzą go w lobby, w tabeli, przy wskaźniku tury, w Top 10 i na ekranie wyników. Kliknij wybrany ponownie, żeby go usunąć. Z kontem awatar zapisuje się też na koncie.',
+  gsi:'Zamiast loginu i hasła możesz też użyć przycisku <b>Zaloguj przez Google</b>.',
+  tw1:'Wieża ma <b>10 pięter</b>. Każde piętro to inna odmiana gry (tryby gry i dodatkowe utrudnienia) z <b>celem punktowym</b>.',
+  xp:['Za ukończone gry zdobywasz <b>XP</b>: <b>25</b> za grę, <b>+40</b> za wygraną, <b>+15</b> za 2. miejsce, <b>+1</b> za każde 20 pkt wyniku i <b>+30</b> za każdy dzień gry.','<b>Premie XP:</b> 👑 Lord w pierwszym rzucie tury <b>+1000</b>, 🃏 Poker w pierwszym rzucie <b>+100</b> (liczy się samo wyrzucenie), 🎓 Prymus <b>+1000</b>, ✨ czysta gra <b>+500</b>, osiągnięcie <b>+50</b> (trudne +100), piętro Wieży <b>+60</b>, gwiazdka Wieży <b>+20</b>, znajomy z Twojego zaproszenia <b>+150</b>.','<b>Poziomy 1–100</b> – każdy kolejny wymaga trochę więcej XP. Poziomy dają rangi (od Nowicjusza do Lord of the Dice) oraz nagrody: ramki awatara, kolory kości, motywy i tytuły (profil → <b>🎁 Nagrody</b>).','Poziom widać przy nicku w grze i w Top 10. Kliknij nick gracza, żeby zobaczyć jego profil.'],
+  sz:['Każdy miesiąc to <b>sezon</b> z własnym motywem i kolorami (np. listopad 🍂). Przycisk sezonu na ekranie startowym pokazuje ranking i czas do końca.','Ranking sezonu liczy <b>XP zdobyte w danym miesiącu</b> (czas irlandzki). 1. dnia startuje nowy sezon, poprzednie trafiają do archiwum.','<b>Top 3</b> sezonu dostaje ramkę awatara w barwach sezonu i tytuł (🥇 🥈 🥉).']},
+ en:{sec:['Levels & XP','Seasons'],
+  t3:'After the 3rd roll you may use an <b>extra roll</b>. Each player has <b>3 for the whole game</b> (in 🐷 Piggy Bank you collect them yourself – see Game modes).',
+  b3:'The bonus counts in TOTAL, the winner and high scores; it is never doubled.',
+  e0:'The game ends when everyone has filled all <b>22 boxes</b>.',
+  pig:'<b>🐷 Piggy Bank</b> – you start with <b>no extra rolls</b>. Each turn has the usual 3 rolls, and the ones you don’t use go into your Piggy Bank: scoring after the 1st roll = <b>+2</b>, after the 2nd roll = <b>+1</b>. In later turns, after your 3rd roll, you spend rolls from the bank just like extra rolls – as many as you like while they last. The ×2 rule for a combination on the 1st roll works as usual. Everyone sees each player’s bank (🐷) live.',
+  host:'The host picks the mode in the lobby and everyone sees it next to the round. Bonuses (School Ace, clean game) work the same in every mode, and each mode has its own card in the <b>🏆 High scores</b> window.',
+  hs:['The <b>🏆 High scores</b> window has a card for every mode: 🎲 Classic, 🚂 Local Train, 📚 Homework, 📣 Call & Roll and 🐷 Piggy Bank. By default you see the mode of your last game.','Each mode has three tabs: <b>All-time</b>, <b>This month</b> (from the 1st) and <b>This week</b> (from Monday, resets at midnight on Sunday). Irish time.','Only games <b>finished 100%</b> count – every box filled, nobody left. Score = TOTAL (with bonuses); Tower games don’t count.','The boards are shared by all players. 📋 next to a score opens the full score sheet of that game. The “Top 10” and “Number 1 of the month” achievements count on the board of the mode you played.'],
+  acc0:'<b>Avatar:</b> below the name field (and in the 👤 Account window) pick one of <b>12 avatars</b>. Other players see it in the lobby, the score sheet, the turn indicator, the Top 10 and the results screen. Tap the chosen one again to remove it. With an account, the avatar is saved to it as well.',
+  gsi:'Instead of a username and password you can also use <b>Sign in with Google</b>.',
+  tw1:'The tower has <b>10 floors</b>. Each floor is a different version of the game (game modes and extra twists) with a <b>target score</b>.',
+  xp:['Finished games earn <b>XP</b>: <b>25</b> per game, <b>+40</b> for a win, <b>+15</b> for 2nd place, <b>+1</b> per 20 points scored and <b>+30</b> for each day you play.','<b>XP bonuses:</b> 👑 Lord on the first roll of a turn <b>+1000</b>, 🃏 Poker on the first roll <b>+100</b> (just rolling it counts), 🎓 School Ace <b>+1000</b>, ✨ clean game <b>+500</b>, achievement <b>+50</b> (hard +100), Tower floor <b>+60</b>, Tower star <b>+20</b>, friend from your invite <b>+150</b>.','<b>Levels 1–100</b> – each one needs a little more XP. Levels give ranks (from Rookie to Lord of the Dice) and rewards: avatar frames, dice colours, themes and titles (profile → <b>🎁 Rewards</b>).','Your level is shown next to your name in the game and in the Top 10. Tap a player’s name to see their profile.'],
+  sz:['Every month is a <b>season</b> with its own theme and colours (e.g. November 🍂). The season button on the start screen shows the ranking and the time left.','The season ranking counts <b>XP earned during the month</b> (Irish time). A new season starts on the 1st; past seasons go to the archive.','The season’s <b>Top 3</b> get an avatar frame in the season’s colours and a title (🥇 🥈 🥉).']},
+ de:{sec:['Level & XP','Saisons'],
+  t3:'Nach dem 3. Wurf kannst du einen <b>Zusatzwurf</b> nutzen. Jeder Spieler hat <b>3 für das ganze Spiel</b> (im 🐷 Sparschwein sammelst du sie selbst – siehe Spielmodi).',
+  b3:'Der Bonus zählt im GESAMT, für den Sieg und in der Bestenliste; er wird nie verdoppelt.',
+  e0:'Das Spiel endet, wenn alle alle <b>22 Felder</b> ausgefüllt haben.',
+  pig:'<b>🐷 Sparschwein</b> – du startest <b>ohne Zusatzwürfe</b>. Jeder Zug hat die üblichen 3 Würfe, und die nicht genutzten wandern in dein Sparschwein: Eintragen nach dem 1. Wurf = <b>+2</b>, nach dem 2. Wurf = <b>+1</b>. In späteren Zügen gibst du nach dem 3. Wurf Würfe aus dem Sparschwein wie Zusatzwürfe aus – so viele du willst, solange sie reichen. Die ×2-Regel für eine Kombination im 1. Wurf gilt wie gewohnt. Alle sehen das Sparschwein (🐷) jedes Spielers live.',
+  host:'Der Gastgeber wählt den Modus in der Lobby, und alle sehen ihn neben der Runde. Boni (Klassenbester, sauberes Spiel) gelten in jedem Modus gleich, und jeder Modus hat eine eigene Karte im Fenster <b>🏆 Bestenliste</b>.',
+  hs:['Das Fenster <b>🏆 Bestenliste</b> hat eine Karte für jeden Modus: 🎲 Klassisch, 🚂 Bummelzug, 📚 Hausaufgaben, 📣 Gesagt ist gesagt und 🐷 Sparschwein. Standardmäßig siehst du den Modus deines letzten Spiels.','Jeder Modus hat drei Reiter: <b>Alle Zeiten</b>, <b>Dieser Monat</b> (ab dem 1.) und <b>Diese Woche</b> (ab Montag, Reset am Sonntag um Mitternacht). Irische Zeit.','Es zählen nur <b>zu 100 % beendete</b> Spiele – alle Felder ausgefüllt, niemand ist gegangen. Wertung = GESAMT (mit Boni); Turmspiele zählen nicht.','Die Listen sind für alle Spieler gleich. 📋 neben einem Ergebnis öffnet den kompletten Block dieses Spiels. Die Erfolge „Top 10“ und „Nummer 1 des Monats“ zählen in der Liste des gespielten Modus.'],
+  acc0:'<b>Avatar:</b> Unter dem Namensfeld (und im Fenster 👤 Konto) wählst du einen von <b>12 Avataren</b>. Die anderen sehen ihn in der Lobby, im Block, bei der Zuganzeige, in der Top 10 und auf dem Ergebnisbildschirm. Tippe den gewählten erneut an, um ihn zu entfernen. Mit Konto wird der Avatar auch dort gespeichert.',
+  gsi:'Statt Benutzername und Passwort kannst du auch <b>Mit Google anmelden</b> nutzen.',
+  tw1:'Der Turm hat <b>10 Etagen</b>. Jede Etage ist eine andere Spielvariante (Spielmodi und zusätzliche Kniffe) mit einer <b>Zielpunktzahl</b>.',
+  xp:['Beendete Spiele bringen <b>XP</b>: <b>25</b> pro Spiel, <b>+40</b> für einen Sieg, <b>+15</b> für Platz 2, <b>+1</b> je 20 Punkte und <b>+30</b> für jeden Spieltag.','<b>XP-Boni:</b> 👑 Lord im ersten Wurf eines Zuges <b>+1000</b>, 🃏 Poker im ersten Wurf <b>+100</b> (das Würfeln allein zählt), 🎓 Klassenbester <b>+1000</b>, ✨ sauberes Spiel <b>+500</b>, Erfolg <b>+50</b> (schwer +100), Turmetage <b>+60</b>, Turmstern <b>+20</b>, Freund über deine Einladung <b>+150</b>.','<b>Level 1–100</b> – jedes braucht etwas mehr XP. Level bringen Ränge (vom Neuling bis zum Lord of the Dice) und Belohnungen: Avatarrahmen, Würfelfarben, Designs und Titel (Profil → <b>🎁 Belohnungen</b>).','Dein Level steht im Spiel und in der Top 10 neben deinem Namen. Tippe auf einen Namen, um das Profil zu sehen.'],
+  sz:['Jeder Monat ist eine <b>Saison</b> mit eigenem Motiv und eigenen Farben (z. B. November 🍂). Der Saison-Knopf auf dem Startbildschirm zeigt die Rangliste und die Restzeit.','Die Saisonrangliste zählt die <b>im Monat verdienten XP</b> (irische Zeit). Am 1. beginnt eine neue Saison, frühere kommen ins Archiv.','Die <b>Top 3</b> der Saison erhalten einen Avatarrahmen in den Saisonfarben und einen Titel (🥇 🥈 🥉).']},
+ es:{sec:['Niveles y XP','Temporadas'],
+  t3:'Tras la 3.ª tirada puedes usar una <b>tirada extra</b>. Cada jugador tiene <b>3 para toda la partida</b> (en 🐷 La Hucha las reúnes tú mismo; mira Modos de juego).',
+  b3:'El bonus cuenta en el TOTAL, para el ganador y en el ranking; nunca se duplica.',
+  e0:'La partida termina cuando todos han rellenado las <b>22 casillas</b>.',
+  pig:'<b>🐷 La Hucha</b> – empiezas <b>sin tiradas extra</b>. Cada turno tiene las 3 tiradas de siempre, y las que no uses van a tu hucha: anotar tras la 1.ª tirada = <b>+2</b>, tras la 2.ª = <b>+1</b>. En turnos posteriores, después de la 3.ª tirada, gastas tiradas de la hucha igual que las extra: todas las que quieras mientras queden. La regla ×2 para una combinación en la 1.ª tirada funciona como siempre. Todos ven la hucha (🐷) de cada jugador en directo.',
+  host:'El anfitrión elige el modo en la sala y todos lo ven junto a la ronda. Los bonus (Alumno estrella, partida limpia) funcionan igual en todos los modos, y cada modo tiene su propia tarjeta en la ventana <b>🏆 Ranking</b>.',
+  hs:['La ventana <b>🏆 Ranking</b> tiene una tarjeta para cada modo: 🎲 Clásico, 🚂 Tren lento, 📚 Tarea, 📣 Lo dicho, dicho y 🐷 La Hucha. Por defecto ves el modo de tu última partida.','Cada modo tiene tres pestañas: <b>Histórico</b>, <b>Este mes</b> (desde el día 1) y <b>Esta semana</b> (desde el lunes; se reinicia el domingo a medianoche). Hora de Irlanda.','Solo cuentan las partidas <b>terminadas al 100 %</b>: todas las casillas rellenas y nadie se fue. Puntuación = TOTAL (con bonus); las partidas de la Torre no cuentan.','Las listas son comunes para todos. 📋 junto a una puntuación abre la hoja completa de esa partida. Los logros «Top 10» y «Número 1 del mes» cuentan en la lista del modo que jugaste.'],
+  acc0:'<b>Avatar:</b> debajo del campo del nombre (y en la ventana 👤 Cuenta) elige uno de los <b>12 avatares</b>. Los demás lo ven en la sala, en la hoja, en el indicador de turno, en el Top 10 y en la pantalla de resultados. Tócalo otra vez para quitarlo. Con cuenta, el avatar también se guarda en ella.',
+  gsi:'En lugar de usuario y contraseña también puedes usar <b>Iniciar sesión con Google</b>.',
+  tw1:'La torre tiene <b>10 pisos</b>. Cada piso es una versión distinta del juego (modos de juego y giros extra) con una <b>puntuación objetivo</b>.',
+  xp:['Las partidas terminadas dan <b>XP</b>: <b>25</b> por partida, <b>+40</b> por ganar, <b>+15</b> por quedar 2.º, <b>+1</b> por cada 20 puntos y <b>+30</b> por cada día que juegas.','<b>Bonus de XP:</b> 👑 Lord en la primera tirada de un turno <b>+1000</b>, 🃏 Póker en la primera tirada <b>+100</b> (basta con sacarlo), 🎓 Alumno estrella <b>+1000</b>, ✨ partida limpia <b>+500</b>, logro <b>+50</b> (difícil +100), piso de la Torre <b>+60</b>, estrella de la Torre <b>+20</b>, amigo invitado por ti <b>+150</b>.','<b>Niveles 1–100</b>: cada uno pide un poco más de XP. Los niveles dan rangos (de Novato a Lord of the Dice) y recompensas: marcos de avatar, colores de dados, temas y títulos (perfil → <b>🎁 Recompensas</b>).','Tu nivel aparece junto a tu nombre en la partida y en el Top 10. Toca el nombre de un jugador para ver su perfil.'],
+  sz:['Cada mes es una <b>temporada</b> con su propio tema y colores (p. ej., noviembre 🍂). El botón de temporada en la pantalla de inicio muestra la clasificación y el tiempo restante.','La clasificación de la temporada cuenta la <b>XP ganada durante el mes</b> (hora de Irlanda). El día 1 empieza una temporada nueva y las anteriores pasan al archivo.','El <b>Top 3</b> de la temporada recibe un marco de avatar con los colores de la temporada y un título (🥇 🥈 🥉).']}};
+ ['pl','en','de','es'].forEach(l=>{const r=RT[l],x=RX[l];if(!r||!x)return;
+  if(Array.isArray(r.sec)&&r.sec.length<16)r.sec=r.sec.slice(0,14).concat(x.sec);
+  if(Array.isArray(r.turn)&&r.turn[3])r.turn[3]=x.t3;if(Array.isArray(r.bonus)&&r.bonus[3])r.bonus[3]=x.b3;if(Array.isArray(r.end)&&r.end[0])r.end[0]=x.e0;
+  if(Array.isArray(r.modes)){const st=i=>r.modes.find(m=>m.indexOf('<b>'+i)===0);r.modes=[st('🎲'),st('🚂'),st('📚'),st('📣'),x.pig,x.host].filter(Boolean)}
+  r.hs=x.hs.slice();
+  if(Array.isArray(r.acc)){r.acc[0]=x.acc0;if(!r.acc.includes(x.gsi))r.acc.splice(2,0,x.gsi)}
+  if(Array.isArray(r.tower)&&r.tower[1])r.tower[1]=x.tw1;
+  r.xp=x.xp.slice();r.sz=x.sz.slice();delete r.v5})}catch(e){}
+/* 5 mode tabs on phones: soft hyphens for long single-word labels (DE) */
+{const SH={Bummelzug:'Bummel\u00adzug',Hausaufgaben:'Haus\u00adauf\u00adgaben',Sparschwein:'Spar\u00adschwein',Klassisch:'Klas\u00adsisch',Skarbonka:'Skar\u00adbonka'};
+ const _o=openHS;openHS=function(){const r=_o.apply(this,arguments);try{document.querySelectorAll('#rov .hsmodes .hmn').forEach(e=>{const v=SH[e.textContent];if(v)e.textContent=v})}catch(e){}return r}}
+window.__v241={pigUI,pigChip};
+
 
 
 </script>
