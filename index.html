@@ -3898,6 +3898,19 @@ const MODES=['classic','train','hw','call','pig','duel'],HW_N=3,PIG_MAX=99;
 // ---- 2.50: Rewolwerowy Pojedynek / High Noon Shootout (1v1 duel: bullets, shots, vest, Bullet Storm) ----
 const DUEL_MAX=6,DUEL_VEST_MS=8000,DUEL_COST={u1:1,u2:1,u3:1,u4:2,u5:2,u6:2,para:1,szansa:2,dpary:2,trojka:2,parz:2,nparz:2,mstrit:2,tpary:3,dtrojki:3,dstrit:3,general:3,kareta:4,full:4,lstrit:4,poker:5,lord:6};
 function dlCost(cat){return DUEL_COST[cat]||99}
+// ---- 2.52: duel roll-off – before the first turn each gunslinger rolls 6 dice, the higher total shoots first (a tie re-rolls).
+// Decided ONCE by whoever creates the game (newGame on the host) and synced inside the game state (g.ro), so both clients replay the same values.
+const DUEL_RO_MAX=8;
+function dlRollOff(rnd){rnd=typeof rnd==='function'?rnd:Math.random;const r=[];let w=-1;
+ for(let k=0;k<DUEL_RO_MAX&&w<0;k++){const a=[0,1].map(()=>Array.from({length:6},()=>1+Math.floor(rnd()*6)));r.push(a);const s=a.map(x=>x.reduce((p,q)=>p+q,0));if(s[0]!==s[1])w=s[0]>s[1]?0:1}
+ return {r,w:w<0?0:w}}
+function dlRoSum(a){return a.reduce((p,q)=>p+q,0)}
+function dlRoOk(ro){try{if(!ro||typeof ro!=='object'||!Array.isArray(ro.r)||ro.r.length<1||ro.r.length>DUEL_RO_MAX||(ro.w!==0&&ro.w!==1))return false;
+ for(let k=0;k<ro.r.length;k++){const R=ro.r[k];if(!Array.isArray(R)||R.length!==2)return false;for(const a of R)if(!Array.isArray(a)||a.length!==6||!a.every(v=>v===1||v===2||v===3||v===4||v===5||v===6))return false;
+  const s=R.map(dlRoSum),last=k===ro.r.length-1;if(!last&&s[0]!==s[1])return false;
+  if(last){if(s[0]===s[1]){if(ro.r.length!==DUEL_RO_MAX||ro.w!==0)return false}else if(ro.w!==(s[0]>s[1]?0:1))return false}}
+ return true}catch(e){return false}}
+
 function dlOpp(g,i){return g&&g.players&&g.players.length===2&&(i===0||i===1)?1-i:-1}
 // bullets for a write: only a real score (not a cross-out) on the 1st roll ("z ręki") loads the drum
 function dlGain(cat,v,f1){if(!f1||v==='x'||v===null||v===undefined)return 0;if(cat==='lord')return DUEL_MAX;if(cat==='poker')return 3;return 1}
@@ -3933,9 +3946,9 @@ function movesOk(g){const m=modeOf(g);if(m==='classic'||!Array.isArray(g.mv))ret
  for(const e of g.mv){if(!Array.isArray(e)||!sh[e[0]]||typeof e[1]!=='string'||e[1] in sh[e[0]]||!allowed(m,nd,sh[e[0]],e[1]))return false;sh[e[0]][e[1]]=1}return true}
 // tower twists (optional g.tw): r = rolls per turn, nx = no extra rolls, lk = locked lower rows (pre-filled 0), xp = cross-out penalty, cu = {c,m,p} cursed row minimum, sr = School must be >= 0 (penalty), tl = seconds per turn
 function maxR(g){return g&&g.tw&&g.tw.r>0?g.tw.r:3}
-function newGame(names,nd,mode,tw){nd=nd===5?5:6;const g={gid:Date.now().toString(36)+Math.random().toString(36).slice(2,7),nd,mode:MODES.includes(mode)?mode:'classic',phase:'play',players:names.map(n=>({name:n,sheet:{},extraUsed:0})),cur:0,dice:Array(nd).fill(0),held:Array(nd).fill(false),rolls:0,round:1,log:[]};
+function newGame(names,nd,mode,tw,rnd){nd=nd===5?5:6;const g={gid:Date.now().toString(36)+Math.random().toString(36).slice(2,7),nd,mode:MODES.includes(mode)?mode:'classic',phase:'play',players:names.map(n=>({name:n,sheet:{},extraUsed:0})),cur:0,dice:Array(nd).fill(0),held:Array(nd).fill(false),rolls:0,round:1,log:[]};
  if(tw&&typeof tw==='object'){g.tw=JSON.parse(JSON.stringify(tw));const lk=(g.tw.lk||[]).filter(k=>catsFor(nd).some(c=>c[0]===k)&&!UPPER.includes(k));g.tw.lk=lk;g.players.forEach(p=>lk.forEach(k=>{p.sheet[k]=0}))}
- if(g.mode==='duel')g.players.forEach(p=>{p.bul=0;p.vest=1;p.dead={}});
+ if(g.mode==='duel'){g.players.forEach(p=>{p.bul=0;p.vest=1;p.dead={}});if(g.players.length===2){g.ro=dlRollOff(rnd);g.cur=g.c0=g.ro.w}}
  return g}
 function canRoll(g){const p=g.players[g.cur],m=maxR(g);return g.phase==='play'&&!g.sh&&(modeOf(g)!=='call'||!!g.ann)&&(g.rolls<m||(g.rolls>=m&&(modeOf(g)==='pig'?(p.bank|0)>0:!(g.tw&&g.tw.nx)&&p.extraUsed<MAX_EXTRA)));}
 function roll(g,rnd){
@@ -3953,10 +3966,10 @@ function write(g,cat,cross){
  g.rolls=0;g.held=g.held.map(()=>false);if(modeOf(g)==='duel'&&dlAfterWrite(g,cat,v,f1))return true;advance(g);return true;}
 function done(q,nd){return catsFor(nd).every(([k])=>k in q.sheet)}
 function advance(g){delete g.ann;const nd=ndOf(g),act=g.players.filter(q=>!q.left&&!done(q,nd));if(!act.length){g.phase='end';return}
- do{g.cur=(g.cur+1)%g.players.length;if(g.cur===0)g.round++}while(g.players[g.cur].left||done(g.players[g.cur],nd));}
+ do{g.cur=(g.cur+1)%g.players.length;if(g.cur===(g.c0|0))g.round++}while(g.players[g.cur].left||done(g.players[g.cur],nd));}
 function leave(g,name){const i=g.players.findIndex(q=>q.name===name);if(i<0)return;if(g.sh){if(g.sh.s===i)delete g.sh;else if(g.sh.st==='vest')vest(g,false)}g.players[i].left=true;if(g.phase==='play'&&g.cur===i){g.rolls=0;g.held=g.held.map(()=>false);advance(g)}else if(g.players.every(q=>q.left||done(q,ndOf(g))))g.phase='end';}
 const CAT_EN={u1:'Ones (1)',u2:'Twos (2)',u3:'Threes (3)',u4:'Fours (4)',u5:'Fives (5)',u6:'Sixes (6)',para:'1 Pair',dpary:'2 Pairs',tpary:'3 Pairs',trojka:'3 of a kind',dtrojki:'2 x 3 of a kind',mstrit:'Small Straight 1-5',dstrit:'Large Straight 2-6',lstrit:'Long Straight 1-6',general:'General',full:'Full House',kareta:'4 of a kind',poker:'Poker (5 of a kind)',lord:'Lord (6 of a kind)',parz:'Even',nparz:'Odd',szansa:'Chance'};
-const api={DUEL_MAX,DUEL_VEST_MS,DUEL_COST,dlCost,dlOpp,dlGain,dlTargets,canShoot,shoot,vest,holster,announce,MODES,HW_N,modeOf,nextCat,hwLeft,allowed,movesOk,NEWC,legacy,REMOVED,catsFor,ndOf,done,leave,dbl,CAT_EN,CATS,UPPER,scores,finalScore,totals,newGame,canRoll,roll,toggleHold,write,MAX_EXTRA,maxR};
+const api={DUEL_RO_MAX,dlRollOff,dlRoOk,DUEL_MAX,DUEL_VEST_MS,DUEL_COST,dlCost,dlOpp,dlGain,dlTargets,canShoot,shoot,vest,holster,announce,MODES,HW_N,modeOf,nextCat,hwLeft,allowed,movesOk,NEWC,legacy,REMOVED,catsFor,ndOf,done,leave,dbl,CAT_EN,CATS,UPPER,scores,finalScore,totals,newGame,canRoll,roll,toggleHold,write,MAX_EXTRA,maxR};
 if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 })(this);
 </script>
@@ -3967,7 +3980,7 @@ if(typeof module!=='undefined')module.exports=api;else root.Kosci=api;
 // On for everyone since v30. ?gsi=0 hides it on this device (remembered), ?gsi=1 shows it again.
 const GSI_CFG={on:true,authDomain:''};
 // human-readable release shown in menu footer, Account tab and feedback: small fixes 1.41, 1.42…; feature releases jump to round numbers 1.40, 1.50…
-const APP_VER='2.51';
+const APP_VER='2.52';
 function appVerTxt(){let d='';try{const v=String(APP_VERSION);const dt=new Date(Date.UTC(+v.slice(0,4),+v.slice(4,6)-1,+v.slice(6,8),12));d=dt.toLocaleDateString({en:'en-GB',de:'de-DE',es:'es-ES'}[LANG]||'pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',timeZone:'UTC'})}catch(e){}
  let tw=false;try{tw=gsiInApp()}catch(e){}return 'v'+APP_VER+(d?' · '+d:'')+(tw?' · Google Play':'')}
 function appVerHTML(){return '<p class="vcount vver" translate="no">'+esc(appVerTxt())+'</p>'}
@@ -4459,7 +4472,7 @@ function applyLook(){document.querySelectorAll('#dice .die').forEach((d,i)=>{let
  d.style.setProperty('--lx',x.toFixed(1)+'px');d.style.setProperty('--ly',y.toFixed(1)+'px')})}
 setInterval(()=>{if(!animOn||document.hidden)return;const i=Math.floor(Math.random()*6);LOOK[i]=Math.random()<.3?[0,0]:[Math.random()*4.4-2.2,Math.random()*3-1.5];applyLook()},700);
 let raf=0;addEventListener('pointermove',e=>{if(!animOn||e.pointerType!=='mouse')return;ptr=[e.clientX,e.clientY];ptrT=Date.now();if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLook()})},{passive:true});
-const APP_VERSION='202611241740';
+const APP_VERSION='202611241900';
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{}));
 async function checkVersion(){try{const r=await fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'});const m=(await r.text()).match(/APP_VERSION='(\d+)'/);
  if(m&&m[1]!==APP_VERSION&&m[1]>APP_VERSION){if(!sessionStorage['kreload_'+m[1]]){sessionStorage['kreload_'+m[1]]=1;const q=new URLSearchParams(location.search);q.set('r',m[1]);location.replace(location.pathname+'?'+q)}
@@ -9681,11 +9694,11 @@ function evUI(){const e=(G.dle||[])[0];if(lastEv.gid!==G.gid){lastEv={gid:G.gid,
 function dgUI(){const d=G.dg;if(lastDg.gid!==G.gid){lastDg={gid:G.gid,n:d?d.n:0};return}if(!d||d.n<=lastDg.n)return;lastDg.n=d.n;const p=G.players[d.i];if(!p)return;
  const pl=document.querySelector('#dlbar .dlp[data-i="'+d.i+'"] .dlpd');if(pl&&anim()){pl.classList.remove('dlload');void pl.offsetWidth;pl.classList.add('dlload');if(d.a>0){const f=document.createElement('span');f.className='dlgain';f.textContent='+'+d.a;pl.appendChild(f);setTimeout(()=>{try{f.remove()}catch(e){}},1500)}}
  if((p.bul|0)===6){dlSnd('full');if(p.name===me)try{toast('🌪️ '+dt('full'))}catch(e){}}else if(d.a>0)dlSnd('load')}
-function startUI(){if(startShown===G.gid)return;startShown=G.gid;const fresh=!(G.mv&&G.mv.length)&&G.rolls===0;if(fresh)dlSnd('start');
+function startUI(){if(startShown===G.gid)return;startShown=G.gid;const fresh=!(G.mv&&G.mv.length)&&G.rolls===0;if(fresh&&!(window.dlROWill&&dlROWill(G)))dlSnd('start');
  const h=holder(),mi=meIdx();if(mi<0||!h)return;const opp=G.players[mi===0?1:0];if(!opp)return;let html='';
  if(isHolderName(h,opp.name))html='<div class="tpb dlmwn"><div class="tp1"><b class="tpn">'+esc(dt('mwFace'))+'</b></div><div class="tp2">'+esc(dt('mwFaceS',{n:opp.name,w:h.w}))+'</div></div>';
  else if(isHolderName(h,me))html='<div class="tpb dlmwn"><div class="tp1"><b class="tpn">'+esc(dt('mwYou'))+'</b></div></div>';
- if(html&&mwShown!==G.gid){mwShown=G.gid;setTimeout(()=>{try{tpShow(html);dlSnd('mw')}catch(e){}},fresh?900:200)}}
+ if(html&&mwShown!==G.gid){mwShown=G.gid;setTimeout(()=>{try{tpShow(html);dlSnd('mw')}catch(e){}},fresh?(window.dlRODelay?dlRODelay(G):900):200)}}
 function dlUI(){try{const on=!!(G&&isDuel(G)&&!$('game').hidden&&!TW);document.body.classList.toggle('duel-on',on);$('game').classList.toggle('dl-skin',on);
  if(!on){const b=$('dlbar');if(b)b.hidden=true;hide('dlaim');hide('dlvest');return}
  barUI();cellsUI();logUI();aimUI();vestUI();evUI();dgUI();startUI()}catch(e){console.warn('duel ui',e)}}
@@ -10109,6 +10122,231 @@ function tick(){const on=document.body.classList.contains('duel-on');lock(on);if
 // leaving the game screen without a render (menu, closing the room)
 setInterval(()=>{try{const on=!!(G&&isDuel(G)&&!$('game').hidden&&!TW);if(!on&&LOCK){document.body.classList.remove('duel-on');lock(false)}}catch(e){}},700);
 window.__v251={lock:()=>LOCK,titlesOf,myTitles,saveMine,badgeHTML,pastMonths,S};
+})();
+
+</script>
+<style id="v252css">
+/* ---- 2.52 duel roll-off overlay: two revolver cylinders, dice loaded as bullets ---- */
+.dlro{--c:min(36vw,30vh,232px);position:fixed;inset:0;z-index:9000;display:flex;overflow-y:auto;overscroll-behavior:contain;padding:12px;box-sizing:border-box;
+ background:radial-gradient(ellipse 90% 70% at 50% 42%,rgba(58,34,14,.70),rgba(14,7,2,.93) 78%);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+ opacity:0;transition:opacity .3s ease;cursor:pointer;-webkit-tap-highlight-color:transparent;font-family:var(--dl-west,'DLWest',Georgia,serif);outline:none}
+.dlro.on,.dlro.still{opacity:1}.dlro.out{opacity:0;transition:opacity .38s ease;pointer-events:none}
+body.dlro-on{overflow:hidden}
+.dlro *{box-sizing:border-box}
+.dlro-bd{position:relative;margin:auto;width:min(100%,640px);padding:16px 14px 12px;border-radius:14px;text-align:center;color:#f7e9c8;
+ background:
+  radial-gradient(circle at 12px 12px,#f0d07e 0 2.6px,#6b4310 2.8px 3.9px,transparent 4.1px),
+  radial-gradient(circle at calc(100% - 12px) 12px,#f0d07e 0 2.6px,#6b4310 2.8px 3.9px,transparent 4.1px),
+  radial-gradient(circle at 12px calc(100% - 12px),#f0d07e 0 2.6px,#6b4310 2.8px 3.9px,transparent 4.1px),
+  radial-gradient(circle at calc(100% - 12px) calc(100% - 12px),#f0d07e 0 2.6px,#6b4310 2.8px 3.9px,transparent 4.1px),
+  repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0 1px,transparent 1px 7px,rgba(255,255,255,.035) 7px 8px,transparent 8px 16px),
+  linear-gradient(180deg,#7c4c27,#5b3517 58%,#472811);
+ border:2px solid #2a1607;box-shadow:inset 0 0 0 3px rgba(255,214,140,.13),inset 0 2px 0 rgba(255,232,185,.2),0 18px 60px rgba(0,0,0,.65);transform:translateY(14px) scale(.97);transition:transform .45s cubic-bezier(.2,.9,.25,1.15)}
+.dlro.on .dlro-bd,.dlro.still .dlro-bd{transform:none}
+.dlro-hd{display:flex;align-items:center;justify-content:center;gap:10px}
+.dlro-hd h2{margin:0;font-family:var(--dl-west,'DLWest',Georgia,serif);font-weight:400;font-size:clamp(21px,5.6vw,34px);line-height:1.05;letter-spacing:.04em;color:#ffe3a1;
+ text-shadow:0 2px 0 #2b1406,0 3px 0 #1b0c03,0 0 22px rgba(255,190,90,.25)}
+.dlro-orn{display:block;flex:0 0 auto;width:34px;height:12px;background:linear-gradient(90deg,transparent,#d6a64a 30%,#f4d48a 50%,#d6a64a 70%,transparent);clip-path:polygon(0 50%,40% 30%,50% 0,60% 30%,100% 50%,60% 70%,50% 100%,40% 70%);opacity:.9}
+.dlro-sub{margin:4px 0 10px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:clamp(12px,3.2vw,14px);color:#ecd9b1;opacity:.9}
+.dlro-row{display:flex;align-items:flex-start;justify-content:center;gap:clamp(6px,2.4vw,22px)}
+.dlro-vs{align-self:center;margin-top:28px;font-family:var(--dl-poster,'DLPoster',Georgia,serif);font-size:clamp(18px,5vw,30px);color:#f2c463;text-shadow:0 2px 0 #2a1406,0 0 12px rgba(0,0,0,.6)}
+.dlro-p{flex:0 1 auto;display:flex;flex-direction:column;align-items:center;min-width:0;transition:opacity .45s ease,filter .45s ease,transform .45s cubic-bezier(.2,.9,.25,1.2)}
+.dlro-who{display:flex;align-items:center;gap:7px;max-width:calc(var(--c) + 24px);min-height:44px;margin-bottom:8px;padding:4px 10px 4px 4px;border-radius:26px;background:linear-gradient(#f5e4bb,#e2c78d);color:#2a1a0c;border:2px solid #3a2210;box-shadow:0 3px 0 #2a1406,0 6px 14px rgba(0,0,0,.35)}
+.dlro-av{flex:0 0 auto;width:36px;height:36px;border-radius:50%;overflow:hidden;background:#d8bc84;border:2px solid #5a3a14;display:flex;align-items:center;justify-content:center}
+.dlro-av .av{width:100%!important;height:100%!important;margin:0!important;filter:sepia(.25)}
+.dlro-av .avq{font-size:22px;line-height:1}
+.dlro-nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--dl-west,'DLWest',Georgia,serif);font-weight:400;font-size:clamp(14px,3.8vw,19px);letter-spacing:.03em}
+.dlro-you{flex:0 0 auto;font-style:normal;font-family:system-ui,sans-serif;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:9px;background:#7a1f16;color:#ffe9c4}
+/* cylinder */
+.dlro-cyl{position:relative;width:var(--c);height:var(--c);margin-top:6px}
+.dlro-pin{position:absolute;left:50%;top:-11px;width:22px;height:14px;margin-left:-11px;z-index:3;background:linear-gradient(#f6dc8e,#b9852b);clip-path:polygon(0 0,100% 0,50% 100%);filter:drop-shadow(0 2px 1px rgba(0,0,0,.6))}
+.dlro-rot{position:absolute;inset:0;border-radius:50%;box-shadow:0 10px 26px rgba(0,0,0,.6),0 0 0 3px rgba(20,10,4,.55);will-change:transform}
+.dlro-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.dlro.fast .dlro-rot{filter:blur(.7px)}
+.dlro-glow{position:absolute;inset:-12%;border-radius:50%;pointer-events:none;opacity:0;background:radial-gradient(circle,transparent 52%,rgba(255,206,110,.55) 62%,rgba(255,170,60,.18) 72%,transparent 76%);transition:opacity .5s ease}
+/* dice = cartridges */
+.dlro-d{--r:0deg;position:absolute;width:16.5%;height:16.5%;z-index:2;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:calc(var(--c)*.017);gap:0;place-items:center;border-radius:22%;
+ background:radial-gradient(circle at 32% 26%,#fffaf0,#f1e2c2 55%,#d6c095);box-shadow:inset 0 -1.5px 0 rgba(120,90,40,.45),inset 0 1px 0 #fff,0 1.5px 2.5px rgba(0,0,0,.6);
+ transform:translate(-50%,-50%) rotate(var(--r)) scale(.2);opacity:0;transition:transform .32s cubic-bezier(.3,1.5,.5,1),opacity .2s ease}
+.dlro-d.in{transform:translate(-50%,-50%) rotate(var(--r)) scale(1);opacity:1}
+.dlro-d s{display:block;width:calc(var(--c)*.036);height:calc(var(--c)*.036);border-radius:50%;background:radial-gradient(circle at 40% 35%,#5a3a22,#1d1108);opacity:0;text-decoration:none}
+.dlro-d.hid{background:radial-gradient(circle at 32% 26%,#fff3d0,#e2c27a 55%,#b58a3a);}
+.dlro-d.hid::after{content:'';position:absolute;inset:26%;background:rgba(110,70,20,.55);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.dlro-d.rev{animation:dlropop .36s cubic-bezier(.3,1.6,.5,1)}
+@keyframes dlropop{0%{transform:translate(-50%,-50%) rotate(var(--r)) scale(1.45)}100%{transform:translate(-50%,-50%) rotate(var(--r)) scale(1)}}
+.dlro-d[data-v="1"] s:nth-child(5){opacity:1;background:radial-gradient(circle at 40% 35%,#c2382c,#6e140d)}
+.dlro-d[data-v="2"] s:nth-child(1),.dlro-d[data-v="2"] s:nth-child(9),
+.dlro-d[data-v="3"] s:nth-child(1),.dlro-d[data-v="3"] s:nth-child(5),.dlro-d[data-v="3"] s:nth-child(9),
+.dlro-d[data-v="4"] s:nth-child(1),.dlro-d[data-v="4"] s:nth-child(3),.dlro-d[data-v="4"] s:nth-child(7),.dlro-d[data-v="4"] s:nth-child(9),
+.dlro-d[data-v="5"] s:nth-child(1),.dlro-d[data-v="5"] s:nth-child(3),.dlro-d[data-v="5"] s:nth-child(5),.dlro-d[data-v="5"] s:nth-child(7),.dlro-d[data-v="5"] s:nth-child(9),
+.dlro-d[data-v="6"] s:nth-child(1),.dlro-d[data-v="6"] s:nth-child(3),.dlro-d[data-v="6"] s:nth-child(4),.dlro-d[data-v="6"] s:nth-child(6),.dlro-d[data-v="6"] s:nth-child(7),.dlro-d[data-v="6"] s:nth-child(9){opacity:1}
+/* total */
+.dlro-sum{margin-top:12px;min-width:86px;padding:3px 14px 5px;border-radius:6px;background:radial-gradient(ellipse at 50% 30%,#f8ecca,#e8cf98);color:#2a1a0c;border:2px solid #3a2210;box-shadow:0 3px 0 #2a1406,0 6px 14px rgba(0,0,0,.35);line-height:1}
+.dlro-sum small{display:block;font-family:system-ui,sans-serif;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:1px}
+.dlro-sum b{display:inline-block;font-family:var(--dl-poster,'DLPoster',Georgia,serif);font-weight:400;font-size:clamp(26px,7vw,38px);font-variant-numeric:tabular-nums}
+.dlro-sum b.bump{animation:dlrobump .28s ease-out}
+@keyframes dlrobump{40%{transform:scale(1.28);color:#8a1d12}}
+/* winner / loser */
+.dlro-p.win{transform:scale(1.04)}
+.dlro-p.win .dlro-glow{opacity:1;animation:dlroglow 1.6s ease-in-out infinite alternate}
+@keyframes dlroglow{to{transform:scale(1.05);opacity:.7}}
+.dlro-p.win .dlro-sum{background:linear-gradient(#ffe7a0,#e2b14a);box-shadow:0 3px 0 #2a1406,0 0 22px rgba(255,200,90,.65)}
+.dlro-p.win .dlro-who{box-shadow:0 3px 0 #2a1406,0 0 18px rgba(255,200,90,.6)}
+.dlro-p.lose{opacity:.58;filter:grayscale(.55) brightness(.85);transform:scale(.96)}
+/* banner (parchment ribbon) */
+.dlro-ban{position:relative;z-index:0;isolation:isolate;margin:14px auto 2px;min-height:58px;max-width:min(92%,460px);padding:8px 34px 10px;color:#2a1608;line-height:1.05;opacity:0;transform:scale(.6) rotate(-2deg)}
+.dlro-ban::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% 30%,#fbefd0,#ecd29d 70%,#d9b673);border-top:2px solid #3a2210;border-bottom:2px solid #3a2210;
+ clip-path:polygon(0 0,100% 0,94% 50%,100% 100%,0 100%,6% 50%);filter:drop-shadow(0 4px 0 #2a1406)}
+.dlro-ban.on{opacity:1;transform:none;transition:opacity .2s ease,transform .5s cubic-bezier(.2,1.6,.4,1)}
+.dlro-ban small{display:block;font-family:var(--dl-west,'DLWest',Georgia,serif);font-size:clamp(13px,3.6vw,17px);letter-spacing:.08em;color:#6b2a14}
+.dlro-ban b{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--dl-poster,'DLPoster',Georgia,serif);font-weight:400;font-size:clamp(24px,7vw,38px);letter-spacing:.02em}
+.dlro-ban.tie b{font-family:var(--dl-west,'DLWest',Georgia,serif);font-size:clamp(20px,5.6vw,30px);color:#7a1f16}
+.dlro-ban.tie small{margin-top:2px;font-family:var(--dl-poster,'DLPoster',Georgia,serif);color:#2a1608}
+.dlro-ban em{display:block;margin-top:3px;font-style:normal;font-family:system-ui,sans-serif;font-size:11px;color:#5b4127}
+.dlro-ban em span{display:block}
+.dlro-tap{margin:8px 0 0;font-family:system-ui,sans-serif;font-size:12px;color:#e9d6ad;opacity:.7}
+@media (max-width:420px){.dlro-bd{padding:14px 8px 10px}.dlro-who{padding-right:8px;gap:5px}.dlro-av{width:30px;height:30px}.dlro-you{display:none}.dlro-vs{margin-top:22px}}
+@media (max-height:520px) and (orientation:landscape){.dlro{--c:min(22vw,36vh,170px);padding:8px}.dlro-sub,.dlro-tap{display:none}.dlro-bd{padding:8px 12px 10px;width:min(100%,560px)}
+ .dlro-hd h2{font-size:20px}.dlro-who{min-height:34px;margin-bottom:4px;padding:2px 8px 2px 2px}.dlro-av{width:28px;height:28px}.dlro-nm{font-size:15px}.dlro-vs{margin-top:16px}
+ .dlro-sum{margin-top:6px;padding:2px 10px 3px;min-width:70px}.dlro-sum b{font-size:24px}.dlro-ban{margin:6px auto 0;min-height:44px;padding:5px 30px 6px}.dlro-ban b{font-size:22px}.dlro-ban small{font-size:12px}}
+@media (prefers-reduced-motion:reduce){.dlro,.dlro-bd,.dlro-d,.dlro-ban,.dlro-p{transition:none!important;animation:none!important}.dlro-p.win .dlro-glow{animation:none}}
+.dlro.still .dlro-d,.dlro.still .dlro-ban,.dlro.still .dlro-p,.dlro.still .dlro-bd{transition:none!important;animation:none!important}
+
+</style>
+<script id="v252ro">
+/* ---- 2.52 duel – roll-off "Kto strzela pierwszy?" / "Who draws first?" ----
+   Before the first turn each gunslinger gets 6 dice loaded into a revolver cylinder like bullets; the cylinders spin, the dice show their faces,
+   the higher total shoots first (a tie re-rolls). Values come from g.ro (decided once in K.newGame by the room host, synced with the game state),
+   so both clients replay the same rolls and the same starter. The overlay is purely visual: the game never waits for it, so a reconnect or a
+   skipped animation can never block a turn. */
+(()=>{const V=window.__v250;if(!V)return;
+const RM=()=>{try{return !!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)}catch(e){return false}};
+const AN=()=>{try{if(typeof animOn!=='undefined'&&!animOn)return false}catch(e){}return !RM()};
+const isDuel=g=>!!(g&&K.modeOf(g)==='duel');
+const T={pl:{t:'Kto strzela pierwszy?',s:'Sześć kości w bębenku – wyższa suma zaczyna pojedynek',sum:'Suma',tie:'Remis! Jeszcze raz',first:'Pierwszy strzela',tap:'Dotknij, aby przyspieszyć',tapGo:'Dotknij, aby zacząć',tieN:'Remis {a} : {b} – rzut powtórzony',you:'Ty',
+  rule:'<b>Kto strzela pierwszy:</b> przed pierwszą turą obaj gracze rzucają 6 kośćmi ułożonymi w bębenku rewolweru. Wyższa suma zaczyna pojedynek, przy remisie rzut się powtarza.'},
+ en:{t:'Who draws first?',s:'Six dice in the cylinder – the higher total shoots first',sum:'Total',tie:'Tie! Again',first:'Draws first',tap:'Tap to speed up',tapGo:'Tap to start',tieN:'Tie {a} : {b} – rolled again',you:'You',
+  rule:'<b>Who draws first:</b> before the first turn both players roll 6 dice loaded into a revolver cylinder. The higher total starts the shootout; a tie is rolled again.'},
+ de:{t:'Wer zieht zuerst?',s:'Sechs Würfel in der Trommel – die höhere Summe beginnt',sum:'Summe',tie:'Unentschieden! Noch mal',first:'Zieht zuerst',tap:'Tippen zum Beschleunigen',tapGo:'Tippen zum Starten',tieN:'Unentschieden {a} : {b} – neu gewürfelt',you:'Du',
+  rule:'<b>Wer zieht zuerst:</b> Vor dem ersten Zug würfeln beide Spieler mit 6 Würfeln aus einer Revolvertrommel. Die höhere Summe beginnt das Duell, bei Gleichstand wird neu gewürfelt.'},
+ es:{t:'¿Quién desenfunda primero?',s:'Seis dados en el tambor – la suma más alta dispara primero',sum:'Total',tie:'¡Empate! Otra vez',first:'Desenfunda primero',tap:'Toca para acelerar',tapGo:'Toca para empezar',tieN:'Empate {a} : {b} – se repite la tirada',you:'Tú',
+  rule:'<b>Quién desenfunda primero:</b> antes del primer turno ambos jugadores tiran 6 dados cargados en el tambor de un revólver. La suma más alta empieza el duelo; si hay empate, se repite la tirada.'}};
+function tt(k,o){const L=(typeof LANG!=='undefined'&&T[LANG])||T.en;let s=L[k]!==undefined?L[k]:T.en[k];if(o)for(const x in o)s=s.split('{'+x+'}').join(o[x]);return s}
+// rules: one more line in the duel section
+try{['pl','en','de','es'].forEach(l=>{const r=RT[l];if(r&&Array.isArray(r.duel)&&!r.duel.some(x=>x===T[l].rule)){const i=r.duel.length>1?1:r.duel.length;r.duel.splice(i,0,T[l].rule)}})}catch(e){}
+
+/* ---------- sounds (synthesised) ---------- */
+Object.assign(V.DL_SND,{
+ // cylinder spin: pawl ratchet clicks that slow down
+ spin(){let t=0,g=.034;for(let i=0;i<26&&t<1.75;i++){noise(t,.012,.7-i*.012,4300-i*40);tone(2500-i*25,t,.012,'square',.035);t+=g;g*=1.085}},
+ // hammer cocked: two-stage click
+ cock(){noise(0,.022,1.1,3200);tone(1300,0,.02,'square',.06);noise(.1,.028,1.3,2300);tone(720,.1,.06,'triangle',.18);noise(.1,.08,.35,900)},
+ tick(){tone(1650,0,.035,'triangle',.11);noise(0,.012,.4,5200)},
+ tie(){tone(523,0,.2,'sine',.16,494);tone(392,.22,.42,'sine',.16,370);noise(.05,.05,.4,2600)}});
+
+/* ---------- state ---------- */
+const FACE={1:[5],2:[1,9],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9],6:[1,3,4,6,7,9]};
+const SK='kdlro';
+let R=null;// running overlay {gid,g,ro,...}
+function seen(gid){try{return sessionStorage[SK]===gid}catch(e){return false}}
+function mark(gid){try{sessionStorage[SK]=gid}catch(e){}}
+function fresh(g){return !!g&&g.phase==='play'&&(g.rolls|0)===0&&!g.sh&&!(g.mv&&g.mv.length)&&g.players.every(p=>!p.sheet||!Object.keys(p.sheet).length)}
+function onScreen(){try{return !!(G&&isDuel(G)&&!$('game').hidden&&!TW)}catch(e){return false}}
+function will(g){return !!(g&&isDuel(g)&&g.players&&g.players.length===2&&K.dlRoOk&&K.dlRoOk(g.ro)&&fresh(g)&&!(R&&R.gid===g.gid&&R.done)&&(R&&R.gid===g.gid||!seen(g.gid)))}
+// expected length of the overlay (ms) – used to hold the "Most Wanted" toast until the roll-off is over
+const D={load:520,spin:1650,rev:6*120+260,tie:1150,res:1700,out:380};
+function dur(g){if(!AN())return 2900;const n=(g&&g.ro&&g.ro.r.length)||1;return 300+n*(D.load+D.spin+D.rev)+(n-1)*D.tie+D.res+D.out}
+window.dlROWill=g=>{try{return will(g)}catch(e){return false}};
+window.dlRODelay=g=>{try{if(R&&!R.done&&R.gid===(g&&g.gid))return Math.max(600,R.end-Date.now()+500);return will(g)?dur(g)+500:900}catch(e){return 900}};
+
+/* ---------- markup ---------- */
+function cylSVG(){let fl='',ch='';
+ for(let i=0;i<6;i++)fl+='<ellipse cx="50" cy="3.2" rx="6.4" ry="10.5" fill="url(#dlroF)" stroke="rgba(0,0,0,.55)" stroke-width=".6" transform="rotate('+(30+i*60)+' 50 50)"/>';
+ for(let i=0;i<6;i++){const a=(-90+i*60)*Math.PI/180,x=(50+31*Math.cos(a)).toFixed(2),y=(50+31*Math.sin(a)).toFixed(2);
+  ch+='<circle cx="'+x+'" cy="'+y+'" r="13.6" fill="#0b0c0d"/><circle cx="'+x+'" cy="'+y+'" r="12.3" fill="url(#dlroB)" stroke="#5a3b0e" stroke-width=".7"/><circle cx="'+x+'" cy="'+y+'" r="10.1" fill="none" stroke="rgba(70,44,8,.75)" stroke-width=".8"/><circle cx="'+x+'" cy="'+y+'" r="11.6" fill="none" stroke="rgba(255,240,200,.45)" stroke-width=".5" stroke-dasharray="9 40" transform="rotate(200 '+x+' '+y+')"/>'}
+ let rat='';for(let i=0;i<6;i++){const a=(i*60-90)*Math.PI/180,b=a+.62;rat+=(i?'L':'M')+(50+10*Math.cos(a)).toFixed(2)+' '+(50+10*Math.sin(a)).toFixed(2)+'L'+(50+6.2*Math.cos(b)).toFixed(2)+' '+(50+6.2*Math.sin(b)).toFixed(2)}
+ return '<svg class="dlro-svg" viewBox="0 0 100 100" aria-hidden="true"><defs>'+
+  '<radialGradient id="dlroS" cx="36%" cy="30%" r="75%"><stop offset="0" stop-color="#d9dee1"/><stop offset=".28" stop-color="#97a1a7"/><stop offset=".62" stop-color="#535c62"/><stop offset="1" stop-color="#1f2327"/></radialGradient>'+
+  '<linearGradient id="dlroF" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#15181b"/><stop offset=".5" stop-color="#3a4248"/><stop offset="1" stop-color="#121417"/></linearGradient>'+
+  '<radialGradient id="dlroB" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#fff0b8"/><stop offset=".35" stop-color="#e2b85a"/><stop offset=".75" stop-color="#a87822"/><stop offset="1" stop-color="#6e4a10"/></radialGradient>'+
+  '<radialGradient id="dlroH" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#e9edf0"/><stop offset=".6" stop-color="#7d878e"/><stop offset="1" stop-color="#2b3035"/></radialGradient></defs>'+
+  '<circle cx="50" cy="50" r="48.4" fill="url(#dlroS)" stroke="#111315" stroke-width="1.3"/><circle cx="50" cy="50" r="45.6" fill="none" stroke="rgba(255,255,255,.16)" stroke-width=".8"/>'+fl+ch+
+  '<path d="'+rat+'Z" fill="url(#dlroH)" stroke="#1b1e21" stroke-width=".7"/><circle cx="50" cy="50" r="4.6" fill="url(#dlroH)" stroke="#16191c" stroke-width=".7"/><circle cx="50" cy="50" r="1.5" fill="#1b1e21"/></svg>'}
+function dieHTML(i){const a=(-90+i*60)*Math.PI/180;return '<i class="dlro-d hid" data-c="'+i+'" style="left:'+(50+31*Math.cos(a)).toFixed(2)+'%;top:'+(50+31*Math.sin(a)).toFixed(2)+'%"><s></s><s></s><s></s><s></s><s></s><s></s><s></s><s></s><s></s></i>'}
+function panel(g,i,side){const p=g.players[i],nm=p?p.name:'?';let av='';try{const k=avOf(nm);av=k?avHTML(k,'avb'):''}catch(e){}if(!av)av='<span class="avq">🤠</span>';
+ let d='';for(let c=0;c<6;c++)d+=dieHTML(c);
+ return '<div class="dlro-p '+side+(nm===me?' me':'')+'" data-i="'+i+'"><div class="dlro-who"><span class="dlro-av">'+av+'</span><b class="dlro-nm">'+esc(nm)+'</b>'+(nm===me?'<em class="dlro-you">'+esc(tt('you'))+'</em>':'')+'</div>'+
+  '<div class="dlro-cyl"><i class="dlro-pin" aria-hidden="true"></i><div class="dlro-rot">'+cylSVG()+d+'</div><i class="dlro-glow" aria-hidden="true"></i></div>'+
+  '<div class="dlro-sum"><small>'+esc(tt('sum'))+'</small><b>0</b></div></div>'}
+
+/* ---------- animation ---------- */
+const sum=a=>a.reduce((p,q)=>p+q,0);
+function el(){return document.getElementById('dlro')}
+function q(s){const o=el();return o?[...o.querySelectorAll(s)]:[]}
+function pEl(i){const o=el();return o?o.querySelector('.dlro-p[data-i="'+i+'"]'):null}
+function T_(fn,ms){const h=setTimeout(()=>{R&&R.tm.delete(h);try{fn()}catch(e){console.warn('dlro',e)}},ms);R.tm.add(h);return h}
+function setDie(d,v,rot){if(v)d.dataset.v=v;else delete d.dataset.v;d.classList.toggle('hid',!v);if(rot!==undefined)d.style.setProperty('--r',rot+'deg')}
+function setRot(i,deg){const p=pEl(i);if(!p)return;const r=p.querySelector('.dlro-rot');r.style.transform='rotate('+deg+'deg)';p._deg=deg}
+function upright(deg,c){// die orientation (relative to the cylinder) that looks level on screen
+ const base=c*60;let best=0,bd=1e9;for(let k=-8;k<=8;k++){const r=k*90-deg;const dd=Math.abs(r-base);if(dd<bd){bd=dd;best=r}}return best}
+function showSum(i,v,bump){const p=pEl(i);if(!p)return;const b=p.querySelector('.dlro-sum b');b.textContent=v;if(bump){b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump')}}
+function banner(html,cls){const b=el()&&el().querySelector('.dlro-ban');if(!b)return;b.className='dlro-ban';void b.offsetWidth;b.innerHTML=html;b.classList.add('on');if(cls)b.classList.add(cls)}
+function reset(){[0,1].forEach(i=>{const p=pEl(i);if(!p)return;p.classList.remove('win','lose');p.querySelectorAll('.dlro-d').forEach((d,c)=>{d.classList.remove('in','rev');setDie(d,0,c*60)});showSum(i,0)});const b=el()&&el().querySelector('.dlro-ban');if(b){b.className='dlro-ban';b.innerHTML=''}}
+function round(k){if(!R)return;R.k=k;R.st='load';reset();const ro=R.ro,L=R.L;
+ // 1. load: dice slide into the chambers like cartridges
+ q('.dlro-d').forEach(d=>{const c=+d.dataset.c;d.style.transitionDelay='';T_(()=>d.classList.add('in'),40+c*70)});
+ [0,180,360].forEach((t,j)=>T_(()=>V.dlSnd('load'),t+j*10));
+ // 2. spin
+ T_(()=>{if(!R)return;R.st='spin';V.dlSnd('spin');const t0=performance.now(),dirs={},end={};
+  [0,1].forEach(i=>{dirs[i]=i===L?1:-1;const turns=k?2:3;end[i]=dirs[i]*(turns*360+60*(1+((ro.r[k][i][0]+i+k)%5)))});
+  el().classList.add('spinning');
+  const step=now=>{if(!R||R.st!=='spin')return;const p=Math.min(1,(now-t0)/D.spin),e=1-Math.pow(1-p,3);[0,1].forEach(i=>setRot(i,end[i]*e));
+   el().classList.toggle('fast',p<.55);if(p<1)R.raf=requestAnimationFrame(step);else{el().classList.remove('spinning','fast');reveal(k,end)}};
+  R.raf=requestAnimationFrame(step)},D.load)}
+// chambers in screen order, clockwise from the top (under the hammer)
+function order(deg){return [0,1,2,3,4,5].sort((a,b)=>(((a*60+deg)%360)+360)%360-(((b*60+deg)%360)+360)%360)}
+function reveal(k,end){if(!R)return;R.st='rev';V.dlSnd('cock');const vals=R.ro.r[k],run=[0,0],ord=[order(end[0]),order(end[1])];
+ for(let j=0;j<6;j++)T_(()=>{[0,1].forEach(i=>{const p=pEl(i);if(!p)return;const c=ord[i][j];const d=p.querySelector('.dlro-d[data-c="'+c+'"]');setDie(d,vals[i][c],upright(end[i],c));d.classList.add('rev');run[i]+=vals[i][c];showSum(i,run[i],true)});V.dlSnd('tick')},120+j*120);
+ T_(()=>after(k),D.rev)}
+function after(k){if(!R)return;const s=R.ro.r[k].map(sum);
+ if(s[0]===s[1]&&k<R.ro.r.length-1){R.st='tie';banner('<b>'+esc(tt('tie'))+'</b><small>'+s[R.L]+' : '+s[1-R.L]+'</small>','tie');V.dlSnd('tie');T_(()=>round(k+1),D.tie);return}
+ result()}
+function result(){if(!R)return;R.st='res';const ro=R.ro,w=ro.w,g=R.g,last=ro.r[ro.r.length-1];
+ [0,1].forEach(i=>{const p=pEl(i);if(p){p.classList.add(i===w?'win':'lose');p.classList.remove('rev')}});
+ const ties=ro.r.slice(0,-1).map(r=>{const s=r.map(sum);return '<span>'+esc(tt('tieN',{a:s[R.L],b:s[1-R.L]}))+'</span>'}).join('');
+ banner('<small>'+esc(tt('first'))+'</small><b>'+esc(g.players[w].name)+'</b>'+(ties&&!AN()?'<em>'+ties+'</em>':''),'win');
+ const t=el()&&el().querySelector('.dlro-tap');if(t)t.textContent=tt('tapGo');
+ V.dlSnd('shot');R.end=Date.now()+D.res;T_(close,D.res)}
+// jump straight to the final picture (tap, reduced motion, or the game moved on)
+function finish(hold){if(!R)return;R.tm.forEach(clearTimeout);R.tm.clear();cancelAnimationFrame(R.raf);const o=el();if(o)o.classList.remove('spinning','fast');
+ const ro=R.ro,k=ro.r.length-1,vals=ro.r[k];R.k=k;
+ [0,1].forEach(i=>{const deg=(i===R.L?1:-1)*360;setRot(i,deg);const p=pEl(i);if(!p)return;p.querySelectorAll('.dlro-d').forEach(d=>{const c=+d.dataset.c;d.classList.add('in');setDie(d,vals[i][c],upright(deg,c))});showSum(i,sum(vals[i]))});
+ result();R.tm.forEach(clearTimeout);R.tm.clear();R.end=Date.now()+hold;T_(close,hold)}
+function close(quiet){if(!R)return;const r=R;r.done=true;r.tm.forEach(clearTimeout);r.tm.clear();cancelAnimationFrame(r.raf);R=Object.assign({},r,{tm:new Set()});R.done=true;
+ const o=el();document.body.classList.remove('dlro-on');if(o){o.classList.add('out');setTimeout(()=>{try{if(o.classList.contains('out'))o.remove()}catch(e){}},D.out)}
+ if(!quiet)setTimeout(()=>{try{if(G&&G.gid===r.gid)V.dlSnd('start')}catch(e){}},120)}
+function open(g){if(R&&!R.done)close(true);const old=el();if(old)old.remove();
+ const mi=g.players.findIndex(p=>p.name===me),L=mi>=0?mi:0;mark(g.gid);
+ R={gid:g.gid,g,ro:g.ro,L,k:0,st:'open',tm:new Set(),raf:0,done:false,end:Date.now()+dur(g)};
+ const o=document.createElement('div');o.id='dlro';o.className='dlro';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-labelledby','dlroT');o.tabIndex=-1;
+ o.innerHTML='<div class="dlro-bd"><div class="dlro-hd"><i class="dlro-orn" aria-hidden="true"></i><h2 id="dlroT">'+esc(tt('t'))+'</h2><i class="dlro-orn r" aria-hidden="true"></i></div><p class="dlro-sub">'+esc(tt('s'))+'</p>'+
+  '<div class="dlro-row">'+panel(g,L,'l')+'<div class="dlro-vs" aria-hidden="true">VS</div>'+panel(g,1-L,'r')+'</div><div class="dlro-ban" role="status" aria-live="assertive"></div><p class="dlro-tap">'+esc(tt('tap'))+'</p></div>';
+ o.addEventListener('click',tap);o.addEventListener('keydown',e=>{if(e.key==='Escape'||e.key==='Enter'||e.key===' '){e.preventDefault();tap()}});
+ document.body.appendChild(o);document.body.classList.add('dlro-on');try{o.focus({preventScroll:true})}catch(e){}
+ if(!AN()){o.classList.add('still');finish(2600);return}
+ requestAnimationFrame(()=>{if(R&&R.gid===g.gid&&!R.done){o.classList.add('on');T_(()=>round(0),300)}})}
+function tap(){if(!R||R.done)return;if(R.st==='res')close();else finish(1400)}
+
+/* ---------- glue ---------- */
+function tick(){try{
+ if(R&&!R.done){// the game moved on (other screen, new game, first roll already made): wrap up quickly
+  if(!onScreen()||G.gid!==R.gid){close(true);return}
+  if(!fresh(G)){if(R.st!=='res')finish(700);return}
+  return}
+ if(onScreen()&&will(G))open(G)}catch(e){console.warn('dlro',e)}}
+{const _r=render;render=function(){const r=_r.apply(this,arguments);tick();return r}}
+setInterval(()=>{if(R&&!R.done&&!onScreen())close(true)},700);
+window.__v252={T,tt,will,fresh,dur,open,finish,close,tap,state:()=>R?{gid:R.gid,st:R.st,k:R.k,done:R.done,L:R.L}:null,upright};
 })();
 
 </script>
