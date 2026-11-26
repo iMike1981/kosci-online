@@ -54,7 +54,7 @@ test("malformed and future-dated stored rooms are removed while valid rooms rema
  storage.map.set("room:missing-time",{...room});
  storage.map.set("room:future",{...room,code:"234567",updatedAt:now+60000});
  storage.map.set("room:invalid-code",{...room,code:"bad",updatedAt:now});
- storage.map.set("room:valid",{...room,code:"345678",updatedAt:now});
+ storage.map.set("room:345678",{...room,code:"345678",updatedAt:now});
  const response=await instance.fetch(req("GET")),data=await response.json();
  assert.deepEqual(data.rooms.map(r=>r.code),["345678"]);
  assert.deepEqual([...storage.map.keys()].filter(k=>k.startsWith("room:")).sort(),["room:345678"]);
