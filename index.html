@@ -3945,7 +3945,10 @@ function allowed(mode,nd,sheet,cat,ann){if(mode==='train')return nextCat(nd,shee
 function movesOk(g){const m=modeOf(g);if(m==='classic'||!Array.isArray(g.mv))return true;const nd=ndOf(g),sh=g.players.map(()=>({}));
  for(const e of g.mv){if(!Array.isArray(e)||!sh[e[0]]||typeof e[1]!=='string'||e[1] in sh[e[0]]||!allowed(m,nd,sh[e[0]],e[1]))return false;sh[e[0]][e[1]]=1}return true}
 // tower twists (optional g.tw): r = rolls per turn, nx = no extra rolls, lk = locked lower rows (pre-filled 0), xp = cross-out penalty, cu = {c,m,p} cursed row minimum, sr = School must be >= 0 (penalty), tl = seconds per turn
-// Cryptographically secure, unbiased dice source (Web Crypto rejection sampling).\nfunction secureDie(){if(!globalThis.crypto||!crypto.getRandomValues)throw new Error('Secure RNG unavailable');const u=new Uint32Array(1),limit=4294967296-(4294967296%6);do{crypto.getRandomValues(u)}while(u[0]>=limit);return 1+(u[0]%6)}\nfunction secureRandom(){return (secureDie()-1)/6}\nfunction maxR(g){return g&&g.tw&&g.tw.r>0?g.tw.r:3}
+// Cryptographically secure, unbiased dice source (Web Crypto rejection sampling).
+function secureDie(){if(!globalThis.crypto||!crypto.getRandomValues)throw new Error('Secure RNG unavailable');const u=new Uint32Array(1),limit=4294967296-(4294967296%6);do{crypto.getRandomValues(u)}while(u[0]>=limit);return 1+(u[0]%6)}
+function secureRandom(){return (secureDie()-1)/6}
+function maxR(g){return g&&g.tw&&g.tw.r>0?g.tw.r:3}
 function newGame(names,nd,mode,tw,rnd){nd=nd===5?5:6;const g={gid:Date.now().toString(36)+Math.random().toString(36).slice(2,7),nd,mode:MODES.includes(mode)?mode:'classic',phase:'play',players:names.map(n=>({name:n,sheet:{},extraUsed:0})),cur:0,dice:Array(nd).fill(0),held:Array(nd).fill(false),rolls:0,round:1,log:[]};
  if(tw&&typeof tw==='object'){g.tw=JSON.parse(JSON.stringify(tw));const lk=(g.tw.lk||[]).filter(k=>catsFor(nd).some(c=>c[0]===k)&&!UPPER.includes(k));g.tw.lk=lk;g.players.forEach(p=>lk.forEach(k=>{p.sheet[k]=0}))}
  if(g.mode==='duel'){g.players.forEach(p=>{p.bul=0;p.vest=1;p.dead={}});if(g.players.length===2){g.ro=dlRollOff(rnd);g.cur=g.c0=g.ro.w}}
