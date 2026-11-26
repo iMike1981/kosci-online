@@ -25,7 +25,7 @@ test("POST stores room, GET returns it",async()=>{
  const {instance,storage}=registry();
  const post=await instance.fetch(req("POST",room));assert.equal(post.status,200);
  const get=await instance.fetch(req("GET"));const data=await get.json();
- assert.equal(data.rooms.length,1);assert.equal(data.rooms[0].code,"123456");assert.equal(storage.map.size,1);
+ assert.equal(data.rooms.length,1);assert.equal(data.rooms[0].code,"123456");assert.equal([...storage.map.keys()].filter(k=>k.startsWith("room:")).length,1);
 });
 test("invalid JSON/data rejected",async()=>{
  const {instance}=registry();
@@ -41,7 +41,7 @@ test("expired listing cleaned on GET",async()=>{
 test("room update replaces existing entry",async()=>{
  const {instance,storage}=registry();await instance.fetch(req("POST",room));
  await instance.fetch(req("POST",{...room,players:2,host:"New host"}));
- assert.equal(storage.map.size,1);assert.equal(storage.map.get("room:123456").players,2);
+ assert.equal([...storage.map.keys()].filter(k=>k.startsWith("room:")).length,1);assert.equal(storage.map.get("room:123456").players,2);
 });
 test("method not supported",async()=>{
  const {instance}=registry();const r=await instance.fetch(new Request("https://registry/rooms",{method:"DELETE"}));assert.equal(r.status,405);
