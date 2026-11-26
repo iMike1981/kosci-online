@@ -49,6 +49,16 @@ test("expired listing cleaned on GET",async()=>{
  const response=await instance.fetch(req("GET"));const data=await response.json();
  assert.equal(data.rooms.length,0);assert.equal([...storage.map.keys()].filter(k=>k.startsWith("room:")).length,0);
 });
+test("malformed and future-dated stored rooms are removed while valid rooms remain",async()=>{
+ const {instance,storage}=registry(),now=Date.now();
+ storage.map.set("room:missing-time",{...room});
+ storage.map.set("room:future",{...room,code:"234567",updatedAt:now+60000});
+ storage.map.set("room:invalid-code",{...room,code:"bad",updatedAt:now});
+ storage.map.set("room:valid",{...room,code:"345678",updatedAt:now});
+ const response=await instance.fetch(req("GET")),data=await response.json();
+ assert.deepEqual(data.rooms.map(r=>r.code),["345678"]);
+ assert.deepEqual([...storage.map.keys()].filter(k=>k.startsWith("room:")).sort(),["room:345678"]);
+});
 test("room update replaces existing entry",async()=>{
  const {instance,storage}=registry();await instance.fetch(req("POST",room));
  await instance.fetch(req("POST",{...room,players:2,host:"New host"}));
