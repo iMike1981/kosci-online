@@ -1,6 +1,9 @@
 /* Public rooms UI integration (directory only; existing MQTT gameplay untouched). */
 (function(){
 "use strict";
+// The main game already contains the public-room panel and Quick Match.
+// Avoid injecting a second, disconnected panel when this fallback is loaded there.
+if(document.getElementById("pubrooms")||document.getElementById("pubquick"))return;
 const APIKEY="dice_public_rooms_api";
 const start=document.getElementById("start");
 if(!start)return;
