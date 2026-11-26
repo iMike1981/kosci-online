@@ -44,7 +44,8 @@ export class RoomRegistry {
     await this.state.storage.put(key,next);
     const rates=await this.state.storage.list({prefix:"rate:",limit:501});
     for(const [k,v] of rates)if(!v||v.resetAt<=now)await this.state.storage.delete(k);
-    const activeCount=[...rates.values()].filter(v=>v&&v.resetAt>now).length;\n    if(activeCount>500)return json({error:"registry temporarily busy"},503);
+    const activeCount=[...rates.values()].filter(v=>v&&v.resetAt>now).length;
+    if(activeCount>500)return json({error:"registry temporarily busy"},503);
     return null;
   }
   async fetch(request){
