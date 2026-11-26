@@ -20,7 +20,11 @@ function makeStorage(){
 }
 function registry(){const storage=makeStorage();return {storage,instance:new RoomRegistry({storage},{})};}
 const room={code:"123456",host:"Player",players:1,maxPlayers:8,mode:"classic",status:"waiting"};
-const req=(method,body,ip="test-ip")=>new Request("https://registry/rooms",{method,...(body?{headers:{"content-type":"application/json","x-directory-ip":ip},body:JSON.stringify(body)}:{headers:{"x-directory-ip":ip})})};
+const req=(method,body,ip="test-ip")=>{
+ const headers={"x-directory-ip":ip};
+ if(body)headers["content-type"]="application/json";
+ return new Request("https://registry/rooms",{method,headers,...(body?{body:JSON.stringify(body)}:{})});
+};
 
 test("valid listing and reject invalid bounds",()=>{
  assert.equal(validRoom(room),true);
