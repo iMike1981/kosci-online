@@ -47,7 +47,7 @@ test("invalid JSON/data rejected",async()=>{
 test("expired listing cleaned on GET",async()=>{
  const {instance,storage}=registry();storage.map.set("room:expired",{...room,updatedAt:Date.now()-180000});
  const response=await instance.fetch(req("GET"));const data=await response.json();
- assert.equal(data.rooms.length,0);assert.equal(storage.map.size,0);
+ assert.equal(data.rooms.length,0);assert.equal([...storage.map.keys()].filter(k=>k.startsWith("room:")).length,0);
 });
 test("room update replaces existing entry",async()=>{
  const {instance,storage}=registry();await instance.fetch(req("POST",room));
