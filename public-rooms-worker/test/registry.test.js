@@ -13,7 +13,7 @@ function makeStorage(){
 }
 function registry(){const storage=makeStorage();return {storage,instance:new RoomRegistry({storage},{})};}
 const room={code:"123456",host:"Player",players:1,maxPlayers:8,mode:"classic",status:"waiting"};
-const req=(method,body)=>new Request("https://registry/rooms",{method,...(body?{headers:{"content-type":"application/json"},body:JSON.stringify(body)}:{})});
+const req=(method,body)=>new Request("https://registry/rooms",{method,...(body?{headers:{"content-type":"application/json","x-directory-ip":"test-ip"},body:JSON.stringify(body)}:{})});
 
 test("valid listing and reject invalid bounds",()=>{
  assert.equal(validRoom(room),true);
@@ -45,4 +45,14 @@ test("room update replaces existing entry",async()=>{
 });
 test("method not supported",async()=>{
  const {instance}=registry();const r=await instance.fetch(new Request("https://registry/rooms",{method:"DELETE"}));assert.equal(r.status,405);
+});
+
+test("oversized body is rejected",async()=>{
+ const {instance}=registry();const huge={...room,host:"x".repeat(3000)};
+ const r=await instance.fetch(req("POST",huge));assert.equal(r.status,400);
+});
+test("rate limit blocks excess updates from one IP",async()=>{
+ const {instance}=registry();let last;
+ for(let i=0;i<61;i++)last=await instance.fetch(req("POST",{...room,code:String(i).padStart(6,"0")}));
+ assert.equal(last.status,429);
 });
