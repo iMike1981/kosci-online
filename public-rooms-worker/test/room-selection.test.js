@@ -10,11 +10,17 @@ const availableRooms = vm.runInNewContext(helperLine + "\navailableRooms");
 
 test("public room availability excludes playing, full and malformed entries", () => {
   const rooms = [
-    { code: "111111", status: "waiting", players: 1, maxPlayers: 8 },
-    { code: "222222", status: "playing", players: 2, maxPlayers: 8 },
-    { code: "333333", status: "waiting", players: 8, maxPlayers: 8 },
-    { code: "444444", status: "waiting", players: 0, maxPlayers: 8 },
-    { code: "555555", status: "waiting", players: 2, maxPlayers: 8 },
+    { code: "111111", host: "Player", mode: "classic", status: "waiting", players: 1, maxPlayers: 8 },
+    { code: "222222", host: "Player", mode: "classic", status: "playing", players: 2, maxPlayers: 8 },
+    { code: "333333", host: "Player", mode: "classic", status: "waiting", players: 8, maxPlayers: 8 },
+    { code: "444444", host: "Player", mode: "classic", status: "waiting", players: 0, maxPlayers: 8 },
+    { code: "555555", host: "Player", mode: "classic", status: "waiting", players: 2, maxPlayers: 8 },
+    { code: "12345", host: "Player", mode: "classic", status: "waiting", players: 1, maxPlayers: 8 },
+    { code: "666666", host: "Player", mode: "classic", status: "waiting", players: "2", maxPlayers: 8 },
+    { code: "777777", host: "Player", mode: "classic", status: "waiting", players: 1, maxPlayers: 1 },
+    { code: "888888", host: "Player", mode: "classic", status: "waiting", players: 1, maxPlayers: 9 },
+    { code: "999999", host: " ", mode: "classic", status: "waiting", players: 1, maxPlayers: 8 },
+    { code: "000000", host: "Player", mode: "", status: "waiting", players: 1, maxPlayers: 8 },
     null
   ];
   assert.deepEqual(Array.from(availableRooms(rooms), r => r.code), ["555555", "111111"]);
