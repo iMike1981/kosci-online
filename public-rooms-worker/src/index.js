@@ -6,6 +6,9 @@
 const ALLOWED_ORIGIN = "https://imike1981.github.io";
 const TTL_MS = 120000;
 const MAX_ROOMS = 100;
+const RATE_WINDOW_MS = 60000;
+const RATE_LIMIT = 60;
+const MAX_BODY_BYTES = 2048;
 
 export default {
   async fetch(request, env) {
@@ -16,18 +19,34 @@ export default {
     if (!originAllowed(request)) return json({error:"origin not allowed"},403);
     if (url.pathname === "/api/rooms" && (request.method === "GET" || request.method === "POST")) {
       const id = env.ROOM_REGISTRY.idFromName("public-registry");
-      return env.ROOM_REGISTRY.get(id).fetch("https://registry/rooms",{method:request.method,headers:request.headers,body:request.method==="POST"?request.body:null});
+      const headers=new Headers(request.headers);
+      if(request.method==="POST")headers.set("x-directory-ip",request.headers.get("CF-Connecting-IP")||"unknown");
+      return env.ROOM_REGISTRY.get(id).fetch("https://registry/rooms",{method:request.method,headers,body:request.method==="POST"?request.body:null});
     }
     return json({error:"not found"},404);
   }
 };
 function originAllowed(req){const o=req.headers.get("origin");return !o || o===ALLOWED_ORIGIN;}
-async function safeJson(req){try{return await req.json()}catch{return null}}
+async function safeJson(req){try{const text=await req.text();if(text.length>MAX_BODY_BYTES)return null;return JSON.parse(text)}catch{return null}}
 function corsHeaders(){return {"content-type":"application/json;charset=utf-8","cache-control":"no-store","access-control-allow-origin":ALLOWED_ORIGIN,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"content-type"}}
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:corsHeaders()})}
 
 export class RoomRegistry {
   constructor(state,env){this.state=state;this.env=env;}
+
+  async rateLimit(request){
+    const ip=(request.headers.get("x-directory-ip")||"unknown").slice(0,80);
+    const key="rate:"+ip,now=Date.now();
+    const previous=await this.state.storage.get(key);
+    if(previous&&previous.resetAt>now&&previous.count>=RATE_LIMIT)
+      return json({error:"rate limit exceeded"},429);
+    const next=previous&&previous.resetAt>now?{count:previous.count+1,resetAt:previous.resetAt}:{count:1,resetAt:now+RATE_WINDOW_MS};
+    await this.state.storage.put(key,next);
+    const rates=await this.state.storage.list({prefix:"rate:",limit:501});
+    for(const [k,v] of rates)if(!v||v.resetAt<=now)await this.state.storage.delete(k);
+    if(rates.size>500)return json({error:"registry temporarily busy"},503);
+    return null;
+  }
   async fetch(request){
     if(request.method==="GET"){
       const entries=await this.state.storage.list({prefix:"room:",limit:MAX_ROOMS});
@@ -37,6 +56,7 @@ export class RoomRegistry {
       return json({rooms:out});
     }
     if(request.method==="POST"){
+      const limited=await this.rateLimit(request);if(limited)return limited;
       const d=await safeJson(request);
       if(!d||!validRoom(d))return json({error:"invalid room data"},400);
       const key="room:"+d.code;
