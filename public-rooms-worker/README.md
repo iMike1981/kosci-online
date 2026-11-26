@@ -17,5 +17,6 @@ Cloudflare Worker + Durable Object registry for discovery. Existing MQTT gamepla
 - Client publishes on game state changes and a 25-second heartbeat.
 - Expired listings are cleaned during directory reads and capacity checks.
 - Registry is discovery only; MQTT gameplay remains separate and this is not an authoritative anti-cheat server.
-- API is unauthenticated; CORS is not security. Clients can submit misleading listings.\n- POSTs are limited to 60 per IP per minute and payloads are capped at 2 KB as basic abuse controls; these are not authentication or anti-cheat.\n- Deploy and test before sharing widely.
+- API is unauthenticated; CORS is not security. Clients can submit misleading listings.
+- POSTs are limited to 60 per IP per minute and payloads are capped at 2 KB as basic abuse controls; these are not authentication or anti-cheat.\n- Deploy and test before sharing widely.
 - Listing and Quick Match require a deployed API configured in the client.
