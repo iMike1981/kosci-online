@@ -55,10 +55,10 @@ export class RoomRegistry {
     return json({error:"method not allowed"},405);
   }
 }
-function validRoom(d){
+export function validRoom(d){
  return /^\d{6}$/.test(d.code||"")&&typeof d.host==="string"&&d.host.trim().length>0&&
  Number.isInteger(Number(d.players))&&Number(d.players)>=1&&Number(d.players)<=8&&
  Number.isInteger(Number(d.maxPlayers))&&Number(d.maxPlayers)>=2&&Number(d.maxPlayers)<=8&&
- Number(d.players)<=Number(d.maxPlayers)&&typeof d.mode==="string"&&d.mode.length<=24;
+ Number(d.players)<=Number(d.maxPlayers)&&typeof d.mode==="string"&&d.mode.trim().length>0&&d.mode.length<=24&&(d.status===undefined||d.status==="waiting"||d.status==="playing");
 }
 function safeText(v,n){return String(v||"").replace(/[<>]/g,"").trim().slice(0,n)}
