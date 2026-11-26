@@ -82,7 +82,10 @@ export class RoomRegistry {
       return this.state.storage.transaction(async tx=>{
         const entries=await tx.list({prefix:"room:",limit:MAX_ROOMS+1});
         const now=Date.now(),out=[];
-        for(const [key,r] of entries){if(!r||now-r.updatedAt>TTL_MS){await tx.delete(key);continue;}out.push(r);}
+        for(const [key,r] of entries){
+          if(!isStoredRoom(r,now)){await tx.delete(key);continue;}
+          out.push(r);
+        }
         out.sort((a,b)=>b.updatedAt-a.updatedAt);
         return json({rooms:out});
       });
@@ -100,7 +103,7 @@ export class RoomRegistry {
         if(!existing){
           const all=await tx.list({prefix:"room:",limit:MAX_ROOMS+1});
           const now=Date.now();
-          for(const [k,v] of all)if(!v||now-v.updatedAt>TTL_MS)await tx.delete(k);
+          for(const [k,v] of all)if(!isStoredRoom(v,now))await tx.delete(k);
           const remaining=await tx.list({prefix:"room:",limit:MAX_ROOMS+1});
           if(remaining.size>=MAX_ROOMS)return json({error:"room directory full"},503);
         }
@@ -110,6 +113,10 @@ export class RoomRegistry {
     }
     return json({error:"method not allowed"},405);
   }
+}
+function isStoredRoom(r,now){
+  return !!r&&Number.isFinite(r.updatedAt)&&r.updatedAt>0&&r.updatedAt<=now+5000&&
+    now-r.updatedAt<=TTL_MS&&validRoom(r);
 }
 export function validRoom(d){
  return /^\d{6}$/.test(d.code||"")&&typeof d.host==="string"&&d.host.trim().length>0&&
