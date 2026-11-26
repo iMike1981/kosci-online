@@ -4,6 +4,8 @@ on:
     branches: [feature/public-rooms-cloudflare]
     paths:
       - 'public-rooms-worker/**'
+      - 'index.html'
+      - '.github/workflows/public-rooms-tests.yml'
   pull_request:
     paths:
       - 'public-rooms-worker/**'
