@@ -19,5 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Validate Worker build (dry run)
+        run: npx --yes wrangler@4 deploy --dry-run
+        working-directory: public-rooms-worker
       - run: npm test
         working-directory: public-rooms-worker
