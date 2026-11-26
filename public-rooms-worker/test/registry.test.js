@@ -46,10 +46,15 @@ test("room update replaces existing entry",async()=>{
 test("method not supported",async()=>{
  const {instance}=registry();const r=await instance.fetch(new Request("https://registry/rooms",{method:"DELETE"}));assert.equal(r.status,405);
 });
-
-test("oversized body is rejected",async()=>{
- const {instance}=registry();const huge={...room,host:"x".repeat(3000)};
- const r=await instance.fetch(req("POST",huge));assert.equal(r.status,400);
+test("oversized body rejected by byte count, including multibyte UTF-8",async()=>{
+ const {instance}=registry();
+ const unicode={...room,host:"é".repeat(1100)};
+ const r=await instance.fetch(req("POST",unicode));assert.equal(r.status,400);
+});
+test("oversized streamed body rejected",async()=>{
+ const {instance}=registry();
+ const r=await instance.fetch(new Request("https://registry/rooms",{method:"POST",headers:{"x-directory-ip":"test-ip"},body:"x".repeat(4096)}));
+ assert.equal(r.status,400);
 });
 test("rate limit blocks excess updates from one IP",async()=>{
  const {instance}=registry();let last;
