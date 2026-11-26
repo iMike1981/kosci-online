@@ -3952,6 +3952,7 @@ function newGame(names,nd,mode,tw,rnd){nd=nd===5?5:6;const g={gid:Date.now().toS
  return g}
 function canRoll(g){const p=g.players[g.cur],m=maxR(g);return g.phase==='play'&&!g.sh&&(modeOf(g)!=='call'||!!g.ann)&&(g.rolls<m||(g.rolls>=m&&(modeOf(g)==='pig'?(p.bank|0)>0:!(g.tw&&g.tw.nx)&&p.extraUsed<MAX_EXTRA)));}
 function roll(g,rnd){
+ rnd=typeof rnd==='function'?rnd:secureRandom;
  if(!canRoll(g))return false;const p=g.players[g.cur];
  if(g.rolls>=maxR(g)){if(modeOf(g)==='pig')p.bank=Math.max(0,(p.bank|0)-1);else p.extraUsed++;}
  if(g.rolls===0)g.held=g.dice.map(()=>false);
