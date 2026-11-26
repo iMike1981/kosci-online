@@ -9,6 +9,8 @@ on:
   pull_request:
     paths:
       - 'public-rooms-worker/**'
+      - 'index.html'
+      - '.github/workflows/public-rooms-tests.yml'
 jobs:
   tests:
     runs-on: ubuntu-latest
