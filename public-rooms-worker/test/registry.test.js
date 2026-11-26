@@ -4,16 +4,23 @@ import { RoomRegistry, validRoom } from "../src/index.js";
 
 function makeStorage(){
  const map=new Map();
- return {map,
+ let tail=Promise.resolve();
+ const storage={map,
   async get(k){return map.get(k)},
   async put(k,v){map.set(k,v)},
   async delete(k){map.delete(k)},
-  async list({prefix="",limit=Infinity}={}){const entries=[...map.entries()].filter(([k])=>k.startsWith(prefix)).slice(0,limit);return new Map(entries)}
+  async list({prefix="",limit=Infinity}={}){const entries=[...map.entries()].filter(([k])=>k.startsWith(prefix)).slice(0,limit);return new Map(entries)},
+  async transaction(fn){
+    const prior=tail;let release;tail=new Promise(resolve=>release=resolve);
+    await prior;
+    try{return await fn(storage)}finally{release();}
+  }
  };
+ return storage;
 }
 function registry(){const storage=makeStorage();return {storage,instance:new RoomRegistry({storage},{})};}
 const room={code:"123456",host:"Player",players:1,maxPlayers:8,mode:"classic",status:"waiting"};
-const req=(method,body)=>new Request("https://registry/rooms",{method,...(body?{headers:{"content-type":"application/json","x-directory-ip":"test-ip"},body:JSON.stringify(body)}:{})});
+const req=(method,body,ip="test-ip")=>new Request("https://registry/rooms",{method,...(body?{headers:{"content-type":"application/json","x-directory-ip":ip},body:JSON.stringify(body)}:{headers:{"x-directory-ip":ip})})};
 
 test("valid listing and reject invalid bounds",()=>{
  assert.equal(validRoom(room),true);
@@ -29,7 +36,7 @@ test("POST stores room, GET returns it",async()=>{
 });
 test("invalid JSON/data rejected",async()=>{
  const {instance}=registry();
- const r=await instance.fetch(new Request("https://registry/rooms",{method:"POST",body:"not-json"}));
+ const r=await instance.fetch(new Request("https://registry/rooms",{method:"POST",headers:{"x-directory-ip":"test-ip"},body:"not-json"}));
  assert.equal(r.status,400);
  const bad=await instance.fetch(req("POST",{...room,players:0}));assert.equal(bad.status,400);
 });
@@ -60,4 +67,16 @@ test("rate limit blocks excess updates from one IP",async()=>{
  const {instance}=registry();let last;
  for(let i=0;i<61;i++)last=await instance.fetch(req("POST",{...room,code:String(i).padStart(6,"0")}));
  assert.equal(last.status,429);
+});
+test("concurrent room creation never exceeds capacity",async()=>{
+ const {instance,storage}=registry();
+ const results=await Promise.all(Array.from({length:101},(_,i)=>instance.fetch(req("POST",{...room,code:String(i).padStart(6,"0")}, "ip-"+i))));
+ const accepted=results.filter(r=>r.status===200).length,full=results.filter(r=>r.status===503).length;
+ assert.equal(accepted,100);assert.equal(full,1);
+ assert.equal([...storage.map.keys()].filter(k=>k.startsWith("room:")).length,100);
+});
+test("concurrent GET and POST are rate limited per IP",async()=>{
+ const {instance}=registry();
+ const results=await Promise.all(Array.from({length:61},()=>instance.fetch(req("GET",null,"read-test"))));
+ assert.equal(results.filter(r=>r.status===200).length,60);assert.equal(results.filter(r=>r.status===429).length,1);
 });
