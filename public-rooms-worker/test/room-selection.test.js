@@ -6,7 +6,7 @@ import vm from "node:vm";
 const index = fs.readFileSync(new URL("../../index.html", import.meta.url), "utf8");
 const helperLine = index.split("\n").find(line => line.startsWith("function availableRooms(rooms){"));
 assert.ok(helperLine, "availability helper must be present in the game page");
-const availableRooms = vm.runInNewContext(helperLine + "\\navailableRooms");
+const availableRooms = vm.runInNewContext(helperLine + "\navailableRooms");
 
 test("public room availability excludes playing, full and malformed entries", () => {
   const rooms = [
