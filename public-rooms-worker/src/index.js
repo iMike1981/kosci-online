@@ -27,13 +27,36 @@ export default {
   }
 };
 function originAllowed(req){const o=req.headers.get("origin");return !o || o===ALLOWED_ORIGIN;}
-async function safeJson(req){try{const text=await req.text();if(text.length>MAX_BODY_BYTES)return null;return JSON.parse(text)}catch{return null}}
+async function safeJson(req){
+  const length=req.headers.get("content-length");
+  if(length!==null && (!/^\d+$/.test(length)||Number(length)>MAX_BODY_BYTES))return null;
+  if(!req.body)return null;
+  const reader=req.body.getReader(),chunks=[];
+  let total=0;
+  try{
+    while(true){
+      const {done,value}=await reader.read();
+      if(done)break;
+      total+=value.byteLength;
+      if(total>MAX_BODY_BYTES){await reader.cancel();return null;}
+      chunks.push(value);
+    }
+    const bytes=new Uint8Array(total);
+    let offset=0;
+    for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.byteLength;}
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }catch{
+    try{await reader.cancel()}catch{}
+    return null;
+  }finally{
+    try{reader.releaseLock()}catch{}
+  }
+}
 function corsHeaders(){return {"content-type":"application/json;charset=utf-8","cache-control":"no-store","access-control-allow-origin":ALLOWED_ORIGIN,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"content-type"}}
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:corsHeaders()})}
 
 export class RoomRegistry {
   constructor(state,env){this.state=state;this.env=env;}
-
   async rateLimit(request){
     const ip=(request.headers.get("x-directory-ip")||"unknown").slice(0,80);
     const key="rate:"+ip,now=Date.now();
