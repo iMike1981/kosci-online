@@ -65,8 +65,9 @@ export class RoomRegistry {
       const previous=await tx.get(key);
       const rates=await tx.list({prefix:"rate:",limit:MAX_RATE_KEYS+1});
       for(const [k,v] of rates)if(!v||v.resetAt<=now)await tx.delete(k);
-      const active=[...rates].filter(([k,v])=>k!==key&&v&&v.resetAt>now);
-      if(active.length>=MAX_RATE_KEYS&&!previous?.resetAt>now)
+      const activeCount=[...rates].filter(([,v])=>v&&v.resetAt>now).length;
+      const keyIsActive=previous&&previous.resetAt>now;
+      if(!keyIsActive&&activeCount>=MAX_RATE_KEYS)
         return json({error:"registry temporarily busy"},503);
       if(previous&&previous.resetAt>now&&previous.count>=RATE_LIMIT)
         return json({error:"rate limit exceeded"},429);
