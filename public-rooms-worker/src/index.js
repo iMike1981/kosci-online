@@ -8,6 +8,7 @@ const TTL_MS = 120000;
 const MAX_ROOMS = 100;
 const RATE_WINDOW_MS = 60000;
 const RATE_LIMIT = 60;
+const MAX_RATE_KEYS = 500;
 const MAX_BODY_BYTES = 2048;
 
 export default {
@@ -20,7 +21,7 @@ export default {
     if (url.pathname === "/api/rooms" && (request.method === "GET" || request.method === "POST")) {
       const id = env.ROOM_REGISTRY.idFromName("public-registry");
       const headers=new Headers(request.headers);
-      if(request.method==="POST")headers.set("x-directory-ip",request.headers.get("CF-Connecting-IP")||"unknown");
+      headers.set("x-directory-ip",request.headers.get("CF-Connecting-IP")||"unknown");
       return env.ROOM_REGISTRY.get(id).fetch("https://registry/rooms",{method:request.method,headers,body:request.method==="POST"?request.body:null});
     }
     return json({error:"not found"},404);
@@ -60,24 +61,30 @@ export class RoomRegistry {
   async rateLimit(request){
     const ip=(request.headers.get("x-directory-ip")||"unknown").slice(0,80);
     const key="rate:"+ip,now=Date.now();
-    const previous=await this.state.storage.get(key);
-    if(previous&&previous.resetAt>now&&previous.count>=RATE_LIMIT)
-      return json({error:"rate limit exceeded"},429);
-    const next=previous&&previous.resetAt>now?{count:previous.count+1,resetAt:previous.resetAt}:{count:1,resetAt:now+RATE_WINDOW_MS};
-    await this.state.storage.put(key,next);
-    const rates=await this.state.storage.list({prefix:"rate:",limit:501});
-    for(const [k,v] of rates)if(!v||v.resetAt<=now)await this.state.storage.delete(k);
-    const activeCount=[...rates.values()].filter(v=>v&&v.resetAt>now).length;
-    if(activeCount>500)return json({error:"registry temporarily busy"},503);
-    return null;
+    return this.state.storage.transaction(async tx=>{
+      const previous=await tx.get(key);
+      const rates=await tx.list({prefix:"rate:",limit:MAX_RATE_KEYS+1});
+      for(const [k,v] of rates)if(!v||v.resetAt<=now)await tx.delete(k);
+      const active=[...rates].filter(([k,v])=>k!==key&&v&&v.resetAt>now);
+      if(active.length>=MAX_RATE_KEYS&&!previous?.resetAt>now)
+        return json({error:"registry temporarily busy"},503);
+      if(previous&&previous.resetAt>now&&previous.count>=RATE_LIMIT)
+        return json({error:"rate limit exceeded"},429);
+      const next=previous&&previous.resetAt>now?{count:previous.count+1,resetAt:previous.resetAt}:{count:1,resetAt:now+RATE_WINDOW_MS};
+      await tx.put(key,next);
+      return null;
+    });
   }
   async fetch(request){
     if(request.method==="GET"){
-      const entries=await this.state.storage.list({prefix:"room:",limit:MAX_ROOMS});
-      const now=Date.now(),out=[];
-      for(const [key,r] of entries){if(!r||now-r.updatedAt>TTL_MS){await this.state.storage.delete(key);continue;}out.push(r);}
-      out.sort((a,b)=>b.updatedAt-a.updatedAt);
-      return json({rooms:out});
+      const limited=await this.rateLimit(request);if(limited)return limited;
+      return this.state.storage.transaction(async tx=>{
+        const entries=await tx.list({prefix:"room:",limit:MAX_ROOMS+1});
+        const now=Date.now(),out=[];
+        for(const [key,r] of entries){if(!r||now-r.updatedAt>TTL_MS){await tx.delete(key);continue;}out.push(r);}
+        out.sort((a,b)=>b.updatedAt-a.updatedAt);
+        return json({rooms:out});
+      });
     }
     if(request.method==="POST"){
       const limited=await this.rateLimit(request);if(limited)return limited;
@@ -85,16 +92,20 @@ export class RoomRegistry {
       if(!d||!validRoom(d))return json({error:"invalid room data"},400);
       const key="room:"+d.code;
       const room={code:d.code,host:safeText(d.host,20),players:Number(d.players),maxPlayers:Number(d.maxPlayers),mode:safeText(d.mode,24),status:d.status==="playing"?"playing":"waiting",updatedAt:Date.now()};
-      // Keep public room listing bounded; expire old entries and refuse new rooms when full.
-      const existing=await this.state.storage.get(key);
-      if(!existing){
-        const all=await this.state.storage.list({prefix:"room:",limit:MAX_ROOMS+1});
-        for(const [k,v] of all)if(!v||Date.now()-v.updatedAt>TTL_MS)await this.state.storage.delete(k);
-        const remaining=await this.state.storage.list({prefix:"room:",limit:MAX_ROOMS+1});
-        if(remaining.size>=MAX_ROOMS)return json({error:"room directory full"},503);
-      }
-      await this.state.storage.put(key,room);
-      return json({ok:true,room});
+      // Capacity check, expiry cleanup, and insertion share one transaction so
+      // concurrent publishers cannot race the 100-room limit.
+      return this.state.storage.transaction(async tx=>{
+        const existing=await tx.get(key);
+        if(!existing){
+          const all=await tx.list({prefix:"room:",limit:MAX_ROOMS+1});
+          const now=Date.now();
+          for(const [k,v] of all)if(!v||now-v.updatedAt>TTL_MS)await tx.delete(k);
+          const remaining=await tx.list({prefix:"room:",limit:MAX_ROOMS+1});
+          if(remaining.size>=MAX_ROOMS)return json({error:"room directory full"},503);
+        }
+        await tx.put(key,room);
+        return json({ok:true,room});
+      });
     }
     return json({error:"method not allowed"},405);
   }
