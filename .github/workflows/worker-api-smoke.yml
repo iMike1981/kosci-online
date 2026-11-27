@@ -1,0 +1,42 @@
+name: Test deployed public-room Worker API
+on:
+  push:
+    branches:
+      - feature/public-rooms-cloudflare
+    paths:
+      - ".github/workflows/worker-api-smoke.yml"
+  workflow_dispatch:
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Smoke test isolated Worker API
+        run: |
+          node <<'NODE'
+          const base = 'https://dice-online-public-rooms-test.janowicz-michal.workers.dev';
+          const origin = 'https://imike1981.github.io';
+          const assert = (ok, msg) => { if (!ok) throw new Error(msg); };
+          async function req(path, opts={}) {
+            const r = await fetch(base+path, opts);
+            const text = await r.text();
+            let body; try { body=JSON.parse(text); } catch { body=text; }
+            return {status:r.status, body};
+          }
+          (async()=>{
+            const health=await req('/health');
+            assert(health.status===200 && health.body?.ok===true,'health endpoint failed');
+            const initial=await req('/api/rooms');
+            assert(initial.status===200 && Array.isArray(initial.body?.rooms),'rooms GET failed');
+            const code='731842';
+            const payload={code,host:'API-Smoke-Test',players:1,maxPlayers:4,mode:'test',status:'waiting'};
+            const post=await req('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json','Origin':origin},body:JSON.stringify(payload)});
+            assert(post.status>=200 && post.status<300,'valid room POST rejected: '+post.status+' '+JSON.stringify(post.body));
+            const list=await req('/api/rooms');
+            assert(list.status===200 && list.body.rooms.some(x=>x.code===code),'posted room not found in GET list');
+            const badOrigin=await req('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json','Origin':'https://example.com'},body:JSON.stringify({...payload,code:'731843'})});
+            assert(badOrigin.status===403,'wrong origin was not rejected with 403; got '+badOrigin.status);
+            const invalid=await req('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json','Origin':origin},body:'{invalid'});
+            assert(invalid.status===400,'invalid JSON was not rejected with 400; got '+invalid.status);
+            console.log('PASS: health, GET, valid POST, room listing, wrong-origin rejection, invalid JSON rejection');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
