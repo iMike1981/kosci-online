@@ -40,4 +40,4 @@ jobs:
           exit 1
       - name: Run isolated real-browser two-player test
         working-directory: public-rooms-worker
-        run: node test/browser-e2e.mjs
+        run: node e2e/browser-e2e.mjs
