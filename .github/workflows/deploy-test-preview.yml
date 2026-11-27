@@ -23,18 +23,18 @@ jobs:
         env:
           PREVIEW_ORIGIN: ${{ inputs.preview_origin }}
         run: |
-          case "$PREVIEW_ORIGIN" in
-            https://*.dice-online-test.pages.dev) ;;
-            *) echo "Only the dice-online-test Pages preview origin is allowed"; exit 1 ;;
-          esac
-          if [ "$PREVIEW_ORIGIN" != "${PREVIEW_ORIGIN%/}" ]; then
-            echo "Remove the trailing slash from preview_origin"; exit 1
-          fi
+          node --input-type=module <<'NODE'
+          import { validatePreviewOrigin } from './public-rooms-worker/e2e/deployment-smoke.mjs';
+          validatePreviewOrigin(process.env.PREVIEW_ORIGIN);
+          console.log('Preview origin validated');
+          NODE
       - name: Install pinned Wrangler
         run: npm install --no-save --no-package-lock wrangler@4.169.0
       - name: Deploy isolated test Worker
         working-directory: public-rooms-worker
-        run: npx wrangler deploy --config wrangler.test.toml --var DICE_PUBLIC_ROOMS_ORIGIN:${{ inputs.preview_origin }}
+        env:
+          PREVIEW_ORIGIN: ${{ inputs.preview_origin }}
+        run: npx wrangler deploy --config wrangler.test.toml --var "DICE_PUBLIC_ROOMS_ORIGIN:${PREVIEW_ORIGIN}"
       - name: Prepare static test preview (does not alter repository files)
         run: node public-rooms-worker/prepare-preview.mjs "$RUNNER_TEMP/dice-online-preview"
       - name: Deploy Cloudflare Pages branch preview
