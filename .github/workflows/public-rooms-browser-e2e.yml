@@ -1,0 +1,43 @@
+name: Public rooms browser E2E
+on:
+  push:
+    branches: [feature/public-rooms-cloudflare]
+    paths:
+      - 'public-rooms-worker/**'
+      - 'index.html'
+      - '.github/workflows/public-rooms-browser-e2e.yml'
+  pull_request:
+    paths:
+      - 'public-rooms-worker/**'
+      - 'index.html'
+      - '.github/workflows/public-rooms-browser-e2e.yml'
+jobs:
+  browser-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install isolated browser test dependencies
+        working-directory: public-rooms-worker
+        run: npm install --no-save --no-package-lock playwright@1.56.1 mqtt@5.10.1 wrangler@4
+      - name: Install Chromium
+        working-directory: public-rooms-worker
+        run: npx playwright install --with-deps chromium
+      - name: Start isolated local Worker (no deployment)
+        working-directory: public-rooms-worker
+        run: |
+          npx wrangler dev --config wrangler.test.toml --port 8787 --ip 127.0.0.1 > /tmp/dice-worker.log 2>&1 &
+          for i in $(seq 1 45); do
+            if curl -fsS http://127.0.0.1:8787/health >/dev/null; then
+              echo "Local Worker ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/dice-worker.log
+          exit 1
+      - name: Run isolated real-browser two-player test
+        working-directory: public-rooms-worker
+        run: node test/browser-e2e.mjs
