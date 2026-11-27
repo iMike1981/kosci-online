@@ -45,7 +45,9 @@ test("test deployment workflow is manual, branch-gated and targets the test Work
   assert.match(workflow, /refs\/heads\/feature\/public-rooms-cloudflare/);
   assert.match(workflow, /wrangler\.test\.toml/);
   assert.match(workflow, /dice-online-test/);
-  assert.match(workflow, /Only the dice-online-test Pages preview origin is allowed/);
+  assert.match(workflow, /validatePreviewOrigin/);
+  assert.ok(workflow.includes('--var "DICE_PUBLIC_ROOMS_ORIGIN:${PREVIEW_ORIGIN}"'));
+  assert.ok(!workflow.includes('--var DICE_PUBLIC_ROOMS_ORIGIN:${{ inputs.preview_origin }}'));
   assert.match(workflow, /--project-name dice-online-test/);
   assert.doesNotMatch(workflow, /wrangler deploy --config public-rooms-worker\/wrangler\.toml/);
   assert.match(workflow, /Smoke-test isolated preview and public-room API/);
