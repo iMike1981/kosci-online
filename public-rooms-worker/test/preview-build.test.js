@@ -43,5 +43,7 @@ test("test deployment workflow is manual, branch-gated and targets the test Work
   assert.match(workflow, /refs\/heads\/feature\/public-rooms-cloudflare/);
   assert.match(workflow, /wrangler\.test\.toml/);
   assert.match(workflow, /dice-online-test/);
+  assert.match(workflow, /Only the dice-online-test Pages preview origin is allowed/);
+  assert.match(workflow, /--project-name dice-online-test/);
   assert.doesNotMatch(workflow, /wrangler deploy --config public-rooms-worker\/wrangler\.toml/);
 });
