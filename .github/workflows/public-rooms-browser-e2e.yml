@@ -25,6 +25,25 @@ jobs:
       - name: Install Chromium
         working-directory: public-rooms-worker
         run: npx playwright install --with-deps chromium
+      - name: Start isolated MQTT WebSocket broker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mosquitto
+          cat > /tmp/mosquitto.conf <<'EOF'
+          listener 9001 127.0.0.1
+          protocol websockets
+          allow_anonymous true
+          EOF
+          mosquitto -c /tmp/mosquitto.conf -v > /tmp/dice-mqtt.log 2>&1 &
+          for i in $(seq 1 45); do
+            if bash -c 'echo > /dev/tcp/127.0.0.1/9001' 2>/dev/null; then
+              echo "Local MQTT broker ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/dice-mqtt.log
+          exit 1
       - name: Start local static game preview
         run: |
           python3 -m http.server 5173 --bind 127.0.0.1 > /tmp/dice-page.log 2>&1 &
