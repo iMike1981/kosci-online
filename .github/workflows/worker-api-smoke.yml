@@ -10,33 +10,61 @@ jobs:
   smoke-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Smoke test isolated Worker API
+      - name: Smoke test isolated Worker API with two simulated clients
         run: |
           node <<'NODE'
           const base = 'https://dice-online-public-rooms-test.janowicz-michal.workers.dev';
           const origin = 'https://imike1981.github.io';
           const assert = (ok, msg) => { if (!ok) throw new Error(msg); };
-          async function req(path, opts={}) {
-            const r = await fetch(base+path, opts);
-            const text = await r.text();
-            let body; try { body=JSON.parse(text); } catch { body=text; }
-            return {status:r.status, body};
+          const availableRooms = rooms => (Array.isArray(rooms) ? rooms : []).filter(r =>
+            r && typeof r.code === 'string' && /^\d{6}$/.test(r.code) &&
+            r.status === 'waiting' && typeof r.host === 'string' && r.host.trim() &&
+            typeof r.mode === 'string' && r.mode.trim() &&
+            Number.isInteger(r.players) && r.players >= 1 && r.players <= 8 &&
+            Number.isInteger(r.maxPlayers) && r.maxPlayers >= 2 && r.maxPlayers <= 8 &&
+            r.players < r.maxPlayers
+          ).sort((a,b) => b.players-a.players);
+          function client(label) {
+            return {
+              async request(path, opts={}) {
+                const r = await fetch(base+path, {...opts, headers:{...(opts.headers||{}), Origin:origin}});
+                const text = await r.text();
+                let body; try { body=JSON.parse(text); } catch { body=text; }
+                return {status:r.status, body, label};
+              }
+            };
           }
           (async()=>{
-            const health=await req('/health');
+            const host=client('host'), guest=client('guest');
+            const health=await host.request('/health');
             assert(health.status===200 && health.body?.ok===true,'health endpoint failed');
-            const initial=await req('/api/rooms');
+            const initial=await host.request('/api/rooms');
             assert(initial.status===200 && Array.isArray(initial.body?.rooms),'rooms GET failed');
-            const code='731842';
-            const payload={code,host:'API-Smoke-Test',players:1,maxPlayers:4,mode:'test',status:'waiting'};
-            const post=await req('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json','Origin':origin},body:JSON.stringify(payload)});
-            assert(post.status>=200 && post.status<300,'valid room POST rejected: '+post.status+' '+JSON.stringify(post.body));
-            const list=await req('/api/rooms');
-            assert(list.status===200 && list.body.rooms.some(x=>x.code===code),'posted room not found in GET list');
-            const badOrigin=await req('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json','Origin':'https://example.com'},body:JSON.stringify({...payload,code:'731843'})});
-            assert(badOrigin.status===403,'wrong origin was not rejected with 403; got '+badOrigin.status);
-            const invalid=await req('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json','Origin':origin},body:'{invalid'});
-            assert(invalid.status===400,'invalid JSON was not rejected with 400; got '+invalid.status);
-            console.log('PASS: health, GET, valid POST, room listing, wrong-origin rejection, invalid JSON rejection');
+            let code;
+            for(let i=0;i<20;i++){
+              const candidate=String(100000+Math.floor(Math.random()*900000));
+              if(!initial.body.rooms.some(r=>r.code===candidate)){code=candidate;break}
+            }
+            assert(code,'could not allocate a unique test room code');
+            const payload={code,host:'Smoke-Host',players:1,maxPlayers:2,mode:'test',status:'waiting'};
+            const post=await host.request('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+            assert(post.status>=200 && post.status<300,'host publish rejected: '+post.status+' '+JSON.stringify(post.body));
+            const guestList=await guest.request('/api/rooms');
+            assert(guestList.status===200 && Array.isArray(guestList.body?.rooms),'guest room discovery failed');
+            const candidates=availableRooms(guestList.body.rooms);
+            assert(candidates.some(r=>r.code===code),'guest cannot discover host room through Quick Match availability filter');
+            const selected=candidates[0];
+            assert(selected && selected.status==='waiting' && selected.players<selected.maxPlayers,'Quick Match candidate is invalid');
+            const guestJoin=await guest.request('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,host:'Smoke-Host',players:2,status:'playing'})});
+            assert(guestJoin.status>=200 && guestJoin.status<300,'guest occupancy update rejected: '+guestJoin.status);
+            const hostCheck=await host.request('/api/rooms');
+            const updated=hostCheck.body?.rooms?.find(r=>r.code===code);
+            assert(hostCheck.status===200 && updated?.players===2 && updated?.status==='playing','host did not observe guest occupancy update');
+            assert(!availableRooms(hostCheck.body.rooms).some(r=>r.code===code),'occupied room remained Quick Match eligible');
+            const badOrigin=await host.request('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json','Origin':'https://example.com'},body:JSON.stringify({...payload,code:'731843'})});
+            assert(badOrigin.status===403,'wrong-origin rejection failed; got '+badOrigin.status);
+            const invalid=await host.request('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json'},body:'{invalid'});
+            assert(invalid.status===400,'invalid JSON rejection failed; got '+invalid.status);
+            console.log('PASS: health; host publish; guest discovery/Quick Match eligibility; guest occupancy update; host observes full/playing state; origin and JSON validation');
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
