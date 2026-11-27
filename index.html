@@ -3901,7 +3901,7 @@ function dlCost(cat){return DUEL_COST[cat]||99}
 // ---- 2.52: duel roll-off – before the first turn each gunslinger rolls 6 dice, the higher total shoots first (a tie re-rolls).
 // Decided ONCE by whoever creates the game (newGame on the host) and synced inside the game state (g.ro), so both clients replay the same values.
 const DUEL_RO_MAX=8;
-function dlRollOff(rnd){rnd=typeof rnd==='function'?rnd:Math.random;const r=[];let w=-1;
+function dlRollOff(rnd){rnd=typeof rnd==='function'?rnd:secureRandom;const r=[];let w=-1;
  for(let k=0;k<DUEL_RO_MAX&&w<0;k++){const a=[0,1].map(()=>Array.from({length:6},()=>1+Math.floor(rnd()*6)));r.push(a);const s=a.map(x=>x.reduce((p,q)=>p+q,0));if(s[0]!==s[1])w=s[0]>s[1]?0:1}
  return {r,w:w<0?0:w}}
 function dlRoSum(a){return a.reduce((p,q)=>p+q,0)}
@@ -3945,6 +3945,9 @@ function allowed(mode,nd,sheet,cat,ann){if(mode==='train')return nextCat(nd,shee
 function movesOk(g){const m=modeOf(g);if(m==='classic'||!Array.isArray(g.mv))return true;const nd=ndOf(g),sh=g.players.map(()=>({}));
  for(const e of g.mv){if(!Array.isArray(e)||!sh[e[0]]||typeof e[1]!=='string'||e[1] in sh[e[0]]||!allowed(m,nd,sh[e[0]],e[1]))return false;sh[e[0]][e[1]]=1}return true}
 // tower twists (optional g.tw): r = rolls per turn, nx = no extra rolls, lk = locked lower rows (pre-filled 0), xp = cross-out penalty, cu = {c,m,p} cursed row minimum, sr = School must be >= 0 (penalty), tl = seconds per turn
+// Cryptographically secure, unbiased dice source (Web Crypto rejection sampling).
+function secureDie(){if(!globalThis.crypto||!crypto.getRandomValues)throw new Error('Secure RNG unavailable');const u=new Uint32Array(1),limit=4294967296-(4294967296%6);do{crypto.getRandomValues(u)}while(u[0]>=limit);return 1+(u[0]%6)}
+function secureRandom(){return (secureDie()-1)/6}
 function maxR(g){return g&&g.tw&&g.tw.r>0?g.tw.r:3}
 function newGame(names,nd,mode,tw,rnd){nd=nd===5?5:6;const g={gid:Date.now().toString(36)+Math.random().toString(36).slice(2,7),nd,mode:MODES.includes(mode)?mode:'classic',phase:'play',players:names.map(n=>({name:n,sheet:{},extraUsed:0})),cur:0,dice:Array(nd).fill(0),held:Array(nd).fill(false),rolls:0,round:1,log:[]};
  if(tw&&typeof tw==='object'){g.tw=JSON.parse(JSON.stringify(tw));const lk=(g.tw.lk||[]).filter(k=>catsFor(nd).some(c=>c[0]===k)&&!UPPER.includes(k));g.tw.lk=lk;g.players.forEach(p=>lk.forEach(k=>{p.sheet[k]=0}))}
@@ -3952,6 +3955,7 @@ function newGame(names,nd,mode,tw,rnd){nd=nd===5?5:6;const g={gid:Date.now().toS
  return g}
 function canRoll(g){const p=g.players[g.cur],m=maxR(g);return g.phase==='play'&&!g.sh&&(modeOf(g)!=='call'||!!g.ann)&&(g.rolls<m||(g.rolls>=m&&(modeOf(g)==='pig'?(p.bank|0)>0:!(g.tw&&g.tw.nx)&&p.extraUsed<MAX_EXTRA)));}
 function roll(g,rnd){
+ rnd=typeof rnd==='function'?rnd:secureRandom;
  if(!canRoll(g))return false;const p=g.players[g.cur];
  if(g.rolls>=maxR(g)){if(modeOf(g)==='pig')p.bank=Math.max(0,(p.bank|0)-1);else p.extraUsed++;}
  if(g.rolls===0)g.held=g.dice.map(()=>false);
