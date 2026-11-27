@@ -5,13 +5,15 @@ test("deployment smoke verifies preview, health, CORS and room publish",async()=
  const roomMap=new Map(),calls=[];
  const fakeFetch=async(url,init={})=>{const u=String(url),m=init.method||"GET";calls.push({u,m});
  if(u===origin)return new Response(`<div>TEST PREVIEW — NOT PRODUCTION</div><script>localStorage.setItem("dicePublicRoomsApi","${worker}")</script>`,{status:200});
+ if(u===origin+"/public-rooms-worker/public-rooms-ui.js")return new Response("/* Public rooms UI integration */",{status:200,headers:{"content-type":"application/javascript"}});
  if(u===worker+"/health")return new Response(JSON.stringify({ok:true}),{status:200});
  if(u===worker+"/api/rooms"&&m==="OPTIONS")return new Response(null,{status:204,headers:{"access-control-allow-origin":origin,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"content-type"}});
  if(u===worker+"/api/rooms"&&m==="POST"){const r=JSON.parse(init.body);roomMap.set(r.code,r);return new Response(JSON.stringify({ok:true,room:r}),{status:200,headers:{"access-control-allow-origin":origin}});}
  if(u===worker+"/api/rooms"&&m==="GET")return new Response(JSON.stringify({rooms:[...roomMap.values()]}),{status:200,headers:{"access-control-allow-origin":origin}});
  throw new Error("Unexpected request "+m+" "+u);};
  const r=await runPreviewSmoke(origin,{fetchImpl:fakeFetch,waitImpl:async()=>{}});
- assert.equal(r.origin,origin);assert.equal(roomMap.get(r.code)?.status,"playing");assert.equal(calls.filter(c=>c.m==="POST").length,1);assert.equal(calls.filter(c=>c.m==="OPTIONS").length,1);
+ assert.equal(r.origin,origin);assert.equal(roomMap.get(r.code)?.status,"playing");assert.equal(calls.some(c=>c.u===origin+"/public-rooms-worker/public-rooms-ui.js"),true);assert.equal(calls.filter(c=>c.m==="POST").length,1);assert.equal(calls.filter(c=>c.m==="OPTIONS").length,1);
 });
+test("smoke fails if the public-room UI asset is missing",async()=>{await assert.rejects(()=>runPreviewSmoke(origin,{fetchImpl:async(url)=>url===origin?new Response(`<div>TEST PREVIEW — NOT PRODUCTION</div><script>localStorage.setItem("dicePublicRoomsApi","${worker}")</script>`,{status:200}):url===origin+"/public-rooms-worker/public-rooms-ui.js"?new Response("missing",{status:404}):new Response(JSON.stringify({ok:true}),{status:200}),waitImpl:async()=>{}}),/Preview public-room UI asset failed HTTP 404/);});
 test("smoke fails if page is not the isolated test page",async()=>{await assert.rejects(()=>runPreviewSmoke(origin,{fetchImpl:async()=>new Response("production page",{status:200}),waitImpl:async()=>{}}),/missing the test banner/);});
 test("CLI entrypoint executes with a relative script path",()=>{const scriptPath=fileURLToPath(new URL("../e2e/deployment-smoke.mjs",import.meta.url)),relative=path.relative(process.cwd(),scriptPath),r=spawnSync(process.execPath,[relative],{encoding:"utf8"});assert.equal(r.status,1);assert.match(r.stderr,/Invalid preview origin/);});

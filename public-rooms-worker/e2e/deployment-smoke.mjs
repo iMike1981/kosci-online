@@ -20,6 +20,10 @@ function cors(r,origin,label){if(r.headers.get("access-control-allow-origin")!==
 export async function runPreviewSmoke(previewOrigin,{fetchImpl=fetch,waitImpl=ms=>new Promise(resolve=>setTimeout(resolve,ms))}={}){
   const origin=validatePreviewOrigin(previewOrigin),html=await pageWithRetry(origin,fetchImpl,waitImpl);
   if(!html.includes("TEST PREVIEW — NOT PRODUCTION")||!html.includes(TEST_WORKER)||!html.includes("dicePublicRoomsApi"))throw new Error("Preview page is missing the test banner or isolated Worker configuration");
+  const uiAsset=await fetchImpl(origin+"/public-rooms-worker/public-rooms-ui.js",{headers:{"cache-control":"no-cache"}});
+  if(!uiAsset.ok)throw new Error(`Preview public-room UI asset failed HTTP ${uiAsset.status}`);
+  const uiText=await uiAsset.text();
+  if(!uiText.includes("Public rooms UI integration"))throw new Error("Preview public-room UI asset is missing its expected source marker");
   const health=await fetchImpl(TEST_WORKER+"/health",{headers:{origin}});
   if(!health.ok||(await health.json()).ok!==true)throw new Error("Test Worker health check failed");
   const url=TEST_WORKER+"/api/rooms",initial=await fetchImpl(url,{headers:{origin}});
@@ -34,7 +38,7 @@ export async function runPreviewSmoke(previewOrigin,{fetchImpl=fetch,waitImpl=ms
   const posted=await post.json();if(!posted.ok||posted.room?.code!==code)throw new Error("POST did not confirm the smoke room");
   const confirm=await fetchImpl(url,{headers:{origin}});if(!confirm.ok)throw new Error(`Confirmation GET failed HTTP ${confirm.status}`);cors(confirm,origin,"Confirmation GET");
   if(!(await confirm.json()).rooms.some(x=>x.code===code&&x.status==="playing"))throw new Error("Smoke room not visible after publish");
-  console.log(`PASS: preview, Worker health, CORS, GET/POST/preflight and publish/confirm (${code}).`);
+  console.log(`PASS: preview page, static UI asset, Worker health, CORS, GET/POST/preflight and publish/confirm (${code}).`);
   return {code,origin};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))runPreviewSmoke(process.argv[2]).catch(e=>{console.error(e.message);process.exitCode=1;});
