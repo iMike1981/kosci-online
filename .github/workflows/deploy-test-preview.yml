@@ -7,11 +7,6 @@ on:
         required: true
         default: https://feature-public-rooms-cloudflare.dice-online-test.pages.dev
         type: string
-      pages_project:
-        description: Existing Cloudflare Pages project for the isolated preview
-        required: true
-        default: dice-online-test
-        type: string
 jobs:
   deploy-test-only:
     if: github.ref == 'refs/heads/feature/public-rooms-cloudflare'
@@ -24,6 +19,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.12.0
+      - name: Validate test preview origin
+        env:
+          PREVIEW_ORIGIN: ${{ inputs.preview_origin }}
+        run: |
+          case "$PREVIEW_ORIGIN" in
+            https://*.dice-online-test.pages.dev) ;;
+            *) echo "Only the dice-online-test Pages preview origin is allowed"; exit 1 ;;
+          esac
+          if [ "$PREVIEW_ORIGIN" != "${PREVIEW_ORIGIN%/}" ]; then
+            echo "Remove the trailing slash from preview_origin"; exit 1
+          fi
       - name: Install pinned Wrangler
         run: npm install --no-save --no-package-lock wrangler@4.169.0
       - name: Deploy isolated test Worker
@@ -32,4 +38,4 @@ jobs:
       - name: Prepare static test preview (does not alter repository files)
         run: node public-rooms-worker/prepare-preview.mjs "$RUNNER_TEMP/dice-online-preview"
       - name: Deploy Cloudflare Pages branch preview
-        run: npx wrangler pages deploy "$RUNNER_TEMP/dice-online-preview" --project-name "${{ inputs.pages_project }}" --branch feature-public-rooms-cloudflare
+        run: npx wrangler pages deploy "$RUNNER_TEMP/dice-online-preview" --project-name dice-online-test --branch feature-public-rooms-cloudflare
