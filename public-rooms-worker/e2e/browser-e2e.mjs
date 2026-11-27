@@ -50,8 +50,8 @@ async function makeClient(browser, name) {
   });
   await page.route("https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js", route =>
     route.fulfill({ status: 200, contentType: "application/javascript", body: mqttBundle }));
-  page.on("console", msg => { if (msg.type() === "error") console.error("[browser console]", msg.text()); });
-  page.on("response", response => { if (response.status() >= 400) console.error("[browser HTTP error]", response.status(), response.url()); });
+  page.on("console", msg => { if (msg.type() === "error") console.error("[browser console]", msg.text(), "source", JSON.stringify(msg.location())); });
+  page.on("response", response => { if (response.status() >= 400) console.error("[browser HTTP error]", response.status(), response.request().resourceType(), response.url()); });
   page.on("pageerror", error => console.error("[browser page error]", error.message));
   page.on("requestfailed", request => { if (request.url().includes("127.0.0.1:8787")) console.error("[API request failed]", request.url(), request.failure()?.errorText); });
   await page.goto(appURL, { waitUntil: "domcontentloaded", timeout });
