@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const pageHTML = fs.readFileSync(new URL("../../index.html", import.meta.url), "utf8");
 const mqttBundle = fs.readFileSync(new URL("../node_modules/mqtt/dist/mqtt.min.js", import.meta.url), "utf8");
 const fallbackUI = fs.readFileSync(new URL("../public-rooms-ui.js", import.meta.url), "utf8");
@@ -35,12 +38,20 @@ async function makeClient(browser, name) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   
   const page = await context.newPage();
-  await page.route(appURL, route => route.fulfill({ status: 200, contentType: "text/html; charset=utf-8", body: testPageHTML }));
+  await page.route("http://127.0.0.1:8787/**", async route => {
+    const pathname = new URL(route.request().url()).pathname;
+    if (pathname === "/") return route.fulfill({ status: 200, contentType: "text/html; charset=utf-8", body: testPageHTML });
+    if (pathname === "/api/rooms" || pathname === "/health") return route.continue();
+    if (pathname === "/public-rooms-worker/public-rooms-ui.js") return route.fulfill({ status: 200, contentType: "application/javascript", body: fallbackUI });
+    const localPath = path.resolve(repoRoot, pathname.replace(/^\\/+/, ""));
+    if (!localPath.startsWith(repoRoot + path.sep) || !fs.existsSync(localPath) || !fs.statSync(localPath).isFile()) return route.continue();
+    const mime = { ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".webmanifest": "application/manifest+json", ".html": "text/html", ".js": "application/javascript", ".txt": "text/plain" }[path.extname(localPath).toLowerCase()] || "application/octet-stream";
+    return route.fulfill({ status: 200, contentType: mime, body: fs.readFileSync(localPath) });
+  });
   await page.route("https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js", route =>
     route.fulfill({ status: 200, contentType: "application/javascript", body: mqttBundle }));
-  await page.route("http://127.0.0.1:8787/public-rooms-worker/public-rooms-ui.js", route =>
-    route.fulfill({ status: 200, contentType: "application/javascript", body: fallbackUI }));
   page.on("console", msg => { if (msg.type() === "error") console.error("[browser console]", msg.text()); });
+  page.on("response", response => { if (response.status() >= 400) console.error("[browser HTTP error]", response.status(), response.url()); });
   page.on("pageerror", error => console.error("[browser page error]", error.message));
   page.on("requestfailed", request => { if (request.url().includes("127.0.0.1:8787")) console.error("[API request failed]", request.url(), request.failure()?.errorText); });
   await page.goto(appURL, { waitUntil: "domcontentloaded", timeout });
