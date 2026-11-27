@@ -22,7 +22,9 @@ test("test preview build copies the static game and injects an isolated test mar
     assert.ok(fs.existsSync(path.join(out, "sw.js")), "service worker should be copied");
     assert.ok(fs.existsSync(path.join(out, "manifest.webmanifest")), "manifest should be copied");
     assert.ok(fs.existsSync(path.join(out, "flags.svg")), "flag asset should be copied");
-    assert.ok(!fs.existsSync(path.join(out, "public-rooms-worker")), "backend source should not be included in static preview");
+    assert.ok(fs.existsSync(path.join(out, "public-rooms-worker", "public-rooms-ui.js")), "the public-room UI script referenced by index.html must be copied");
+    assert.ok(!fs.existsSync(path.join(out, "public-rooms-worker", "src")), "backend implementation must not be included in static preview");
+    assert.ok(!fs.existsSync(path.join(out, "public-rooms-worker", "wrangler.test.toml")), "Worker configuration must not be included in static preview");
     const original = fs.readFileSync(path.join(repoRoot, "index.html"), "utf8");
     assert.doesNotMatch(original, /TEST PREVIEW — NOT PRODUCTION/);
   } finally {
