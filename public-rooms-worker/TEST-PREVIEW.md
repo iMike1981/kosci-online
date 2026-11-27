@@ -4,9 +4,9 @@ The deployment is intentionally **manual** and only runs from `feature/public-ro
 
 ## Prerequisites (one-time)
 
-1. Create a Cloudflare Pages project named `dice-online-test` (or choose another project name when dispatching the workflow) and allow branch preview deployments.
+1. Create a Cloudflare Pages project named `dice-online-test` and allow branch preview deployments. The deployment workflow is deliberately restricted to this project.
 2. Add repository Actions secrets `CF_API_TOKEN` and `CF_ACCOUNT_ID`. The API token needs Cloudflare Pages deployment and Workers deployment/Durable Objects migration permissions for the test account.
-3. Confirm the preview branch alias. With the default project name it is expected to be `https://feature-public-rooms-cloudflare.dice-online-test.pages.dev`. Use the exact origin (no trailing slash) as the workflow input; do not assume it if Cloudflare shows a different alias.
+3. Confirm the preview branch alias. With the default project name it is expected to be `https://feature-public-rooms-cloudflare.dice-online-test.pages.dev`. Use the exact origin (no trailing slash) as the workflow input. The workflow rejects origins outside `*.dice-online-test.pages.dev`.
 
 ## Deploy
 
