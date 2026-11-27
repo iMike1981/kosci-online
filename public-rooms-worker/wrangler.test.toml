@@ -1,0 +1,11 @@
+name = "dice-online-public-rooms-test"
+main = "src/index.js"
+compatibility_date = "2026-11-26"
+
+[[durable_objects.bindings]]
+name = "ROOM_REGISTRY"
+class_name = "RoomRegistry"
+
+[[migrations]]
+tag = "test-v1"
+new_sqlite_classes = ["RoomRegistry"]
