@@ -54,10 +54,8 @@ jobs:
             const guestList=await guest.request('/api/rooms');
             assert(guestList.status===200 && Array.isArray(guestList.body?.rooms),'guest room discovery failed');
             const candidates=availableRooms(guestList.body.rooms);
-            const discovered=candidates.find(r=>r.code===code);
-            assert(discovered,'guest cannot discover host room through Quick Match availability filter');
-            const selected=candidates[0];
-            assert(selected && selected.status==='waiting' && selected.players<selected.maxPlayers,'Quick Match candidate is invalid');
+            const selected=candidates.find(r=>r.code===code);
+            assert(selected && selected.status==='waiting' && selected.players<selected.maxPlayers,'host room is not selectable as a Quick Match candidate');
             const guestJoin=await guest.request('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,players:2,status:'playing'})});
             assert(guestJoin.status>=200 && guestJoin.status<300,'guest occupancy update rejected: '+guestJoin.status);
             const hostCheck=await host.request('/api/rooms');
