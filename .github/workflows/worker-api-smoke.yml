@@ -5,6 +5,8 @@ on:
       - feature/public-rooms-cloudflare
     paths:
       - ".github/workflows/worker-api-smoke.yml"
+      - "index.html"
+      - "public-rooms-worker/**"
   workflow_dispatch:
 jobs:
   smoke-test:
