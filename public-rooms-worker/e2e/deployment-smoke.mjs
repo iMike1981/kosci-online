@@ -5,7 +5,7 @@ export function validatePreviewOrigin(value) {
   let url; try { url=new URL(value); } catch { throw new Error("Invalid preview origin"); }
   const hostnamePattern=/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.dice-online-test\.pages\.dev$/;
   if(url.protocol!=="https:"||!hostnamePattern.test(url.hostname)||value!==url.origin)
-    throw new Error("Preview origin must be an exact HTTPS branch-preview origin under *.dice-online-test.pages.dev (no path or trailing slash");
+    throw new Error("Preview origin must be an exact HTTPS branch-preview origin under *.dice-online-test.pages.dev (no path or trailing slash)");
   return url.origin;
 }
 async function pageWithRetry(origin,fetchImpl,waitImpl,attempts=8){
