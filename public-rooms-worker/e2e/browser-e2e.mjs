@@ -43,7 +43,7 @@ async function makeClient(browser, name) {
     if (pathname === "/") return route.fulfill({ status: 200, contentType: "text/html; charset=utf-8", body: testPageHTML });
     if (pathname === "/api/rooms" || pathname === "/health") return route.continue();
     if (pathname === "/public-rooms-worker/public-rooms-ui.js") return route.fulfill({ status: 200, contentType: "application/javascript", body: fallbackUI });
-    const localPath = path.resolve(repoRoot, pathname.replace(/^\\/+/, ""));
+    const localPath = path.resolve(repoRoot, pathname.slice(1));
     if (!localPath.startsWith(repoRoot + path.sep) || !fs.existsSync(localPath) || !fs.statSync(localPath).isFile()) return route.continue();
     const mime = { ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".webmanifest": "application/manifest+json", ".html": "text/html", ".js": "application/javascript", ".txt": "text/plain" }[path.extname(localPath).toLowerCase()] || "application/octet-stream";
     return route.fulfill({ status: 200, contentType: mime, body: fs.readFileSync(localPath) });
