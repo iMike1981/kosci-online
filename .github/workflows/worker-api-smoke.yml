@@ -27,7 +27,9 @@ jobs:
           function client(label) {
             return {
               async request(path, opts={}) {
-                const r = await fetch(base+path, {...opts, headers:{...(opts.headers||{}), Origin:origin}});
+                const headers={...(opts.headers||{})};
+                if(!headers.Origin)headers.Origin=origin;
+                const r = await fetch(base+path, {...opts, headers});
                 const text = await r.text();
                 let body; try { body=JSON.parse(text); } catch { body=text; }
                 return {status:r.status, body, label};
@@ -52,10 +54,11 @@ jobs:
             const guestList=await guest.request('/api/rooms');
             assert(guestList.status===200 && Array.isArray(guestList.body?.rooms),'guest room discovery failed');
             const candidates=availableRooms(guestList.body.rooms);
-            assert(candidates.some(r=>r.code===code),'guest cannot discover host room through Quick Match availability filter');
+            const discovered=candidates.find(r=>r.code===code);
+            assert(discovered,'guest cannot discover host room through Quick Match availability filter');
             const selected=candidates[0];
             assert(selected && selected.status==='waiting' && selected.players<selected.maxPlayers,'Quick Match candidate is invalid');
-            const guestJoin=await guest.request('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,host:'Smoke-Host',players:2,status:'playing'})});
+            const guestJoin=await guest.request('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,players:2,status:'playing'})});
             assert(guestJoin.status>=200 && guestJoin.status<300,'guest occupancy update rejected: '+guestJoin.status);
             const hostCheck=await host.request('/api/rooms');
             const updated=hostCheck.body?.rooms?.find(r=>r.code===code);
