@@ -80,7 +80,7 @@ async function diceValues(page) {
 }
 
 const browser = await chromium.launch({ headless: true });
-let host, guest;
+let host, guest, scout;
 try {
   host = await makeClient(browser, hostName);
   guest = await makeClient(browser, guestName);
@@ -111,6 +111,10 @@ try {
   await host.page.locator("#go").click();
   await host.page.locator("#game").waitFor({ state: "visible", timeout });
   await guest.page.locator("#game").waitFor({ state: "visible", timeout });
+  await waitFor(async () => {
+    const room = await roomFromDirectory(code);
+    return room && room.players === 2 && room.maxPlayers === 2 && room.status === "playing";
+  }, "started two-player room published as playing and full", timeout);
 
   const active = await waitFor(async () => {
     if (await host.page.locator("#rollb").isEnabled()) return host.page;
@@ -131,8 +135,15 @@ try {
   assert.ok(hDice.every(v => v >= 1 && v <= 6), "Host must display a valid rolled result");
   assert.deepEqual(gDice, hDice, "Guest and Host must display the same dice after a real roll");
 
-  console.log("PASS: real browser Host -> local public-room directory -> Quick Match Guest -> shared lobby -> game start -> synchronized dice roll.");
+  scout = await makeClient(browser, "Scout-" + stamp);
+  await scout.page.locator("#pubrooms summary").click();
+  await scout.page.locator("#pubquick").click();
+  await waitFor(() => scout.page.locator("#publist").textContent().then(s => s.includes("No waiting rooms found")), "Quick Match excludes the started room", 15_000);
+  assert.equal(await scout.page.locator("#lobby").isVisible(), false, "Quick Match must not join a started or full room");
+
+  console.log("PASS: real browser Host -> local public-room directory -> Quick Match Guest -> full two-player lobby -> game start -> synchronized dice roll -> started-room exclusion.");
 } finally {
+  if (scout) await scout.context.close().catch(() => {});
   if (guest) await guest.context.close().catch(() => {});
   if (host) await host.context.close().catch(() => {});
   await browser.close().catch(() => {});
