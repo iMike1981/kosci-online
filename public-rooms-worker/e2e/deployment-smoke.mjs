@@ -1,3 +1,5 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 const TEST_WORKER = "https://dice-online-public-rooms-test.janowicz-michal.workers.dev";
 export function validatePreviewOrigin(value) {
   let url; try { url=new URL(value); } catch { throw new Error("Invalid preview origin"); }
@@ -35,4 +37,4 @@ export async function runPreviewSmoke(previewOrigin,{fetchImpl=fetch,waitImpl=ms
   console.log(`PASS: preview, Worker health, CORS, GET/POST/preflight and publish/confirm (${code}).`);
   return {code,origin};
 }
-if(process.argv[1]&&import.meta.url===new URL(`file://${process.argv[1]}`).href)runPreviewSmoke(process.argv[2]).catch(e=>{console.error(e.message);process.exitCode=1;});
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))runPreviewSmoke(process.argv[2]).catch(e=>{console.error(e.message);process.exitCode=1;});
