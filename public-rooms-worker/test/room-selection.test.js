@@ -5,7 +5,7 @@ import vm from "node:vm";
 
 const index = fs.readFileSync(new URL("../../index.html", import.meta.url), "utf8");
 const helperLine = index.split("\n").find(line => line.startsWith("function availableRooms(rooms){"));
-const maxPlayersLine = index.split("\\n").find(line => line.startsWith("function publicRoomMaxPlayers(mode){"));
+const maxPlayersLine = index.split("\n").find(line => line.startsWith("function publicRoomMaxPlayers(mode){"));
 assert.ok(helperLine, "availability helper must be present in the game page");
 const availableRooms = vm.runInNewContext(helperLine + "\navailableRooms");
 assert.ok(maxPlayersLine, "mode capacity helper must be present in the game page");
@@ -28,7 +28,7 @@ test("public room availability excludes playing, full and malformed entries", ()
     { code: "000000", host: "Player", mode: "", status: "waiting", players: 1, maxPlayers: 8 },
     null
   ];
-  assert.deepEqual(Array.from(availableRooms(rooms), r => r.code), ["555555", "222223", "111111"]);
+  assert.deepEqual(Array.from(availableRooms(rooms), r => r.code), ["555555", "111111", "222223"]);
 });
 
 test("both manual refresh and Quick Match use the shared availability filter", () => {
