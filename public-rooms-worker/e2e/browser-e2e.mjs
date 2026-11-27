@@ -4,11 +4,12 @@ import { chromium } from "playwright";
 
 const pageHTML = fs.readFileSync(new URL("../../index.html", import.meta.url), "utf8");
 const mqttBundle = fs.readFileSync(new URL("../node_modules/mqtt/dist/mqtt.min.js", import.meta.url), "utf8");
+const fallbackUI = fs.readFileSync(new URL("../public-rooms-ui.js", import.meta.url), "utf8");
 const publicBrokerList = "const SERVERS=[['wss://public.cloud.shiftr.io:443',{username:'public',password:'public'}],['wss://broker.hivemq.com:8884/mqtt',{}],['wss://broker.emqx.io:8084/mqtt',{}]];";
 const testBrokerList = "const SERVERS=[['ws://127.0.0.1:9001/mqtt',{}]];";
 const testPageHTML = pageHTML.replace(publicBrokerList, testBrokerList);
 assert.notEqual(testPageHTML, pageHTML, "E2E preview must use the isolated local MQTT broker");
-const appURL = "http://127.0.0.1:5173/";
+const appURL = "http://127.0.0.1:8787/";
 const apiURL = "http://127.0.0.1:8787";
 const timeout = 120_000;
 const stamp = Date.now().toString(36);
@@ -37,6 +38,8 @@ async function makeClient(browser, name) {
   await page.route(appURL, route => route.fulfill({ status: 200, contentType: "text/html; charset=utf-8", body: testPageHTML }));
   await page.route("https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js", route =>
     route.fulfill({ status: 200, contentType: "application/javascript", body: mqttBundle }));
+  await page.route("http://127.0.0.1:8787/public-rooms-worker/public-rooms-ui.js", route =>
+    route.fulfill({ status: 200, contentType: "application/javascript", body: fallbackUI }));
   page.on("console", msg => { if (msg.type() === "error") console.error("[browser console]", msg.text()); });
   page.on("pageerror", error => console.error("[browser page error]", error.message));
   page.on("requestfailed", request => { if (request.url().includes("127.0.0.1:8787")) console.error("[API request failed]", request.url(), request.failure()?.errorText); });
