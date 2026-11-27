@@ -30,6 +30,13 @@ test("test preview build copies the static game and injects an isolated test mar
   }
 });
 
+test("preview builder refuses an output directory inside the source repository", () => {
+  const run = spawnSync(process.execPath, [script, repoRoot], { cwd: repoRoot, encoding: "utf8" });
+  assert.notEqual(run.status, 0, "the source tree must not be used as the build output");
+  assert.match(run.stderr, /Preview output must be outside the repository/);
+  assert.ok(fs.existsSync(path.join(repoRoot, "index.html")), "source index should remain intact");
+});
+
 test("test deployment workflow is manual, branch-gated and targets the test Worker config", () => {
   const workflow = fs.readFileSync(path.join(repoRoot, ".github/workflows/deploy-test-preview.yml"), "utf8");
   assert.match(workflow, /workflow_dispatch:/);
