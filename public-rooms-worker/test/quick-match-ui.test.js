@@ -44,34 +44,33 @@ test("Quick Match selects a valid waiting room and triggers the existing Join fl
     { code: "666666", host: "Duel", players: 1, maxPlayers: 2, mode: "duel", status: "waiting" }
   ];
   const h = harness({ rooms });
-  await h.elements.get?.("pubquick")?.onclick?.();
-  await h.elements.pubquick.onclick();
+  await h.elements.get("pubquick").onclick();
   assert.equal(h.fetchCalls.length, 1);
   assert.equal(h.fetchCalls[0], "https://worker.test/api/rooms");
-  assert.equal(h.elements.code.value, "222222");
-  assert.equal(h.elements.pubrooms.open, false);
+  assert.equal(h.elements.get("code").value, "222222");
+  assert.equal(h.elements.get("pubrooms").open, false);
   assert.equal(h.getJoinClicks(), 1);
 });
 
 test("Quick Match reports an empty directory without attempting to join", async () => {
   const h = harness({ rooms: [] });
-  await h.elements.pubquick.onclick();
-  assert.match(h.elements.publist.textContent, /No waiting rooms found/);
+  await h.elements.get("pubquick").onclick();
+  assert.match(h.elements.get("publist").textContent, /No waiting rooms found/);
   assert.equal(h.getJoinClicks(), 0);
-  assert.equal(h.elements.code.value, "");
+  assert.equal(h.elements.get("code").value, "");
 });
 
 test("Quick Match reports directory errors and does not join", async () => {
   const h = harness({ fetchError: new Error("HTTP 503") });
-  await h.elements.pubquick.onclick();
-  assert.match(h.elements.publist.textContent, /Quick Match failed: HTTP 503/);
+  await h.elements.get("pubquick").onclick();
+  assert.match(h.elements.get("publist").textContent, /Quick Match failed: HTTP 503/);
   assert.equal(h.getJoinClicks(), 0);
 });
 
 test("Quick Match refuses to search until a directory URL is configured", async () => {
   const h = harness({ api: "", savedApi: "" });
-  await h.elements.pubquick.onclick();
-  assert.match(h.elements.publist.textContent, /Configure API first/);
+  await h.elements.get("pubquick").onclick();
+  assert.match(h.elements.get("publist").textContent, /Configure API first/);
   assert.equal(h.fetchCalls.length, 0);
   assert.equal(h.getJoinClicks(), 0);
 });
