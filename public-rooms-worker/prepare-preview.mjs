@@ -6,6 +6,7 @@ const workerDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(workerDir, "..");
 const outputDir = path.resolve(process.argv[2] || path.join(repoRoot, "preview"));
 const testApi = "https://dice-online-public-rooms-test.janowicz-michal.workers.dev";
+if (outputDir === repoRoot || outputDir.startsWith(repoRoot + path.sep)) throw new Error("Preview output must be outside the repository to protect source files");
 const testBanner = '<div id="dice-test-preview-banner" role="status" style="position:sticky;top:0;z-index:99999;padding:8px 12px;background:#8b1d1d;color:#fff;text-align:center;font:700 14px system-ui">TEST PREVIEW — NOT PRODUCTION</div>';
 
 fs.rmSync(outputDir, { recursive: true, force: true });
