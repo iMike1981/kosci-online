@@ -29,7 +29,19 @@ async function waitFor(fn, description, ms = 30_000) {
 }
 async function makeClient(browser, name) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
-  await context.addInitScript(({ name, apiURL }) => {
+  
+  const page = await context.newPage();
+  await page.route(appURL, route => route.fulfill({ status: 200, contentType: "text/html; charset=utf-8", body: pageHTML }));
+  await page.route("https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js", route =>
+    route.fulfill({ status: 200, contentType: "application/javascript", body: mqttBundle }));
+  await page.route("https://imike1981.github.io/kosci-online/public-rooms-worker/public-rooms-ui.js", route =>
+    route.fulfill({ status: 200, contentType: "application/javascript", body: fallbackUI }));
+  page.on("console", msg => { if (msg.type() === "error") console.error("[browser console]", msg.text()); });
+  page.on("pageerror", error => console.error("[browser page error]", error.message));
+  page.on("requestfailed", request => { if (request.url().includes("127.0.0.1:8787")) console.error("[API request failed]", request.url(), request.failure()?.errorText); });
+  await page.goto(appURL, { waitUntil: "domcontentloaded", timeout });
+  await page.locator("#create").waitFor({ state: "visible", timeout: 15_000 });
+  await page.evaluate(({ name, apiURL }) => {
     localStorage.setItem("kname", name);
     localStorage.setItem("dicePublicRoomsApi", apiURL);
     localStorage.setItem("klang", "en");
@@ -37,14 +49,25 @@ async function makeClient(browser, name) {
     localStorage.removeItem("kroom");
     localStorage.removeItem("ksess");
   }, { name, apiURL });
-  const page = await context.newPage();
-  await page.route(appURL, route => route.fulfill({ status: 200, contentType: "text/html; charset=utf-8", body: pageHTML }));
-  await page.route("https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js", route =>
-    route.fulfill({ status: 200, contentType: "application/javascript", body: mqttBundle }));
-  await page.route("https://imike1981.github.io/kosci-online/public-rooms-worker/public-rooms-ui.js", route =>
-    route.fulfill({ status: 200, contentType: "application/javascript", body: fallbackUI }));
-  await page.goto(appURL, { waitUntil: "domcontentloaded", timeout });
-  await page.locator("#create").waitFor({ state: "visible", timeout: 15_000 });
+  const configured = await page.evaluate(() => ({ name: localStorage.getItem("kname"), api: localStorage.getItem("dicePublicRoomsApi"), mode: localStorage.getItem("kmode") }));
+  assert.equal(configured.api, apiURL, "Public-room API must be configured in the browser");
+  assert.equal(configured.mode, "duel", "test Host must use Duel mode");
+  const probe = await page.evaluate(async api => {
+    try {
+      const r = await fetch(api + "/api/rooms", { cache: "no-store" });
+      return { status: r.status, body: await r.text() };
+    } catch (e) { return { error: e.message }; }
+  }, apiURL);
+  console.log("[API GET probe]", JSON.stringify(probe));
+  assert.equal(probe.status, 200, "Browser origin must be able to read local directory API");
+  const postProbe = await page.evaluate(async api => {
+    try {
+      const r = await fetch(api + "/api/rooms", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ code: "999999", host: "CORS-probe", players: 1, maxPlayers: 2, mode: "duel", status: "playing" }) });
+      return { status: r.status, body: await r.text() };
+    } catch (e) { return { error: e.message }; }
+  }, apiURL);
+  console.log("[API POST probe]", JSON.stringify(postProbe));
+  assert.equal(postProbe.status, 200, "Browser origin must be able to publish to local directory API");
   await page.locator("#name").fill(name);
   return { context, page };
 }
