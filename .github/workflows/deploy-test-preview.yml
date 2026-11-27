@@ -39,3 +39,7 @@ jobs:
         run: node public-rooms-worker/prepare-preview.mjs "$RUNNER_TEMP/dice-online-preview"
       - name: Deploy Cloudflare Pages branch preview
         run: npx wrangler pages deploy "$RUNNER_TEMP/dice-online-preview" --project-name dice-online-test --branch feature-public-rooms-cloudflare
+      - name: Smoke-test isolated preview and public-room API
+        env:
+          PREVIEW_ORIGIN: ${{ inputs.preview_origin }}
+        run: node public-rooms-worker/e2e/deployment-smoke.mjs "$PREVIEW_ORIGIN"

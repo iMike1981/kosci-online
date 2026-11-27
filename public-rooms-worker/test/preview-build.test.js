@@ -46,4 +46,6 @@ test("test deployment workflow is manual, branch-gated and targets the test Work
   assert.match(workflow, /Only the dice-online-test Pages preview origin is allowed/);
   assert.match(workflow, /--project-name dice-online-test/);
   assert.doesNotMatch(workflow, /wrangler deploy --config public-rooms-worker\/wrangler\.toml/);
+  assert.match(workflow, /Smoke-test isolated preview and public-room API/);
+  assert.match(workflow, /deployment-smoke\\.mjs/);
 });
