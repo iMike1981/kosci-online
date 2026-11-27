@@ -25,6 +25,18 @@ jobs:
       - name: Install Chromium
         working-directory: public-rooms-worker
         run: npx playwright install --with-deps chromium
+      - name: Start local static game preview
+        run: |
+          python3 -m http.server 5173 --bind 127.0.0.1 > /tmp/dice-page.log 2>&1 &
+          for i in $(seq 1 45); do
+            if curl -fsS http://127.0.0.1:5173/ >/dev/null; then
+              echo "Local game preview ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/dice-page.log
+          exit 1
       - name: Start isolated local Worker (no deployment)
         working-directory: public-rooms-worker
         run: |

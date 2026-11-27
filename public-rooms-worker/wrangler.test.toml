@@ -9,3 +9,6 @@ class_name = "RoomRegistry"
 [[migrations]]
 tag = "test-v1"
 new_sqlite_classes = ["RoomRegistry"]
+
+[vars]
+DICE_PUBLIC_ROOMS_ORIGIN = "http://127.0.0.1:5173"

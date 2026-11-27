@@ -18,7 +18,7 @@ function makeStorage(){
  };
  return storage;
 }
-function registry(){const storage=makeStorage();return {storage,instance:new RoomRegistry({storage},{})};}
+function registry(env={}){const storage=makeStorage();return {storage,instance:new RoomRegistry({storage},env)};}
 const room={code:"123456",host:"Player",players:1,maxPlayers:8,mode:"classic",status:"waiting"};
 const req=(method,body,ip="test-ip")=>{
  const headers={"x-directory-ip":ip};
@@ -93,4 +93,13 @@ test("concurrent GET and POST are rate limited per IP",async()=>{
  const {instance}=registry();
  const results=await Promise.all(Array.from({length:61},()=>instance.fetch(req("GET",null,"read-test"))));
  assert.equal(results.filter(r=>r.status===200).length,60);assert.equal(results.filter(r=>r.status===429).length,1);
+});
+
+
+test("registry responses advertise the configured preview origin",async()=>{
+ const origin="http://127.0.0.1:5173";
+ const {instance}=registry({DICE_PUBLIC_ROOMS_ORIGIN:origin});
+ const response=await instance.fetch(req("GET"));
+ assert.equal(response.status,200);
+ assert.equal(response.headers.get("access-control-allow-origin"),origin);
 });

@@ -2,10 +2,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { chromium } from "playwright";
 
-const pageHTML = fs.readFileSync(new URL("../../index.html", import.meta.url), "utf8");
 const mqttBundle = fs.readFileSync(new URL("../node_modules/mqtt/dist/mqtt.min.js", import.meta.url), "utf8");
-const fallbackUI = fs.readFileSync(new URL("../public-rooms-ui.js", import.meta.url), "utf8");
-const appURL = "https://imike1981.github.io/kosci-online/";
+const appURL = "http://127.0.0.1:5173/";
 const apiURL = "http://127.0.0.1:8787";
 const timeout = 120_000;
 const stamp = Date.now().toString(36);
@@ -31,11 +29,8 @@ async function makeClient(browser, name) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   
   const page = await context.newPage();
-  await page.route(appURL, route => route.fulfill({ status: 200, contentType: "text/html; charset=utf-8", body: pageHTML }));
   await page.route("https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js", route =>
     route.fulfill({ status: 200, contentType: "application/javascript", body: mqttBundle }));
-  await page.route("https://imike1981.github.io/kosci-online/public-rooms-worker/public-rooms-ui.js", route =>
-    route.fulfill({ status: 200, contentType: "application/javascript", body: fallbackUI }));
   page.on("console", msg => { if (msg.type() === "error") console.error("[browser console]", msg.text()); });
   page.on("pageerror", error => console.error("[browser page error]", error.message));
   page.on("requestfailed", request => { if (request.url().includes("127.0.0.1:8787")) console.error("[API request failed]", request.url(), request.failure()?.errorText); });

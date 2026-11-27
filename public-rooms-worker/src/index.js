@@ -14,20 +14,22 @@ const MAX_BODY_BYTES = 2048;
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    if (request.method === "OPTIONS") return new Response(null,{status:204,headers:corsHeaders()});
+    const allowed = originFor(env);
+    if (request.method === "OPTIONS") return new Response(null,{status:204,headers:corsHeaders(allowed)});
     if (url.pathname === "/health" && request.method === "GET")
-      return json({ok:true,service:"dice-online-public-rooms",version:1});
-    if (!originAllowed(request)) return json({error:"origin not allowed"},403);
+      return json({ok:true,service:"dice-online-public-rooms",version:1},200,allowed);
+    if (!originAllowed(request,allowed)) return json({error:"origin not allowed"},403,allowed);
     if (url.pathname === "/api/rooms" && (request.method === "GET" || request.method === "POST")) {
       const id = env.ROOM_REGISTRY.idFromName("public-registry");
       const headers=new Headers(request.headers);
       headers.set("x-directory-ip",request.headers.get("CF-Connecting-IP")||"unknown");
       return env.ROOM_REGISTRY.get(id).fetch("https://registry/rooms",{method:request.method,headers,body:request.method==="POST"?request.body:null});
     }
-    return json({error:"not found"},404);
+    return json({error:"not found"},404,allowed);
   }
 };
-function originAllowed(req){const o=req.headers.get("origin");return !o || o===ALLOWED_ORIGIN;}
+function originFor(env){const value=env&&env.DICE_PUBLIC_ROOMS_ORIGIN;return typeof value==="string"&&value.trim()?value.trim():ALLOWED_ORIGIN;}
+function originAllowed(req,allowed=ALLOWED_ORIGIN){const o=req.headers.get("origin");return !o || o===allowed;}
 async function safeJson(req){
   const length=req.headers.get("content-length");
   if(length!==null && (!/^\d+$/.test(length)||Number(length)>MAX_BODY_BYTES))return null;
@@ -53,12 +55,12 @@ async function safeJson(req){
     try{reader.releaseLock()}catch{}
   }
 }
-function corsHeaders(){return {"content-type":"application/json;charset=utf-8","cache-control":"no-store","access-control-allow-origin":ALLOWED_ORIGIN,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"content-type"}}
-function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:corsHeaders()})}
+function corsHeaders(allowed=ALLOWED_ORIGIN){return {"content-type":"application/json;charset=utf-8","cache-control":"no-store","access-control-allow-origin":allowed,"access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"content-type"}}
+function json(data,status=200,allowed=ALLOWED_ORIGIN){return new Response(JSON.stringify(data),{status,headers:corsHeaders(allowed)})}
 
 export class RoomRegistry {
   constructor(state,env){this.state=state;this.env=env;}
-  async rateLimit(request){
+  async rateLimit(request,allowed=originFor(this.env)){
     const ip=(request.headers.get("x-directory-ip")||"unknown").slice(0,80);
     const key="rate:"+ip,now=Date.now();
     return this.state.storage.transaction(async tx=>{
@@ -68,17 +70,18 @@ export class RoomRegistry {
       const activeCount=[...rates].filter(([,v])=>v&&v.resetAt>now).length;
       const keyIsActive=previous&&previous.resetAt>now;
       if(!keyIsActive&&activeCount>=MAX_RATE_KEYS)
-        return json({error:"registry temporarily busy"},503);
+        return json({error:"registry temporarily busy"},503,allowed);
       if(previous&&previous.resetAt>now&&previous.count>=RATE_LIMIT)
-        return json({error:"rate limit exceeded"},429);
+        return json({error:"rate limit exceeded"},429,allowed);
       const next=previous&&previous.resetAt>now?{count:previous.count+1,resetAt:previous.resetAt}:{count:1,resetAt:now+RATE_WINDOW_MS};
       await tx.put(key,next);
       return null;
     });
   }
   async fetch(request){
+    const allowed=originFor(this.env);
     if(request.method==="GET"){
-      const limited=await this.rateLimit(request);if(limited)return limited;
+      const limited=await this.rateLimit(request,allowed);if(limited)return limited;
       return this.state.storage.transaction(async tx=>{
         const entries=await tx.list({prefix:"room:",limit:MAX_ROOMS+1});
         const now=Date.now(),out=[];
@@ -87,13 +90,13 @@ export class RoomRegistry {
           out.push(r);
         }
         out.sort((a,b)=>b.updatedAt-a.updatedAt);
-        return json({rooms:out});
+        return json({rooms:out},200,allowed);
       });
     }
     if(request.method==="POST"){
-      const limited=await this.rateLimit(request);if(limited)return limited;
+      const limited=await this.rateLimit(request,allowed);if(limited)return limited;
       const d=await safeJson(request);
-      if(!d||!validRoom(d))return json({error:"invalid room data"},400);
+      if(!d||!validRoom(d))return json({error:"invalid room data"},400,allowed);
       const key="room:"+d.code;
       const room={code:d.code,host:safeText(d.host,20),players:Number(d.players),maxPlayers:Number(d.maxPlayers),mode:safeText(d.mode,24),status:d.status==="playing"?"playing":"waiting",updatedAt:Date.now()};
       // Capacity check, expiry cleanup, and insertion share one transaction so
@@ -105,13 +108,13 @@ export class RoomRegistry {
           const now=Date.now();
           for(const [k,v] of all)if(!isStoredRoom(v,now))await tx.delete(k);
           const remaining=await tx.list({prefix:"room:",limit:MAX_ROOMS+1});
-          if(remaining.size>=MAX_ROOMS)return json({error:"room directory full"},503);
+          if(remaining.size>=MAX_ROOMS)return json({error:"room directory full"},503,allowed);
         }
         await tx.put(key,room);
-        return json({ok:true,room});
+        return json({ok:true,room},200,allowed);
       });
     }
-    return json({error:"method not allowed"},405);
+    return json({error:"method not allowed"},405,allowed);
   }
 }
 function isStoredRoom(r,now){

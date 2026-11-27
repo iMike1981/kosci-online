@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import worker from "../src/index.js";
 
-function makeEnv() {
+function makeEnv(origin=null) {
   let forwarded;
   const stub = {
     async fetch(url, init) {
@@ -19,6 +19,7 @@ function makeEnv() {
       get(id) { assert.equal(id.name, "public-registry"); return stub; }
     }
   };
+  if(origin)env.DICE_PUBLIC_ROOMS_ORIGIN=origin;
   return { env, getForwarded: () => forwarded };
 }
 
@@ -63,4 +64,18 @@ test("unknown API method is not delegated", async () => {
   }), env);
   assert.equal(response.status, 404);
   assert.equal(getForwarded(), undefined);
+});
+
+
+test("local preview origin is accepted and preflight advertises it",async()=>{
+ const origin="http://127.0.0.1:5173", {env}=makeEnv(origin);
+ const response=await worker.fetch(new Request("https://worker/api/rooms",{method:"OPTIONS",headers:{origin,"access-control-request-method":"POST","access-control-request-headers":"content-type"}}),env);
+ assert.equal(response.status,204);
+ assert.equal(response.headers.get("access-control-allow-origin"),origin);
+});
+test("configured preview origin is forwarded to the registry",async()=>{
+ const origin="http://127.0.0.1:5173", {env,getForwarded}=makeEnv(origin);
+ const response=await worker.fetch(new Request("https://worker/api/rooms",{headers:{origin}}),env);
+ assert.equal(response.status,200);
+ assert.equal(getForwarded().init.headers.get("origin"),origin);
 });
