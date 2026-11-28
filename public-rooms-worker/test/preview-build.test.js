@@ -53,7 +53,7 @@ test("test deployment workflow is manual, branch-gated and targets the test Work
   assert.doesNotMatch(workflow, /wrangler deploy --config public-rooms-worker\/wrangler\.toml/);
   assert.match(workflow, /Smoke-test isolated preview and public-room API/);
   assert.match(workflow, /deployment-smoke\.mjs/);
-  assert.match(workflow, /default:\\s*https:\\/\\/feature-public-rooms-cloudflare\\.dice-online-test\\.pages\\.dev/);
+  assert.ok(workflow.includes("default: https://feature-public-rooms-cloudflare.dice-online-test.pages.dev"));
   assert.match(guide, /provide the exact Pages preview origin/i);
   assert.match(guide, /project name is fixed to `dice-online-test`/);
   assert.match(guide, /workflow input/);

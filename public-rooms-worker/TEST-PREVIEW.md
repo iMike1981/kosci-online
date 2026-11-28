@@ -10,7 +10,7 @@ The deployment is intentionally **manual** and only runs from `feature/public-ro
 
 ## Deploy
 
-On GitHub, open **Actions → Deploy isolated Dice Online test preview → Run workflow**. Select the feature branch, provide the exact Pages preview origin (the project name is fixed to `dice-online-test`; it is not a workflow input), and run it. The workflow is gated to the feature branch and `workflow_dispatch`; pushes and pull requests do not deploy.
+On GitHub, open **Actions → Deploy isolated Dice Online test preview → Run workflow**. Select the feature branch, provide the exact Pages preview origin and project name, and run it. The workflow is gated to the feature branch and `workflow_dispatch`; pushes and pull requests do not deploy.
 
 The static preview build copies the root game assets into a separate directory, injects a prominent **TEST PREVIEW — NOT PRODUCTION** banner, and defaults its public-room API to the isolated test Worker. The source `index.html` is not edited by the build. The test Worker is configured to accept the supplied preview origin.
 
