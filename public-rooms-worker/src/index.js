@@ -121,13 +121,15 @@ function isStoredRoom(r,now){
   return !!r&&Number.isFinite(r.updatedAt)&&r.updatedAt>0&&r.updatedAt<=now+5000&&
     now-r.updatedAt<=TTL_MS&&validRoom(r);
 }
+const MODE_CAPACITY=Object.freeze({classic:8,train:8,hw:8,call:8,pig:8,duel:2});
 export function validRoom(d){
  return !!d&&typeof d==="object"&&
  typeof d.code==="string"&&/^\d{6}$/.test(d.code)&&
  typeof d.host==="string"&&d.host.trim().length>0&&
  typeof d.players==="number"&&Number.isInteger(d.players)&&d.players>=1&&d.players<=8&&
- typeof d.maxPlayers==="number"&&Number.isInteger(d.maxPlayers)&&d.maxPlayers>=2&&d.maxPlayers<=8&&
- d.players<=d.maxPlayers&&typeof d.mode==="string"&&d.mode.trim().length>0&&d.mode.length<=24&&
+ typeof d.mode==="string"&&Object.prototype.hasOwnProperty.call(MODE_CAPACITY,d.mode)&&
+ typeof d.maxPlayers==="number"&&Number.isInteger(d.maxPlayers)&&d.maxPlayers===MODE_CAPACITY[d.mode]&&
+ d.players<=d.maxPlayers&&
  (d.status===undefined||d.status==="waiting"||d.status==="playing");
 }
 function safeText(v,n){return String(v||"").replace(/[<>]/g,"").trim().slice(0,n)}
