@@ -41,6 +41,7 @@ test("preview builder refuses an output directory inside the source repository",
 
 test("test deployment workflow is manual, branch-gated and targets the test Worker config", () => {
   const workflow = fs.readFileSync(path.join(repoRoot, ".github/workflows/deploy-test-preview.yml"), "utf8");
+  const guide = fs.readFileSync(path.join(repoRoot, "public-rooms-worker/TEST-PREVIEW.md"), "utf8");
   assert.match(workflow, /workflow_dispatch:/);
   assert.match(workflow, /refs\/heads\/feature\/public-rooms-cloudflare/);
   assert.match(workflow, /wrangler\.test\.toml/);
@@ -52,4 +53,8 @@ test("test deployment workflow is manual, branch-gated and targets the test Work
   assert.doesNotMatch(workflow, /wrangler deploy --config public-rooms-worker\/wrangler\.toml/);
   assert.match(workflow, /Smoke-test isolated preview and public-room API/);
   assert.match(workflow, /deployment-smoke\.mjs/);
+  assert.match(workflow, /default:\\s*https:\\/\\/feature-public-rooms-cloudflare\\.dice-online-test\\.pages\\.dev/);
+  assert.match(guide, /provide the exact Pages preview origin/i);
+  assert.match(guide, /project name is fixed to `dice-online-test`/);
+  assert.match(guide, /workflow input/);
 });
