@@ -35,7 +35,8 @@ async function waitFor(fn, description, ms = 30_000) {
   throw new Error("Timed out waiting for " + description + (last ? ": " + last : ""));
 }
 async function makeClient(browser, name) {
-  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  // This harness serves assets through page routes and a local Worker; skip PWA service-worker registration to avoid a false script 404.
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, serviceWorkers: "block" });
   
   const page = await context.newPage();
   await page.route("http://127.0.0.1:8787/**", async route => {
