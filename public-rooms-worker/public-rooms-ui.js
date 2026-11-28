@@ -7,6 +7,16 @@ if(document.getElementById("pubrooms")||document.getElementById("pubquick"))retu
 const APIKEY="dice_public_rooms_api";
 const MODE_CAPACITY=Object.freeze({classic:8,train:8,hw:8,call:8,pig:8,duel:2});
 function maxPlayersForMode(mode){return MODE_CAPACITY[mode]||8;}
+function availableRooms(rooms){
+ return (Array.isArray(rooms)?rooms:[]).filter(r=>r&&
+  typeof r.code==="string"&&/^\d{6}$/.test(r.code)&&
+  typeof r.host==="string"&&r.host.trim().length>0&&
+  typeof r.mode==="string"&&Object.prototype.hasOwnProperty.call(MODE_CAPACITY,r.mode)&&
+  Number.isInteger(r.players)&&r.players>=1&&r.players<=8&&
+  Number.isInteger(r.maxPlayers)&&r.maxPlayers===MODE_CAPACITY[r.mode]&&
+  r.players<r.maxPlayers&&r.status==="waiting"
+ ).sort((a,b)=>b.players-a.players);
+}
 const start=document.getElementById("start");
 if(!start)return;
 const panel=document.createElement("section");
@@ -21,7 +31,7 @@ function show(msg){$("prList").innerHTML=msg}
 function endpoint(){return api.replace(/\/$/,"")}
 async function listRooms(){
  if(!endpoint()){show('<p class="small">Public lobby is prepared, but its directory server has not been deployed/configured yet.</p>');return []}
- try{const r=await fetch(endpoint()+"/api/rooms",{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const d=await r.json();const rooms=(d.rooms||[]).filter(x=>x.status!=="playing"&&x.players<x.maxPlayers);if(!rooms.length){show('<p>No waiting rooms found. / Brak wolnych pokoi.</p>');return []}
+ try{const r=await fetch(endpoint()+"/api/rooms",{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const d=await r.json();const rooms=availableRooms(d.rooms);if(!rooms.length){show('<p>No waiting rooms found. / Brak wolnych pokoi.</p>');return []}
  show(rooms.map(x=>'<div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><div><b>'+esc(x.host)+'</b> <span class="small">· '+esc(x.mode)+' · '+x.players+'/'+x.maxPlayers+'</span><br><span class="small">Room '+esc(x.code)+'</span></div><button type="button" data-room="'+esc(x.code)+'">Join</button></div>').join(""));
  $("prList").querySelectorAll("[data-room]").forEach(b=>b.onclick=()=>{const n=$("name").value.trim();if(!n){alert("Enter your name first.");return}enterRoom(b.dataset.room,false)});
  return rooms;
