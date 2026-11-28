@@ -50,7 +50,7 @@ jobs:
               if(!initial.body.rooms.some(r=>r.code===candidate)){code=candidate;break}
             }
             assert(code,'could not allocate a unique test room code');
-            const payload={code,host:'Smoke-Host',players:1,maxPlayers:2,mode:'test',status:'waiting'};
+            const payload={code,host:'Smoke-Host',players:1,maxPlayers:2,mode:'duel',status:'waiting'};
             const post=await host.request('/api/rooms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
             assert(post.status>=200 && post.status<300,'host publish rejected: '+post.status+' '+JSON.stringify(post.body));
             const guestList=await guest.request('/api/rooms');
