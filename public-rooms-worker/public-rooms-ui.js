@@ -5,6 +5,8 @@
 // Avoid injecting a second, disconnected panel when this fallback is loaded there.
 if(document.getElementById("pubrooms")||document.getElementById("pubquick"))return;
 const APIKEY="dice_public_rooms_api";
+const MODE_CAPACITY=Object.freeze({classic:8,train:8,hw:8,call:8,pig:8,duel:2});
+function maxPlayersForMode(mode){return MODE_CAPACITY[mode]||8;}
 const start=document.getElementById("start");
 if(!start)return;
 const panel=document.createElement("section");
@@ -27,7 +29,8 @@ async function listRooms(){
 }
 async function publish(){
  try{if(!endpoint()||!window.ROOM||!window.S||!window.me||!window.S.host)return;
- const d={code:window.ROOM,host:window.S.host,players:(window.S.lobby||[]).length,maxPlayers:8,mode:window.S.mode||"classic",status:window.S.G&&window.S.G.phase==="play"?"playing":"waiting"};
+ const mode=window.S.mode||"classic";
+ const d={code:window.ROOM,host:window.S.host,players:(window.S.lobby||[]).length,maxPlayers:maxPlayersForMode(mode),mode,status:window.S.G&&window.S.G.phase==="play"?"playing":"waiting"};
  await fetch(endpoint()+"/api/rooms",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)});
  }catch(e){}
 }
